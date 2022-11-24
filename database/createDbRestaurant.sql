@@ -22,34 +22,28 @@ DROP TABLE IF EXISTS `restaurant`.`category` ;
 CREATE TABLE IF NOT EXISTS `restaurant`.`category` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
-  `parent` INT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_category_category_idx` (`parent` ASC),
-  INDEX `idx_category_name` (`name` ASC, `parent` ASC),
-  CONSTRAINT `fk_category_category1`
-    FOREIGN KEY (`parent`)
-    REFERENCES `restaurant`.`category` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+  INDEX `idx_category_name` (`name` ASC)
+  );
 
 
 -- -----------------------------------------------------
 -- Table `restaurant`.`category`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `restaurant`.`category` ;
+-- DROP TABLE IF EXISTS `restaurant`.`category` ;
 
-CREATE TABLE IF NOT EXISTS `restaurant`.`category` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
-  `parent` INT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_category_category_idx` (`parent` ASC),
-  INDEX `idx_category_name` (`name` ASC, `parent` ASC),
-  CONSTRAINT `fk_category_category1`
-    FOREIGN KEY (`parent`)
-    REFERENCES `restaurant`.`category` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+-- CREATE TABLE IF NOT EXISTS `restaurant`.`category` (
+  -- `id` INT NOT NULL AUTO_INCREMENT,
+  -- `name` VARCHAR(45) NOT NULL,
+  -- `parent` INT NULL,
+  -- PRIMARY KEY (`id`),
+  -- INDEX `fk_category_category_idx` (`parent` ASC),
+  -- INDEX `idx_category_name` (`name` ASC, `parent` ASC),
+  -- CONSTRAINT `fk_category_category1`
+    -- FOREIGN KEY (`parent`)
+    -- REFERENCES `restaurant`.`category` (`id`)
+    -- ON DELETE NO ACTION
+    -- ON UPDATE NO ACTION);
 
 
 -- -----------------------------------------------------
@@ -61,10 +55,11 @@ CREATE TABLE IF NOT EXISTS `restaurant`.`dish` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `description` VARCHAR(255) NOT NULL,
+  `weight` INT NULL,
   `price` DECIMAL(9,2) UNSIGNED NOT NULL,
   `amount` INT UNSIGNED NOT NULL,
+  `special` TINYINT(1) NULL DEFAULT 0,
   `image` VARCHAR(45) NULL,
-  `dish_detail` VARCHAR(64) NULL,
   `category_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   FULLTEXT INDEX `idx_dish_name` (`name`),
@@ -78,11 +73,11 @@ CREATE TABLE IF NOT EXISTS `restaurant`.`dish` (
 
 
 -- -----------------------------------------------------
--- Table `restaurant`.`commition_status`
+-- Table `restaurant`.`commission_status`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `restaurant`.`commition_status` ;
+DROP TABLE IF EXISTS `restaurant`.`commission_status` ;
 
-CREATE TABLE IF NOT EXISTS `restaurant`.`commition_status` (
+CREATE TABLE IF NOT EXISTS `restaurant`.`commission_status` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`));
@@ -123,28 +118,29 @@ CREATE TABLE IF NOT EXISTS `restaurant`.`user` (
 
 
 -- -----------------------------------------------------
--- Table `restaurant`.`commition`
+-- Table `restaurant`.`commission`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `restaurant`.`commition` ;
+DROP TABLE IF EXISTS `restaurant`.`commission` ;
 
-CREATE TABLE IF NOT EXISTS `restaurant`.`commition` (
+CREATE TABLE IF NOT EXISTS `restaurant`.`commission` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `address` VARCHAR(1024) NOT NULL,
-  `phone_number` VARCHAR(12) NOT NULL,
+  `phone_number` VARCHAR(13) NOT NULL,
+  `payment` TINYINT(1) NULL DEFAULT 0,
   `creation_data` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   `close_date` TIMESTAMP NULL,
   `status_id` INT NOT NULL,
   `user_id` INT NOT NULL,
-  PRIMARY KEY (`id`, `status_id`),
-  INDEX `fk_commition_commition_status1_idx` (`status_id` ASC),
-  INDEX `fk_commition_user1_idx` (`user_id` ASC),
-  CONSTRAINT `fk_commition_commition_status1`
+  PRIMARY KEY (`id`),
+  INDEX `fk_commission_commission_status_idx` (`status_id` ASC),
+  INDEX `fk_commission_user_idx` (`user_id` ASC),
+  CONSTRAINT `fk_commission_commission_status`
     FOREIGN KEY (`status_id`)
-    REFERENCES `restaurant`.`commition_status` (`id`)
+    REFERENCES `restaurant`.`commission_status` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
-  CONSTRAINT `fk_commition_user`
+  CONSTRAINT `fk_commission_user`
     FOREIGN KEY (`user_id`)
     REFERENCES `restaurant`.`user` (`id`)
     ON DELETE RESTRICT
@@ -152,24 +148,24 @@ CREATE TABLE IF NOT EXISTS `restaurant`.`commition` (
 
 
 -- -----------------------------------------------------
--- Table `restaurant`.`commition_has_dish`
+-- Table `restaurant`.`commission_has_dish`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `restaurant`.`commition_has_dish` ;
+DROP TABLE IF EXISTS `restaurant`.`commission_has_dish` ;
 
-CREATE TABLE IF NOT EXISTS `restaurant`.`commition_has_dish` (
-  `commition_id` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS `restaurant`.`commission_has_dish` (
+  `commission_id` INT NOT NULL,
   `dish_id` INT NOT NULL,
   `amount` INT UNSIGNED NOT NULL,
   `price` DECIMAL(9,2) UNSIGNED NOT NULL,
-  PRIMARY KEY (`commition_id`, `dish_id`),
-  INDEX `fk_commition_has_dish_dish1_idx` (`dish_id` ASC),
-  INDEX `fk_commition_has_dish_commition1_idx` (`commition_id` ASC),
-  CONSTRAINT `fk_commition_has_dish_commition1`
-    FOREIGN KEY (`commition_id`)
-    REFERENCES `restaurant`.`commition` (`id`)
+  PRIMARY KEY (`commission_id`, `dish_id`),
+  INDEX `fk_commission_has_dish_dish_idx` (`dish_id` ASC),
+  INDEX `fk_commission_has_dish_commission_idx` (`commission_id` ASC),
+  CONSTRAINT `fk_commission_has_dish_commission`
+    FOREIGN KEY (`commission_id`)
+    REFERENCES `restaurant`.`commission` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
-  CONSTRAINT `fk_commition_has_dish_dish1`
+  CONSTRAINT `fk_commission_has_dish_dish`
     FOREIGN KEY (`dish_id`)
     REFERENCES `restaurant`.`dish` (`id`)
     ON DELETE RESTRICT
@@ -185,8 +181,10 @@ CREATE TABLE IF NOT EXISTS `restaurant`.`user_details` (
   `user_id` INT NOT NULL,
   `birthday` DATE NULL,
   `passport` VARCHAR(16) NULL,
-  `bank_account` VARCHAR(45) NULL,
+  `bank_account` VARCHAR(29) NULL,
   PRIMARY KEY (`user_id`),
+  UNIQUE INDEX `passport_UNIQUE` (`passport` ASC),
+  UNIQUE INDEX `bank_account_UNIQUE` (`bank_account` ASC),
   CONSTRAINT `fk_user_details_user`
     FOREIGN KEY (`user_id`)
     REFERENCES `restaurant`.`user` (`id`)
@@ -215,14 +213,14 @@ CREATE TABLE IF NOT EXISTS `restaurant`.`menu_has_dish` (
   `menu_id` INT NOT NULL,
   `dish_id` INT NOT NULL,
   PRIMARY KEY (`menu_id`, `dish_id`),
-  INDEX `fk_menu_has_dish_dish1_idx` (`dish_id` ASC),
-  INDEX `fk_menu_has_dish_menu1_idx` (`menu_id` ASC),
-  CONSTRAINT `fk_menu_has_dish_menu1`
+  INDEX `fk_menu_has_dish_dish_idx` (`dish_id` ASC),
+  INDEX `fk_menu_has_dish_menu_idx` (`menu_id` ASC),
+  CONSTRAINT `fk_menu_has_dish_menu`
     FOREIGN KEY (`menu_id`)
     REFERENCES `restaurant`.`menu` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
-  CONSTRAINT `fk_menu_has_dish_dish1`
+  CONSTRAINT `fk_menu_has_dish_dish`
     FOREIGN KEY (`dish_id`)
     REFERENCES `restaurant`.`dish` (`id`)
     ON DELETE CASCADE
