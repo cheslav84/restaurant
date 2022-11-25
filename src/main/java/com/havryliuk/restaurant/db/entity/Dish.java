@@ -124,4 +124,18 @@ public class Dish implements Entity {
         result = 31 * result + (price != null ? price.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Dish{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", weight=" + weight +
+                ", price=" + price +
+                ", amount=" + amount +
+                ", special=" + special +
+                ", image='" + image + '\'' +
+                ", category=" + category +
+                '}' + "\n" ;
+    }
 }

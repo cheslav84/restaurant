@@ -67,7 +67,7 @@ public class RestaurantConnectionPool implements ConnectionPool {
 
     private static void loadProperties() {
         try {
-            properties.load(new FileReader(Constants.SETTINGS_FILE));
+            properties.load(new FileReader(Constants.APP_PROPERTIES_FILE));
         } catch (IOException e) {
             e.printStackTrace(); //todo log
         }

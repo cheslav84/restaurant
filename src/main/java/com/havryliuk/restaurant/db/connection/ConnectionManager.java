@@ -1,12 +1,10 @@
 package com.havryliuk.restaurant.db.connection;
 
 import com.havryliuk.restaurant.Constants;
-import com.havryliuk.restaurant.exceptions.DBException;
 import org.apache.log4j.Logger;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.Connection;
 import java.util.Properties;
 
 public class ConnectionManager {
@@ -19,7 +17,7 @@ public class ConnectionManager {
 
     static {
         try {
-            properties.load(new FileReader(Constants.SETTINGS_FILE));
+            properties.load(new FileReader(Constants.APP_PROPERTIES_FILE));
         } catch (IOException e) {
             e.printStackTrace(); //todo log
         }
