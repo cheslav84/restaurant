@@ -1,4 +1,4 @@
-package com.havryliuk.restaurant.Exceptions;
+package com.havryliuk.restaurant.exceptions;
 
 public class DaoException extends Exception {
     public DaoException() {

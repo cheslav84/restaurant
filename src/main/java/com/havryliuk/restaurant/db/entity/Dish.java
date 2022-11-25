@@ -5,18 +5,33 @@ import java.math.BigDecimal;
 public class Dish implements Entity {
     private long id;
     private String name;
-    private BigDecimal price;
-    private int weight;
     private String description;
+    private int weight;
+    private BigDecimal price;
     private int amount;
+    private boolean special;
+    private String image;
+    private Category category;
 
-    // private String picture;
+    public Dish() {
+    }
 
-    public static Dish getInstance(String name, BigDecimal price, int weight) {
+    public static Dish getInstance(String name, BigDecimal price, int amount) {
         Dish dish = new Dish();
         dish.setName(name);
         dish.setPrice(price);
+        dish.setAmount(amount);
+        return dish;
+    }
+
+    public static Dish getInstance(String name, String description, int weight, BigDecimal price,
+                                   int amount, boolean special, String image, Category category) {
+        Dish dish = getInstance(name, price, amount);
+        dish.setDescription(description);
         dish.setWeight(weight);
+        dish.setSpecial(special);
+        dish.setImage(image);
+        dish.setCategory(category);
         return dish;
     }
 
@@ -29,27 +44,15 @@ public class Dish implements Entity {
     }
 
     public void setName(String name) {
-        validateStringData(name, 45);
-        this.name = name ;
+        this.name = name;
     }
 
-
-
-    public String getDescription()  {
+    public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        validatePrice(price);
-        this.price = price;
     }
 
     public int getWeight() {
@@ -60,6 +63,14 @@ public class Dish implements Entity {
         this.weight = weight;
     }
 
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
     public int getAmount() {
         return amount;
     }
@@ -67,24 +78,50 @@ public class Dish implements Entity {
     public void setAmount(int amount) {
         this.amount = amount;
     }
-    private void validateStringData(String data, int maxLength) { //todo move to separate util class and make static
-        if (data == null) {
-            throw new IllegalArgumentException("Input data can't be null.");
-        }
-        if (data.isBlank() || data.length() < 2 ) {
-            throw new IllegalArgumentException("Data is blank," +
-                    " length of data is too short or too long." +
-                    " Data: " + data + ". (The length can't be " +
-                    "more than " + maxLength + " symbols.");
-        }
+
+    public boolean isSpecial() {
+        return special;
     }
 
-    private void validatePrice(BigDecimal price) {
-        if (price.equals(0)) { //todo check if this method valid and check for max input value
-            throw new IllegalArgumentException("Price value is not correct: " + price);
-        }
+    public void setSpecial(boolean special) {
+        this.special = special;
     }
 
+    public String getImage() {
+        return image;
+    }
 
+    public void setImage(String image) {
+        this.image = image;
+    }
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Dish dish = (Dish) o;
+
+        if (weight != dish.weight) return false;
+        if (name != null ? !name.equals(dish.name) : dish.name != null) return false;
+        if (description != null ? !description.equals(dish.description) : dish.description != null) return false;
+        return price != null ? price.equals(dish.price) : dish.price == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + weight;
+        result = 31 * result + (price != null ? price.hashCode() : 0);
+        return result;
+    }
 }
