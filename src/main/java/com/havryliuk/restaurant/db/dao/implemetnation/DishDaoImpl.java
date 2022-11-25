@@ -53,6 +53,9 @@ public class DishDaoImpl implements DishDao {
         return null;
     }
 
+
+
+
     @Override
     public List<Dish> getSortedByName() throws DBException {
         return getDishes(DishSql.FIND_ALL_ORDERED_BY_NAME.QUERY);
@@ -141,6 +144,7 @@ public class DishDaoImpl implements DishDao {
         FIND_ALL_ORDERED_BY_NAME("SELECT * FROM dish ORDER BY name"),
         FIND_ALL_ORDERED_BY_PRICE("SELECT * FROM dish ORDER BY price"),
 
+        FIND_ALL_BY_CATEGORY("SELECT * FROM dish d JOIN category c WHERE c.name=?"),
 
         FIND_DISH_BY_CATEGORY("SELECT * FROM dish d WHERE d.name=?"),
 
