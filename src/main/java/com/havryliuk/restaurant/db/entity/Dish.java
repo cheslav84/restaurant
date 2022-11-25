@@ -11,12 +11,27 @@ public class Dish implements Entity {
     private int amount;
     private boolean special;
     private String image;
+    private Category category;
+
+    public Dish() {
+    }
 
     public static Dish getInstance(String name, BigDecimal price, int amount) {
         Dish dish = new Dish();
         dish.setName(name);
         dish.setPrice(price);
         dish.setAmount(amount);
+        return dish;
+    }
+
+    public static Dish getInstance(String name, String description, int weight, BigDecimal price,
+                                   int amount, boolean special, String image, Category category) {
+        Dish dish = getInstance(name, price, amount);
+        dish.setDescription(description);
+        dish.setWeight(weight);
+        dish.setSpecial(special);
+        dish.setImage(image);
+        dish.setCategory(category);
         return dish;
     }
 
@@ -80,6 +95,13 @@ public class Dish implements Entity {
         this.image = image;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 
     @Override
     public boolean equals(Object o) {
