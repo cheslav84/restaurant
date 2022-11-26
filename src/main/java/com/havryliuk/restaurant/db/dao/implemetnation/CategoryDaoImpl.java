@@ -95,7 +95,7 @@ public class CategoryDaoImpl implements CategoryDao {
 
     private Category mapCategory(ResultSet rs) throws SQLException {
         String name = rs.getString(CategoryFields.CATEGORY_NAME);
-        return Category.valueOf(name.toUpperCase());
+        return Category.getInstance(name);
     }
 
     enum CategorySql {

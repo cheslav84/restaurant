@@ -48,22 +48,12 @@ public class DishDaoImpl implements DishDao {
         return dish;
     }
 
-    @Override
-    public List<Dish> findByCategory(Category category) throws DBException {
-        return null;
-    }
-
-
 
 
     @Override
     public List<Dish> getSortedByName() throws DBException {
         return getDishes(DishSql.FIND_ALL_ORDERED_BY_NAME.QUERY);
     }
-
-
-
-
 
     @Override
     public List<Dish> getSortedByPrice() throws DBException {
@@ -72,6 +62,11 @@ public class DishDaoImpl implements DishDao {
 
     @Override
     public List<Dish> getSortedByCategory() throws DBException {
+        return null;
+    }
+
+    @Override
+    public List<Dish> findByCategory(Category category) throws DBException {
         return null;
     }
 
@@ -121,7 +116,6 @@ public class DishDaoImpl implements DishDao {
     }
 
     private Dish mapDish(ResultSet rs) throws SQLException, DBException {
-
         String name = rs.getString(DishFields.DISH_NAME);
         String description = rs.getString(DishFields.DISH_DESCRIPTION);
         int weight = rs.getInt(DishFields.DISH_WEIGHT);
@@ -130,12 +124,12 @@ public class DishDaoImpl implements DishDao {
         boolean special = rs.getBoolean(DishFields.DISH_SPECIAL);
         String image = rs.getString(DishFields.DISH_IMAGE);
         Long categoryId = rs.getLong(DishFields.DISH_CATEGORY_ID);
+        return Dish.getInstance(name, description, weight, price, amount, special, image, getCategory(categoryId));
+    }
 
+    private Category getCategory(Long categoryId) throws DBException {
         CategoryDao categoryDao = new CategoryDaoImpl();
-        Category category = categoryDao.findById(categoryId);
-
-//        return Dish.getInstance(name, price, amount);
-        return Dish.getInstance(name, description, weight, price, amount, special, image, category);
+        return categoryDao.findById(categoryId);
     }
 
     enum DishSql {

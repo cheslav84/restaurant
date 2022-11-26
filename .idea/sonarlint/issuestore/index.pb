@@ -9,8 +9,6 @@ O
 database/createDbRestaurant.sql,3\2\324eabbf9c2a491e515699adb3f540160ec6c5de
 s
 Csrc/main/java/com/havryliuk/restaurant/exceptions/DaoException.java,9\3\93e2a356f294e26ac61431dce17a4de0c2b10398
-n
->src/main/java/com/havryliuk/restaurant/db/entity/Category.java,d\2\d2a01d040a15b2f5234cebcd0b20038d62832cff
 l
 <src/main/java/com/havryliuk/restaurant/db/dao/EntityDao.java,8\5\85901164d5f7d9da9c77637ea05b6b286f35eba0
 j
