@@ -5,7 +5,6 @@ import com.havryliuk.restaurant.exceptions.DBException;
 import java.sql.Connection;
 
 public interface ConnectionPool {
-
     Connection getConnection() throws DBException;
     boolean releaseConnection(Connection connection);
     String getUrl();

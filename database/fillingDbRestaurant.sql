@@ -45,7 +45,7 @@ INSERT INTO dish (name, description, price, amount, special, category_id)
 VALUES ('Taco Salad', 'Lorem ipsum dolor sit amet consectetur adipiscing.', '14.00', '20', '0', '2');
 
 INSERT INTO dish (name, description, price, amount, special, category_id) 
-VALUES ('Taco Salad', 'Lorem ipsum dolor sit amet consectetur adipiscing.', '15.00', '25', '0', '2');
+VALUES ('Fajita Lunch', 'Lorem ipsum dolor sit amet consectetur adipiscing.', '15.00', '25', '0', '2');
 
 INSERT INTO dish (name, description, price, amount, special, category_id) 
 VALUES ('Chile Relleno', 'Lorem ipsum dolor sit amet consectetur adipiscing.', '18.00', '12', '0', '2');
@@ -92,8 +92,8 @@ INSERT INTO booking_status (name) VALUE ('completed');
 
 
 
--- SELECT * FROM category order by id
- SELECT * FROM dish order by id
+ SELECT * FROM category order by id
+-- SELECT * FROM dish order by id
 -- SELECT * FROM role order by id
 -- SELECT * FROM user order by id
 -- SELECT * FROM booking_status order by id

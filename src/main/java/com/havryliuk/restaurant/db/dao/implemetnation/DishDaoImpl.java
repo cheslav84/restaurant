@@ -38,7 +38,7 @@ public class DishDaoImpl implements DishDao {
                     dish = mapDish(rs);
                 }
             }
-            log.info("The \"" + name + "\" dish received from database.");
+            log.info("The \"" + name + "\" dish has been received from database.");
         } catch (SQLException e) {
             log.error("Error in getting dish \"" + name +  "\" from database. ", e);
             throw new DBException(e);
@@ -48,12 +48,22 @@ public class DishDaoImpl implements DishDao {
         return dish;
     }
 
+    @Override
+    public List<Dish> findByCategory(Category category) throws DBException {
+        return null;
+    }
+
+
 
 
     @Override
     public List<Dish> getSortedByName() throws DBException {
         return getDishes(DishSql.FIND_ALL_ORDERED_BY_NAME.QUERY);
     }
+
+
+
+
 
     @Override
     public List<Dish> getSortedByPrice() throws DBException {
@@ -62,11 +72,6 @@ public class DishDaoImpl implements DishDao {
 
     @Override
     public List<Dish> getSortedByCategory() throws DBException {
-        return null;
-    }
-
-    @Override
-    public List<Dish> findByCategory(Category category) throws DBException {
         return null;
     }
 
@@ -86,8 +91,8 @@ public class DishDaoImpl implements DishDao {
     }
 
     @Override
-    public Dish update(Dish entity) throws DBException {
-        return null;
+    public boolean update(Dish entity) throws DBException {
+        return false;
     }
 
     @Override
@@ -108,6 +113,7 @@ public class DishDaoImpl implements DishDao {
             while (rs.next()) {
                 dishes.add(mapDish(rs));
             }
+            log.info("List of dishes have been received from database.");
         } catch (SQLException e) {
             log.error("Error in getting list of dishes from DB.", e);
             throw new DBException(e);
@@ -116,6 +122,7 @@ public class DishDaoImpl implements DishDao {
     }
 
     private Dish mapDish(ResultSet rs) throws SQLException, DBException {
+        long id = rs.getLong(DishFields.DISH_ID);
         String name = rs.getString(DishFields.DISH_NAME);
         String description = rs.getString(DishFields.DISH_DESCRIPTION);
         int weight = rs.getInt(DishFields.DISH_WEIGHT);
@@ -124,12 +131,11 @@ public class DishDaoImpl implements DishDao {
         boolean special = rs.getBoolean(DishFields.DISH_SPECIAL);
         String image = rs.getString(DishFields.DISH_IMAGE);
         Long categoryId = rs.getLong(DishFields.DISH_CATEGORY_ID);
-        return Dish.getInstance(name, description, weight, price, amount, special, image, getCategory(categoryId));
-    }
 
-    private Category getCategory(Long categoryId) throws DBException {
-        CategoryDao categoryDao = new CategoryDaoImpl();
-        return categoryDao.findById(categoryId);
+        CategoryDao categoryDao = new CategoryDaoImpl();//todo is it normal to use CategoryDao in that situation?
+        Category category = categoryDao.findById(categoryId);
+
+        return Dish.getInstance(id, name, description, weight, price, amount, special, image, category);
     }
 
     enum DishSql {

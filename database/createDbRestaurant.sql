@@ -21,20 +21,11 @@ DROP TABLE IF EXISTS `restaurant`.`category` ;
 
 CREATE TABLE IF NOT EXISTS `restaurant`.`category` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
+  `name` VARCHAR(16) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `idx_category_name` (`name` ASC));
+  INDEX `idx_category_name` (`name` ASC),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC));
 
-
--- -----------------------------------------------------
--- Table `restaurant`.`menu`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `restaurant`.`menu` ;
-
-CREATE TABLE IF NOT EXISTS `restaurant`.`menu` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `date` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`));
 
 
 -- -----------------------------------------------------
@@ -56,6 +47,7 @@ CREATE TABLE IF NOT EXISTS `restaurant`.`dish` (
   FULLTEXT INDEX `idx_dish_name` (`name`),
   INDEX `idx_dish_price` (`price` ASC, `name` ASC),
   INDEX `fk_dish_category_idx` (`category_id` ASC),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC),
   CONSTRAINT `fk_dish_category`
     FOREIGN KEY (`category_id`)
     REFERENCES `restaurant`.`category` (`id`)
@@ -70,8 +62,9 @@ DROP TABLE IF EXISTS `restaurant`.`booking_status` ;
 
 CREATE TABLE IF NOT EXISTS `restaurant`.`booking_status` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id`));
+  `name` VARCHAR(16) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC));
 
 
 -- -----------------------------------------------------
@@ -82,7 +75,8 @@ DROP TABLE IF EXISTS `restaurant`.`role` ;
 CREATE TABLE IF NOT EXISTS `restaurant`.`role` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(16) NOT NULL,
-  PRIMARY KEY (`id`));
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC));
 
 
 -- -----------------------------------------------------

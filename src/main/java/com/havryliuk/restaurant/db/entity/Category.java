@@ -9,9 +9,19 @@ public class Category implements Entity {
         category.setName(name);
         return category;
     }
+    public static Category getInstance(long id, String name) {
+        Category category = getInstance(name);
+        category.setId(id);
+        return category;
+    }
+
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {

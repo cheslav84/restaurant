@@ -24,6 +24,10 @@ public class Booking implements Entity{
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
@@ -58,6 +62,10 @@ public class Booking implements Entity{
 
     public Date getCreationDate() {
         return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
 
     public Date getCloseDate() {

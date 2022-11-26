@@ -24,9 +24,10 @@ public class Dish implements Entity {
         return dish;
     }
 
-    public static Dish getInstance(String name, String description, int weight, BigDecimal price,
+    public static Dish getInstance(long id, String name, String description, int weight, BigDecimal price,
                                    int amount, boolean special, String image, Category category) {
         Dish dish = getInstance(name, price, amount);
+        dish.setId(id);
         dish.setDescription(description);
         dish.setWeight(weight);
         dish.setSpecial(special);
@@ -37,6 +38,10 @@ public class Dish implements Entity {
 
     public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {
