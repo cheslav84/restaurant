@@ -21,17 +21,11 @@ J
 	Questions,9\a\9a1fc1731f624d1f9dbca42b781ff8a60a6594e1
 n
 >src/main/java/com/havryliuk/restaurant/db/dao/CategoryDao.java,2\b\2bd9260474dfa12122835f9d7480e5d551faa487
-
-Qsrc/main/java/com/havryliuk/restaurant/db/dao/implemetnation/CategoryDaoImpl.java,d\3\d3f33cf4979fba3416ad4c8bc07eaef8d018e461
 
 Osrc/main/java/com/havryliuk/restaurant/db/dao/databaseFieds/CategoryFields.java,5\c\5cb22ff539ab3c217e206d78ea6d7f4487020ad5
 {
 Ksrc/main/java/com/havryliuk/restaurant/db/connection/ConnectionManager.java,9\c\9c6b1fa1365fe0f4bf01cfb2c3289e0628117a34
-e
-5src/main/java/com/havryliuk/restaurant/Constants.java,6\c\6c6cdc17b288f3175c9f851e648dfc49adacbca3
 j
 :src/main/java/com/havryliuk/restaurant/db/entity/Dish.java,8\4\84b9c63fecdb35f91b9d3c5a93c297fdc2e5cef7
 {
 Ksrc/main/java/com/havryliuk/restaurant/db/dao/databaseFieds/DishFields.java,f\7\f7b4f544cd3bc00c299718d95320147516c503f6
-‚
-Rsrc/main/java/com/havryliuk/restaurant/db/connection/RestaurantConnectionPool.java,9\4\945fdda8eb9f2aeea82a3700c9f971f01b4e16bb

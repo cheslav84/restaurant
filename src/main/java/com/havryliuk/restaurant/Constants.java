@@ -2,8 +2,8 @@ package com.havryliuk.restaurant;
 
 public class Constants {
 	
-	public static final String APP_PROPERTIES_FILE = "app.properties";
-	public static final String DB_FIELDS_SETTING_FILE = "database_fields.properties";
+	public static final String APP_PROPERTIES_FILE = "src\\main\\resources\\app.properties";
+	public static final String DB_FIELDS_SETTING_FILE = "src\\main\\resources\\database_fields.properties";
 
 
 	public static final String DATABASE_URL = "database.url";

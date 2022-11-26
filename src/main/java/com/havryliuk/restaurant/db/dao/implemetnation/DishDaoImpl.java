@@ -38,9 +38,9 @@ public class DishDaoImpl implements DishDao {
                     dish = mapDish(rs);
                 }
             }
-            log.info("The  " + dish.getName() + " dish received from DB.");
+            log.info("The \"" + name + "\" dish received from database.");
         } catch (SQLException e) {
-            log.error("Error in getting dish " + name, e);
+            log.error("Error in getting dish \"" + name +  "\" from database. ", e);
             throw new DBException(e);
         } finally {
             connectionPool.releaseConnection(con);

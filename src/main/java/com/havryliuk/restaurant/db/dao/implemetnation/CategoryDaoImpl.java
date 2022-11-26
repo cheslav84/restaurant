@@ -37,9 +37,9 @@ public class CategoryDaoImpl implements CategoryDao {
                     category = mapCategory(rs);
                 }
             }
-            log.info("The  " + category + " team received from DB.");
+            log.info("The \"" + category + "\" category received from database.");
         } catch (SQLException e) {
-            log.error("Error in getting team " + name, e);
+            log.error("Error in getting category \"" + name + "\" from database.", e);
             throw new DBException(e);
         } finally {
             connectionPool.releaseConnection(con);
@@ -58,9 +58,9 @@ public class CategoryDaoImpl implements CategoryDao {
                     category = mapCategory(rs);
                 }
             }
-            log.info("The  " + category + " category received from DB.");
+            log.info("The category with id \"" + id + "\" received from database.");
         } catch (SQLException e) {
-            log.error("Error in getting category with id " + id, e);
+            log.error("Error in getting category with id \"" + id + "\" from database.", e);
             throw new DBException(e);
         } finally {
             connectionPool.releaseConnection(con);
@@ -68,11 +68,9 @@ public class CategoryDaoImpl implements CategoryDao {
         return category;
     }
 
-
-
     @Override
     public boolean create(Category entity) {
-        return false;
+        return false;//todo
     }
 
     @Override
