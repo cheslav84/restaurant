@@ -1,0 +1,69 @@
+.menu-item-image-box {
+    width: 100%;
+    height: 150px;
+    background-size: contain;
+
+    /* border: 3px solid red; */
+}
+
+.menu-item-image {
+    max-width: 100%;
+    max-height: 150px;
+    display: block;
+    margin: 0 auto;
+}
+
+.menu-item-amount {
+    position: absolute;
+    top: 3px;
+    right: 24px;
+    display: inline-block;
+    margin-top: 9px;
+    padding-right: 9px;
+    padding-left: 9px;
+    float: none;
+    border-radius: 3px;
+    background-color: #e88f2a;
+    font-family: 'Open Sans', sans-serif;
+    color: #fff;
+    line-height: 24px;
+    font-weight: 700;
+  }
+
+  .booking-select-container {
+  position: absolute;
+  /* top: 3px; */
+  /* right: 24px; */
+  /* display: inline-block; */
+  /* margin-top: 9px;
+  padding-right: 9px;
+  padding-left: 9px; */
+  float: none;
+  border-radius: 3px;
+  background-color: #e88f2a;
+  font-family: 'Open Sans', sans-serif;
+  color: #fff;
+  line-height: 24px;
+  font-weight: 700;
+}
+
+.booking-checkbox-container {
+    display: inline-flex;
+}
+
+.booking-list-label {
+    display: inline-flex;
+    font-weight: inherit;
+    margin-top: 5px;
+}
+
+.w-select.booking-list {
+    display: inline-flex;
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    margin-top: -8px;
+  }
+

@@ -3,12 +3,11 @@ package com.havryliuk.restaurant.db.dao.implemetnation;
 import com.havryliuk.restaurant.db.connection.ConnectionPool;
 import com.havryliuk.restaurant.db.connection.RestaurantConnectionPool;
 import com.havryliuk.restaurant.db.dao.CategoryDao;
-import com.havryliuk.restaurant.db.dao.databaseFieds.DishFields;
-import com.havryliuk.restaurant.exceptions.DBException;
-import com.havryliuk.restaurant.exceptions.DaoException;
 import com.havryliuk.restaurant.db.dao.DishDao;
+import com.havryliuk.restaurant.db.dao.databaseFieds.DishFields;
 import com.havryliuk.restaurant.db.entity.Category;
 import com.havryliuk.restaurant.db.entity.Dish;
+import com.havryliuk.restaurant.exceptions.DBException;
 import org.apache.log4j.Logger;
 
 import java.math.BigDecimal;

@@ -83,20 +83,30 @@ public class RestaurantConnectionPool implements ConnectionPool {
     @Override
     public Connection getConnection() throws DBException {//todo maybe throw another type of Exception?
         addConnectionIfPoolIsEmpty();
-        Connection connection = connectionPool.remove(connectionPool.size() - 1);
-        connection = createNewIfCurrentNotValid(connection);
-        usedConnections.add(connection);
+        Connection connection;
+        synchronized (RestaurantConnectionPool.class) {
+            connection= connectionPool.remove(connectionPool.size() - 1);
+            connection = createNewIfCurrentNotValid(connection);
+            usedConnections.add(connection);
+        }
         return connection;
     }
 
 
     @Override
     public void shutdown() throws DBException {
-//        usedConnections.forEach(this::releaseConnection);//todo UnsupportedOperationException
+//        usedConnections.forEach(this::releaseConnection);
 
-        for (Connection connection : usedConnections) {//todo UnsupportedOperationException
+//        for (Connection connection : usedConnections) {//todo ConcurrentModificationException
+//            releaseConnection(connection);
+//        }
+
+        for (int i = 0; i < usedConnections.size(); i++) {
+            Connection connection = usedConnections.get(i);
             releaseConnection(connection);
         }
+
+
         for (Connection c : connectionPool) {
             try {
                 c.close();
@@ -109,9 +119,11 @@ public class RestaurantConnectionPool implements ConnectionPool {
 
     @Override
     public boolean releaseConnection(Connection connection) {//todo while Exception occurs in giving Connection, it's possible to get null in finally blocks.
-        if (connection != null) {                           // todo is it correct to check for null here?
-            connectionPool.add(connection);
-            return usedConnections.remove(connection);
+        synchronized (RestaurantConnectionPool.class) {
+            if (connection != null) {                           // todo is it correct to check for null here?
+                connectionPool.add(connection);
+                return usedConnections.remove(connection);
+            }
         }
         return false;
     }

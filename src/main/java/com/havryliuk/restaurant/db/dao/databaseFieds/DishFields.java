@@ -1,11 +1,9 @@
 package com.havryliuk.restaurant.db.dao.databaseFieds;
 
 import com.havryliuk.restaurant.Constants;
-import com.havryliuk.restaurant.exceptions.DBException;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.Properties;
 
 public class DishFields {
