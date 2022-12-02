@@ -77,8 +77,8 @@ INSERT INTO role (name) VALUE ('Client');
 -- -----------------------------------------------------
 -- `USER`
 -- -----------------------------------------------------
-INSERT INTO user (email, password, name, surname, role_id) 
-VALUES ('v_cheslav@ukr.net', 'pass!@#123', 'Вячеслав', 'Гаврилюк', '1');
+INSERT INTO user (email, password, name, surname, gender, age, role_id) 
+VALUES ('v_cheslav@ukr.net', 'pass!@#123', 'Вячеслав', 'Гаврилюк', 'male', '38', '1');
 
 
 -- -----------------------------------------------------
@@ -92,11 +92,17 @@ INSERT INTO booking_status (name) VALUE ('completed');
 
 
 
- SELECT * FROM category order by id
--- SELECT * FROM dish order by id
--- SELECT * FROM role order by id
--- SELECT * FROM user order by id
+-- SELECT * FROM category ORDER BY id
+-- SELECT * FROM dish ORDER BY id
+-- SELECT * FROM role ORDER BY id
+-- SELECT * FROM user ORDER BY id
 -- SELECT * FROM booking_status order by id
+ -- SELECT * FROM dish d JOIN category c ORDER BY c.name
+SELECT d.*, c.name as 'category_name' FROM dish d JOIN category c ON c.name='coffee'
+
+
+ 
+
 
 
 

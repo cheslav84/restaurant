@@ -22,6 +22,7 @@ public class CategoryFields {
             properties.load(fileReader);
         } catch (IOException e) {
             e.printStackTrace(); //todo log
+            // throw new IOException(e); //todo thhrow unchecked Exception and render 500 on browser?
         }
     }
 

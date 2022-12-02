@@ -25,10 +25,7 @@ public class RestaurantConnectionPool implements ConnectionPool {
     private static int maxTimeout;
     private static final Properties properties = new Properties();
 
-    private static volatile RestaurantConnectionPool instance;//todo it's not primitive type. Ask???
-
-
-
+    private static volatile RestaurantConnectionPool instance;
 
     private final List<Connection> connectionPool;
     private final List<Connection> usedConnections = new ArrayList<>();

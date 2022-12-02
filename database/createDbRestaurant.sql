@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `restaurant`.`user` (
   `name` VARCHAR(24) NOT NULL,
   `surname` VARCHAR(24) NOT NULL,
   `gender` VARCHAR(8) NOT NULL,
-  `age` INT NOT NULL,
+  `age` INT UNSIGNED NOT NULL,
   `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   `role_id` INT NOT NULL,
   PRIMARY KEY (`id`),

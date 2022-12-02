@@ -2,7 +2,7 @@ package com.havryliuk.restaurant.db.entity;
 
 import java.math.BigDecimal;
 
-public class Dish implements Entity {
+public class Dish implements Entity {//todo implements Serializable (to save Objects in session)
     private long id;
     private String name;
     private String description;
@@ -131,7 +131,7 @@ public class Dish implements Entity {
     }
 
     @Override
-    public String toString() {
+    public String toString() {//todo represent like jsp?
         return "Dish{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +

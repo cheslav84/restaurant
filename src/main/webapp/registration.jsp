@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
 <!DOCTYPE html>
 <html>
 
@@ -9,8 +11,8 @@
         name="description">
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <meta content="Webflow" name="generator">
-    <link href="WEB-INF/css/common.css" rel="stylesheet" type="text/css">
-    <link href="WEB-INF/css/registration.css" rel="stylesheet" type="text/css">
+    <link href="css/common.css" rel="stylesheet" type="text/css">
+    <link href="css/registration.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>

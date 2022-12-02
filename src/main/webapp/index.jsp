@@ -1,7 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+
+<%@ page import="com*"%>   
+
+
 
     <!DOCTYPE html>
     <html>
+  
+   
+
     <!--        data-wf-domain="easy-times.webflow.io" data-wf-page="559f85c38bde14cf4b3723d0"-->
     <!--      data-wf-site="559f85c38bde14cf4b3723cf"-->
     <!--      class="w-mod-js wf-merriweather-n3-active wf-merriweather-i3-active wf-merriweather-n4-active wf-merriweather-i4-active wf-merriweather-n7-active wf-merriweather-i7-active wf-merriweather-n9-active wf-merriweather-i9-active wf-oswald-n2-active wf-oswald-n3-active wf-oswald-n4-active wf-oswald-n5-active wf-oswald-n6-active wf-oswald-n7-active wf-lato-n1-active wf-lato-i1-active wf-lato-n3-active wf-lato-i3-active wf-lato-n4-active wf-lato-i4-active wf-lato-n7-active wf-lato-i7-active wf-lato-n9-active wf-lato-i9-active wf-droidsans-n4-active wf-droidsans-n7-active wf-opensans-n3-active wf-opensans-i3-active wf-opensans-n4-active wf-opensans-i4-active wf-opensans-n6-active wf-opensans-i6-active wf-opensans-n7-active wf-opensans-i7-active wf-opensans-n8-active wf-opensans-i8-active wf-satisfy-n4-active wf-reeniebeanie-n4-active wf-active"-->
@@ -16,10 +24,14 @@
         <meta content="width=device-width, initial-scale=1" name="viewport">
         <meta content="Webflow" name="generator">
 
+        <!-- <link href="../java/com/havryliuk/restaurant/db/entity/Dish" rel="stylesheet" type="text/css"> -->
+
+        <!-- <link href="../../../target/classes/com/havryliuk/restaurant/db/entity/Dish.class" rel="stylesheet" type="text/css"> -->
+
         <link href="css/common.css" rel="stylesheet" type="text/css">
         <link href="css/menu.css" rel="stylesheet" type="text/css">
 
-        <!-- <script src="./index/webfont.js" type="text/javascript"></script>
+        <!-- <script src="./index/webfont.js" type="text/javascript"></script>  
        <link rel="stylesheet" href="./index/css" media="all">
        <script type="text/javascript">
             WebFont.load({  google: {    families: ["Merriweather:300,300italic,400,400italic,700,700italic,900,900italic","Oswald:200,300,400,500,600,700","Lato:100,100italic,300,300italic,400,400italic,700,700italic,900,900italic","Droid Sans:400,700","Open Sans:300,300italic,400,400italic,600,600italic,700,700italic,800,800italic","Satisfy:regular","Reenie Beanie:regular"]  }});
@@ -30,10 +42,6 @@
         <!--    <![endif]&ndash;&gt;-->
         <!--    <script type="text/javascript">-->
         <!--        !function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart"in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);-->
-
-
-
-
         <!--    </script>-->
         <!--    <link href="https://assets.website-files.com/559f85c38bde14cf4b3723cf/55d833f553965dde61577bdd_Favicon.png"-->
         <!--          rel="shortcut icon" type="image/x-icon">-->
@@ -91,7 +99,7 @@
                                 &amp;&nbsp;Restaurant
                             </div>
                             <div class="hero-slide-title">Welcome!</div>
-                            <div data-ix="slider-title-3" class="hero-slide-title subtitle">The best coffee in London
+                            <div data-ix="slider-title-3" class="hero-slide-title subtitle">The best coffee in Kyiv
                             </div>
                             <a href="#about-us" data-ix="slider-button-1" class="button slider-button">More about us</a>
                             <a href="reservation.html" data-ix="slider-button-2" class="button">Reserve a table!</a>
@@ -121,7 +129,7 @@
                                 &amp;&nbsp;Restaurant
                             </div>
                             <div data-ix="slider-title-2" class="hero-slide-title">Cappuccino</div>
-                            <div data-ix="slider-title-3" class="hero-slide-title subtitle">The best coffee in London
+                            <div data-ix="slider-title-3" class="hero-slide-title subtitle">The best coffee in Kyiv
                             </div>
                             <a href="#about-us" data-ix="slider-button-1" class="button slider-button">More about us</a>
                             <a href="reservation.html" data-ix="slider-button-2" class="button">Reserve a table!</a>
@@ -200,77 +208,40 @@
                             </a>
                         </div>
                         <div class="w-tab-content">
+
+
+<%
+
+ // Dish d = request.getAttribute("coffeeMenu");
+
+    // List<Dish> coffees = (List<Dish>) request.getAttribute("coffeeMenu");
+    //    for(Dish s :coffees){
+    //         out.print(s);
+    //    }
+%>
+
+
+
                             <div data-w-tab="Coffee" class="menu-tab-pane w-tab-pane w--tab-active">
                                 <div class="menu-white-wrapper w-dyn-list">
                                     <div role="list" class="w-clearfix w-dyn-items w-row">
                                         <div role="listitem" class="menu-list-item w-dyn-item w-col w-col-6">
-
-                                            <!-- <div style="background-image: url('pictures/common/example-bg.png');"
+                                            <div style="background-image: url('pictures/dish_pictures/brew-coffee.webp');"
                                                 class="menu-item-image-box">
-                                            </div> -->
-
-                                            <!-- <div class="menu-item-image-box style="background-image: url('pictures/common/example-bg.png');"> -->
-                                            <!-- <img src="pictures/common/example-bg.png" alt=""
-                                                        class="menu-item-image"> -->
-
-
+                                            </div>
+                                            <div class="menu-item-text">
+                                                <div class="menu-item-title">Single Cup Brew</div>
+                                                <div class="menu-item-title description">Lorem ipsum dolor sit amet
+                                                    consectetur adipiscing.
+                                                </div>
+                                            </div>
                                             <div class="menu-item-price">6.50
                                                 <span class="price-marker">₴</span>
                                             </div>
-
-                                            <div class="menu-item-amount">230
-                                                <span class="price-marker">pieces left</span>
-                                            </div>
-<!-- 
-                                            <div class="booking-select-container">
-                                                <span class="price-marker">Order</span>
-                                                    <select id="booking-amount" name="bookingAmount" data-name="Booking amount"
-                                                        class="field first-half w-select">
-                                                        <option value="1">1</option>
-                                                        <option value="2">2</option>
-                                                        <option value="3">3</option>
-                                                    </select>
-                                                    <span class="price-marker">piese</span>
-                                            </div> -->
-
-
-
-                                            <!-- <div class="booking-checkbox-container">
-                                                <label for="booking-list" class="booking-list-label">Order
-                                                    now</label>
-                                                <input type="checkbox" id="booking-list" name="bookingList"
-                                                    data-name="Booking list" class="booking-list">
-                                                </input>
-                                            </div> -->
-
-
-
-
-                                            <div class="menu-item-title">Single Cup Brew</div>
-                                            <div class="menu-item-title description">Lorem ipsum dolor sit amet
-                                                consectetur adipiscing.
-                                            </div>
-
-
-
-
-
-
-
+                                            <a href="" class="order-icon-container">
+                                                <img src="pictures/icons/Icon-basket.png" alt="" class="order-icon-img">
+                                            </a>
                                         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

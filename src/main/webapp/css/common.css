@@ -2734,8 +2734,8 @@ li {
 
 .menu-item-price {
   position: absolute;
-  top: 3px;
-  left: 7px;
+  top: -2px;
+  right: 24px;
   display: inline-block;
   margin-top: 9px;
   padding-right: 9px;
@@ -3817,6 +3817,10 @@ li {
     font-size: 13px;
   }
 
+  .order-icon-container {
+    right: 24px !important;
+  }
+
   .intro-title {
     margin-bottom: 10px;
     font-size: 22px;
@@ -4148,6 +4152,7 @@ li {
   .menu-list-item {
     padding-right: 57px;
     padding-left: 0px;
+    min-height: 72px;
   }
 
   .menu-item-title {
@@ -4161,6 +4166,10 @@ li {
 
   .menu-item-price {
     right: 0px;
+  }
+
+  .order-icon-container {
+    right: 13px !important;
   }
 
   .hero-slide-container {
@@ -4583,6 +4592,10 @@ li {
     margin-bottom: 7px;
     padding-bottom: 7px;
   }
+
+  .order-icon-container {
+    right: 13px !important;
+}
 
   .hero-slide-container {
     top: 60%;

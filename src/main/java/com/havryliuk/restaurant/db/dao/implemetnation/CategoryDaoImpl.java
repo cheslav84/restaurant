@@ -24,14 +24,14 @@ public class CategoryDaoImpl implements CategoryDao {
     public Category findByName(String name) throws DBException {
         Category category = null;
         Connection con = connectionPool.getConnection();//todo запитати чи потрібно connection в блок try-catch?
-        try (PreparedStatement stmt = con.prepareStatement(CategorySql.FIND_CATEGORY_BY_NAME.QUERY)) {
+        try (PreparedStatement stmt = con.prepareStatement(CategorySql.FIND_CATEGORY_BY_NAME.query)) {
             stmt.setString(1, name);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     category = mapCategory(rs);
                 }
             }
-            log.info("The \"" + category + "\" category received from database.");
+            log.debug("The \"" + category + "\" category received from database.");
         } catch (SQLException e) {
             log.error("Error in getting category \"" + name + "\" from database.", e);
             throw new DBException(e);
@@ -45,14 +45,14 @@ public class CategoryDaoImpl implements CategoryDao {
     public Category findById(Long id) throws DBException {
         Category category = null;
         Connection con = connectionPool.getConnection();
-        try (PreparedStatement stmt = con.prepareStatement(CategorySql.FIND_CATEGORY_BY_ID.QUERY)) {
+        try (PreparedStatement stmt = con.prepareStatement(CategorySql.FIND_CATEGORY_BY_ID.query)) {
             stmt.setLong(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     category = mapCategory(rs);
                 }
             }
-            log.info("The category with id \"" + id + "\" received from database.");
+            log.debug("The category with id \"" + id + "\" received from database.");
         } catch (SQLException e) {
             log.error("Error in getting category with id \"" + id + "\" from database.", e);
             throw new DBException(e);
@@ -67,7 +67,7 @@ public class CategoryDaoImpl implements CategoryDao {
         Connection con = connectionPool.getConnection();
         try  {
             addCategory(category, con);
-            log.info("The \"" + category.getName() + "\" category has been added to database.");
+            log.debug("The \"" + category.getName() + "\" category has been added to database.");
         } catch (SQLException e) {
             log.error("Error in inserting category \"" + category.getName() + "\" to database.", e);
             throw new DBException(e);
@@ -79,7 +79,7 @@ public class CategoryDaoImpl implements CategoryDao {
     }
 
     private void addCategory(Category category, Connection con) throws SQLException {
-        try (PreparedStatement stmt = con.prepareStatement(CategorySql.ADD_CATEGORY.QUERY,
+        try (PreparedStatement stmt = con.prepareStatement(CategorySql.ADD_CATEGORY.query,
                 Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, category.getName());
             int insertionAmount = stmt.executeUpdate();
@@ -97,14 +97,14 @@ public class CategoryDaoImpl implements CategoryDao {
     public List<Category> findAll() throws DBException {
         List<Category> categories = new ArrayList<>();
         Connection con = connectionPool.getConnection();
-         try (PreparedStatement stmt = con.prepareStatement(CategorySql.FIND_ALL_CATEGORIES.QUERY);
-             ResultSet rs = stmt.executeQuery()) {
+         try (PreparedStatement stmt = con.prepareStatement(CategorySql.FIND_ALL_CATEGORIES.query);
+              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 categories.add(mapCategory(rs));
             }
-            log.info("List of categories have been received from database.");
+            log.debug("List of categories have been received from database.");
         } catch (SQLException e) {
-            log.error("Error in getting list of categories from database.", e);
+            log.debug("Error in getting list of categories from database.", e);
             throw new DBException(e);
         } finally {
             connectionPool.releaseConnection(con);
@@ -115,11 +115,11 @@ public class CategoryDaoImpl implements CategoryDao {
     @Override
     public boolean update(Category category) throws DBException {
         Connection con = connectionPool.getConnection();
-        try (PreparedStatement stmt = con.prepareStatement(CategorySql.UPDATE_CATEGORY.QUERY)) {
+        try (PreparedStatement stmt = con.prepareStatement(CategorySql.UPDATE_CATEGORY.query)) {
             stmt.setString(1, category.getName());
             stmt.setLong(2, category.getId());
             stmt.executeUpdate();
-            log.info("The category with id \"" + category.getId() +
+            log.debug("The category with id \"" + category.getId() +
                     "\", has been successfully updated, category name set to \"" + category.getName() + "\".");
         } catch (SQLException e) {
             log.error("The category with id \"" + category.getId() +
@@ -132,10 +132,10 @@ public class CategoryDaoImpl implements CategoryDao {
     @Override
     public boolean delete(Category category) throws DBException {
         Connection con = connectionPool.getConnection();
-        try (PreparedStatement stmt = con.prepareStatement(CategorySql.DELETE_CATEGORY_BY_NAME.QUERY)) {
+        try (PreparedStatement stmt = con.prepareStatement(CategorySql.DELETE_CATEGORY_BY_NAME.query)) {
             stmt.setString(1, category.getName());
             stmt.executeUpdate();
-            log.info("The category \"" + category.getName() + "\", has been successfully deleted.");
+            log.debug("The category \"" + category.getName() + "\", has been successfully deleted.");
         } catch (SQLException e) {
             log.error("The category \"" + category.getName() + "\", has not been deleted.", e);
             throw new DBException(e);
@@ -146,10 +146,10 @@ public class CategoryDaoImpl implements CategoryDao {
     @Override
     public boolean delete(Long id) throws DBException {
         Connection con = connectionPool.getConnection();
-        try (PreparedStatement stmt = con.prepareStatement(CategorySql.DELETE_CATEGORY_BY_ID.QUERY)) {
+        try (PreparedStatement stmt = con.prepareStatement(CategorySql.DELETE_CATEGORY_BY_ID.query)) {
             stmt.setLong(1, id);
             stmt.executeUpdate();
-            log.info("The category with id \"" + id + "\", has been successfully deleted");
+            log.debug("The category with id \"" + id + "\", has been successfully deleted");
         } catch (SQLException e) {
             log.error("The category with id \"" + id + "\", has not been deleted.", e);
             throw new DBException(e);
@@ -172,10 +172,10 @@ public class CategoryDaoImpl implements CategoryDao {
         DELETE_CATEGORY_BY_NAME("DELETE FROM category WHERE name=?"),
         DELETE_CATEGORY_BY_ID("DELETE FROM category WHERE id=?");
 
-        String QUERY;
+        private final String query;
 
         CategorySql(String QUERY) {
-            this.QUERY = QUERY;
+            this.query = QUERY;
         }
     }
 }
