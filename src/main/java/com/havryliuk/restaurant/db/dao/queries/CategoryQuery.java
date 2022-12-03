@@ -2,11 +2,13 @@ package com.havryliuk.restaurant.db.dao.queries;
 
 import com.havryliuk.restaurant.Constants;
 import com.havryliuk.restaurant.utils.PropertiesLoader;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.Properties;
 
 public class CategoryQuery {
-    static Logger log = Logger.getLogger(CategoryQuery.class.getName());
+    private static final Logger log = LogManager.getLogger(CategoryQuery.class);
     private static final Properties properties;
     public static String ADD_CATEGORY;
     public static String FIND_CATEGORY_BY_ID;

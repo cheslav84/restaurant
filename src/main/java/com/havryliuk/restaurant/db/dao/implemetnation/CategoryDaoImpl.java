@@ -6,14 +6,15 @@ import com.havryliuk.restaurant.db.dao.CategoryDao;
 import com.havryliuk.restaurant.db.dao.databaseFieds.CategoryFields;
 import com.havryliuk.restaurant.db.entity.Category;
 import com.havryliuk.restaurant.exceptions.DBException;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryDaoImpl implements CategoryDao {
-    static Logger log = Logger.getLogger(CategoryDaoImpl.class.getName());
+    private static final Logger log = LogManager.getLogger(CategoryDaoImpl.class);
     private static ConnectionPool connectionPool;
 
     public CategoryDaoImpl() throws DBException {

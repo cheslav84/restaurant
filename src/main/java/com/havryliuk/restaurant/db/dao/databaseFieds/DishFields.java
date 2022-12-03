@@ -1,13 +1,15 @@
 package com.havryliuk.restaurant.db.dao.databaseFieds;
 
 import com.havryliuk.restaurant.Constants;
-import com.havryliuk.restaurant.db.dao.implemetnation.DishDaoImpl;
 import com.havryliuk.restaurant.utils.PropertiesLoader;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.Properties;
 
 public class DishFields {
-    static Logger log = Logger.getLogger(DishDaoImpl.class.getName());
+    private static final Logger log = LogManager.getLogger(DishFields.class);
+
     private static final Properties properties;
     public static String DISH_ID;
     public static String DISH_NAME;

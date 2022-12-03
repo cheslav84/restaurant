@@ -1,14 +1,16 @@
 package com.havryliuk.restaurant.db.dao.databaseFieds;
 
 import com.havryliuk.restaurant.Constants;
+import com.havryliuk.restaurant.db.dao.implemetnation.DishDaoImpl;
 import com.havryliuk.restaurant.db.dao.queries.CategoryQuery;
 import com.havryliuk.restaurant.utils.PropertiesLoader;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Properties;
 
 public class CategoryFields {
-    static Logger log = Logger.getLogger(CategoryFields.class.getName());
+    private static final Logger log = LogManager.getLogger(CategoryFields.class);
 
     private static final Properties properties;
 

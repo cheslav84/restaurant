@@ -10,7 +10,8 @@ import com.havryliuk.restaurant.db.dao.queries.DishQuery;
 import com.havryliuk.restaurant.db.entity.Category;
 import com.havryliuk.restaurant.db.entity.Dish;
 import com.havryliuk.restaurant.exceptions.DBException;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DishDaoImpl implements DishDao {
-    static Logger log = Logger.getLogger(DishDaoImpl.class.getName());
+    private static final Logger log = LogManager.getLogger(DishDaoImpl.class);
     private static ConnectionPool connectionPool;
 
     public DishDaoImpl () throws DBException {

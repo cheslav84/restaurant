@@ -19,9 +19,10 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.List;
 
 
-    //todo read about PRG pattern
+//todo read about PRG pattern
 
     @WebServlet("/")
     public class MenuController extends HttpServlet {
@@ -46,14 +47,15 @@ import java.sql.Connection;
 
 
 
-//            DishDao dishDao = null;
-//            List<Dish> dishes = null;
-//            try {
-//                dishDao = new DishDaoImpl();
-//                dishes = dishDao.findByCategory(Category.getInstance("Coffee"));
-//            } catch (DBException e) {
-//                e.printStackTrace();
-//            }
+            DishDao dishDao = null;
+            List<Dish> dishes = null;
+            try {
+                dishDao = new DishDaoImpl();
+                dishes = dishDao.findByCategory(Category.getInstance("Coffee"));
+//                System.out.println(dishes);
+            } catch (DBException e) {
+                e.printStackTrace();
+            }
 
             req.setAttribute("dishes", "dishes");
 
