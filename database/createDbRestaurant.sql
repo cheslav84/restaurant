@@ -21,10 +21,11 @@ DROP TABLE IF EXISTS `restaurant`.`category` ;
 
 CREATE TABLE IF NOT EXISTS `restaurant`.`category` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(16) NOT NULL,
+  `category_name` VARCHAR(16) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `idx_category_name` (`name` ASC),
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC));
+  INDEX `idx_category_name` (`category_name` ASC),
+  UNIQUE INDEX `name_UNIQUE` (`category_name` ASC));
+
 
 
 
@@ -35,7 +36,7 @@ DROP TABLE IF EXISTS `restaurant`.`dish` ;
 
 CREATE TABLE IF NOT EXISTS `restaurant`.`dish` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
+  `dish_name` VARCHAR(45) NOT NULL,
   `description` VARCHAR(255) NOT NULL,
   `weight` INT UNSIGNED NULL,
   `price` DECIMAL(9,2) UNSIGNED NOT NULL,
@@ -44,10 +45,10 @@ CREATE TABLE IF NOT EXISTS `restaurant`.`dish` (
   `image` VARCHAR(45) NULL,
   `category_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  FULLTEXT INDEX `idx_dish_name` (`name`),
-  INDEX `idx_dish_price` (`price` ASC, `name` ASC),
+  FULLTEXT INDEX `idx_dish_name` (`dish_name`),
+  INDEX `idx_dish_price` (`price` ASC, `dish_name` ASC),
   INDEX `fk_dish_category_idx` (`category_id` ASC),
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC),
+  UNIQUE INDEX `name_UNIQUE` (`dish_name` ASC),
   CONSTRAINT `fk_dish_category`
     FOREIGN KEY (`category_id`)
     REFERENCES `restaurant`.`category` (`id`)
@@ -62,9 +63,9 @@ DROP TABLE IF EXISTS `restaurant`.`booking_status` ;
 
 CREATE TABLE IF NOT EXISTS `restaurant`.`booking_status` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(16) NOT NULL,
+  `booking_status_name` VARCHAR(16) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC));
+  UNIQUE INDEX `name_UNIQUE` (`booking_status_name` ASC));
 
 
 -- -----------------------------------------------------
@@ -74,9 +75,9 @@ DROP TABLE IF EXISTS `restaurant`.`role` ;
 
 CREATE TABLE IF NOT EXISTS `restaurant`.`role` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(16) NOT NULL,
+  `role_name` VARCHAR(16) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC));
+  UNIQUE INDEX `name_UNIQUE` (`role_name` ASC));
 
 
 -- -----------------------------------------------------
@@ -88,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `restaurant`.`user` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `email` VARCHAR(32) NOT NULL,
   `password` VARCHAR(32) NOT NULL,
-  `name` VARCHAR(24) NOT NULL,
+  `user_name` VARCHAR(24) NOT NULL,
   `surname` VARCHAR(24) NOT NULL,
   `gender` VARCHAR(8) NOT NULL,
   `age` INT UNSIGNED NOT NULL,
@@ -111,7 +112,7 @@ DROP TABLE IF EXISTS `restaurant`.`booking` ;
 
 CREATE TABLE IF NOT EXISTS `restaurant`.`booking` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
+  `booking_name` VARCHAR(45) NOT NULL,
   `address` VARCHAR(1024) NOT NULL,
   `phone_number` VARCHAR(13) NOT NULL,
   `payment` TINYINT(1) NULL DEFAULT 0,
@@ -120,14 +121,14 @@ CREATE TABLE IF NOT EXISTS `restaurant`.`booking` (
   `status_id` INT NOT NULL,
   `user_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_booking_booking_status_idx` (`status_id` ASC),
-  INDEX `fk_booking_user1_idx` (`user_id` ASC),
-  CONSTRAINT `fk_booking_booking_status`
+  INDEX `fk_commition_booking_status_idx` (`status_id` ASC),
+  INDEX `fk_booking_user_idx` (`user_id` ASC),
+  CONSTRAINT `fk_commition_commition_status`
     FOREIGN KEY (`status_id`)
     REFERENCES `restaurant`.`booking_status` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
-  CONSTRAINT `fk_booking_user`
+  CONSTRAINT `fk_commition_user`
     FOREIGN KEY (`user_id`)
     REFERENCES `restaurant`.`user` (`id`)
     ON DELETE RESTRICT
@@ -145,14 +146,14 @@ CREATE TABLE IF NOT EXISTS `restaurant`.`booking_has_dish` (
   `amount` INT UNSIGNED NOT NULL,
   `price` DECIMAL(9,2) UNSIGNED NOT NULL,
   PRIMARY KEY (`booking_id`, `dish_id`),
-  INDEX `fk_booking_has_dish_dish1_idx` (`dish_id` ASC),
-  INDEX `fk_booking_has_dish_booking1_idx` (`booking_id` ASC),
-  CONSTRAINT `fk_booking_has_dish_booking1`
+  INDEX `fk_commition_has_dish_dish1_idx` (`dish_id` ASC),
+  INDEX `fk_commition_has_dish_commition1_idx` (`booking_id` ASC),
+  CONSTRAINT `fk_commition_has_dish_commition`
     FOREIGN KEY (`booking_id`)
     REFERENCES `restaurant`.`booking` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
-  CONSTRAINT `fk_booking_has_dish_dish1`
+  CONSTRAINT `fk_commition_has_dish_dish`
     FOREIGN KEY (`dish_id`)
     REFERENCES `restaurant`.`dish` (`id`)
     ON DELETE RESTRICT
@@ -168,7 +169,7 @@ CREATE TABLE IF NOT EXISTS `restaurant`.`user_details` (
   `user_id` INT NOT NULL,
   `birthdate` DATE NULL,
   `passport` VARCHAR(16) NULL,
-  `bank_account` VARCHAR(29) NULL,
+  `bank_account` VARCHAR(45) NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE INDEX `passport_UNIQUE` (`passport` ASC),
   UNIQUE INDEX `bank_account_UNIQUE` (`bank_account` ASC),
@@ -178,6 +179,7 @@ CREATE TABLE IF NOT EXISTS `restaurant`.`user_details` (
     ON DELETE RESTRICT
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
+
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

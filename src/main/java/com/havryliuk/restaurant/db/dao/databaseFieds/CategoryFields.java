@@ -1,29 +1,25 @@
 package com.havryliuk.restaurant.db.dao.databaseFieds;
 
 import com.havryliuk.restaurant.Constants;
+import com.havryliuk.restaurant.db.dao.queries.CategoryQuery;
+import com.havryliuk.restaurant.utils.PropertiesLoader;
+import org.apache.log4j.Logger;
 
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.Properties;
 
 public class CategoryFields {
-    private static final Properties properties = new Properties();
+    static Logger log = Logger.getLogger(CategoryFields.class.getName());
+
+    private static final Properties properties;
 
     public static String CATEGORY_ID;
     public static String CATEGORY_NAME;
 
     static {
-        loadProperties();
+        properties = PropertiesLoader.getProperties(Constants.DB_FIELDS_SETTING_FILE);
         initialiseVariable();
-    }
+        log.debug("Database fields for \"Category\" table have been initialised successfully.");
 
-    private static void loadProperties() {
-        try (FileReader fileReader = new FileReader(Constants.DB_FIELDS_SETTING_FILE)) {
-            properties.load(fileReader);
-        } catch (IOException e) {
-            e.printStackTrace(); //todo log
-            // throw new IOException(e); //todo thhrow unchecked Exception and render 500 on browser?
-        }
     }
 
     private static void initialiseVariable() {

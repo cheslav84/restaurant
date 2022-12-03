@@ -2,6 +2,7 @@ package com.havryliuk.restaurant.db.connection;
 
 import com.havryliuk.restaurant.Constants;
 import com.havryliuk.restaurant.exceptions.DBException;
+import com.havryliuk.restaurant.utils.PropertiesLoader;
 import org.apache.log4j.Logger;
 
 import java.io.FileReader;
@@ -15,7 +16,7 @@ import java.util.Properties;
 
 public class RestaurantConnectionPool implements ConnectionPool {
 
-    static Logger log = Logger.getLogger(RestaurantConnectionPool.class.getName());
+    static Logger log = Logger.getLogger(RestaurantConnectionPool.class.getName());// todo add logs for class
 
     private static String url;
     private static String user;
@@ -32,19 +33,46 @@ public class RestaurantConnectionPool implements ConnectionPool {
 
 
     public static RestaurantConnectionPool getInstance() throws DBException {
+//        PropertiesLoader.getProperties(Constants.APP_PROPERTIES_FILE);
         loadProperties();
         initVariables();
         return getRestaurantConnectionPool();
     }
 
+
+
     private static void loadProperties() throws DBException {
-        try(FileReader fileReader = new FileReader(Constants.APP_PROPERTIES_FILE)) {
-            properties.load(fileReader);
-        } catch (IOException e) {
-            log.error("Error in loading properties from " + Constants.APP_PROPERTIES_FILE, e);
-            throw new DBException(e);
-        }
+        properties.setProperty("database.url", "jdbc:mysql://localhost:3306/restaurant");
+        properties.setProperty("database.user", "root");
+        properties.setProperty("database.password", "1111");
+        properties.setProperty("connection_pool.initial_size", "10");
+        properties.setProperty("connection_pool.max_size", "20");
+        properties.setProperty("connection_pool.max_timeout", "30");
+
+
+
+//        try(FileReader fileReader = new FileReader(Constants.APP_PROPERTIES_FILE)) {
+//            properties.load(fileReader);
+//        } catch (IOException e) {
+//            log.error("Error in loading properties from " + Constants.APP_PROPERTIES_FILE, e);
+//            throw new DBException(e);
+//        }
     }
+
+
+
+
+//    private static void loadProperties() throws DBException {
+//        try(FileReader fileReader = new FileReader(Constants.APP_PROPERTIES_FILE)) {
+//            properties.load(fileReader);
+//        } catch (IOException e) {
+//            log.error("Error in loading properties from " + Constants.APP_PROPERTIES_FILE, e);
+//            throw new DBException(e);
+//        }
+//    }
+
+
+
 
     private static void initVariables() {
         url = (String) properties.get(Constants.DATABASE_URL);
@@ -80,8 +108,18 @@ public class RestaurantConnectionPool implements ConnectionPool {
     @Override
     public Connection getConnection() throws DBException {//todo maybe throw another type of Exception?
         addConnectionIfPoolIsEmpty();
+
+
+
         Connection connection;
         synchronized (RestaurantConnectionPool.class) {
+
+
+
+
+
+
+
             connection= connectionPool.remove(connectionPool.size() - 1);
             connection = createNewIfCurrentNotValid(connection);
             usedConnections.add(connection);
@@ -170,6 +208,12 @@ public class RestaurantConnectionPool implements ConnectionPool {
 
     private static Connection createConnection(String url, String user, String password) throws DBException {
         try {
+
+
+
+
+
+
             return DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
             throw new DBException(e);

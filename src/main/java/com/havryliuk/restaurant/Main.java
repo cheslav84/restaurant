@@ -16,6 +16,7 @@ import java.util.List;
 
 public class Main {
 
+//    public List<Dish> main() throws DBException {
     public static void main(String[] args) throws DBException {
 
         long startTime = System.currentTimeMillis();
@@ -25,6 +26,7 @@ public class Main {
         long finishTime = System.currentTimeMillis();
         System.out.println(finishTime - startTime);
 
+//return dishes;
 //        List<Dish> dishes1 = dishDao.findAll();
 //        System.out.println(dishes1);
 
