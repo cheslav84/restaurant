@@ -54,7 +54,8 @@ public class DishDaoImpl implements DishDao {
     public List<Dish> findByCategory(Category category) throws DBException {
         List<Dish> dishes = new ArrayList<>();
         Connection con = connectionPool.getConnection();
-        try (PreparedStatement stmt = con.prepareStatement(DishQuery.FIND_ALL_BY_CATEGORY)) {//todo catch PropertyInitializationException
+
+        try (PreparedStatement stmt = con.prepareStatement(DishQuery.FIND_ALL_BY_CATEGORY)) {
             stmt.setString(1, category.getName());
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
@@ -133,6 +134,20 @@ public class DishDaoImpl implements DishDao {
     }
 
     private Dish mapDish(ResultSet rs) throws SQLException, DBException {//todo може тут відразу джоіном категорю витягувати? Навіщо 2 рази ходити в базу?
+//        long id = rs.getLong(DishFields.DISH_ID);
+//        String name = rs.getString(DishFields.DISH_NAME);
+//        String description = rs.getString(DishFields.DISH_DESCRIPTION);
+//        int weight = rs.getInt(DishFields.DISH_WEIGHT);
+//        BigDecimal price = rs.getBigDecimal(DishFields.DISH_PRICE);
+//        int amount = rs.getInt(DishFields.DISH_AMOUNT);
+//        boolean special = rs.getBoolean(DishFields.DISH_SPECIAL);
+//        String image = rs.getString(DishFields.DISH_IMAGE);
+////        Long categoryId = rs.getLong(DishFields.DISH_CATEGORY_ID);
+//
+//        String categoryName = rs.getString(CategoryFields.CATEGORY_NAME);
+//        Category category = Category.getInstance(categoryName);
+
+
         long id = rs.getLong(DishFields.DISH_ID);
         String name = rs.getString(DishFields.DISH_NAME);
         String description = rs.getString(DishFields.DISH_DESCRIPTION);
@@ -145,6 +160,24 @@ public class DishDaoImpl implements DishDao {
 
         String categoryName = rs.getString(CategoryFields.CATEGORY_NAME);
         Category category = Category.getInstance(categoryName);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //        CategoryDao categoryDao = new CategoryDaoImpl();//todo is it normal to use CategoryDao in that situation?

@@ -30,8 +30,10 @@
                     <div class="w-icon-nav-menu"></div>
                 </div>
                 <nav role="navigation" class="nav-menu w-nav-menu">
-                    <a href="index.jsp" aria-current="page" class="nav-link w-nav-link w--current"
+
+                    <a href="/index" aria-current="page" class="nav-link w-nav-link w--current"
                         style="max-width: 940px;">Home</a>
+                        
                     <a href="menu.html" class="nav-link w-nav-link" style="max-width: 940px;">Menu</a>
                     <a href="reservation.html" class="nav-link w-nav-link" style="max-width: 940px;">Reservation</a>
                     <a href="gallery.html" class="nav-link w-nav-link" style="max-width: 940px;">Gallery</a>
@@ -40,6 +42,8 @@
                     <a href="about-us.html" class="nav-link w-nav-link" style="max-width: 940px;">About us</a>
                     <a href="blog.html" class="nav-link w-nav-link" style="max-width: 940px;">Blog</a>
                     <a href="contact.html" class="nav-link w-nav-link" style="max-width: 940px;">Contact us</a>
+                    <a href="registration.jsp" class="nav-link w-nav-link" style="max-width: 940px;">Registration</a>
+
                 </nav>
                 <div class="menu-divider w-hidden-small w-hidden-tiny"></div>
                 <div class="nav-contact-block w-hidden-small w-hidden-tiny">
@@ -78,6 +82,9 @@
                         <h2 class="section-intro-title subtitle">Log in please</h2>
                         <div class="section-divider-line"></div>
 
+
+
+                        
                         <form id="wf-form-Reservation-Form" name="logInForm" data-name="Log in form">
 
                             <input type="email" id="Email-3" name="email" data-name="Email" placeholder="Email address"

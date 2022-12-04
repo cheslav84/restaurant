@@ -2711,7 +2711,7 @@ li {
   position: relative;
   margin-bottom: 15px;
   padding-right: 90px;
-  padding-bottom: 15px;
+  /* padding-bottom: 15px; */
   border-bottom: 1px dashed rgba(0, 0, 0, 0.2);
   text-align: left;
 }
@@ -3800,7 +3800,7 @@ li {
   .menu-list-item {
     margin-bottom: 10px;
     padding-right: 72px;
-    padding-bottom: 10px;
+    /* padding-bottom: 10px; */
   }
 
   .menu-item-title {
@@ -4590,7 +4590,7 @@ li {
 
   .menu-list-item {
     margin-bottom: 7px;
-    padding-bottom: 7px;
+    /* padding-bottom: 7px; */
   }
 
   .order-icon-container {

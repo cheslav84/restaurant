@@ -1,14 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-
-<!-- <page import="com.havryliuk.restaurant.db.entity.Dish%>    -->
 
 
 
     <!DOCTYPE html>
     <html>
+  
+   
+
+    <!--        data-wf-domain="easy-times.webflow.io" data-wf-page="559f85c38bde14cf4b3723d0"-->
+    <!--      data-wf-site="559f85c38bde14cf4b3723cf"-->
+    <!--      class="w-mod-js wf-merriweather-n3-active wf-merriweather-i3-active wf-merriweather-n4-active wf-merriweather-i4-active wf-merriweather-n7-active wf-merriweather-i7-active wf-merriweather-n9-active wf-merriweather-i9-active wf-oswald-n2-active wf-oswald-n3-active wf-oswald-n4-active wf-oswald-n5-active wf-oswald-n6-active wf-oswald-n7-active wf-lato-n1-active wf-lato-i1-active wf-lato-n3-active wf-lato-i3-active wf-lato-n4-active wf-lato-i4-active wf-lato-n7-active wf-lato-i7-active wf-lato-n9-active wf-lato-i9-active wf-droidsans-n4-active wf-droidsans-n7-active wf-opensans-n3-active wf-opensans-i3-active wf-opensans-n4-active wf-opensans-i4-active wf-opensans-n6-active wf-opensans-i6-active wf-opensans-n7-active wf-opensans-i7-active wf-opensans-n8-active wf-opensans-i8-active wf-satisfy-n4-active wf-reeniebeanie-n4-active wf-active"-->
+
     <head>
-        <!-- <meta content="text/html; charset=UTF-8"> -->
+        <meta content="text/html; charset=UTF-8">
         <!--    http-equiv="Content-Type"-->
         <title>Easy Times</title>
         <meta
@@ -17,13 +23,51 @@
         <meta content="width=device-width, initial-scale=1" name="viewport">
         <meta content="Webflow" name="generator">
 
-        <!-- <link href="../java/com/havryliuk/restaurant/db/entity/Dish" rel="stylesheet" type="text/css"> -->
 
-        <!-- <link href="../../../target/classes/com/havryliuk/restaurant/db/entity/Dish.class" rel="stylesheet" type="text/css"> -->
 
-        <!-- <link href="css/common.css" rel="stylesheet" type="text/css">
-        <link href="css/menu.css" rel="stylesheet" type="text/css"> -->
+
+
+
+        <link href="${pageContext.request.contextPath}common.css" rel="stylesheet" type="text/css">
+
+        
+        <link href="${pageContext.request.contextPath}common.css" rel="stylesheet" type="text/css">
+        <link href="${pageContext.request.contextPath}css/common.css" rel="stylesheet" type="text/css">
+        <link href="${pageContext.request.contextPath}../css/common.css" rel="stylesheet" type="text/css">
+        <link href="${pageContext.request.contextPath}./common.css" rel="stylesheet" type="text/css">
+        <link href="${pageContext.request.contextPath}../../css/common.css" rel="stylesheet" type="text/css">
+
+   
+
+
+
+        <link href="common.css" rel="stylesheet" type="text/css">
+        <link href="css/common.css" rel="stylesheet" type="text/css">
+        <link href="../css/common.css" rel="stylesheet" type="text/css">
+        <link href="./css/common.css" rel="stylesheet" type="text/css">
+        <link href="../../css/common.css" rel="stylesheet" type="text/css">
+
+        <link href="././css/common.css" rel="stylesheet" type="text/css">
+        <link href="../../css/menu.css" rel="stylesheet" type="text/css">
+
+        <!-- <script src="./index/webfont.js" type="text/javascript"></script>  
+       <link rel="stylesheet" href="./index/css" media="all">
+       <script type="text/javascript">
+            WebFont.load({  google: {    families: ["Merriweather:300,300italic,400,400italic,700,700italic,900,900italic","Oswald:200,300,400,500,600,700","Lato:100,100italic,300,300italic,400,400italic,700,700italic,900,900italic","Droid Sans:400,700","Open Sans:300,300italic,400,400italic,600,600italic,700,700italic,800,800italic","Satisfy:regular","Reenie Beanie:regular"]  }});
+        </script> -->
+        <!-- [if lt IE 9]> -->
+        <!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"-->
+        <!--            type="text/javascript"></script>-->
+        <!--    <![endif]&ndash;&gt;-->
+        <!--    <script type="text/javascript">-->
+        <!--        !function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart"in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);-->
+        <!--    </script>-->
+        <!--    <link href="https://assets.website-files.com/559f85c38bde14cf4b3723cf/55d833f553965dde61577bdd_Favicon.png"-->
+        <!--          rel="shortcut icon" type="image/x-icon">-->
+        <!--    <link href="https://assets.website-files.com/559f85c38bde14cf4b3723cf/55d833f753965dde61577bde_Webclip.jpg"-->
+        <!--          rel="apple-touch-icon">-->
     </head>
+
     <body>
         <div data-animation="default" class="navbar-left w-nav" data-easing2="ease" data-easing="ease"
             data-collapse="small" role="banner" data-no-scroll="1" data-duration="400" data-doc-height="1">
@@ -184,26 +228,37 @@
                         </div>
                         <div class="w-tab-content">
 
-
-                            <c:forEach var="dish" items="${requestScope.dishes}">
-                                <ul>
-                            
-                                    <li>Имя: <c:out value="${dish.name}"/></li>
-                            
-
-                                </ul>
-                                <hr />
-                            
-                            </c:forEach>
-
-
-
-
-
-
                             <div data-w-tab="Coffee" class="menu-tab-pane w-tab-pane w--tab-active">
                                 <div class="menu-white-wrapper w-dyn-list">
                                     <div role="list" class="w-clearfix w-dyn-items w-row">
+
+<!-- 
+                                        <c:forEach var="dish" items="${requestScope.dishes}">
+                                                    <div role="listitem" class="menu-list-item w-dyn-item w-col w-col-6">
+                                                        <div style="background-image: url('pictures/dish_pictures/brew-coffee.webp');"
+                                                            class="menu-item-image-box">
+                                                        </div>
+                                                        <div class="menu-item-text">
+                                                            <div class="menu-item-title">
+                                                                <c:out value="${dish.name}" />
+                                                            </div>
+                                                            <div class="menu-item-title description">
+                                                                <c:out value="${dish.description}" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="menu-item-price">
+                                                            <c:out value="${dish.price}" />
+                                                        </div>
+                                                            <span class="price-marker">₴</span>
+                                                        </div>
+                                                        <a href="" class="order-icon-container">
+                                                            <img src="pictures/icons/Icon-basket.png" alt="" class="order-icon-img">
+                                                        </a>
+                                                    </div>
+                                        </c:forEach> -->
+
+
+<!-- 
                                         <div role="listitem" class="menu-list-item w-dyn-item w-col w-col-6">
                                             <div style="background-image: url('pictures/dish_pictures/brew-coffee.webp');"
                                                 class="menu-item-image-box">
@@ -220,22 +275,18 @@
                                             <a href="" class="order-icon-container">
                                                 <img src="pictures/icons/Icon-basket.png" alt="" class="order-icon-img">
                                             </a>
-                                        </div>
+                                        </div> -->
 
 
-
-
-
-
-                                        <div role="listitem" class="menu-list-item w-dyn-item w-col w-col-6">
+                                        <!-- <div role="listitem" class="menu-list-item w-dyn-item w-col w-col-6">
                                             <div class="menu-item-price">4.50</div>
                                             <div class="menu-item-title">Black Eyed Andy</div>
                                             <div class="menu-item-title description">Lorem ipsum dolor sit amet
                                                 consectetur
                                                 adipiscing.
                                             </div>
-                                        </div>
-                                        <div role="listitem" class="menu-list-item w-dyn-item w-col w-col-6">
+                                        </div> -->
+                                        <!-- <div role="listitem" class="menu-list-item w-dyn-item w-col w-col-6">
                                             <div class="menu-item-price">4.99</div>
                                             <div class="menu-item-title">Cuban Shot</div>
                                             <div class="menu-item-title description">Lorem ipsum dolor sit amet
@@ -257,8 +308,8 @@
                                             <div class="menu-item-title description">Lorem ipsum dolor sit amet
                                                 consectetur
                                                 adipiscing.
-                                            </div>
-                                        </div>
+                                            </div> -->
+                                        <!-- </div>
                                         <div role="listitem" class="menu-list-item w-dyn-item w-col w-col-6">
                                             <div class="menu-item-price">4.00</div>
                                             <div class="menu-item-title">Cappuccino</div>
@@ -290,7 +341,7 @@
                                                 consectetur
                                                 adipiscing.
                                             </div>
-                                        </div>
+                                        </div> 
                                         <div role="listitem" class="menu-list-item w-dyn-item w-col w-col-6">
                                             <div class="menu-item-price">5.99</div>
                                             <div class="menu-item-title">Standard black coffee</div>
@@ -298,7 +349,7 @@
                                                 consectetur
                                                 adipiscing.
                                             </div>
-                                        </div>
+                                        </div>-->
                                     </div>
                                 </div>
                             </div>
