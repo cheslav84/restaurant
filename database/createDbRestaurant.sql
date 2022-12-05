@@ -168,10 +168,10 @@ DROP TABLE IF EXISTS `restaurant`.`user_details` ;
 
 CREATE TABLE IF NOT EXISTS `restaurant`.`user_details` (
   `user_id` INT NOT NULL,
-  `birthdate` DATE NULL,
-  `passport` VARCHAR(16) NULL,
-  `bank_account` VARCHAR(45) NULL,
-  PRIMARY KEY (`user_id`),
+  `birthdate` DATE NOT NULL,
+  `passport` VARCHAR(16) NOT NULL,
+  `bank_account` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`user_id`, `passport`, `bank_account`, `birthdate`),
   UNIQUE INDEX `passport_UNIQUE` (`passport` ASC),
   UNIQUE INDEX `bank_account_UNIQUE` (`bank_account` ASC),
   CONSTRAINT `fk_user_details_user`

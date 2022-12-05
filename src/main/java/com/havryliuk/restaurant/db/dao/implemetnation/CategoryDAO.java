@@ -14,7 +14,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryDAO implements DAO<Long, Category> {
+public class CategoryDAO implements DAO<Category> {
     private static final Logger log = LogManager.getLogger(CategoryDAO.class);
     private final ConnectionPool connectionPool;
 

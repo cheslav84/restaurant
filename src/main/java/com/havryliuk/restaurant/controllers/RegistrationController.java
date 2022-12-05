@@ -49,8 +49,9 @@ public class RegistrationController extends HttpServlet {
         final String surname = request.getParameter("surname");
         final String gender = request.getParameter("userGender");
         final boolean isOverEighteen = request.getParameter("userOverEighteenAge") != null;
+        final Role userRole = Role.getInstance(Role.UserRole.CLIENT);
 
-        final User user = User.getInstance(email, password, name, surname, gender, isOverEighteen);
+        final User user = User.getInstance(email, password, name, surname, gender, isOverEighteen, userRole);
 
         System.out.println(user);
 

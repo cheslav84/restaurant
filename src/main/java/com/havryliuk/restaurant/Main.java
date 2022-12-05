@@ -4,11 +4,10 @@ package com.havryliuk.restaurant;
 import com.havryliuk.restaurant.db.dao.DishDao;
 import com.havryliuk.restaurant.db.dao.DAO;
 import com.havryliuk.restaurant.db.dao.implemetnation.DishDaoImpl;
-import com.havryliuk.restaurant.db.dao.implemetnation.ManagerDAO;
 import com.havryliuk.restaurant.db.dao.implemetnation.UserDAO;
 import com.havryliuk.restaurant.db.entity.Category;
 import com.havryliuk.restaurant.db.entity.Dish;
-import com.havryliuk.restaurant.db.entity.Manager;
+import com.havryliuk.restaurant.db.entity.UserDetails;
 import com.havryliuk.restaurant.db.entity.User;
 import com.havryliuk.restaurant.exceptions.DBException;
 
@@ -16,7 +15,7 @@ import java.util.List;
 
 public class Main {
 
-//    public List<Dish> main() throws DBException {
+
     public static void main(String[] args) throws DBException {
 
         long startTime = System.currentTimeMillis();
@@ -29,15 +28,14 @@ public class Main {
 
 
 
-        DAO<Long, User> userDAO = new UserDAO<>();
-        DAO<Long, User> managerDAO = new ManagerDAO();
+        DAO<User> userDAO = new UserDAO();
+//        DAO<Long, User> managerDAO = new ManagerDAO();
 
         User user = userDAO.findByName("email");
-        User manager = managerDAO.findByName("email");
+//        User manager = managerDAO.findByName("email");
 
         userDAO.create(new User());
-        userDAO.create(new Manager());// todo ???
-        managerDAO.create(new Manager());
+
 
 
 

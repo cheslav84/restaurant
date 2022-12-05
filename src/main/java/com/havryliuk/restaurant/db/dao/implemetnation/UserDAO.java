@@ -3,6 +3,7 @@ package com.havryliuk.restaurant.db.dao.implemetnation;
 import com.havryliuk.restaurant.db.connection.ConnectionPool;
 import com.havryliuk.restaurant.db.connection.RestaurantConnectionPool;
 import com.havryliuk.restaurant.db.dao.DAO;
+import com.havryliuk.restaurant.db.dao.databaseFieds.CategoryFields;
 import com.havryliuk.restaurant.db.dao.databaseFieds.UserFields;
 import com.havryliuk.restaurant.db.dao.queries.UserQuery;
 import com.havryliuk.restaurant.db.entity.*;
@@ -17,7 +18,7 @@ import java.util.List;
 
 
 //public class UserDAO<T extends User> implements DAO<Long, User> {
-public class UserDAO<T extends User> implements DAO<Long, User> {
+public class UserDAO implements DAO<User> {
     private static final Logger log = LogManager.getLogger(UserDAO.class);
     private final ConnectionPool connectionPool;
 
@@ -84,7 +85,7 @@ public class UserDAO<T extends User> implements DAO<Long, User> {
     }
 
     @Override
-    public List<? extends Manager> findAll() throws DBException {
+    public List<User> findAll() throws DBException {
         List<User> users = new ArrayList<>();
         Connection con = connectionPool.getConnection();
          try (PreparedStatement stmt = con.prepareStatement(UserQuery.FIND_ALL_USERS);
@@ -183,25 +184,25 @@ public class UserDAO<T extends User> implements DAO<Long, User> {
         String gender = rs.getString(UserFields.USER_GENDER);
         boolean isOverEighteen = rs.getBoolean(UserFields.USER_IS_AGE_OVER_EIGHTEEN);
         Date accountCreationDate = rs.getTimestamp(UserFields.USER_ACCOUNT_CREATION_DATE);
-//        Role role = mapRoleForUser(rs);
-        User user = User.getInstance(id, email, password, name, surname,
-                                     gender, isOverEighteen, accountCreationDate);
-//        if (role.getUserRole() == UserRole.MANAGER) { // todo краще витягувати всі дані відразу, чи зайвий раз сходити в базу,
-//            return  mapManager(rs, user);
-//        }
-        return user;
+        Role role = mapRoleForUser(rs);
+        UserDetails userDetails = null;
+        if (role.getUserRole() == Role.UserRole.MANAGER) { // todo краще витягувати всі дані відразу, чи зайвий раз сходити в базу,
+            userDetails = mapUserDetails(rs);
+        }
+        return User.getInstance(id, email, password, name, surname,
+                gender, isOverEighteen, accountCreationDate, role, userDetails);
     }
 
-//    private Manager mapManager(ResultSet rs, User user) throws SQLException {
-//        Date birthDate =new Date(rs.getDate(UserFields.MANAGER_BIRTH_DATE).getTime());;
-//        String passport = rs.getString(UserFields.MANAGER_PASSPORT);
-//        String bankAccount = rs.getString(UserFields.MANAGER_BANK_ACCOUNT);
-//        return Manager.getInstance(user, birthDate, passport, bankAccount);
-//    }
+    private UserDetails mapUserDetails(ResultSet rs) throws SQLException {// todo винести потім в UserDetailsDao
+        Date birthDate =new Date(rs.getDate(UserFields.MANAGER_BIRTH_DATE).getTime());;
+        String passport = rs.getString(UserFields.MANAGER_PASSPORT);
+        String bankAccount = rs.getString(UserFields.MANAGER_BANK_ACCOUNT);
+        return UserDetails.getInstance(birthDate, passport, bankAccount);
+    }
 
-//    private Role mapRoleForUser(ResultSet rs) throws SQLException {
-//        String roleName = rs.getString(CategoryFields.CATEGORY_NAME);
-//        return Role.getInstance(UserRole.valueOf(roleName));
-//    }
+    private Role mapRoleForUser(ResultSet rs) throws SQLException {// todo винести потім в RoleDao
+        String roleName = rs.getString(CategoryFields.CATEGORY_NAME);
+        return Role.getInstance(Role.UserRole.valueOf(roleName));
+    }
 
 }

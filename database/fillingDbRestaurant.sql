@@ -1,5 +1,4 @@
-
-
+USE `restaurant` ;
 
 -- -----------------------------------------------------
 -- `CATEGORY`
@@ -82,11 +81,11 @@ INSERT INTO role (role_name) VALUE ('CLIENT');
 -- -----------------------------------------------------
 INSERT INTO user (email, password, user_name, surname, gender, age_over_eighteen, role_id) 
 VALUES ('v_cheslav@ukr.net', 'pass!@#123', 'Вячеслав', 'Гаврилюк', 'male', '1', '1');
--- INSERT INTO user_details (user_id, birthdate, passport, bank_account)
--- VALUES ('1', '05.12.2022', 'PSserial', 'secredAcount');
+ INSERT INTO user_details (user_id, birthdate, passport, bank_account)
+ VALUES ('1', '2022-5-12', 'PSserial', 'secretAccount');
 
 INSERT INTO user (email, password, user_name, surname, gender, age_over_eighteen, role_id) 
-VALUES ('some@gmail.com', 'some!@#123', 'Name', 'Surname', 'male', '1', '0');
+VALUES ('some@gmail.com', 'some!@#123', 'Name', 'Surname', 'male', '1', '2');
 
 -- -----------------------------------------------------
 -- `booking STATUS`
@@ -99,16 +98,21 @@ INSERT INTO booking_status (booking_status_name) VALUE ('completed');
 
 
 
--- SELECT * FROM category ORDER BY id
+-- SELECT * FROM category ORDER BY id 
 -- SELECT * FROM dish ORDER BY id
- SELECT * FROM role ORDER BY id
--- SELECT * FROM user ORDER BY id
+ #SELECT * FROM role ORDER BY id
+ #SELECT * FROM user ORDER BY id
+ #DELETE FROM user WHERE id=1
+ #SELECT * FROM user_details
 -- SELECT * FROM booking_status order by id
 -- SELECT * FROM dish d JOIN category c ORDER BY c.name 
 -- SELECT d.*, c.name as 'category_name' FROM dish d JOIN category c ON c.name='coffee'
 -- SELECT d.*, c.category_name FROM dish d JOIN category c ON c.category_name='coffee'
 
 
+SELECT * FROM user u JOIN user_details ud ON u.id=ud.user_id ORDER BY surname
+#SELECT * FROM user u JOIN user_details ud ON u.id=ud.user_id WHERE u.id=1
+#SELECT * FROM user u JOIN user_details ud ON u.id=ud.user_id WHERE u.surname='Гаврилюк'
  
 
 

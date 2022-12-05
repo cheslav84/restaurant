@@ -2,6 +2,7 @@ package com.havryliuk.restaurant.db.entity;
 
 
 public class Role implements Entity{
+    public enum UserRole {CLIENT, MANAGER}
     private Long id;
     private UserRole userRole;
 
