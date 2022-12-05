@@ -3,12 +3,15 @@ package com.havryliuk.restaurant;
 
 import com.havryliuk.restaurant.db.connection.ConnectionPool;
 import com.havryliuk.restaurant.db.connection.RestaurantConnectionPool;
-import com.havryliuk.restaurant.db.dao.CategoryDao;
 import com.havryliuk.restaurant.db.dao.DishDao;
+import com.havryliuk.restaurant.db.dao.EntityDao;
 import com.havryliuk.restaurant.db.dao.implemetnation.CategoryDaoImpl;
 import com.havryliuk.restaurant.db.dao.implemetnation.DishDaoImpl;
+import com.havryliuk.restaurant.db.dao.implemetnation.UserDaoImpl;
 import com.havryliuk.restaurant.db.entity.Category;
 import com.havryliuk.restaurant.db.entity.Dish;
+import com.havryliuk.restaurant.db.entity.Manager;
+import com.havryliuk.restaurant.db.entity.User;
 import com.havryliuk.restaurant.exceptions.DBException;
 
 import java.sql.Connection;
@@ -25,6 +28,22 @@ public class Main {
         System.out.println(dishes);
         long finishTime = System.currentTimeMillis();
         System.out.println(finishTime - startTime);
+
+
+        EntityDao<Long, ? super Manager> dao = new UserDaoImpl<>();
+
+
+        Object o = dao.findByName("name");
+        User user = dao.findByName("userName");
+        Manager manager = dao.findByName("managerName");
+
+
+        dao.create()
+
+
+
+
+
 
 //return dishes;
 //        List<Dish> dishes1 = dishDao.findAll();

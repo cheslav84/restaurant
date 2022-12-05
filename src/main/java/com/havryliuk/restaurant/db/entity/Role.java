@@ -3,11 +3,11 @@ package com.havryliuk.restaurant.db.entity;
 
 public class Role implements Entity{
     private Long id;
-    private String name;
+    private UserRole userRole;
 
-    public static Role getInstance(String name) {
+    public static Role getInstance(UserRole userRole) {
         Role role = new Role();
-        role.setName(name);
+        role.setUserRole(userRole);
         return role;
     }
 
@@ -19,12 +19,12 @@ public class Role implements Entity{
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public UserRole getUserRole() {
+        return userRole;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
     }
 
     @Override
@@ -34,11 +34,11 @@ public class Role implements Entity{
 
         Role role = (Role) o;
 
-        return name != null ? name.equals(role.name) : role.name == null;
+        return userRole != null ? userRole.equals(role.userRole) : role.userRole == null;
     }
 
     @Override
     public int hashCode() {
-        return name != null ? name.hashCode() : 0;
+        return userRole != null ? userRole.hashCode() : 0;
     }
 }

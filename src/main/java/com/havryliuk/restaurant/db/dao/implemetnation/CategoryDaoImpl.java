@@ -2,8 +2,9 @@ package com.havryliuk.restaurant.db.dao.implemetnation;
 
 import com.havryliuk.restaurant.db.connection.ConnectionPool;
 import com.havryliuk.restaurant.db.connection.RestaurantConnectionPool;
-import com.havryliuk.restaurant.db.dao.CategoryDao;
+import com.havryliuk.restaurant.db.dao.EntityDao;
 import com.havryliuk.restaurant.db.dao.databaseFieds.CategoryFields;
+import com.havryliuk.restaurant.db.dao.queries.CategoryQuery;
 import com.havryliuk.restaurant.db.entity.Category;
 import com.havryliuk.restaurant.exceptions.DBException;
 import org.apache.logging.log4j.LogManager;
@@ -13,19 +14,19 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryDaoImpl implements CategoryDao {
+public class CategoryDaoImpl implements EntityDao <Long, Category> {
     private static final Logger log = LogManager.getLogger(CategoryDaoImpl.class);
-    private static ConnectionPool connectionPool;
+    private final ConnectionPool connectionPool;
 
     public CategoryDaoImpl() throws DBException {
-        connectionPool = RestaurantConnectionPool.getInstance();//todo get class by reflection
+        connectionPool = RestaurantConnectionPool.getInstance(); //todo get class by reflection
     }
 
     @Override
     public Category findByName(String name) throws DBException {
         Category category = null;
-        Connection con = connectionPool.getConnection();//todo запитати чи потрібно connection в блок try-catch?
-        try (PreparedStatement stmt = con.prepareStatement(CategorySql.FIND_CATEGORY_BY_NAME.query)) {
+        Connection con = connectionPool.getConnection();//todo запитати чи потрібно connection в блок try-catch якщо в нас летить одне і теж виключення?
+        try (PreparedStatement stmt = con.prepareStatement(CategoryQuery.FIND_CATEGORY_BY_NAME)) {
             stmt.setString(1, name);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
@@ -46,7 +47,7 @@ public class CategoryDaoImpl implements CategoryDao {
     public Category findById(Long id) throws DBException {
         Category category = null;
         Connection con = connectionPool.getConnection();
-        try (PreparedStatement stmt = con.prepareStatement(CategorySql.FIND_CATEGORY_BY_ID.query)) {
+        try (PreparedStatement stmt = con.prepareStatement(CategoryQuery.FIND_CATEGORY_BY_ID)) {
             stmt.setLong(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
@@ -80,7 +81,7 @@ public class CategoryDaoImpl implements CategoryDao {
     }
 
     private void addCategory(Category category, Connection con) throws SQLException {
-        try (PreparedStatement stmt = con.prepareStatement(CategorySql.ADD_CATEGORY.query,
+        try (PreparedStatement stmt = con.prepareStatement(CategoryQuery.ADD_CATEGORY,
                 Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, category.getName());
             int insertionAmount = stmt.executeUpdate();
@@ -98,7 +99,7 @@ public class CategoryDaoImpl implements CategoryDao {
     public List<Category> findAll() throws DBException {
         List<Category> categories = new ArrayList<>();
         Connection con = connectionPool.getConnection();
-         try (PreparedStatement stmt = con.prepareStatement(CategorySql.FIND_ALL_CATEGORIES.query);
+         try (PreparedStatement stmt = con.prepareStatement(CategoryQuery.FIND_ALL_CATEGORIES);
               ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 categories.add(mapCategory(rs));
@@ -113,10 +114,11 @@ public class CategoryDaoImpl implements CategoryDao {
         return categories;
     }
 
+
     @Override
     public boolean update(Category category) throws DBException {
         Connection con = connectionPool.getConnection();
-        try (PreparedStatement stmt = con.prepareStatement(CategorySql.UPDATE_CATEGORY.query)) {
+        try (PreparedStatement stmt = con.prepareStatement(CategoryQuery.UPDATE_CATEGORY)) {
             stmt.setString(1, category.getName());
             stmt.setLong(2, category.getId());
             stmt.executeUpdate();
@@ -133,7 +135,7 @@ public class CategoryDaoImpl implements CategoryDao {
     @Override
     public boolean delete(Category category) throws DBException {
         Connection con = connectionPool.getConnection();
-        try (PreparedStatement stmt = con.prepareStatement(CategorySql.DELETE_CATEGORY_BY_NAME.query)) {
+        try (PreparedStatement stmt = con.prepareStatement(CategoryQuery.DELETE_CATEGORY_BY_NAME)) {
             stmt.setString(1, category.getName());
             stmt.executeUpdate();
             log.debug("The category \"" + category.getName() + "\", has been successfully deleted.");
@@ -147,7 +149,7 @@ public class CategoryDaoImpl implements CategoryDao {
     @Override
     public boolean delete(Long id) throws DBException {
         Connection con = connectionPool.getConnection();
-        try (PreparedStatement stmt = con.prepareStatement(CategorySql.DELETE_CATEGORY_BY_ID.query)) {
+        try (PreparedStatement stmt = con.prepareStatement(CategoryQuery.DELETE_CATEGORY_BY_ID)) {
             stmt.setLong(1, id);
             stmt.executeUpdate();
             log.debug("The category with id \"" + id + "\", has been successfully deleted");
@@ -158,25 +160,28 @@ public class CategoryDaoImpl implements CategoryDao {
         return true;
     }
 
+
     private Category mapCategory(ResultSet rs) throws SQLException {
         long id = rs.getLong(CategoryFields.CATEGORY_ID);
         String name = rs.getString(CategoryFields.CATEGORY_NAME);
         return Category.getInstance(id, name);
     }
 
-    enum CategorySql {// todo add queries to properties file?
-        ADD_CATEGORY("INSERT INTO category (name) VALUE (?)"),
-        FIND_CATEGORY_BY_ID("SELECT * FROM category c WHERE c.id=?"),
-        FIND_CATEGORY_BY_NAME("SELECT * FROM category c WHERE c.name=?"),
-        FIND_ALL_CATEGORIES("SELECT * FROM category ORDER BY name"),
-        UPDATE_CATEGORY("UPDATE category SET name=? WHERE id=?"),
-        DELETE_CATEGORY_BY_NAME("DELETE FROM category WHERE name=?"),
-        DELETE_CATEGORY_BY_ID("DELETE FROM category WHERE id=?");
 
-        private final String query;
 
-        CategorySql(String QUERY) {
-            this.query = QUERY;
-        }
-    }
+//    enum CategorySql {// todo add queries to properties file?
+//        ADD_CATEGORY("INSERT INTO category (name) VALUE (?)"),
+//        FIND_CATEGORY_BY_ID("SELECT * FROM category c WHERE c.id=?"),
+//        FIND_CATEGORY_BY_NAME("SELECT * FROM category c WHERE c.name=?"),
+//        FIND_ALL_CATEGORIES("SELECT * FROM category ORDER BY name"),
+//        UPDATE_CATEGORY("UPDATE category SET name=? WHERE id=?"),
+//        DELETE_CATEGORY_BY_NAME("DELETE FROM category WHERE name=?"),
+//        DELETE_CATEGORY_BY_ID("DELETE FROM category WHERE id=?");
+//
+//        private final String query;
+//
+//        CategorySql(String QUERY) {
+//            this.query = QUERY;
+//        }
+//    }
 }

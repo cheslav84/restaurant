@@ -10,6 +10,9 @@ public class Dish implements Entity {//todo implements Serializable (to save Obj
     private BigDecimal price;
     private int amount;
     private boolean special;
+
+    private boolean spirits;// todo add field
+
     private String image;
     private Category category;
 

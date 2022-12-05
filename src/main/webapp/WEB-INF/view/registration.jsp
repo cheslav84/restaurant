@@ -33,7 +33,7 @@
 
                     <a href="/index" aria-current="page" class="nav-link w-nav-link w--current"
                         style="max-width: 940px;">Home</a>
-                        
+
                     <a href="menu.html" class="nav-link w-nav-link" style="max-width: 940px;">Menu</a>
                     <a href="reservation.html" class="nav-link w-nav-link" style="max-width: 940px;">Reservation</a>
                     <a href="gallery.html" class="nav-link w-nav-link" style="max-width: 940px;">Gallery</a>
@@ -84,8 +84,9 @@
 
 
 
+
                         
-                        <form id="wf-form-Reservation-Form" name="logInForm" data-name="Log in form">
+                        <!-- <form method="post" id="wf-form-Reservation-Form" name="logInForm" data-name="Log in form">
 
                             <input type="email" id="Email-3" name="email" data-name="Email" placeholder="Email address"
                                 maxlength="32" required="true" class="field w-input">
@@ -103,12 +104,12 @@
                             <div class="intro-title">Do not have account?</div>
                             <input type="submit" value="Sing in" data-wait="Please wait..."
                                 class="button submit-button w-button">
-                        </div>
+                        </div> -->
 
 
 
 
-                        <form id="wf-form-Reservation-Form" name="registrationForm" data-name="Reservation Form">
+                        <form method="post" id="wf-form-Reservation-Form" name="registrationForm" data-name="Reservation Form">
                             <input type="text" id="name" name="name" data-name="Name" placeholder="Enter your name"
                                 maxlength="24" class="field w-input">
                             <input type="text" id="name" name="surname" data-name="Surname"
@@ -127,8 +128,7 @@
                                 <div class="w-clearfix w-col w-col-6">
                                     <div class="w-row field last-half w-select">
                                         <label for="user-age" class="w-col user-age-label">I'm 18</label>
-                                        <input type="checkbox" id="user-age" name="userAge" data-name="User age"
-                                            class="w-col w-select user-age">
+                                        <input type="checkbox" id="user-age" name="userOverEighteenAge" data-name="User age" class="w-col w-select user-age" value="">
                                         </input>
                                     </div>
 
@@ -195,7 +195,19 @@
             </div>
         </div>
     </div>
-    <script src="./js/jquery3.6.1.js" type="text/javascript"  crossorigin="anonymous"></script>
-    <script src="./js/webflow.js" type="text/javascript"></script>
+
+
+    
+
+
+    <script src="js/jquery3.6.1.js" type="text/javascript" crossorigin="anonymous"></script>
+    <script src="js/webflow.js" type="text/javascript"></script>
+
+
+
+</body>
+
+
+
 
 </html>

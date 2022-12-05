@@ -10,7 +10,8 @@ public class User implements Entity{
     private String surname;
     private Date creationDate;
     private Role role;
-    private UserDetails userDetails;
+    private String gender;
+    private boolean isOverEighteen;
 
     public static User getInstance(String email, String password, String name, String surname) {
         User user = new User();
@@ -20,6 +21,15 @@ public class User implements Entity{
         user.setSurname(surname);
         return user;
     }
+
+    public static User getInstance(String email, String password, String name, String surname, String gender, boolean isOverEighteen) {
+        User user = getInstance(email, password, name, surname);
+        user.setGender(gender);
+        user.setOverEighteen(isOverEighteen);
+        user.setRole(Role.getInstance(UserRole.CLIENT));
+        return user;
+    }
+
 
     public long getId() {
         return id;
@@ -77,37 +87,58 @@ public class User implements Entity{
         this.role = role;
     }
 
-    public UserDetails getUserDetails() {
-        return userDetails;
+    public String getGender() {
+        return gender;
     }
 
-    public void setUserDetails(UserDetails userDetails) {
-        this.userDetails = userDetails;
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public boolean isOverEighteen() {
+        return isOverEighteen;
+    }
+
+    public void setOverEighteen(boolean overEighteen) {
+        isOverEighteen = overEighteen;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
+        if (o == null || getClass() != o.getClass() || this.hashCode() != o.hashCode()){
+            return false;
+        }
         User user = (User) o;
 
+        if (isOverEighteen != user.isOverEighteen) return false;
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
-        if (password != null ? !password.equals(user.password) : user.password != null) return false;
         if (name != null ? !name.equals(user.name) : user.name != null) return false;
         if (surname != null ? !surname.equals(user.surname) : user.surname != null) return false;
-        if (creationDate != null ? !creationDate.equals(user.creationDate) : user.creationDate != null) return false;
-        return userDetails != null ? userDetails.equals(user.userDetails) : user.userDetails == null;
+        return gender != null ? gender.equals(user.gender) : user.gender == null;
     }
 
     @Override
     public int hashCode() {
         int result = email != null ? email.hashCode() : 0;
-        result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (surname != null ? surname.hashCode() : 0);
-        result = 31 * result + (creationDate != null ? creationDate.hashCode() : 0);
-        result = 31 * result + (userDetails != null ? userDetails.hashCode() : 0);
+        result = 31 * result + (gender != null ? gender.hashCode() : 0);
+        result = 31 * result + (isOverEighteen ? 1 : 0);
         return result;
+    }
+
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", gender='" + gender + '\'' +
+                ", isOverEighteen=" + isOverEighteen +
+                '}';
     }
 }

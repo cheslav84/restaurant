@@ -2,7 +2,6 @@ package com.havryliuk.restaurant.db.dao.implemetnation;
 
 import com.havryliuk.restaurant.db.connection.ConnectionPool;
 import com.havryliuk.restaurant.db.connection.RestaurantConnectionPool;
-import com.havryliuk.restaurant.db.dao.CategoryDao;
 import com.havryliuk.restaurant.db.dao.DishDao;
 import com.havryliuk.restaurant.db.dao.databaseFieds.CategoryFields;
 import com.havryliuk.restaurant.db.dao.databaseFieds.DishFields;
@@ -23,7 +22,7 @@ import java.util.List;
 
 public class DishDaoImpl implements DishDao {
     private static final Logger log = LogManager.getLogger(DishDaoImpl.class);
-    private static ConnectionPool connectionPool;
+    private final ConnectionPool connectionPool;
 
     public DishDaoImpl () throws DBException {
         connectionPool = RestaurantConnectionPool.getInstance();//todo як не вказувати конкретний клас? Наприклад якщо замінити в майбутньому наприкада на Hikari
@@ -133,21 +132,7 @@ public class DishDaoImpl implements DishDao {
         return dishes;
     }
 
-    private Dish mapDish(ResultSet rs) throws SQLException, DBException {//todo може тут відразу джоіном категорю витягувати? Навіщо 2 рази ходити в базу?
-//        long id = rs.getLong(DishFields.DISH_ID);
-//        String name = rs.getString(DishFields.DISH_NAME);
-//        String description = rs.getString(DishFields.DISH_DESCRIPTION);
-//        int weight = rs.getInt(DishFields.DISH_WEIGHT);
-//        BigDecimal price = rs.getBigDecimal(DishFields.DISH_PRICE);
-//        int amount = rs.getInt(DishFields.DISH_AMOUNT);
-//        boolean special = rs.getBoolean(DishFields.DISH_SPECIAL);
-//        String image = rs.getString(DishFields.DISH_IMAGE);
-////        Long categoryId = rs.getLong(DishFields.DISH_CATEGORY_ID);
-//
-//        String categoryName = rs.getString(CategoryFields.CATEGORY_NAME);
-//        Category category = Category.getInstance(categoryName);
-
-
+    private Dish mapDish(ResultSet rs) throws SQLException, DBException {
         long id = rs.getLong(DishFields.DISH_ID);
         String name = rs.getString(DishFields.DISH_NAME);
         String description = rs.getString(DishFields.DISH_DESCRIPTION);
@@ -156,34 +141,14 @@ public class DishDaoImpl implements DishDao {
         int amount = rs.getInt(DishFields.DISH_AMOUNT);
         boolean special = rs.getBoolean(DishFields.DISH_SPECIAL);
         String image = rs.getString(DishFields.DISH_IMAGE);
-//        Long categoryId = rs.getLong(DishFields.DISH_CATEGORY_ID);
-
-        String categoryName = rs.getString(CategoryFields.CATEGORY_NAME);
-        Category category = Category.getInstance(categoryName);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//        CategoryDao categoryDao = new CategoryDaoImpl();//todo is it normal to use CategoryDao in that situation?
-//        Category category = categoryDao.findById(categoryId);
-
+        Category category = mapCategoryForUser(rs);
         return Dish.getInstance(id, name, description, weight, price, amount, special, image, category);
+    }
+
+    protected Category mapCategoryForUser(ResultSet rs) throws SQLException {
+        long id = rs.getLong(DishFields.DISH_CATEGORY_ID);
+        String name = rs.getString(CategoryFields.CATEGORY_NAME);
+        return Category.getInstance(id, name);
     }
 
 //    enum DishSql {

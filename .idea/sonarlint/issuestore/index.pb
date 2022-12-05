@@ -4,46 +4,22 @@ $src/main/webapp/css/registration.css,c\a\caf3e9452afe69513c022db98ee5c192e463d
 :
 
 .gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
-l
-<src/main/java/com/havryliuk/restaurant/db/dao/EntityDao.java,8\5\85901164d5f7d9da9c77637ea05b6b286f35eba0
 m
 =src/main/java/com/havryliuk/restaurant/db/entity/Booking.java,5\7\57f37f5d08012bb13749c167d1db405aca00fe1b
 Q
 !src/main/webapp/js/jquery3.6.1.js,a\8\a880e4f702aa21fd68051a891d34fea2d4bcdb28
 x
 Hsrc/main/java/com/havryliuk/restaurant/db/connection/ConnectionPool.java,1\f\1f0bdbcc190d1cea873a8f2901efa1006cd7f041
-j
-:src/main/java/com/havryliuk/restaurant/db/dao/DishDao.java,d\0\d0386c27d39a84b8cbcfcc7d172bbaf1b5f0c99c
 9
 	Questions,9\a\9a1fc1731f624d1f9dbca42b781ff8a60a6594e1
-n
->src/main/java/com/havryliuk/restaurant/db/entity/Category.java,d\2\d2a01d040a15b2f5234cebcd0b20038d62832cff
-l
-<src/main/java/com/havryliuk/restaurant/controllers/Test.java,d\2\d23e8aef349781f2c4e6ab98a51fc166de017ff4
 †
 Vsrc/main/java/com/havryliuk/restaurant/exceptions/PropertyInitializationException.java,f\e\fe7bdf1ec1ccc215d43f02bee5ea8a3eefa561aa
-O
-database/createDbRestaurant.sql,3\2\324eabbf9c2a491e515699adb3f540160ec6c5de
-P
- database/fillingDbRestaurant.sql,2\9\298d007dbe9386690c1aac5c2ac77c6fea623789
 
 Qsrc/test/java/com/havryliuk/restaurant/db/dao/implemetnation/DishDaoImplTest.java,8\1\81e9b007af0490cd3b04aad7bb9d92c4e79c7470
-`
-0src/main/java/com/havryliuk/restaurant/Main.java,e\6\e6d0734344129b0f2b54b9d006303dd7a4d57a8d
 r
 Bsrc/main/java/com/havryliuk/restaurant/exceptions/DBException.java,7\3\7393c6a4394dd5b96e46d49e9d5b06e3951e8f18
 T
 $src/main/webapp/META-INF/context.xml,c\b\cbfb0d2e9b2b9fbf9d54374577c894a38643c6d0
-
-Qsrc/main/java/com/havryliuk/restaurant/db/dao/implemetnation/CategoryDaoImpl.java,d\3\d3f33cf4979fba3416ad4c8bc07eaef8d018e461
-
-Osrc/main/java/com/havryliuk/restaurant/db/dao/databaseFieds/CategoryFields.java,5\c\5cb22ff539ab3c217e206d78ea6d7f4487020ad5
-x
-Hsrc/main/java/com/havryliuk/restaurant/db/dao/queries/CategoryQuery.java,b\0\b00ae9ece3b2f30674dd3c03a802f7111bc49297
-{
-Ksrc/main/java/com/havryliuk/restaurant/db/dao/databaseFieds/DishFields.java,f\7\f7b4f544cd3bc00c299718d95320147516c503f6
-t
-Dsrc/main/java/com/havryliuk/restaurant/db/dao/queries/DishQuery.java,5\d\5d5bc2e9f3be9b2aac767e401f5d1acfc371318c
 W
 'src/main/webapp/WEB-INF/view/index2.jsp,e\7\e7ab2da357997eb5192ed6358f376ef4c0c8796c
 a

@@ -41,6 +41,7 @@ CREATE TABLE IF NOT EXISTS `restaurant`.`dish` (
   `weight` INT UNSIGNED NULL,
   `price` DECIMAL(9,2) UNSIGNED NOT NULL,
   `amount` INT UNSIGNED NOT NULL,
+  `spirits` TINYINT(1) NOT NULL,
   `special` TINYINT(1) NULL DEFAULT 0,
   `image` VARCHAR(45) NULL,
   `category_id` INT NOT NULL,
@@ -92,11 +93,11 @@ CREATE TABLE IF NOT EXISTS `restaurant`.`user` (
   `user_name` VARCHAR(24) NOT NULL,
   `surname` VARCHAR(24) NOT NULL,
   `gender` VARCHAR(8) NOT NULL,
-  `age` INT UNSIGNED NOT NULL,
-  `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `age_over_eighteen` TINYINT(1) UNSIGNED NOT NULL,
+  `creation_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   `role_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_user_role1_idx` (`role_id` ASC),
+  INDEX `fk_user_role_idx` (`role_id` ASC),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC),
   CONSTRAINT `fk_user_role`
     FOREIGN KEY (`role_id`)
@@ -176,7 +177,7 @@ CREATE TABLE IF NOT EXISTS `restaurant`.`user_details` (
   CONSTRAINT `fk_user_details_user`
     FOREIGN KEY (`user_id`)
     REFERENCES `restaurant`.`user` (`id`)
-    ON DELETE RESTRICT
+    ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
