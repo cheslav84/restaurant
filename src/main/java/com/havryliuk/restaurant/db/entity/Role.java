@@ -11,6 +11,12 @@ public class Role implements Entity{
         return role;
     }
 
+    public static Role getInstance(Long id, UserRole userRole) {
+        Role role = getInstance(userRole);
+        role.setId(id);
+        return role;
+    }
+
     public Long getId() {
         return id;
     }

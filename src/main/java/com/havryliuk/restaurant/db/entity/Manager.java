@@ -3,30 +3,22 @@ package com.havryliuk.restaurant.db.entity;
 import java.util.Date;
 
 public class Manager extends User implements Entity{
-    private long userId;
     private Date birthDate;
     private String passport;
     private String bankAccount;
 
 
-    public static Manager getInstance(long id,
-                                      String email,
-                                      String password,
-                                      String name,
-                                      String surname,
-                                      Date creationDate,
-                                      String gender,
-                                      boolean isOverEighteen,
-                                      Date birthDate,
-                                      String passport,
-                                      String bankAccount) {
+    public static Manager getInstance(long id, String email, String password,
+                                      String name, String surname, Date creationDate,
+                                      String gender, boolean isOverEighteen, Date birthDate,
+                                      String passport, String bankAccount) {
         Manager manager = new Manager();
         manager.setId(id);
         manager.setEmail(email);
-        manager.setPassport(passport);
+        manager.setPassword(password);
         manager.setName(name);
         manager.setSurname(surname);
-        manager.setCreationDate(creationDate);
+        manager.setAccountCreationDate(creationDate);
         manager.setRole(Role.getInstance(UserRole.MANAGER));
         manager.setGender(gender);
         manager.setOverEighteen(isOverEighteen);
@@ -43,7 +35,7 @@ public class Manager extends User implements Entity{
         manager.setPassport(user.getPassword());
         manager.setName(user.getName());
         manager.setSurname(user.getSurname());
-        manager.setCreationDate(new Date(user.getCreationDate().getTime()));
+        manager.setAccountCreationDate(new Date(user.getAccountCreationDate().getTime()));
         manager.setRole(Role.getInstance(UserRole.MANAGER));
         manager.setGender(user.getGender());
         manager.setOverEighteen(user.isOverEighteen());
@@ -51,14 +43,6 @@ public class Manager extends User implements Entity{
         manager.setPassport(passport);
         manager.setBankAccount(bankAccount);
         return manager;
-    }
-
-    public long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
     }
 
     public Date getBirthDate() {

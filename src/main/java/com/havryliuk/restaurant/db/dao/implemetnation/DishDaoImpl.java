@@ -141,11 +141,11 @@ public class DishDaoImpl implements DishDao {
         int amount = rs.getInt(DishFields.DISH_AMOUNT);
         boolean special = rs.getBoolean(DishFields.DISH_SPECIAL);
         String image = rs.getString(DishFields.DISH_IMAGE);
-        Category category = mapCategoryForUser(rs);
+        Category category = mapCategoryForDish(rs);
         return Dish.getInstance(id, name, description, weight, price, amount, special, image, category);
     }
 
-    protected Category mapCategoryForUser(ResultSet rs) throws SQLException {
+    private Category mapCategoryForDish(ResultSet rs) throws SQLException { //todo low coupling
         long id = rs.getLong(DishFields.DISH_CATEGORY_ID);
         String name = rs.getString(CategoryFields.CATEGORY_NAME);
         return Category.getInstance(id, name);

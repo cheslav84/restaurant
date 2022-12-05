@@ -2,7 +2,7 @@ package com.havryliuk.restaurant.db.dao.implemetnation;
 
 import com.havryliuk.restaurant.db.connection.ConnectionPool;
 import com.havryliuk.restaurant.db.connection.RestaurantConnectionPool;
-import com.havryliuk.restaurant.db.dao.EntityDao;
+import com.havryliuk.restaurant.db.dao.DAO;
 import com.havryliuk.restaurant.db.dao.databaseFieds.CategoryFields;
 import com.havryliuk.restaurant.db.dao.queries.CategoryQuery;
 import com.havryliuk.restaurant.db.entity.Category;
@@ -14,11 +14,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryDaoImpl implements EntityDao <Long, Category> {
-    private static final Logger log = LogManager.getLogger(CategoryDaoImpl.class);
+public class CategoryDAO implements DAO<Long, Category> {
+    private static final Logger log = LogManager.getLogger(CategoryDAO.class);
     private final ConnectionPool connectionPool;
 
-    public CategoryDaoImpl() throws DBException {
+    public CategoryDAO() throws DBException {
         connectionPool = RestaurantConnectionPool.getInstance(); //todo get class by reflection
     }
 

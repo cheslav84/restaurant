@@ -1,20 +1,16 @@
 package com.havryliuk.restaurant;
 
 
-import com.havryliuk.restaurant.db.connection.ConnectionPool;
-import com.havryliuk.restaurant.db.connection.RestaurantConnectionPool;
 import com.havryliuk.restaurant.db.dao.DishDao;
-import com.havryliuk.restaurant.db.dao.EntityDao;
-import com.havryliuk.restaurant.db.dao.implemetnation.CategoryDaoImpl;
+import com.havryliuk.restaurant.db.dao.DAO;
 import com.havryliuk.restaurant.db.dao.implemetnation.DishDaoImpl;
-import com.havryliuk.restaurant.db.dao.implemetnation.UserDaoImpl;
+import com.havryliuk.restaurant.db.dao.implemetnation.UserDAO;
 import com.havryliuk.restaurant.db.entity.Category;
 import com.havryliuk.restaurant.db.entity.Dish;
 import com.havryliuk.restaurant.db.entity.Manager;
 import com.havryliuk.restaurant.db.entity.User;
 import com.havryliuk.restaurant.exceptions.DBException;
 
-import java.sql.Connection;
 import java.util.List;
 
 public class Main {
@@ -30,15 +26,18 @@ public class Main {
         System.out.println(finishTime - startTime);
 
 
-        EntityDao<Long, ? super Manager> dao = new UserDaoImpl<>();
+        DAO<Long, User> userDAO = new UserDAO<>();
+        DAO<Long, Manager> managerDAO = new UserDAO();
 
 
-        Object o = dao.findByName("name");
-        User user = dao.findByName("userName");
-        Manager manager = dao.findByName("managerName");
+        User user = userDAO.findByName("userName");
+        Manager manager = managerDAO.findByName("managerName");
 
 
-        dao.create()
+        userDAO.create(new User());
+        userDAO.create(new Manager());
+        managerDAO.create(new Manager());
+
 
 
 

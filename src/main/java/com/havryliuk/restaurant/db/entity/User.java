@@ -8,10 +8,10 @@ public class User implements Entity{
     private String password;
     private String name;
     private String surname;
-    private Date creationDate;
-    private Role role;
     private String gender;
     private boolean isOverEighteen;
+    private Date accountCreationDate;
+    private Role role;
 
     public static User getInstance(String email, String password, String name, String surname) {
         User user = new User();
@@ -22,13 +22,20 @@ public class User implements Entity{
         return user;
     }
 
-    public static User getInstance(String email, String password, String name, String surname, String gender, boolean isOverEighteen) {
+    public static User getInstance(Long id, String email, String password,
+                                   String name, String surname, String gender,
+                                   boolean isOverEighteen, Date accountCreationDate) {
         User user = getInstance(email, password, name, surname);
+        user.setId(id);
         user.setGender(gender);
         user.setOverEighteen(isOverEighteen);
+        user.setAccountCreationDate(accountCreationDate);
         user.setRole(Role.getInstance(UserRole.CLIENT));
         return user;
     }
+
+
+
 
 
     public long getId() {
@@ -71,12 +78,12 @@ public class User implements Entity{
         this.surname = surname;
     }
 
-    public Date getCreationDate() {
-        return creationDate;
+    public Date getAccountCreationDate() {
+        return accountCreationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
+    public void setAccountCreationDate(Date accountCreationDate) {
+        this.accountCreationDate = accountCreationDate;
     }
 
     public Role getRole() {

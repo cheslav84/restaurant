@@ -6,7 +6,7 @@ import com.havryliuk.restaurant.exceptions.DBException;
 
 import java.util.List;
 
-public interface DishDao extends EntityDao<Long, Dish> {
+public interface DishDao extends DAO<Long, Dish> {
     Dish findByName(String name) throws DBException;
     List<Dish> findByCategory(Category category) throws DBException;
     List<Dish> getSortedByName() throws DBException;

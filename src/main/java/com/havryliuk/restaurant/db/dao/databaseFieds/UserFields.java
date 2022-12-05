@@ -5,6 +5,7 @@ import com.havryliuk.restaurant.utils.PropertiesLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Date;
 import java.util.Properties;
 
 public class UserFields {
@@ -18,8 +19,14 @@ public class UserFields {
     public static String USER_SURNAME;
     public static String USER_GENDER;
     public static String USER_IS_AGE_OVER_EIGHTEEN;
-    public static String USER_CREATION_TIME;
+    public static String USER_ACCOUNT_CREATION_DATE;
     public static String USER_ROLE_ID;
+    public static String MANAGER_ID;
+    public static String MANAGER_BIRTH_DATE;
+    public static String MANAGER_PASSPORT;
+    public static String MANAGER_BANK_ACCOUNT;
+
+
 
     static {
         properties = PropertiesLoader.getProperties(Constants.DB_FIELDS_SETTING_FILE);
@@ -35,8 +42,12 @@ public class UserFields {
         USER_SURNAME = (String) properties.get("user.surname");
         USER_GENDER = (String) properties.get("user.gender");
         USER_IS_AGE_OVER_EIGHTEEN = (String) properties.get("user.isOverEighteen");
-        USER_CREATION_TIME = (String) properties.get("user.creationTime");
+        USER_ACCOUNT_CREATION_DATE = (String) properties.get("user.creationTime");
         USER_ROLE_ID = (String) properties.get("user.roleId");
-    }
+        MANAGER_ID = (String) properties.get("manager.id");
+        MANAGER_BIRTH_DATE = (String) properties.get("manager.birthDate");
+        MANAGER_PASSPORT = (String) properties.get("manager.passport");
+        MANAGER_BANK_ACCOUNT = (String) properties.get("manager.bankAccount");
 
+    }
 }
