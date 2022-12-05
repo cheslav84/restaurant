@@ -15,7 +15,7 @@ public class UserQuery {
     public static String FIND_USER_BY_NAME;
     public static String FIND_ALL_USERS;
     public static String UPDATE_USER;
-    public static String DELETE_USER_BY_NAME;
+    public static String DELETE_USER;
     public static String DELETE_USER_BY_ID;
 
     static {
@@ -30,7 +30,7 @@ public class UserQuery {
            FIND_USER_BY_NAME = (String) properties.get("user.FIND_USER_BY_NAME");
            FIND_ALL_USERS = (String) properties.get("user.FIND_ALL_USERS");
            UPDATE_USER = (String) properties.get("user.UPDATE_USER");
-           DELETE_USER_BY_NAME = (String) properties.get("user.DELETE_USER_BY_NAME");
+           DELETE_USER = (String) properties.get("user.DELETE_USER");
            DELETE_USER_BY_ID = (String) properties.get("user.DELETE_USER_BY_ID");
        }
 }

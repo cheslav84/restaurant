@@ -2,10 +2,14 @@ package com.havryliuk.restaurant.db.dao.implemetnation;
 
 import com.havryliuk.restaurant.db.connection.ConnectionPool;
 import com.havryliuk.restaurant.db.connection.RestaurantConnectionPool;
-import com.havryliuk.restaurant.db.dao.DAO;
+import com.havryliuk.restaurant.db.dao.databaseFieds.CategoryFields;
 import com.havryliuk.restaurant.db.dao.databaseFieds.UserFields;
+import com.havryliuk.restaurant.db.dao.queries.ManagerQuery;
 import com.havryliuk.restaurant.db.dao.queries.UserQuery;
-import com.havryliuk.restaurant.db.entity.*;
+import com.havryliuk.restaurant.db.entity.Manager;
+import com.havryliuk.restaurant.db.entity.Role;
+import com.havryliuk.restaurant.db.entity.User;
+import com.havryliuk.restaurant.db.entity.UserRole;
 import com.havryliuk.restaurant.exceptions.DBException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,45 +20,49 @@ import java.util.Date;
 import java.util.List;
 
 
-//public class UserDAO<T extends User> implements DAO<Long, User> {
-public class UserDAO<T extends User> implements DAO<Long, User> {
-    private static final Logger log = LogManager.getLogger(UserDAO.class);
+public class ManagerDAO extends UserDAO<Manager> {
+    private static final Logger log = LogManager.getLogger(ManagerDAO.class);
     private final ConnectionPool connectionPool;
 
-    public UserDAO() throws DBException {
+//    private final DAO userDAO;
+
+    public ManagerDAO() throws DBException {
         connectionPool = RestaurantConnectionPool.getInstance();
+//        userDAO = new UserDAO<User>();
     }
 
     @Override
-    public User findByName(String name) throws DBException {
-        User user = null;
+    public Manager findByName(String name) throws DBException {
+        Manager manager = null;
         Connection con = connectionPool.getConnection();
-        try (PreparedStatement stmt = con.prepareStatement(UserQuery.FIND_USER_BY_NAME)) {
+        try (PreparedStatement stmt = con.prepareStatement(ManagerQuery.FIND_MANAGER_BY_NAME)) {
             stmt.setString(1, name);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    user = mapUser(rs);
+                    User user = super.mapUser(rs);
+                    manager = mapManager(rs, user);
                 }
             }
-            log.debug("The \"" + user + "\" user received from database.");
+            log.debug("The \"" + manager + "\" user received from database.");
         } catch (SQLException e) {
             log.error("Error in getting user \"" + name + "\" from database.", e);
             throw new DBException(e);
         } finally {
             connectionPool.releaseConnection(con);
         }
-        return user;
+        return manager;
     }
 
     @Override
-    public User findById(Long id) throws DBException {// todo зробити абстрактний клас зі всіма аналогічними методами і передаваити як аргумент query?
-        User user = null;
+    public Manager findById(Long id) throws DBException {// todo зробити абстрактний клас зі всіма аналогічними методами і передаваити як аргумент query?
+        Manager manager = null;
         Connection con = connectionPool.getConnection();
-        try (PreparedStatement stmt = con.prepareStatement(UserQuery.FIND_USER_BY_ID)) {
+        try (PreparedStatement stmt = con.prepareStatement(ManagerQuery.FIND_MANAGER_BY_ID)) {
             stmt.setLong(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    user = mapUser(rs);
+                    User user = super.mapUser(rs);
+                    manager = mapManager(rs, user);
                 }
             }
             log.debug("The user with id \"" + id + "\" received from database.");
@@ -64,11 +72,12 @@ public class UserDAO<T extends User> implements DAO<Long, User> {
         } finally {
             connectionPool.releaseConnection(con);
         }
-        return user;
+        return manager;
     }
 
+
     @Override
-    public boolean create(User user) throws DBException {
+    public boolean create(Manager manager) throws DBException {
         Connection con = connectionPool.getConnection();
         try  {
             addUser(user, con);
@@ -84,7 +93,7 @@ public class UserDAO<T extends User> implements DAO<Long, User> {
     }
 
     @Override
-    public List<? extends Manager> findAll() throws DBException {
+    public List<Manager> findAll() throws DBException {
         List<User> users = new ArrayList<>();
         Connection con = connectionPool.getConnection();
          try (PreparedStatement stmt = con.prepareStatement(UserQuery.FIND_ALL_USERS);
@@ -174,34 +183,17 @@ public class UserDAO<T extends User> implements DAO<Long, User> {
         stmt.setLong(k++, userRole.getId());
     }
 
-    protected User mapUser(ResultSet rs) throws SQLException {
-        long id = rs.getLong(UserFields.USER_ID);
-        String email = rs.getString(UserFields.USER_EMAIL);
-        String password = rs.getString(UserFields.USER_PASSWORD);
-        String name = rs.getString(UserFields.USER_NAME);
-        String surname = rs.getString(UserFields.USER_SURNAME);
-        String gender = rs.getString(UserFields.USER_GENDER);
-        boolean isOverEighteen = rs.getBoolean(UserFields.USER_IS_AGE_OVER_EIGHTEEN);
-        Date accountCreationDate = rs.getTimestamp(UserFields.USER_ACCOUNT_CREATION_DATE);
-//        Role role = mapRoleForUser(rs);
-        User user = User.getInstance(id, email, password, name, surname,
-                                     gender, isOverEighteen, accountCreationDate);
-//        if (role.getUserRole() == UserRole.MANAGER) { // todo краще витягувати всі дані відразу, чи зайвий раз сходити в базу,
-//            return  mapManager(rs, user);
-//        }
-        return user;
+
+    private Manager mapManager(ResultSet rs, User user) throws SQLException {
+        Date birthDate =new Date(rs.getDate(UserFields.MANAGER_BIRTH_DATE).getTime());;
+        String passport = rs.getString(UserFields.MANAGER_PASSPORT);
+        String bankAccount = rs.getString(UserFields.MANAGER_BANK_ACCOUNT);
+        return Manager.getInstance(user, birthDate, passport, bankAccount);
     }
 
-//    private Manager mapManager(ResultSet rs, User user) throws SQLException {
-//        Date birthDate =new Date(rs.getDate(UserFields.MANAGER_BIRTH_DATE).getTime());;
-//        String passport = rs.getString(UserFields.MANAGER_PASSPORT);
-//        String bankAccount = rs.getString(UserFields.MANAGER_BANK_ACCOUNT);
-//        return Manager.getInstance(user, birthDate, passport, bankAccount);
-//    }
-
-//    private Role mapRoleForUser(ResultSet rs) throws SQLException {
-//        String roleName = rs.getString(CategoryFields.CATEGORY_NAME);
-//        return Role.getInstance(UserRole.valueOf(roleName));
-//    }
+    private Role mapRoleForUser(ResultSet rs) throws SQLException {
+        String roleName = rs.getString(CategoryFields.CATEGORY_NAME);
+        return Role.getInstance(UserRole.valueOf(roleName));
+    }
 
 }

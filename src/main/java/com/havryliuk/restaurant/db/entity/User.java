@@ -34,10 +34,6 @@ public class User implements Entity{
         return user;
     }
 
-
-
-
-
     public long getId() {
         return id;
     }

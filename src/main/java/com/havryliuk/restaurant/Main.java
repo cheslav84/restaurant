@@ -4,6 +4,7 @@ package com.havryliuk.restaurant;
 import com.havryliuk.restaurant.db.dao.DishDao;
 import com.havryliuk.restaurant.db.dao.DAO;
 import com.havryliuk.restaurant.db.dao.implemetnation.DishDaoImpl;
+import com.havryliuk.restaurant.db.dao.implemetnation.ManagerDAO;
 import com.havryliuk.restaurant.db.dao.implemetnation.UserDAO;
 import com.havryliuk.restaurant.db.entity.Category;
 import com.havryliuk.restaurant.db.entity.Dish;
@@ -26,16 +27,16 @@ public class Main {
         System.out.println(finishTime - startTime);
 
 
+
+
         DAO<Long, User> userDAO = new UserDAO<>();
-        DAO<Long, Manager> managerDAO = new UserDAO();
+        DAO<Long, User> managerDAO = new ManagerDAO();
 
-
-        User user = userDAO.findByName("userName");
-        Manager manager = managerDAO.findByName("managerName");
-
+        User user = userDAO.findByName("email");
+        User manager = managerDAO.findByName("email");
 
         userDAO.create(new User());
-        userDAO.create(new Manager());
+        userDAO.create(new Manager());// todo ???
         managerDAO.create(new Manager());
 
 
