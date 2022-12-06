@@ -18,7 +18,6 @@ public class PropertiesLoader {
 
        public static Properties getProperties (String path) throws PropertyInitializationException {
            Properties properties = new Properties();
-           System.out.println(path);
            try (InputStream is = PropertiesLoader.class.getClassLoader().getResourceAsStream(path)) {
                if (is == null) {
                    log.error("The properties file path haven't been found: " + path);

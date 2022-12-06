@@ -39,6 +39,15 @@ public class DBManager {
         return localInstance;
     }
 
+    public Connection getConnection() throws DBException {
+        try {
+            Connection conn = ds.getConnection();
+            return conn;
+        } catch (SQLException e) {
+            throw new DBException(e);
+        }
+    }
+
 
 
     private static void initDataSource() throws DBException {
@@ -50,8 +59,11 @@ public class DBManager {
             log.error("Can't get Initial context for DataSource.", e);
             throw new DBException(e);
         }
-
     }
+
+
+
+
 
 
 

@@ -1,5 +1,6 @@
 package com.havryliuk.restaurant.controllers;
 
+import com.havryliuk.restaurant.db.connection.RestaurantConnectionPool;
 import com.havryliuk.restaurant.db.dao.DishDao;
 import com.havryliuk.restaurant.db.dao.implemetnation.DishDaoImpl;
 import com.havryliuk.restaurant.db.entity.Category;
@@ -11,6 +12,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
@@ -22,6 +25,7 @@ import java.util.List;
 
 @WebServlet("/")
 public class MenuController extends HttpServlet {
+    private static final Logger log = LogManager.getLogger(MenuController.class);// todo add logs for class
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -31,7 +35,6 @@ public class MenuController extends HttpServlet {
         try {
             dishDao = new DishDaoImpl();
             dishes = dishDao.findByCategory(Category.getInstance("Coffee"));
-
             for (Dish dish : dishes) {
                 dish.getName();
             }

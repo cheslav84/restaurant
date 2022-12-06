@@ -1,7 +1,6 @@
 package com.havryliuk.restaurant.db.dao.implemetnation;
 
-import com.havryliuk.restaurant.db.connection.ConnectionPool;
-import com.havryliuk.restaurant.db.connection.RestaurantConnectionPool;
+import com.havryliuk.restaurant.db.connection.DBManager;
 import com.havryliuk.restaurant.db.dao.DAO;
 import com.havryliuk.restaurant.db.dao.databaseFieds.CategoryFields;
 import com.havryliuk.restaurant.db.dao.databaseFieds.UserFields;
@@ -20,29 +19,26 @@ import java.util.List;
 //public class UserDAO<T extends User> implements DAO<Long, User> {
 public class UserDAO implements DAO<User> {
     private static final Logger log = LogManager.getLogger(UserDAO.class);
-    private final ConnectionPool connectionPool;
+    private final DBManager dbManager;
 
     public UserDAO() throws DBException {
-        connectionPool = RestaurantConnectionPool.getInstance();
+        dbManager = DBManager.getInstance();
     }
 
+    /**
+     * by email.
+     */
     @Override
     public User findByName(String name) throws DBException {
         User user = null;
-        Connection con = connectionPool.getConnection();
-        try (PreparedStatement stmt = con.prepareStatement(UserQuery.FIND_USER_BY_NAME)) {
+        try (Connection con = dbManager.getConnection();
+             PreparedStatement stmt = con.prepareStatement(UserQuery.FIND_USER_BY_NAME)) {
             stmt.setString(1, name);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    user = mapUser(rs);
-                }
-            }
+            user = extractUser(stmt);
             log.debug("The \"" + user + "\" user received from database.");
         } catch (SQLException e) {
             log.error("Error in getting user \"" + name + "\" from database.", e);
             throw new DBException(e);
-        } finally {
-            connectionPool.releaseConnection(con);
         }
         return user;
     }
@@ -50,36 +46,46 @@ public class UserDAO implements DAO<User> {
     @Override
     public User findById(Long id) throws DBException {// todo зробити абстрактний клас зі всіма аналогічними методами і передаваити як аргумент query?
         User user = null;
-        Connection con = connectionPool.getConnection();
-        try (PreparedStatement stmt = con.prepareStatement(UserQuery.FIND_USER_BY_ID)) {
+        try (Connection con = dbManager.getConnection();
+             PreparedStatement stmt = con.prepareStatement(UserQuery.FIND_USER_BY_ID)) {
             stmt.setLong(1, id);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    user = mapUser(rs);
-                }
-            }
+            user = extractUser(stmt);
             log.debug("The user with id \"" + id + "\" received from database.");
         } catch (SQLException e) {
             log.error("Error in getting user with id \"" + id + "\" from database.", e);
             throw new DBException(e);
-        } finally {
-            connectionPool.releaseConnection(con);
+        }
+        return user;
+    }
+
+    private User extractUser(PreparedStatement stmt) throws SQLException {
+        User user = null;
+        try (ResultSet rs = stmt.executeQuery()) {
+            if (rs.next()) {
+                user = mapUser(rs);
+            }
         }
         return user;
     }
 
     @Override
     public boolean create(User user) throws DBException {
-        Connection con = connectionPool.getConnection();
-        try  {
-            addUser(user, con);
+        try (Connection con = dbManager.getConnection();
+             PreparedStatement stmt = con.prepareStatement(UserQuery.ADD_USER,
+                     Statement.RETURN_GENERATED_KEYS)) {
+            setUserParameters(user, stmt);
+            int insertionAmount = stmt.executeUpdate();
+            if (insertionAmount > 0) {
+                try (ResultSet rs = stmt.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        user.setId(rs.getLong(1));
+                    }
+                }
+            }
             log.debug("The \"" + user.getName() + "\" user has been added to database.");
         } catch (SQLException e) {
             log.error("Error in inserting user \"" + user.getName() + "\" to database.", e);
             throw new DBException(e);
-        }
-        finally {
-            connectionPool.releaseConnection(con);
         }
         return true;
     }
@@ -87,9 +93,9 @@ public class UserDAO implements DAO<User> {
     @Override
     public List<User> findAll() throws DBException {
         List<User> users = new ArrayList<>();
-        Connection con = connectionPool.getConnection();
-         try (PreparedStatement stmt = con.prepareStatement(UserQuery.FIND_ALL_USERS);
-              ResultSet rs = stmt.executeQuery()) {
+        try (Connection con = dbManager.getConnection();
+             PreparedStatement stmt = con.prepareStatement(UserQuery.FIND_ALL_USERS);
+             ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 users.add(mapUser(rs));
             }
@@ -97,17 +103,14 @@ public class UserDAO implements DAO<User> {
         } catch (SQLException e) {
             log.debug("Error in getting list of user from database.", e);
             throw new DBException(e);
-        } finally {
-            connectionPool.releaseConnection(con);
         }
         return users;
     }
 
     @Override
     public boolean update(User user) throws DBException {
-        Connection con = connectionPool.getConnection();
-        try (PreparedStatement stmt = con.prepareStatement(UserQuery.UPDATE_USER)) {
-
+        try (Connection con = dbManager.getConnection();
+             PreparedStatement stmt = con.prepareStatement(UserQuery.UPDATE_USER)) {
             setUserParameters(user, stmt);
             stmt.executeUpdate();
             log.debug("The user with id \"" + user.getId() +
@@ -122,8 +125,8 @@ public class UserDAO implements DAO<User> {
 
     @Override
     public boolean delete(User user) throws DBException {
-        Connection con = connectionPool.getConnection();
-        try (PreparedStatement stmt = con.prepareStatement(UserQuery.DELETE_USER)) {
+        try (Connection con = dbManager.getConnection();
+             PreparedStatement stmt = con.prepareStatement(UserQuery.DELETE_USER)) {
             stmt.setString(1, user.getEmail());
             stmt.executeUpdate();
             log.debug("The user \"" + user.getName() + "\", has been successfully deleted.");
@@ -136,8 +139,8 @@ public class UserDAO implements DAO<User> {
 
     @Override
     public boolean delete(Long id) throws DBException {
-        Connection con = connectionPool.getConnection();
-        try (PreparedStatement stmt = con.prepareStatement(UserQuery.DELETE_USER_BY_ID)) {
+        try (Connection con = dbManager.getConnection();
+             PreparedStatement stmt = con.prepareStatement(UserQuery.DELETE_USER_BY_ID)) {
             stmt.setLong(1, id);
             stmt.executeUpdate();
             log.debug("The user with id \"" + id + "\", has been successfully deleted");
@@ -148,20 +151,6 @@ public class UserDAO implements DAO<User> {
         return true;
     }
 
-    private void addUser(User user, Connection con) throws SQLException {
-        try (PreparedStatement stmt = con.prepareStatement(UserQuery.ADD_USER,
-                Statement.RETURN_GENERATED_KEYS)) {
-            setUserParameters(user, stmt);
-            int insertionAmount = stmt.executeUpdate();
-            if (insertionAmount > 0) {
-                try (ResultSet rs = stmt.getGeneratedKeys()) {
-                    if (rs.next()) {
-                        user.setId(rs.getLong(1));
-                    }
-                }
-            }
-        }
-    }
 
     private void setUserParameters(User user, PreparedStatement stmt) throws SQLException {
         Role userRole = user.getRole();
@@ -194,7 +183,8 @@ public class UserDAO implements DAO<User> {
     }
 
     private UserDetails mapUserDetails(ResultSet rs) throws SQLException {// todo винести потім в UserDetailsDao
-        Date birthDate =new Date(rs.getDate(UserFields.MANAGER_BIRTH_DATE).getTime());;
+        Date birthDate = new Date(rs.getDate(UserFields.MANAGER_BIRTH_DATE).getTime());
+        ;
         String passport = rs.getString(UserFields.MANAGER_PASSPORT);
         String bankAccount = rs.getString(UserFields.MANAGER_BANK_ACCOUNT);
         return UserDetails.getInstance(birthDate, passport, bankAccount);
