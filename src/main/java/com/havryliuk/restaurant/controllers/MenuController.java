@@ -20,7 +20,7 @@ import java.util.List;
 
 //todo read about PRG pattern
 
-@WebServlet("/index")
+@WebServlet("/")
 public class MenuController extends HttpServlet {
 
     @Override
@@ -39,7 +39,7 @@ public class MenuController extends HttpServlet {
             e.printStackTrace();
         }
         request.setAttribute("dishes", dishes);
-        request.getRequestDispatcher("/WEB-INF/view/index.jsp").forward(request, response);
+        request.getRequestDispatcher("/view/index.jsp").forward(request, response);
     }
 
 }

@@ -1,4 +1,6 @@
 package com.havryliuk.restaurant.db.entity;
 
-public interface Entity {
+import java.io.Serializable;
+
+public interface Entity extends Serializable {
 }

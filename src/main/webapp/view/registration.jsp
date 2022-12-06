@@ -83,11 +83,8 @@
                         <div class="section-divider-line"></div>
 
 
-
-
                         
-                        <!-- <form method="post" id="wf-form-Reservation-Form" name="logInForm" data-name="Log in form">
-
+                        <form method="post" id="wf-form-Reservation-Form" name="logInForm" data-name="Log in form">
                             <input type="email" id="Email-3" name="email" data-name="Email" placeholder="Email address"
                                 maxlength="32" required="true" class="field w-input">
 
@@ -104,7 +101,7 @@
                             <div class="intro-title">Do not have account?</div>
                             <input type="submit" value="Sing in" data-wait="Please wait..."
                                 class="button submit-button w-button">
-                        </div> -->
+                        </div>
 
 
 
@@ -114,8 +111,6 @@
                                 maxlength="24" class="field w-input">
                             <input type="text" id="name" name="surname" data-name="Surname"
                                 placeholder="Enter your surname" maxlength="24" class="field w-input">
-
-
                             <div class="w-row">
                                 <div class="w-clearfix w-col w-col-6">
                                     <select id="user-gender" name="userGender" data-name="User gender"
@@ -131,8 +126,6 @@
                                         <input type="checkbox" id="user-age" name="userOverEighteenAge" data-name="User age" class="w-col w-select user-age" value="">
                                         </input>
                                     </div>
-
-
                                 </div>
                             </div>
 
@@ -146,8 +139,6 @@
                             <input type="submit" value="Submit" data-wait="Please wait..."
                                 class="button submit-button w-button">
                         </form>
-
-
 
                         <div class="success-bg w-form-done">
                             <p class="success-text">Thank you!</p>
@@ -201,7 +192,7 @@
 
 
     <script src="js/jquery3.6.1.js" type="text/javascript" crossorigin="anonymous"></script>
-    <script src="js/webflow.js" type="text/javascript"></script>
+    <script src="js/webflow.e.js" type="text/javascript"></script>
 
 
 

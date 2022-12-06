@@ -27,7 +27,7 @@ public class RegistrationController extends HttpServlet {
 
         //todo ask from which page user came
 //        request.getRequestDispatcher("/WEB-INF/view/registration.jsp").forward(request, response);
-        request.getRequestDispatcher("/WEB-INF/view/registration.jsp").forward(request, response);
+        request.getRequestDispatcher("/view/registration.jsp").forward(request, response);
     }
 
 
@@ -59,7 +59,8 @@ public class RegistrationController extends HttpServlet {
 
 
 //        request.getRequestDispatcher("/WEB-INF/view/user.jsp").forward(request, response);
-        request.getRequestDispatcher("/WEB-INF/view/index.jsp").forward(request, response);
+        request.getRequestDispatcher("/view/index.jsp").forward(request, response);
+        //todo redirect
     }
 
 }

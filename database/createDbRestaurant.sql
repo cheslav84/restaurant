@@ -171,8 +171,8 @@ CREATE TABLE IF NOT EXISTS `restaurant`.`user_details` (
   `birthdate` DATE NOT NULL,
   `passport` VARCHAR(16) NOT NULL,
   `bank_account` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`user_id`, `passport`, `bank_account`, `birthdate`),
-  UNIQUE INDEX `passport_UNIQUE` (`passport` ASC),
+  PRIMARY KEY (`user_id`),
+  UNIQUE INDEX `passport_UNIQUE` (`passport` ASC) ,
   UNIQUE INDEX `bank_account_UNIQUE` (`bank_account` ASC),
   CONSTRAINT `fk_user_details_user`
     FOREIGN KEY (`user_id`)

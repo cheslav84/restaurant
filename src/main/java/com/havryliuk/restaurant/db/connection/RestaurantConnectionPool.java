@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class RestaurantConnectionPool implements ConnectionPool {
+public class RestaurantConnectionPool implements ConnectionPool {// TODO CHANGE TO DB MANAGER. НАРАЗІ ВЗЯВ CONNECTION З TOMCAT DATASOURSE
     private static final Logger log = LogManager.getLogger(RestaurantConnectionPool.class);// todo add logs for class
 
 
@@ -28,13 +28,15 @@ public class RestaurantConnectionPool implements ConnectionPool {
 
     private static volatile RestaurantConnectionPool instance;
 
-    private final List<Connection> connectionPool;
+    private List<Connection> connectionPool = null;
 //    private final List<Connection> usedConnections = new ArrayList<>();
     private final List<Connection> usedConnections = new CopyOnWriteArrayList<>();
 
     private static DataSource ds = null;
     private static Context envContext;
 
+    private RestaurantConnectionPool() {
+    }
 
     public static RestaurantConnectionPool getInstance() throws DBException {
         initDataSource();
@@ -174,13 +176,7 @@ public class RestaurantConnectionPool implements ConnectionPool {
 
     private static Connection createConnection() throws DBException {
         try {
-//
-//            DataSource ds = null;
-//            Context initContext = new InitialContext();
-//            Context envContext  = (Context)initContext.lookup("java:/comp/env");
-//            ds = (DataSource)envContext.lookup("jdbc/Restaurant");
             Connection conn = ds.getConnection();
-
             return conn;
         } catch (SQLException e) {
             throw new DBException(e);

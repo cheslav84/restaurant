@@ -6,10 +6,10 @@ import com.havryliuk.restaurant.db.entity.User;
 import com.havryliuk.restaurant.exceptions.DBException;
 
 public class UserService {
-    DAO<Long, ? super User> userDao;
+    DAO<User> userDao;
 
     public UserService() throws DBException {
-        userDao = new UserDAO<>();
+        userDao = new UserDAO();
     }
 
     public void addUser(User user) throws DBException {

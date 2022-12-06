@@ -876,12 +876,12 @@
              d = window.location, 
              f = window.XDomainRequest && !window.atob, 
              h = ".w-form", p = /e(-)?mail/i, v = /^\S+@\S+$/
-            //  , 
-            //  m = window.alert, g = r.env(), w = /list-manage[1-9]?.com/i, b = e.debounce(
-            //     function () {
-            //          m("Oops! This page has improperly configured forms. Please contact your website administrator to fix this issue.") 
-            //     }, 100
-            // )
+             , 
+             m = window.alert, g = r.env(), w = /list-manage[1-9]?.com/i, b = e.debounce(
+                function () {
+                     m("Oops! This page has improperly configured forms. Please contact your website administrator to fix this issue.") 
+                }, 100
+            )
             ; 
             function y(e, n) {
                      var i = t(n), r = t.data(n, h); r || (r = t.data(n, h, {
