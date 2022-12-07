@@ -102,6 +102,7 @@ INSERT INTO booking_status (booking_status_name) VALUE ('completed');
 -- SELECT * FROM dish ORDER BY id
  #SELECT * FROM role ORDER BY id
  #SELECT * FROM user ORDER BY id
+  DELETE FROM user WHERE email='mail@com'
  #DELETE FROM user WHERE id=1
  #SELECT * FROM user_details
 -- SELECT * FROM booking_status order by id
@@ -110,7 +111,7 @@ INSERT INTO booking_status (booking_status_name) VALUE ('completed');
 -- SELECT d.*, c.category_name FROM dish d JOIN category c ON c.category_name='coffee'
 
 
-SELECT * FROM user u JOIN user_details ud ON u.id=ud.user_id ORDER BY surname
+#SELECT * FROM user u JOIN user_details ud ON u.id=ud.user_id ORDER BY surname
 #SELECT * FROM user u JOIN user_details ud ON u.id=ud.user_id WHERE u.id=1
 #SELECT * FROM user u JOIN user_details ud ON u.id=ud.user_id WHERE u.surname='Гаврилюк'
  
