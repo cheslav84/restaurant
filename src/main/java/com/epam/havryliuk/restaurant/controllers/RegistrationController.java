@@ -50,10 +50,12 @@ public class RegistrationController extends HttpServlet {
             //todo inform cause
         }
 
-        HttpSession session = request.getSession();
-        session.setAttribute("user", user);
-//        request.getRequestDispatcher("/WEB-INF/view/user.jsp").forward(request, response);
+        request.getSession().setAttribute("user", user);
+
+//        HttpSession session = request.getSession();
+//        session.setAttribute("user", user);
         request.getRequestDispatcher("view/jsp/registration.jsp").forward(request, response);
+        response.sendRedirect("registration");
         //todo redirect
     }
 

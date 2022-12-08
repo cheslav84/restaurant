@@ -7,112 +7,35 @@
 <%=Properties.url%>
 
 
-<my:user id="123" />
+<!-- <my:user id="123" /> -->
  
         <!DOCTYPE html>
         <html>
-
-
-        <!--        data-wf-domain="easy-times.webflow.io" data-wf-page="559f85c38bde14cf4b3723d0"-->
-        <!--      data-wf-site="559f85c38bde14cf4b3723cf"-->
-        <!--      class="w-mod-js wf-merriweather-n3-active wf-merriweather-i3-active wf-merriweather-n4-active wf-merriweather-i4-active wf-merriweather-n7-active wf-merriweather-i7-active wf-merriweather-n9-active wf-merriweather-i9-active wf-oswald-n2-active wf-oswald-n3-active wf-oswald-n4-active wf-oswald-n5-active wf-oswald-n6-active wf-oswald-n7-active wf-lato-n1-active wf-lato-i1-active wf-lato-n3-active wf-lato-i3-active wf-lato-n4-active wf-lato-i4-active wf-lato-n7-active wf-lato-i7-active wf-lato-n9-active wf-lato-i9-active wf-droidsans-n4-active wf-droidsans-n7-active wf-opensans-n3-active wf-opensans-i3-active wf-opensans-n4-active wf-opensans-i4-active wf-opensans-n6-active wf-opensans-i6-active wf-opensans-n7-active wf-opensans-i7-active wf-opensans-n8-active wf-opensans-i8-active wf-satisfy-n4-active wf-reeniebeanie-n4-active wf-active"-->
-
         <head>
             <meta content="text/html; charset=UTF-8">
-            <!--    http-equiv="Content-Type"-->
             <title>Easy Times</title>
             <meta
                 content="Easy Times is a Restaurant website Restaurant, Cafe including the presentation of menus, events, blogging functionality, multiple contact forms and more."
                 name="description">
             <meta content="width=device-width, initial-scale=1" name="viewport">
             <meta content="Webflow" name="generator">
-
-
-
-
-            <!-- 
-
-        <link href="${pageContext.request.contextPath}common.css" rel="stylesheet" type="text/css">
-
-        
-        <link href="${pageContext.request.contextPath}common.css" rel="stylesheet" type="text/css">
-        <link href="${pageContext.request.contextPath}css/common.css" rel="stylesheet" type="text/css">
-        <link href="${pageContext.request.contextPath}../css/common.css" rel="stylesheet" type="text/css">
-        <link href="${pageContext.request.contextPath}./common.css" rel="stylesheet" type="text/css">
-        <link href="${pageContext.request.contextPath}../../css/common.css" rel="stylesheet" type="text/css">
-
-    -->
-    <!-- <link href="../host.properties" rel="stylesheet" type="text/css"> -->
-    <!-- <link href="././css/common.css" rel="stylesheet" type="text/css"> -->
-            <!-- <link href="<%=Properties.url%>view/css/common.css" rel="stylesheet" type="text/css">
-            <link href="<%=Properties.url%>view/css/menu.css" rel="stylesheet" type="text/css"> -->
+   
             <link href="view/css/common.css" rel="stylesheet" type="text/css">
             <link href="view/css/menu.css" rel="stylesheet" type="text/css">
+            <!-- <script src="view/js/menu.js" type="text/javascript"></script> -->
 
-            <!-- <script src="./index/webfont.js" type="text/javascript"></script>  
-       <link rel="stylesheet" href="./index/css" media="all">
-       <script type="text/javascript">
-            WebFont.load({  google: {    families: ["Merriweather:300,300italic,400,400italic,700,700italic,900,900italic","Oswald:200,300,400,500,600,700","Lato:100,100italic,300,300italic,400,400italic,700,700italic,900,900italic","Droid Sans:400,700","Open Sans:300,300italic,400,400italic,600,600italic,700,700italic,800,800italic","Satisfy:regular","Reenie Beanie:regular"]  }});
-        </script> -->
-            <!-- [if lt IE 9]> -->
-            <!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"-->
-            <!--            type="text/javascript"></script>-->
-            <!--    <![endif]&ndash;&gt;-->
-            <!--    <script type="text/javascript">-->
-            <!--        !function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart"in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);-->
-            <!--    </script>-->
-            <!--    <link href="https://assets.website-files.com/559f85c38bde14cf4b3723cf/55d833f553965dde61577bdd_Favicon.png"-->
-            <!--          rel="shortcut icon" type="image/x-icon">-->
-            <!--    <link href="https://assets.website-files.com/559f85c38bde14cf4b3723cf/55d833f753965dde61577bde_Webclip.jpg"-->
-            <!--          rel="apple-touch-icon">-->
         </head>
 
         <body>
-            <div data-animation="default" class="navbar-left w-nav" data-easing2="ease" data-easing="ease"
-                data-collapse="small" role="banner" data-no-scroll="1" data-duration="400" data-doc-height="1">
-                <div class="menu-overlay">
-                    <div class="w-container">
-                        <a href="index.html" aria-current="page"
-                            class="logo-container w-clearfix w-nav-brand w--current">
-                            <img src="view/pictures/icons/Icon-coffee.png" alt="" class="logo-icon">
-                            <!-- <img src="pictures/icons/Icon-coffee.png" alt="" class="logo-icon"> -->
-                            <h1 class="logo-text">Easy Times</h1>
-                            <h2 class="logo-text subtitle">Cafe&nbsp;&amp; Restaurant</h2>
-                        </a>
-                        <div class="menu-divider w-hidden-small w-hidden-tiny"></div>
-                        <div class="menu-button w-nav-button">
-                            <div class="w-icon-nav-menu"></div>
-                        </div>
-                        <nav role="navigation" class="nav-menu w-nav-menu">
-                            <a href="index.html" aria-current="page" class="nav-link w-nav-link w--current"
-                                style="max-width: 940px;">Home</a>
-                            <a href="menu.html" class="nav-link w-nav-link" style="max-width: 940px;">Menu</a>
-                            <a href="reservation.html" class="nav-link w-nav-link"
-                                style="max-width: 940px;">Reservation</a>
-                            <a href="gallery.html" class="nav-link w-nav-link" style="max-width: 940px;">Gallery</a>
-                            <a href="parties.html" class="nav-link w-nav-link" style="max-width: 940px;">Parties &amp;
-                                Events</a>
-                            <a href="about-us.html" class="nav-link w-nav-link" style="max-width: 940px;">About us</a>
-                            <a href="blog.html" class="nav-link w-nav-link" style="max-width: 940px;">Blog</a>
-                            <a href="contact.html" class="nav-link w-nav-link" style="max-width: 940px;">Contact us</a>
-                        </nav>
-                        <div class="menu-divider w-hidden-small w-hidden-tiny"></div>
-                        <div class="nav-contact-block w-hidden-small w-hidden-tiny">
-                            <a href="http://www.facebook.com/" target="_blank" class="nav-social-button w-inline-block">
-                                <img src="pictures/icons/Icon-facebook.png" alt="" class="nav-social-icon"></a>
-                            <a href="http://www.twitter.com/" target="_blank" class="nav-social-button w-inline-block">
-                                <img src="pictures/icons/Icon-twitter.png" alt="" class="nav-social-icon">
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="w-nav-overlay" data-wf-ignore=""></div>
-            </div>
+            <jsp:include page="sidebar.jsp"/>
+
+
+
             <div data-delay="4000" data-animation="fade" class="hero-slider w-slider" data-autoplay="true"
                 data-easing="ease" data-hide-arrows="false" data-disable-swipe="false" data-autoplay-limit="0"
                 data-nav-spacing="3" data-duration="500" data-infinite="true" id="top">
                 <div class="w-slider-mask">
-                    <div class="hero-slide w-slide"
+                    <!-- <div class="hero-slide w-slide"
                         style="transform: translateX(-1201.82px); opacity: 1; z-index: 15; visibility: hidden;">
                         <div class="hero-slide-overlay">
                             <div class="hero-slide-container w-container">
@@ -160,7 +83,7 @@
                                 <a href="reservation.html" data-ix="slider-button-2" class="button">Reserve a table!</a>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="hero-slide-button w-slider-arrow-left">
                     <div class="w-icon-slider-left"></div>
@@ -169,7 +92,7 @@
                     <div class="w-icon-slider-right"></div>
                 </div>
             </div>
-            <div id="about-us" class="section wf-section">
+            <!-- <div id="about-us" class="section wf-section">
                 <div class="container w-container">
                     <div class="section-intro-block">
                         <div data-ix="fade-in-on-scroll" class="intro-title">Welcome</div>
@@ -217,7 +140,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
+
+
             <div class="image-background-section wf-section">
                 <div class="image-background-overlay">
                     <div class="container w-container">
@@ -227,25 +152,21 @@
                         <div data-duration-in="300" data-duration-out="100" data-current="Coffee" data-easing="ease"
                             class="menu-tabs w-tabs">
                             <div class="menu-tabs-menu w-tab-menu">
-                            
-                                <form action="coffeeMenu" name="CoffeeController" method="POST" data-w-tab="Coffee" class="menu-tab-button w-inline-block w-tab-link w--current">
-                                    <div>Coffee</div>
-                                    <!-- <input type="hidden" name="menu" value="coffe"/>
-                                    <input type="submit" name="button" value="Coffee" class="menu-tab-button w-tab-link "/> -->
-                                    <!-- <jsp:useBean id="calendar" class="java.util.GregorianCalendar"/> -->
-                                    <!-- <input type="hidden" name="time" value="sometime"/>
-                                    <input type="submit" name="button" value="time"/> -->
 
-                                </form>
                             
-                                <form action="lunchMenu" data-w-tab="Lunch" class="menu-tab-button w-inline-block w-tab-link">
+                                <form method="get" name="menu" data-w-tab="Coffee"
+                                    class="menu-tab-button w-inline-block w-tab-link w--current" >
+                                    <div>Coffee</div>
+                                   <input type="submit" name="menu" value="COFFEE" class="menu-hidden-input" />
+                                </form>
+                                <form method="get" id="lunchMenuButton" data-w-tab="Lunch" class="menu-tab-button w-inline-block w-tab-link">
                                     <div>Lunch</div>
+                                    <input type="submit" name="menu" value="LUNCH" class="menu-hidden-input" />
                                 </form>
-                            
-                                <form action="specialsMenu" data-w-tab="Every Day Specials" class="menu-tab-button w-inline-block w-tab-link">
+                                <form method="get" id="specialsMenuButton" data-w-tab="Every Day Specials" class="menu-tab-button w-inline-block w-tab-link">
                                     <div>Every Day Specials</div>
+                                    <input type="submit" name="menu" value="SPECIALS" class="menu-hidden-input" />
                                 </form>
-                            
                             </div>
                             <div class="w-tab-content">
 
@@ -292,8 +213,42 @@
                                 </div>
                                 <div data-w-tab="Lunch" class="menu-tab-pane w-tab-pane">
                                     <div class="menu-white-wrapper w-dyn-list">
+
+
                                         <div role="list" class="w-clearfix w-dyn-items w-row">
-                                            <div role="listitem" class="menu-list-item w-dyn-item w-col w-col-6">
+
+
+                                            <c:forEach var="dish" items="${requestScope.dishes}">
+                                                <div role="listitem" class="menu-list-item w-dyn-item w-col w-col-6">
+                                                    <div class="menu-image-container">
+                                                        <div style="background-image: url('pictures/dish_pictures/brew-coffee.webp');"
+                                                            class="menu-item-image-box">
+                                                        </div>
+                                                    </div>
+                                                    <div class="menu-item-text">
+                                                        <div class="menu-item-title">
+                                                            <c:out value="${dish.name}" />
+                                                        </div>
+                                                        <div class="menu-item-title description">
+                                                            <c:out value="${dish.description}" />
+                                                        </div>
+                                                        <div class="menu-item-title weight">
+                                                            <c:out value="${dish.weight}" />
+                                                            <span class="weight-marker"> g</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="menu-item-price">
+                                                        <c:out value="${dish.price}" />
+                                                        <span class="price-marker">₴</span>
+                                                    </div>
+                                                    <a href="" class="order-icon-container">
+                                                        <img src="pictures/icons/Icon-basket.png" alt=""
+                                                            class="order-icon-img">
+                                                    </a>
+                                                </div>
+                                            </c:forEach>
+
+                                            <!-- <div role="listitem" class="menu-list-item w-dyn-item w-col w-col-6">
                                                 <div class="menu-item-price">14.00</div>
                                                 <div class="menu-item-title">Taco Salad</div>
                                                 <div class="menu-item-title description">Lorem ipsum dolor sit amet
@@ -324,8 +279,13 @@
                                                     consectetur
                                                     adipiscing.
                                                 </div>
-                                            </div>
+                                            </div> -->
+
+
+
+
                                         </div>
+                                        
                                     </div>
                                 </div>
                                 <div data-w-tab="Every Day Specials" class="menu-tab-pane w-tab-pane">
@@ -407,17 +367,6 @@
                                         <img src="pictures/common/person-woman-coffee-cup.jpg"
                                             sizes="(max-width: 479px) 44vw, (max-width: 767px) 45vw, (max-width: 991px) 17vw, 15vw"
                                             alt="" class="gallery-thumb">
-
-
-
-
-                                        <!--                            <script type="application/json" class="w-json">{-->
-                                        <!--                                "items": [],-->
-                                        <!--                                "group": "Home gallery"-->
-                                        <!--                            }-->
-
-
-                                        <!--                            </script>-->
                                     </a>
                                 </div>
                                 <div
@@ -426,13 +375,6 @@
                                         <img src="pictures/common/restaurant-coffee-cup-cappuccino.jpg"
                                             sizes="(max-width: 479px) 44vw, (max-width: 767px) 45vw, (max-width: 991px) 17vw, 15vw"
                                             alt="" class="gallery-thumb">
-                                        <!--                            <script type="application/json" class="w-json">{-->
-                                        <!--                                "items": [],-->
-                                        <!--                                "group": "Home gallery"-->
-                                        <!--                            }-->
-
-
-                                        <!--                            </script>-->
                                     </a>
                                 </div>
                             </div>
@@ -442,13 +384,6 @@
                                         <img src="pictures/common/Eating.jpg"
                                             sizes="(max-width: 479px) 44vw, (max-width: 767px) 45vw, (max-width: 991px) 17vw, 15vw"
                                             alt="" class="gallery-thumb">
-                                        <!--                            <script type="application/json" class="w-json">{-->
-                                        <!--                                "items": [],-->
-                                        <!--                                "group": "Home gallery"-->
-                                        <!--                            }-->
-
-
-                                        <!--                            </script>-->
                                     </a>
                                 </div>
                                 <div
@@ -457,13 +392,6 @@
                                         <img src="pictures/common/beans-coffee-morning-espresso.jpg"
                                             sizes="(max-width: 479px) 44vw, (max-width: 767px) 45vw, (max-width: 991px) 17vw, 15vw"
                                             alt="" class="gallery-thumb">
-                                        <!--                            <script type="application/json" class="w-json">{-->
-                                        <!--                                "items": [],-->
-                                        <!--                                "group": "Home gallery"-->
-                                        <!--                            }-->
-
-
-                                        <!--                            </script>-->
                                     </a>
                                 </div>
                             </div>
@@ -475,6 +403,7 @@
             <jsp:include page="footer.jsp"/>
             <script src="view/js/jquery3.6.1.js" type="text/javascript" crossorigin="anonymous"></script>
             <script src="view/js/webflow.e.js" type="text/javascript"></script>
+            <script src="view/js/menu.js" type="text/javascript"></script>
 
         </body>
 

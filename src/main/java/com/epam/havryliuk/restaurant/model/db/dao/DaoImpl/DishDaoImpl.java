@@ -8,6 +8,7 @@ import com.epam.havryliuk.restaurant.model.db.dao.databaseFieds.DishFields;
 import com.epam.havryliuk.restaurant.model.db.dao.queries.DishQuery;
 import com.epam.havryliuk.restaurant.model.db.entity.Dish;
 import com.epam.havryliuk.restaurant.model.db.entity.Category;
+import com.epam.havryliuk.restaurant.model.db.entity.constants.CategoryName;
 import com.epam.havryliuk.restaurant.model.exceptions.DBException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -39,7 +40,7 @@ public class DishDaoImpl implements DishDao {
                     dish = mapDish(rs);
                 }
             }
-            log.debug("The \"" + name + "\" dish has been received from database.");
+//            log.debug("The \"" + name + "\" dish has been received from database.");
         } catch (SQLException e) {
             log.error("Error in getting dish \"" + name +  "\" from database. ", e);
             throw new DBException(e);
@@ -55,13 +56,13 @@ public class DishDaoImpl implements DishDao {
         Connection con = connectionPool.getConnection();
 
         try (PreparedStatement stmt = con.prepareStatement(DishQuery.FIND_ALL_BY_CATEGORY)) {
-            stmt.setString(1, category.getName());
+            stmt.setString(1, category.getCategoryName().name());
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     dishes.add(mapDish(rs));
                 }
             }
-            log.debug("List of dishes has been received from database.");
+            log.debug("List of dishes (by category) has been received from database. ");
         } catch (SQLException e) {
             log.error("Error in getting list of dishes from database. ", e);
             throw new DBException(e);
@@ -148,35 +149,6 @@ public class DishDaoImpl implements DishDao {
     private Category mapCategoryForDish(ResultSet rs) throws SQLException { //todo low coupling
         long id = rs.getLong(DishFields.DISH_CATEGORY_ID);
         String name = rs.getString(CategoryFields.CATEGORY_NAME);
-        return Category.getInstance(id, name);
+        return Category.getInstance(id, CategoryName.valueOf(name));
     }
-
-//    enum DishSql {
-//        ADD_DISH("INSERT INTO dish (name) values (?)"),//todo
-//        FIND_DISH_BY_NAME("SELECT * FROM dish d WHERE d.name=?"),
-//        FIND_ALL_ORDERED_BY_NAME("SELECT * FROM dish ORDER BY name"),
-//        FIND_ALL_ORDERED_BY_PRICE("SELECT * FROM dish ORDER BY price"),
-//        FIND_ALL_ORDERED_BY_CATEGORY("SELECT * FROM dish ORDER BY category"),
-//
-//
-//
-//        FIND_ALL_BY_CATEGORY("SELECT d.*, c.name as 'category_name' FROM dish d JOIN category c ON c.name=?"),
-//        //FIND_ALL_BY_CATEGORY("SELECT * FROM dish d JOIN category c WHERE c.name=?"),
-//
-//        FIND_DISH_BY_CATEGORY("SELECT * FROM dish d WHERE d.name=?"),
-//
-//
-//        UPDATE_DISH("UPDATE teams SET name=? WHERE id=?"),//todo
-//        //        DELETE_TEAM("DELETE t, ut FROM teams t JOIN users_teams ut WHERE t.id=? AND ut.team_id=?;"),
-//        DELETE_DISH("DELETE FROM teams WHERE id=?"),//todo
-//        DELETE_USERS_IN_TEAM("DELETE FROM users_teams WHERE team_id=?"),//todo
-//        GET_ALL_DISHES("SELECT * FROM teams t ORDER BY t.name"),//todo
-//        GET_TEAMS_BY_USER("SELECT id, name FROM teams t JOIN users_teams ut ON t.id=ut.team_id WHERE ut.user_id=?");//todo
-//
-//        String QUERY;
-//
-//        DishSql(String QUERY) {
-//            this.QUERY = QUERY;
-//        }
-//    }
 }

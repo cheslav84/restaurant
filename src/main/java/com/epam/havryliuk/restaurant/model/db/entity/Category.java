@@ -1,16 +1,18 @@
 package com.epam.havryliuk.restaurant.model.db.entity;
 
+import com.epam.havryliuk.restaurant.model.db.entity.constants.CategoryName;
+
 public class Category implements Entity {
     private Long id;
-    private String name;
+    private CategoryName categoryName;
 
-    public static Category getInstance(String name) {
+    public static Category getInstance(CategoryName categoryName) {
         Category category = new Category();
-        category.setName(name);
+        category.setCategoryName(categoryName);
         return category;
     }
-    public static Category getInstance(long id, String name) {
-        Category category = getInstance(name);
+    public static Category getInstance(long id, CategoryName categoryName) {
+        Category category = getInstance(categoryName);
         category.setId(id);
         return category;
     }
@@ -24,13 +26,15 @@ public class Category implements Entity {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+
+    public CategoryName getCategoryName() {
+        return categoryName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCategoryName(CategoryName categoryName) {
+        this.categoryName = categoryName;
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -39,18 +43,18 @@ public class Category implements Entity {
 
         Category category = (Category) o;
 
-        return name != null ? name.equals(category.name) : category.name == null;
+        return categoryName == category.categoryName;
     }
 
     @Override
     public int hashCode() {
-        return name != null ? name.hashCode() : 0;
+        return categoryName != null ? categoryName.hashCode() : 0;
     }
 
     @Override
     public String toString() {
         return "Category{" +
-                "name='" + name + '\'' +
+                "categoryName=" + categoryName.name() +
                 '}';
     }
 }

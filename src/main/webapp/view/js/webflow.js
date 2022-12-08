@@ -44,6 +44,13 @@
 
 
 
+
+([function menu () {
+    alert();
+}])
+
+
+
     ([function (t, e, n) {
         "use strict";
         var i = {}, r = {}, o = [], a = window.Webflow

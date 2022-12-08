@@ -6,6 +6,8 @@ import com.epam.havryliuk.restaurant.model.db.dao.DaoImpl.DishDaoImpl;
 import com.epam.havryliuk.restaurant.model.db.entity.Category;
 import com.epam.havryliuk.restaurant.model.exceptions.DBException;
 
+import com.epam.havryliuk.restaurant.model.exceptions.NoSuchEntityException;
+import com.epam.havryliuk.restaurant.model.services.DishService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -21,27 +23,40 @@ import java.util.List;
 
 //todo read about PRG pattern
 
-@WebServlet("/")
+@WebServlet("/index")
 public class MenuController extends HttpServlet {
     private static final Logger log = LogManager.getLogger(MenuController.class);// todo add logs for class
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        DishDao dishDao = null;
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        log.debug("\"/index\" request doGet MenuController");
+
+        String categoryMenu = req.getParameter("menu");
+        log.debug("Request for \"" + categoryMenu + "\" menu has been received.");
+
+        DishService dishService = new DishService();
         List<Dish> dishes = null;
         try {
-            dishDao = new DishDaoImpl();
-            dishes = dishDao.findByCategory(Category.getInstance("Coffee"));
+            dishes = dishService.getMenuByCategory(categoryMenu);
+            log.debug("List of dishes received by servlet and going to be sending to client side.");
             for (Dish dish : dishes) {
-                dish.getName();
+                System.out.println(dish);
             }
-        } catch (DBException e) {
-            e.printStackTrace();
+        } catch (NoSuchEntityException e) {
+            log.error("vList of dishes has been received.");
+            //req.setAttribute("message", "Message");//todo inform user!!!
         }
-        request.setAttribute("dishes", dishes);
-        request.getRequestDispatcher("view/jsp/index.jsp").forward(request, response);
+
+        req.setAttribute("dishes", dishes);
+        req.getRequestDispatcher("view/jsp/index.jsp").forward(req, resp);
     }
+
+//    @Override
+//    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+//        response.sendRedirect("index");
+//    }
 
 }
 
@@ -49,17 +64,6 @@ public class MenuController extends HttpServlet {
 
 
 
-//
-//@WebServlet("/")
-// class IndexController extends HttpServlet {
-//
-//    @Override
-//    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        String path = request.getContextPath() + "/index";
-//        response.sendRedirect(path);
-//    }
-//}
-//
 
 
 
@@ -67,69 +71,6 @@ public class MenuController extends HttpServlet {
 
 
 
-//@WebServlet("/timeaction")
-// class TimeServlet extends HttpServlet {
-//    @Override
-//    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-//            throws ServletException, IOException {
-//        processRequest(request, response);
-//    }
-//    @Override
-//    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-//            throws ServletException, IOException {
-//
-//        processRequest(request, response);
-//    }
-//    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-//            throws ServletException, IOException {
-//        GregorianCalendar gc = new GregorianCalendar();
-//        String timeJsp = request.getParameter("time");
-//        float delta = ((float)(gc.getTimeInMillis() - Long.parseLong(timeJsp)))/1_000;
-//        request.setAttribute("res", delta);
-//        request.getRequestDispatcher("/WEB-INF/view/index.jsp").forward(request, response);
-//    }
-//}
 
 
-//@WebServlet("/index")
-//public class MenuController extends HttpServlet {
-//
-//    @Override
-//    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//
-//
-//        processRequest(request, response);
-//
-////        req.getRequestDispatcher("/WEB-INF/view/index.jsp").forward(req, resp);
-//    }
-//
-//    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-//            throws ServletException, IOException {
-////        GregorianCalendar gc = new GregorianCalendar();
-////        String timeJsp = request.getParameter("time");
-////        float delta = ((float)(gc.getTimeInMillis() - Long.parseLong(timeJsp)))/1_000;
-////        request.setAttribute("res", delta);
-//
-////        String menuList = request.getParameter("menu");
-////
-////        System.out.println(menuList);
-//
-//        DishDao dishDao = null;
-//        List<Dish> dishes = null;
-//        try {
-//            dishDao = new DishDaoImpl();
-//            dishes = dishDao.findByCategory(Category.getInstance("Coffee"));
-//
-//            for (Dish dish : dishes) {
-//                dish.getName();
-//            }
-//        } catch (DBException e) {
-//            e.printStackTrace();
-//        }
-//
-//        request.setAttribute("dishes", dishes);
-//
-//        request.getRequestDispatcher("/jsp/result.jsp").forward(request, response);
-//    }
-//}
 

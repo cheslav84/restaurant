@@ -21,10 +21,12 @@
 </head>
 
 <body>
-    <div data-animation="default" class="navbar-left w-nav" data-easing2="ease" data-easing="ease" data-collapse="small"
+    <jsp:include page="sidebar.jsp"/>
+
+    <!-- <div data-animation="default" class="navbar-left w-nav" data-easing2="ease" data-easing="ease" data-collapse="small"
         role="banner" data-no-scroll="1" data-duration="400" data-doc-height="1">
         <div class="menu-overlay">
-            <!-- <div class="w-container">
+            <div class="w-container">
                 <a href="index.html" aria-current="page" class="logo-container w-clearfix w-nav-brand w--current">
                     <img src="./icons/Icon-coffee.png" alt="" class="logo-icon">
                     <h1 class="logo-text">Easy Times</h1>
@@ -58,10 +60,10 @@
                         <img src="WEB-INF/pictures/icons/Icon-twitter.png" alt="" class="nav-social-icon">
                     </a>
                 </div>
-            </div> -->
+            </div>
         </div>
         <div class="w-nav-overlay" data-wf-ignore=""></div>
-    </div>
+    </div> -->
     <div id="top" class="page-header reservations">
         <div class="page-header-overlay">
             <div class="container w-container">
@@ -88,7 +90,7 @@
                         <div class="section-divider-line"></div>
 
 
-                        
+                        <!-- LOGING IN -->
                         <form method="post" id="wf-form-Reservation-Form" name="logInForm" data-name="Log in form">
                             <input type="email" id="Email-3" name="email" data-name="Email" placeholder="Email address"
                                 maxlength="32" required="true" class="field w-input">
@@ -110,7 +112,7 @@
 
 
 
-
+                        <!-- REGISTRATION -->
                         <form method="post" id="wf-form-Reservation-Form" name="registrationForm" data-name="Reservation Form">
                             <input type="text" id="name" name="name" data-name="Name" placeholder="Enter your name"
                                 maxlength="24" class="field w-input"                                                     value="Name">
@@ -145,6 +147,11 @@
                                 class="button submit-button w-button">
                         </form>
 
+
+
+
+
+                        
                         <div class="success-bg w-form-done">
                             <p class="success-text">Thank you!</p>
                             <p class="success-text _2">Your Reservation has been received!</p>

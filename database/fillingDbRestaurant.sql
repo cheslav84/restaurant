@@ -3,10 +3,10 @@ USE `restaurant` ;
 -- -----------------------------------------------------
 -- `CATEGORY`
 -- -----------------------------------------------------
-INSERT INTO category (category_name) VALUE ('Coffee');
-INSERT INTO category (category_name) VALUE ('Lunch');
-INSERT INTO category (category_name) VALUE ('Diner');
-INSERT INTO category (category_name) VALUE ('Drinks');
+INSERT INTO category (category_name) VALUE ('COFFEE');
+INSERT INTO category (category_name) VALUE ('LUNCH');
+INSERT INTO category (category_name) VALUE ('DINER');
+INSERT INTO category (category_name) VALUE ('DRINKS');
 
 -- -----------------------------------------------------
 -- `DISH`

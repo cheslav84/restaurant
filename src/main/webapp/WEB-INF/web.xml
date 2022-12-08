@@ -24,12 +24,12 @@
 
 
 <!--  <servlet>-->
-<!--    <servlet-name>GetStartPageServlet</servlet-name>-->
-<!--    <servlet-class>com.havryliuk.restaurant.controllers.GetIndexPageServlet</servlet-class>-->
+<!--    <servlet-name>MenuController</servlet-name>-->
+<!--    <servlet-class>com.epam.havryliuk.restaurant.controllers.MenuController</servlet-class>-->
 <!--  </servlet>-->
 
 <!--  <servlet-mapping>-->
-<!--    <servlet-name>GetStartPageServlet</servlet-name>-->
+<!--    <servlet-name>MenuController</servlet-name>-->
 <!--    <url-pattern>/</url-pattern>-->
 <!--  </servlet-mapping>-->
 
