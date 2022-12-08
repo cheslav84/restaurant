@@ -14,6 +14,7 @@ public class CategoryService {
             categoryName = "COFFEE";
         }
 
+
         Category category;
         try {
             category = Category.getInstance(CategoryName.valueOf(categoryName));

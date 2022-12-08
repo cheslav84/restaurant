@@ -1,11 +1,6 @@
 package com.epam.havryliuk.restaurant.controllers;
 
-import com.epam.havryliuk.restaurant.model.db.dao.DishDao;
 import com.epam.havryliuk.restaurant.model.db.entity.Dish;
-import com.epam.havryliuk.restaurant.model.db.dao.DaoImpl.DishDaoImpl;
-import com.epam.havryliuk.restaurant.model.db.entity.Category;
-import com.epam.havryliuk.restaurant.model.exceptions.DBException;
-
 import com.epam.havryliuk.restaurant.model.exceptions.NoSuchEntityException;
 import com.epam.havryliuk.restaurant.model.services.DishService;
 import jakarta.servlet.ServletException;
@@ -40,9 +35,6 @@ public class MenuController extends HttpServlet {
         try {
             dishes = dishService.getMenuByCategory(categoryMenu);
             log.debug("List of dishes received by servlet and going to be sending to client side.");
-            for (Dish dish : dishes) {
-                System.out.println(dish);
-            }
         } catch (NoSuchEntityException e) {
             log.error("vList of dishes has been received.");
             //req.setAttribute("message", "Message");//todo inform user!!!

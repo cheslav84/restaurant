@@ -1,14 +1,13 @@
 package com.epam.havryliuk.restaurant.model.db.dao.DaoImpl;
 
 import com.epam.havryliuk.restaurant.model.db.connection.ConnectionPool;
+import com.epam.havryliuk.restaurant.model.db.connection.DBManager;
 import com.epam.havryliuk.restaurant.model.db.connection.RestaurantConnectionPool;
 import com.epam.havryliuk.restaurant.model.db.dao.DishDao;
-import com.epam.havryliuk.restaurant.model.db.dao.databaseFieds.CategoryFields;
 import com.epam.havryliuk.restaurant.model.db.dao.databaseFieds.DishFields;
 import com.epam.havryliuk.restaurant.model.db.dao.queries.DishQuery;
 import com.epam.havryliuk.restaurant.model.db.entity.Dish;
 import com.epam.havryliuk.restaurant.model.db.entity.Category;
-import com.epam.havryliuk.restaurant.model.db.entity.constants.CategoryName;
 import com.epam.havryliuk.restaurant.model.exceptions.DBException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,29 +22,28 @@ import java.util.List;
 
 public class DishDaoImpl implements DishDao {
     private static final Logger log = LogManager.getLogger(DishDaoImpl.class);
-    private final ConnectionPool connectionPool;
+    private final DBManager dbManager;
 
     public DishDaoImpl () throws DBException {
-        connectionPool = RestaurantConnectionPool.getInstance();//todo як не вказувати конкретний клас? Наприклад якщо замінити в майбутньому наприкада на Hikari
+        dbManager = DBManager.getInstance();
     }
 
     @Override
     public Dish findByName(String name) throws DBException {
         Dish dish = null;
-        Connection con = connectionPool.getConnection();
-        try (PreparedStatement stmt = con.prepareStatement(DishQuery.FIND_DISH_BY_NAME)) {
+
+        try (Connection con = dbManager.getConnection();
+                PreparedStatement stmt = con.prepareStatement(DishQuery.FIND_DISH_BY_NAME)) {
             stmt.setString(1, name);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     dish = mapDish(rs);
                 }
             }
-//            log.debug("The \"" + name + "\" dish has been received from database.");
+            log.debug("The \"" + name + "\" dish has been received from database.");
         } catch (SQLException e) {
             log.error("Error in getting dish \"" + name +  "\" from database. ", e);
             throw new DBException(e);
-        } finally {
-            connectionPool.releaseConnection(con);
         }
         return dish;
     }
@@ -53,9 +51,8 @@ public class DishDaoImpl implements DishDao {
     @Override
     public List<Dish> findByCategory(Category category) throws DBException {
         List<Dish> dishes = new ArrayList<>();
-        Connection con = connectionPool.getConnection();
-
-        try (PreparedStatement stmt = con.prepareStatement(DishQuery.FIND_ALL_BY_CATEGORY)) {
+        try (Connection con = dbManager.getConnection();
+                PreparedStatement stmt = con.prepareStatement(DishQuery.FIND_ALL_BY_CATEGORY)) {
             stmt.setString(1, category.getCategoryName().name());
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
@@ -66,11 +63,10 @@ public class DishDaoImpl implements DishDao {
         } catch (SQLException e) {
             log.error("Error in getting list of dishes from database. ", e);
             throw new DBException(e);
-        } finally {
-            connectionPool.releaseConnection(con);
         }
         return dishes;
     }
+
 
     @Override
     public List<Dish> getSortedByName() throws DBException {
@@ -119,8 +115,8 @@ public class DishDaoImpl implements DishDao {
 
     private List<Dish> getDishes(String query) throws DBException {
         List<Dish> dishes = new ArrayList<>();
-        Connection con = connectionPool.getConnection();
-        try (PreparedStatement stmt = con.prepareStatement(query);
+        try (Connection con = dbManager.getConnection();
+             PreparedStatement stmt = con.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 dishes.add(mapDish(rs));
@@ -140,15 +136,14 @@ public class DishDaoImpl implements DishDao {
         int weight = rs.getInt(DishFields.DISH_WEIGHT);
         BigDecimal price = rs.getBigDecimal(DishFields.DISH_PRICE);
         int amount = rs.getInt(DishFields.DISH_AMOUNT);
-        boolean special = rs.getBoolean(DishFields.DISH_SPECIAL);
         String image = rs.getString(DishFields.DISH_IMAGE);
-        Category category = mapCategoryForDish(rs);
-        return Dish.getInstance(id, name, description, weight, price, amount, special, image, category);
+//        Category category = mapCategoryForDish(rs);
+        return Dish.getInstance(id, name, description, weight, price, amount, image);
     }
 
-    private Category mapCategoryForDish(ResultSet rs) throws SQLException { //todo low coupling
-        long id = rs.getLong(DishFields.DISH_CATEGORY_ID);
-        String name = rs.getString(CategoryFields.CATEGORY_NAME);
-        return Category.getInstance(id, CategoryName.valueOf(name));
-    }
+//    private Category mapCategoryForDish(ResultSet rs) throws SQLException { //todo low coupling
+//        long id = rs.getLong(DishFields.DISH_CATEGORY_ID);
+//        String name = rs.getString(CategoryFields.CATEGORY_NAME);
+//        return Category.getInstance(id, CategoryName.valueOf(name));
+//    }
 }

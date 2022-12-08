@@ -9,12 +9,11 @@ public class Dish implements Entity {//todo implements Serializable (to save Obj
     private int weight;
     private BigDecimal price;
     private int amount;
-    private boolean special;
 
     private boolean spirits;// todo add field
 
     private String image;
-    private Category category;
+//    private Category category;
 
     public Dish() {
     }
@@ -28,14 +27,14 @@ public class Dish implements Entity {//todo implements Serializable (to save Obj
     }
 
     public static Dish getInstance(long id, String name, String description, int weight, BigDecimal price,
-                                   int amount, boolean special, String image, Category category) {
+                                   int amount, String image) {
+//                                   int amount, String image, Category category) {
         Dish dish = getInstance(name, price, amount);
         dish.setId(id);
         dish.setDescription(description);
         dish.setWeight(weight);
-        dish.setSpecial(special);
         dish.setImage(image);
-        dish.setCategory(category);
+//        dish.setCategory(category);
         return dish;
     }
 
@@ -87,14 +86,6 @@ public class Dish implements Entity {//todo implements Serializable (to save Obj
         this.amount = amount;
     }
 
-    public boolean isSpecial() {
-        return special;
-    }
-
-    public void setSpecial(boolean special) {
-        this.special = special;
-    }
-
     public String getImage() {
         return image;
     }
@@ -103,13 +94,13 @@ public class Dish implements Entity {//todo implements Serializable (to save Obj
         this.image = image;
     }
 
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
+//    public Category getCategory() {
+//        return category;
+//    }
+//
+//    public void setCategory(Category category) {
+//        this.category = category;
+//    }
 
     @Override
     public boolean equals(Object o) {
@@ -141,9 +132,8 @@ public class Dish implements Entity {//todo implements Serializable (to save Obj
                 ", weight=" + weight +
                 ", price=" + price +
                 ", amount=" + amount +
-                ", special=" + special +
                 ", image='" + image + '\'' +
-                ", category=" + category +
+//                ", category=" + category +
                 '}' + "\n" ;
     }
 }

@@ -1,7 +1,6 @@
 package com.epam.havryliuk.restaurant.model.db.dao.DaoImpl;
 
-import com.epam.havryliuk.restaurant.model.db.connection.ConnectionPool;
-import com.epam.havryliuk.restaurant.model.db.connection.RestaurantConnectionPool;
+import com.epam.havryliuk.restaurant.model.db.connection.DBManager;
 import com.epam.havryliuk.restaurant.model.db.dao.DAO;
 import com.epam.havryliuk.restaurant.model.db.dao.databaseFieds.CategoryFields;
 import com.epam.havryliuk.restaurant.model.db.dao.queries.CategoryQuery;
@@ -17,17 +16,16 @@ import java.util.List;
 
 public class CategoryDAO implements DAO<Category> {
     private static final Logger log = LogManager.getLogger(CategoryDAO.class);
-    private final ConnectionPool connectionPool;
+    private final DBManager dbManager;
 
     public CategoryDAO() throws DBException {
-        connectionPool = RestaurantConnectionPool.getInstance(); //todo get class by reflection
-    }
+        dbManager = DBManager.getInstance();    }
 
     @Override
     public Category findByName(String name) throws DBException {
         Category category = null;
-        Connection con = connectionPool.getConnection();//todo запитати чи потрібно connection в блок try-catch якщо в нас летить одне і теж виключення?
-        try (PreparedStatement stmt = con.prepareStatement(CategoryQuery.FIND_CATEGORY_BY_NAME)) {
+        try (Connection con = dbManager.getConnection();
+                PreparedStatement stmt = con.prepareStatement(CategoryQuery.FIND_CATEGORY_BY_NAME)) {
             stmt.setString(1, name);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
@@ -38,8 +36,6 @@ public class CategoryDAO implements DAO<Category> {
         } catch (SQLException e) {
             log.error("Error in getting category \"" + name + "\" from database.", e);
             throw new DBException(e);
-        } finally {
-            connectionPool.releaseConnection(con);
         }
         return category;
     }
@@ -47,8 +43,8 @@ public class CategoryDAO implements DAO<Category> {
     @Override
     public Category findById(long id) throws DBException {
         Category category = null;
-        Connection con = connectionPool.getConnection();
-        try (PreparedStatement stmt = con.prepareStatement(CategoryQuery.FIND_CATEGORY_BY_ID)) {
+        try (Connection con = dbManager.getConnection();
+                PreparedStatement stmt = con.prepareStatement(CategoryQuery.FIND_CATEGORY_BY_ID)) {
             stmt.setLong(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
@@ -59,8 +55,6 @@ public class CategoryDAO implements DAO<Category> {
         } catch (SQLException e) {
             log.error("Error in getting category with id \"" + id + "\" from database.", e);
             throw new DBException(e);
-        } finally {
-            connectionPool.releaseConnection(con);
         }
         return category;
     }
@@ -101,8 +95,9 @@ public class CategoryDAO implements DAO<Category> {
     @Override
     public List<Category> findAll() throws DBException {
         List<Category> categories = new ArrayList<>();
-        Connection con = connectionPool.getConnection();
-         try (PreparedStatement stmt = con.prepareStatement(CategoryQuery.FIND_ALL_CATEGORIES);
+
+         try (Connection con = dbManager.getConnection();
+                 PreparedStatement stmt = con.prepareStatement(CategoryQuery.FIND_ALL_CATEGORIES);
               ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 categories.add(mapCategory(rs));
@@ -111,8 +106,6 @@ public class CategoryDAO implements DAO<Category> {
         } catch (SQLException e) {
             log.debug("Error in getting list of categories from database.", e);
             throw new DBException(e);
-        } finally {
-            connectionPool.releaseConnection(con);
         }
         return categories;
     }

@@ -20,6 +20,11 @@ public class DishService {
     public List<Dish> getMenuByCategory(String categoryName) throws NoSuchEntityException {
         CategoryService categoryService = new CategoryService();
 
+        if (categoryName == "") {
+
+        }
+
+
         Category category = categoryService.getCategoryByName(categoryName);
         DishDao dishDao;
         List<Dish> dishes = null;
