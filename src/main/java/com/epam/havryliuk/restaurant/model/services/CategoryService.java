@@ -10,9 +10,9 @@ public class CategoryService {
     private static final Logger log = LogManager.getLogger(CategoryService.class);
 
     public Category getCategoryByName(String categoryName) throws NoSuchEntityException {
-        if (categoryName == null) {// todo get initial value from client side
-            categoryName = "COFFEE";
-        }
+//        if (categoryName == null) {// todo get initial value from client side
+//            categoryName = "COFFEE";
+//        }
 
 
         Category category;

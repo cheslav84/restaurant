@@ -1,8 +1,6 @@
 package com.epam.havryliuk.restaurant.model.db.dao.DaoImpl;
 
-import com.epam.havryliuk.restaurant.model.db.connection.ConnectionPool;
 import com.epam.havryliuk.restaurant.model.db.connection.DBManager;
-import com.epam.havryliuk.restaurant.model.db.connection.RestaurantConnectionPool;
 import com.epam.havryliuk.restaurant.model.db.dao.DishDao;
 import com.epam.havryliuk.restaurant.model.db.dao.databaseFieds.DishFields;
 import com.epam.havryliuk.restaurant.model.db.dao.queries.DishQuery;
@@ -58,6 +56,9 @@ public class DishDaoImpl implements DishDao {
                 while (rs.next()) {
                     dishes.add(mapDish(rs));
                 }
+            }
+            for (Dish dish : dishes) {
+                System.out.println(dish);
             }
             log.debug("List of dishes (by category) has been received from database. ");
         } catch (SQLException e) {

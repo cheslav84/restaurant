@@ -22,18 +22,13 @@
 
 
 // window.onload=function(){
-//     // var auto = setTimeout(function(){ autoRefresh(); }, 100);
+//     var menuCategory = "COFFEE";
+//     var id = '<%=session.getAttribute("id")%>';
 
-//     function submitform(){
-//       alert('test');
-//       document.forms["coffeeMenuButton"].submit();
-//     }
 
-//     function autoRefresh(){
-//        clearTimeout(auto);
-//        auto = setTimeout(function(){ submitform(); autoRefresh(); }, 10000);
-//     }
-
+    
+//     '<%Session["UserName"] = "' + menuCategory + '"; %>';
+//      alert(id);
 // }
 
 

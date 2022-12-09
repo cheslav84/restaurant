@@ -90,6 +90,12 @@
                         <div class="section-divider-line"></div>
 
 
+                        
+                        
+                        <%-- <c:out value = ""/> --%>
+
+
+
                         <!-- LOGING IN -->
                         <form method="post" id="wf-form-Reservation-Form" name="logInForm" data-name="Log in form">
                             <input type="email" id="Email-3" name="email" data-name="Email" placeholder="Email address"
@@ -131,7 +137,6 @@
                                     <div class="w-row field last-half w-select">
                                         <label for="user-age" class="w-col user-age-label">I'm 18+</label>
                                         <input type="checkbox" id="user-age" name="userOverEighteenAge" data-name="User age" class="w-col w-select user-age" value="">
-                                        </input>
                                     </div>
                                 </div>
                             </div>

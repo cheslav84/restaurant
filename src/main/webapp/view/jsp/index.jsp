@@ -2,9 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.epam.havryliuk.restaurant.model.utils.Properties" %>
 
-<%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
+<%-- <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
 
-<%=Properties.url%>
+<%=Properties.url%> --%>
 
 
 <!-- <my:user id="123" /> -->
@@ -143,7 +143,11 @@
             </div> -->
 
 
-            <div class="image-background-section wf-section">
+
+                <jsp:include page="indexMenu.jsp"/>
+
+
+            <!-- <div class="image-background-section wf-section">
                 <div class="image-background-overlay">
                     <div class="container w-container">
                         <h2 data-ix="fade-in-on-scroll" class="section-intro-title">Our menu</h2>
@@ -167,6 +171,7 @@
                                     <div>Every Day Specials</div>
                                     <input type="submit" name="menu" value="SPECIALS" class="menu-hidden-input" />
                                 </form>
+
                             </div>
                             <div class="w-tab-content">
 
@@ -248,7 +253,7 @@
                                                 </div>
                                             </c:forEach>
 
-                                            <!-- <div role="listitem" class="menu-list-item w-dyn-item w-col w-col-6">
+                                            <div role="listitem" class="menu-list-item w-dyn-item w-col w-col-6">
                                                 <div class="menu-item-price">14.00</div>
                                                 <div class="menu-item-title">Taco Salad</div>
                                                 <div class="menu-item-title description">Lorem ipsum dolor sit amet
@@ -279,7 +284,7 @@
                                                     consectetur
                                                     adipiscing.
                                                 </div>
-                                            </div> -->
+                                            </div>
 
 
 
@@ -290,8 +295,44 @@
                                 </div>
                                 <div data-w-tab="Every Day Specials" class="menu-tab-pane w-tab-pane">
                                     <div class="menu-white-wrapper w-dyn-list">
+                                       
+                                       
                                         <div role="list" class="w-clearfix w-dyn-items w-row">
-                                            <div role="listitem" class="menu-list-item w-dyn-item w-col w-col-6">
+                                        
+                                        
+                                            <c:forEach var="dish" items="${requestScope.dishes}">
+                                                <div role="listitem" class="menu-list-item w-dyn-item w-col w-col-6">
+                                                    <div class="menu-image-container">
+                                                        <div style="background-image: url('pictures/dish_pictures/brew-coffee.webp');"
+                                                            class="menu-item-image-box">
+                                                        </div>
+                                                    </div>
+                                                    <div class="menu-item-text">
+                                                        <div class="menu-item-title">
+                                                            <c:out value="${dish.name}" />
+                                                        </div>
+                                                        <div class="menu-item-title description">
+                                                            <c:out value="${dish.description}" />
+                                                        </div>
+                                                        <div class="menu-item-title weight">
+                                                            <c:out value="${dish.weight}" />
+                                                            <span class="weight-marker"> g</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="menu-item-price">
+                                                        <c:out value="${dish.price}" />
+                                                        <span class="price-marker">₴</span>
+                                                    </div>
+                                                    <a href="" class="order-icon-container">
+                                                        <img src="pictures/icons/Icon-basket.png" alt=""
+                                                            class="order-icon-img">
+                                                    </a>
+                                                </div>
+                                            </c:forEach>
+                                        
+                                        
+                                     
+                                             <div role="listitem" class="menu-list-item w-dyn-item w-col w-col-6">
                                                 <div class="menu-item-price">6.50</div>
                                                 <div class="menu-item-title">Single Cup Brew</div>
                                                 <div class="menu-item-title description">Lorem ipsum dolor sit amet
@@ -338,7 +379,11 @@
                                                     consectetur
                                                     adipiscing.
                                                 </div>
-                                            </div>
+                                            </div> 
+                                        
+                                        
+                                        
+                                        
                                         </div>
                                     </div>
                                 </div>
@@ -347,7 +392,19 @@
                         <a href="menu.html" class="button">View our complete menu</a>
                     </div>
                 </div>
-            </div>
+            </div> -->
+
+
+
+
+
+
+
+
+
+
+
+            
             <div class="section wf-section">
                 <div class="container w-container">
                     <div class="w-row">

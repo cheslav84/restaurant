@@ -4,6 +4,21 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
+
+    <filter>
+        <filter-name>encoding-filter</filter-name>
+        <filter-class>com.epam.havryliuk.restaurant.controllers.filters.EncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>encoding-filter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
     <servlet-mapping>
         <servlet-name>default</servlet-name>
         <url-pattern>*.css</url-pattern>
@@ -19,6 +34,11 @@
         <url-pattern>*.png</url-pattern>
     </servlet-mapping>
 
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.webp</url-pattern>
+    </servlet-mapping>
+
 
 <!--  <display-name>Archetype Created Web Application</display-name>-->
 
@@ -32,7 +52,5 @@
 <!--    <servlet-name>MenuController</servlet-name>-->
 <!--    <url-pattern>/</url-pattern>-->
 <!--  </servlet-mapping>-->
-
-
 
 </web-app>

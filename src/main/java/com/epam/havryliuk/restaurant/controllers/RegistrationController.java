@@ -22,25 +22,24 @@ public class RegistrationController extends HttpServlet {
     private static final Logger log = LogManager.getLogger(RegistrationController.class);// todo add logs for class
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         log.debug("\"/registration\" request doGet in RegistrationController");
 
+
         //todo ask from which page user came
-        request.getRequestDispatcher("view/jsp/registration.jsp").forward(request, response);
+        req.getRequestDispatcher("view/jsp/registration.jsp").forward(req, resp);
     }
 
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         log.debug("\"/registration\" request doPost in RegistrationController");
-
-        request.setCharacterEncoding("UTF-8");
 
         //todo create Session
         User user = null;
         try {
             UserService service = new UserService();
-            user = service.getUser(request);
+            user = service.getUser(req);
             //todo set userId
             log.info("The user \"" + user.getName() + "\" has been successfully added to DataBase.");
 
@@ -50,12 +49,13 @@ public class RegistrationController extends HttpServlet {
             //todo inform cause
         }
 
-        request.getSession().setAttribute("user", user);
+        req.getSession().setAttribute("user", user);
 
-//        HttpSession session = request.getSession();
-//        session.setAttribute("user", user);
-        request.getRequestDispatcher("view/jsp/registration.jsp").forward(request, response);
-        response.sendRedirect("registration");
+        HttpSession session = req.getSession();
+        session.setAttribute("user", user);
+
+        req.getRequestDispatcher("view/jsp/registration.jsp").forward(req, resp);
+        resp.sendRedirect("registration");
         //todo redirect
     }
 
