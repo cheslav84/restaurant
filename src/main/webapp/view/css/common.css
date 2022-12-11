@@ -913,7 +913,17 @@ textarea.w-select {
   display: none !important
 }
 
+
+
+
+
+
+
 @media screen and (max-width:991px) {
+
+
+
+
   .w-container {
     max-width: 728px
   }
@@ -979,6 +989,8 @@ textarea.w-select {
     left: auto;
     right: auto
   }
+
+
 }
 
 @media screen and (max-width:767px) {
@@ -1053,6 +1065,11 @@ textarea.w-select {
   .w-col-small-12 {
     width: 100%
   }
+
+
+  .logo-icon {
+      margin-left: 10px;
+      }
 }
 
 @media screen and (max-width:479px) {
@@ -1127,6 +1144,7 @@ textarea.w-select {
   .w-col-tiny-12 {
     width: 100%
   }
+
 }
 
 .w-widget {
@@ -2414,7 +2432,8 @@ li {
 .logo-container {
   display: block;
   width: 100%;
-  padding-top: 35px;
+  margin-top: 80px;
+  /* padding-top: 65px; */
   padding-bottom: 25px;
   float: none;
   text-align: center;

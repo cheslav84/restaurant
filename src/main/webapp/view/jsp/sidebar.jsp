@@ -1,6 +1,41 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <div data-animation="default" class="navbar-left w-nav" data-easing2="ease" data-easing="ease" data-collapse="small"
     role="banner" data-no-scroll="1" data-duration="400" data-doc-height="1">
     <div class="menu-overlay">
+        <div class="user-panel">
+            <div class="user-info">
+            
+                <c:if test="${sessionScope.loggedUser ne null}">
+
+                    <c:if test="${sessionScope.userRole eq CLIENT}"> Role user
+                        <div class="user-name">Welcome, 
+                        <c:out value="${sessionScope.loggedUser.name}"/>
+                        </div>
+                    </c:if>
+
+                    <c:if test="${sessionScope.userRole eq MANAGER}"> Role admin
+                        <a href="adminPage" target="_blank" class="user-name">Admin page</a>
+                    </c:if>
+            
+                    <a href="logout" aria-current="page" class="nav-social-button w-inline-block login-page-link">Log out</a>
+                </c:if>
+
+
+                <c:if test="${sessionScope.loggedUser eq null}">
+                    <a href="login" aria-current="page" class="nav-social-button w-inline-block login-page-link">Log in</a>
+                </c:if>
+            </div>
+
+            <div class="ordering">
+                <a href="/basket" target="_blank" class="nav-social-button w-inline-block order-link"> My orders
+                    <img src="view/pictures/icons/shopping_basket_unactive.png" alt="" class="nav-social-icon basket-image">
+                </a>
+            </div>
+            
+                
+        </div>
         <div class="w-container">
             <a href="index.html" aria-current="page" class="logo-container w-clearfix w-nav-brand w--current">
                 <img src="view/pictures/icons/Icon-coffee.png" alt="" class="logo-icon">
@@ -14,7 +49,7 @@
             <nav role="navigation" class="nav-menu w-nav-menu">
                 <a href="index" aria-current="page" class="nav-link w-nav-link w--current"
                     style="max-width: 940px;">Home</a>
-                <a href="menu.html" class="nav-link w-nav-link" style="max-width: 940px;">Menu</a>
+                <a href="menu" class="nav-link w-nav-link" style="max-width: 940px;">Menu</a>
                 <a href="reservation.html" class="nav-link w-nav-link" style="max-width: 940px;">Reservation</a>
                 <a href="gallery.html" class="nav-link w-nav-link" style="max-width: 940px;">Gallery</a>
                 <a href="parties.html" class="nav-link w-nav-link" style="max-width: 940px;">Parties &amp;

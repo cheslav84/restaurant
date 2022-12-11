@@ -1,0 +1,137 @@
+.user-name, .login-page-link, .order-link  {
+    font-family: Oswald, sans-serif;
+    color: #fff;
+    font-size: 14px;
+    line-height: 15px;
+    font-weight: 400;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+.user-panel {
+
+}
+
+
+.user-info {
+    margin-top: 12px;
+    margin-left: 10px;
+    position: relative;
+    float: left;
+}
+
+.user-name {
+    margin-bottom: 5px;
+    
+}
+
+.login-page-link {
+    display: block;
+    float: left;
+    margin: 0;
+}
+
+
+
+.ordering {
+    margin-top: 12px;
+    margin-right: 8px;
+    position: relative;
+    float: right;
+}
+
+.order-link {
+    float: right;
+    position: relative;
+
+}
+
+.basket-image {
+    display: block;
+    width: 25px;
+    height: 25px;
+    opacity: 0.3;
+    margin: auto;
+    margin-top: 8px;
+}
+
+
+
+
+
+
+a.login-page-link:hover {
+    color: #e88f2a;
+    opacity: 1;
+}
+
+.order-link:hover {
+    color: #e88f2a;
+    opacity: 1;
+
+}
+
+.basket-image:hover {
+    content: url(../pictures/icons/shopping_basket_active.png);
+    opacity: 1;
+}
+
+
+
+
+
+
+
+@media screen and (max-width:991px) {
+
+    .user-info {
+        margin-top: 8px;
+    }
+
+    .ordering {
+        margin-top: 8px;
+    }
+
+
+
+
+
+  .user-info {
+      width: 60px;
+      float: left;
+  }
+
+  .login-page-link {
+  position: absolute;
+      padding-left: 6px;
+
+  }
+
+  .basket-link {
+      margin-top: 35px;
+      width: 100%;
+      padding: 0;
+  }
+
+}
+
+@media screen and (max-width:767px) {
+    /* .user-info {
+        margin-top: 5px;
+    }
+
+    .ordering {
+        margin-top: 5px;
+    } */
+}
+
+@media screen and (max-width:479px) {
+    .menu-button {
+        margin-right: 21px;
+      }
+
+    .logo-container {
+        margin-top: 22px;
+    }
+}
+ 

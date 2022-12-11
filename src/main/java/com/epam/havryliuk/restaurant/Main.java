@@ -1,8 +1,7 @@
 package com.epam.havryliuk.restaurant;
 
-import com.epam.havryliuk.restaurant.model.db.entity.Category;
-import com.epam.havryliuk.restaurant.model.db.entity.User;
-import com.epam.havryliuk.restaurant.model.exceptions.NoSuchEntityException;
+import com.epam.havryliuk.restaurant.model.entity.Category;
+import com.epam.havryliuk.restaurant.model.entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
