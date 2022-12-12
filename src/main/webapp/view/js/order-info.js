@@ -1,3 +1,28 @@
+$('.order-menu-button').click(function() {
+    $('#hide-order-info').removeClass('hidden');
+  });
+
+  $('#close-cross-button').click(function() {
+    $('#hide-order-info').addClass('hidden');
+  });
+
+
+// document.querySelector('#order-menu-button').addEventListener('click', () => {
+//     document.querySelector('.hide-order-info').classList.remove('hidden');
+//   }); 
+
+//   document.querySelector('#order-menu-button').addEventListener('click', () => {
+//     document.querySelector('.hide-order-info').classList.remove('hidden');
+//   }); 
+
+
+
+
+
+
+
+
+
 
 // $(document).ready(function() {
 //     const menuButtons = document.getElementsByName("menuCategory");

@@ -62,9 +62,13 @@
                                             <c:out value="${dish.price}" />
                                             <span class="price-marker">₴</span>
                                         </div>
-                                        <a href="" class="order-icon-container">
+
+                                            <div id="order-menu-button" name="order-menu-button" class="button order-menu-button">Order</div>
+                        
+
+                                        <%-- <a href="" class="order-icon-container">
                                             <img src="view/pictures/icons/shopping_basket_active.png" alt="" class="order-icon-img">
-                                        </a>
+                                        </a> --%>
                                     </div>
                                 </c:forEach>
 
@@ -72,7 +76,8 @@
                             </div>
                         </div>
                     </div>
-                    <div data-w-tab="Lunch" class="menu-tab-pane w-tab-pane">
+
+                    <%-- <div data-w-tab="Lunch" class="menu-tab-pane w-tab-pane">
                         <div class="menu-white-wrapper w-dyn-list">
 
 
@@ -113,6 +118,7 @@
 
                         </div>
                     </div>
+
                     <div data-w-tab="Every Day Specials" class="menu-tab-pane w-tab-pane">
                         <div class="menu-white-wrapper w-dyn-list">
 
@@ -143,10 +149,13 @@
                                             <c:out value="${dish.price}" />
                                             <span class="price-marker">₴</span>
                                         </div>
+                                        
+    
+                                        
                                         <a href="" class="order-icon-container">
                                             <img src="pictures/icons/Icon-basket.png" alt="" class="order-icon-img">
                                         </a>
-                                    </div>
+                                    </div>  
                                 </c:forEach>
 
 
@@ -155,7 +164,7 @@
 
                             </div>
                         </div>
-                    </div>
+                    </div> --%>
                 </div>
             </div>
             <a href="menu.html" class="button">View our complete menu</a>

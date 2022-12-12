@@ -460,64 +460,16 @@
                 </div>
             </div>
 
-    <div class="order-info">
-        <div class="order-info-container">
-            <div class="order-info-box">
-
-
-                <div class="one-dish-info">
-
-                    <div class="menu-item-label menu-item-weight">
-                        200
-                        <span class="weight-marker"> g</span>
-                    </div>
-
-                    <div class="menu-item-label menu-item-price-reload">
-                        4.50
-                        <span class="price-marker">₴</span>
-                    </div>
-
-                    <div class="menu-item-label menu-item-special">
-                        SPECIAL
-                    </div>
-
-                </div>
-                    <div class="menu-item-text ordering">
-                        <div class="menu-item-title ordering">
-                            Black Eyed Andy
-                        </div>
-                        <div class="menu-item-title description ordering">
-                            i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i
-                            i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i
-                            i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i
-                            i i i i i i i i i i i i i i i i i i .
-                        </div>
-
-                    </div>
-
-                <div class="order-buttons">
-                    <form>
-                        <div class="button order-button button-amount">
-                            <div class="amount-button-label">amount</div>
-                            <input type="text" name="dishes-amout" class="dishes-amout"/>
-                        </div>
-                        <button class="button order-button">continue ordering</button>
-                        <button class="button order-button">confirm my orders</button>
-                    </form>
-                </div>
-
-
-
-
-            </div>
-        </div>
-    </div>
-
+            <c:if test="${sessionScope.loggedUser ne null}">
+                <jsp:include page="order-info.jsp"/>
+            </c:if>
 
             <jsp:include page="footer.jsp"/>
+
             <script src="view/js/jquery3.6.1.js" type="text/javascript" crossorigin="anonymous"></script>
             <script src="view/js/webflow.e.js" type="text/javascript"></script>
             <script src="view/js/menu.js" type="text/javascript"></script>
+            <script src="view/js/order-info.js" type="text/javascript"></script>
 
         </body>
 
