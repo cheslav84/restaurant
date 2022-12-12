@@ -1,6 +1,6 @@
 package com.epam.havryliuk.restaurant.model.database.dao.DaoImpl;
 
-import com.epam.havryliuk.restaurant.model.database.connection.DBManager;
+import com.epam.havryliuk.restaurant.model.database.connection.ConnectionManager;
 import com.epam.havryliuk.restaurant.model.database.dao.DAO;
 import com.epam.havryliuk.restaurant.model.database.dao.databaseFieds.CategoryFields;
 import com.epam.havryliuk.restaurant.model.database.dao.queries.CategoryQuery;
@@ -16,16 +16,16 @@ import java.util.List;
 
 public class CategoryDAO implements DAO<Category> {
     private static final Logger log = LogManager.getLogger(CategoryDAO.class);
-    private final DBManager dbManager;
+    private final ConnectionManager connectionManager;
 
     public CategoryDAO() throws DBException {
-        dbManager = DBManager.getInstance();    }
+        connectionManager = ConnectionManager.getInstance();    }
 
     @Override
     public Category findByName(String name) throws DBException {
         Category category = null;
-        try (Connection con = dbManager.getConnection();
-                PreparedStatement stmt = con.prepareStatement(CategoryQuery.FIND_CATEGORY_BY_NAME)) {
+        try (Connection con = connectionManager.getConnection();
+             PreparedStatement stmt = con.prepareStatement(CategoryQuery.FIND_CATEGORY_BY_NAME)) {
             stmt.setString(1, name);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
@@ -43,8 +43,8 @@ public class CategoryDAO implements DAO<Category> {
     @Override
     public Category findById(long id) throws DBException {
         Category category = null;
-        try (Connection con = dbManager.getConnection();
-                PreparedStatement stmt = con.prepareStatement(CategoryQuery.FIND_CATEGORY_BY_ID)) {
+        try (Connection con = connectionManager.getConnection();
+             PreparedStatement stmt = con.prepareStatement(CategoryQuery.FIND_CATEGORY_BY_ID)) {
             stmt.setLong(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
@@ -96,8 +96,8 @@ public class CategoryDAO implements DAO<Category> {
     public List<Category> findAll() throws DBException {
         List<Category> categories = new ArrayList<>();
 
-         try (Connection con = dbManager.getConnection();
-                 PreparedStatement stmt = con.prepareStatement(CategoryQuery.FIND_ALL_CATEGORIES);
+         try (Connection con = connectionManager.getConnection();
+              PreparedStatement stmt = con.prepareStatement(CategoryQuery.FIND_ALL_CATEGORIES);
               ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 categories.add(mapCategory(rs));

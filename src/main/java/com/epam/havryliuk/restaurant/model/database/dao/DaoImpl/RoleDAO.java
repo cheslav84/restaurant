@@ -1,11 +1,12 @@
 package com.epam.havryliuk.restaurant.model.database.dao.DaoImpl;
 
-import com.epam.havryliuk.restaurant.model.database.connection.DBManager;
+import com.epam.havryliuk.restaurant.model.database.connection.ConnectionManager;
 import com.epam.havryliuk.restaurant.model.database.dao.DAO;
 import com.epam.havryliuk.restaurant.model.database.dao.databaseFieds.RoleFields;
 import com.epam.havryliuk.restaurant.model.database.dao.queries.RoleQuery;
 import com.epam.havryliuk.restaurant.model.database.dao.queries.UserQuery;
 import com.epam.havryliuk.restaurant.model.entity.Role;
+import com.epam.havryliuk.restaurant.model.entity.constants.UserRole;
 import com.epam.havryliuk.restaurant.model.exceptions.DBException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,16 +19,16 @@ import java.util.List;
 //public class UserDAO<T extends User> implements DAO<Long, User> {
 public class RoleDAO implements DAO<Role> {
     private static final Logger log = LogManager.getLogger(RoleDAO.class);
-    private final DBManager dbManager;
+    private final ConnectionManager connectionManager;
 
     public RoleDAO() throws DBException {
-        dbManager = DBManager.getInstance();
+        connectionManager = ConnectionManager.getInstance();
     }
 
     @Override
     public Role findByName(String name) throws DBException {
         Role role = null;
-        try (Connection con = dbManager.getConnection();
+        try (Connection con = connectionManager.getConnection();
              PreparedStatement stmt = con.prepareStatement(RoleQuery.FIND_ROLE_BY_NAME)) {
             stmt.setString(1, name);
             role = extractRole(stmt);
@@ -42,7 +43,7 @@ public class RoleDAO implements DAO<Role> {
     @Override
     public Role findById(long id) throws DBException {
         Role role = null;
-        try (Connection con = dbManager.getConnection();
+        try (Connection con = connectionManager.getConnection();
              PreparedStatement stmt = con.prepareStatement(RoleQuery.FIND_ROLE_BY_ID)) {
             stmt.setLong(1, id);
             role = extractRole(stmt);
@@ -66,7 +67,7 @@ public class RoleDAO implements DAO<Role> {
 
     @Override
     public boolean create(Role role) throws DBException {
-        try (Connection con = dbManager.getConnection();
+        try (Connection con = connectionManager.getConnection();
              PreparedStatement stmt = con.prepareStatement(RoleQuery.ADD_ROLE,
                      Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, role.getUserRole().name());
@@ -89,7 +90,7 @@ public class RoleDAO implements DAO<Role> {
     @Override
     public List<Role> findAll() throws DBException {
         List<Role> roles = new ArrayList<>();
-        try (Connection con = dbManager.getConnection();
+        try (Connection con = connectionManager.getConnection();
              PreparedStatement stmt = con.prepareStatement(RoleQuery.FIND_ALL_ROLES);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
@@ -105,7 +106,7 @@ public class RoleDAO implements DAO<Role> {
 
     @Override
     public boolean update(Role role) throws DBException {
-        try (Connection con = dbManager.getConnection();
+        try (Connection con = connectionManager.getConnection();
              PreparedStatement stmt = con.prepareStatement(RoleQuery.UPDATE_ROLE)) {
             stmt.setString(1, role.getUserRole().name());
             stmt.executeUpdate();
@@ -121,7 +122,7 @@ public class RoleDAO implements DAO<Role> {
 
     @Override
     public boolean delete(Role role) throws DBException {
-        try (Connection con = dbManager.getConnection();
+        try (Connection con = connectionManager.getConnection();
              PreparedStatement stmt = con.prepareStatement(UserQuery.DELETE_USER)) {
             stmt.setString(1, role.getUserRole().name());
             stmt.executeUpdate();
@@ -135,7 +136,7 @@ public class RoleDAO implements DAO<Role> {
 
     @Override
     public boolean delete(long id) throws DBException {
-        try (Connection con = dbManager.getConnection();
+        try (Connection con = connectionManager.getConnection();
              PreparedStatement stmt = con.prepareStatement(UserQuery.DELETE_USER_BY_ID)) {
             stmt.setLong(1, id);
             stmt.executeUpdate();
@@ -155,7 +156,7 @@ public class RoleDAO implements DAO<Role> {
     private Role mapRole(ResultSet rs) throws SQLException {
         long id = rs.getLong(RoleFields.ROLE_ID);
         String role = rs.getString(RoleFields.ROLE_NAME);
-        return Role.getInstance(id, Role.UserRole.valueOf(role));
+        return Role.getInstance(id, UserRole.valueOf(role));
     }
 
 

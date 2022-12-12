@@ -13,3 +13,12 @@
     right: 12px;
     margin-top: -8px;
   }
+
+  .error-message {
+    margin-top: 15px;
+    font-family: Satisfy, sans-serif;
+    color: #eda03b;
+    font-size: 13px;
+    line-height: 16px;
+    text-shadow: none;
+  }

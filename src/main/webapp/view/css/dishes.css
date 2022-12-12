@@ -1,0 +1,161 @@
+
+.lable {
+    position:absolute;
+    padding-right: 9px;
+    padding-left: 9px;
+    width: 70px;
+    float: none;
+    border-radius: 3px;
+    background-color: #e88f2a;
+    font-family: 'Open Sans', sans-serif;
+    color: #fff;
+    line-height: 24px;
+    font-weight: 700;
+    text-align: center;
+}
+
+
+.menu-item-amount {
+/* position:absolute; */
+      right: 10px;
+      top: 0px;
+      /* padding-right: 9px;
+          padding-left: 9px;
+          float: none;
+          border-radius: 3px;
+          background-color: #e88f2a;
+          font-family: 'Open Sans', sans-serif;
+          color: #fff;
+          line-height: 24px;
+          font-weight: 700; */
+}
+
+.menu-item-price {
+    right: 95px;
+    top: -9px;
+}
+
+.menu-item-weight{
+    right: 180px;
+    top: 0px;
+}
+
+.menu-item-special{
+
+    right: 265px;
+    top: 0px;
+    width: 110px;
+}
+
+
+.menu-item-button {
+      position: absolute;
+      right: 11px;
+      top: 30px;
+      margin: 0;
+      padding: 0px 8px;
+      width:100px;
+}
+
+.menu-item-text {
+    margin-top: 5px;
+}
+
+.menu-item-title.description {
+    width: 85%;
+    /* max-width: 460px; */
+ }
+
+
+
+@media screen and (max-width:1100px) {
+
+    /* .menu-item-title.description {
+        max-width: 360px;
+    } */
+
+}
+
+@media screen and (max-width:991px) {
+
+    .menu-item-title.description {
+        width: 75%;
+        /* max-width: 215px; */
+    }
+
+    .menu-item-title.weight{
+        margin-right: 55px;
+        /* margin-top: -20px; */
+    }
+
+    .menu-item-title.description {
+        width: 110%;
+        /* max-width: 150px; */
+    }
+
+
+.menu-item-text {
+        margin-top: 75px;
+        margin-left: 5px;
+    }
+}
+
+
+
+@media screen and (max-width:767px) {
+
+
+ 
+
+.menu-item-special{
+
+    right: 140px;
+    top: 30px;
+
+}
+
+}
+
+@media screen and (max-width:479px) {
+
+   
+    
+    /* .menu-item-title.description {
+        width: 110%;
+    } */
+
+    /* .menu-item-title.weight{
+        margin-top: -100px;
+    } */
+
+    
+}
+/* 
+@media screen and (max-width:466px) {
+
+    .menu-item-title.weight{
+        margin-top: -115px;
+    } 
+
+    
+}*/
+
+
+
+
+.menu-list-item {
+    width: 100%
+}
+
+
+.dish-titles {
+    margin-top: 30px;
+}
+
+.menu-header{
+    display: inline-block;
+}
+
+.menu-item{
+    display: inline-block;
+}

@@ -14,8 +14,6 @@ import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
-
-import java.util.Enumeration;
 import java.util.List;
 
 
@@ -31,28 +29,15 @@ public class MainPageController extends HttpServlet {
 
         String currentMenu = getCurrentMenu(req);
 
-
         DishService dishService = new DishService();
         List<Dish> dishes = null;
         try {
             dishes = dishService.getMenuByCategory(currentMenu);
             log.debug("List of dishes received by servlet and going to be sending to client side.");
         } catch (NoSuchEntityException e) {
-            log.error("vList of dishes has been received.");
+            log.error("List of dishes hasn't been received.");
             //req.setAttribute("message", "Message");//todo inform user!!!
         }
-
-        Enumeration<String> att = req.getAttributeNames();
-        System.out.println("req. attributes  ++++++++++++++++++++++++++++++++++++++++++  ");
-        if (att.hasMoreElements()) {
-            System.out.println("attribute ==> " + att.nextElement());
-        }
-        Enumeration<String> attS = req.getSession().getAttributeNames();
-        System.out.println("sess. attributes  ++++++++++++++++++++++++++++++++++++++++++  ");
-        if (attS.hasMoreElements()) {
-            System.out.println("attribute ==> " + attS.nextElement());
-        }
-
 
         req.setAttribute("dishes", dishes);
         req.getRequestDispatcher("view/jsp/index.jsp").forward(req, resp);

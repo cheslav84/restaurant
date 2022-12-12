@@ -1,8 +1,10 @@
 package com.epam.havryliuk.restaurant.model.entity;
 
 
+import com.epam.havryliuk.restaurant.model.entity.constants.UserRole;
+
 public class Role implements Entity{
-    public enum UserRole {CLIENT, MANAGER}
+
     private long id;
     private UserRole userRole;
 
@@ -47,5 +49,10 @@ public class Role implements Entity{
     @Override
     public int hashCode() {
         return userRole != null ? userRole.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return getUserRole().name();
     }
 }

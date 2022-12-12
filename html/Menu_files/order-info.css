@@ -1,0 +1,148 @@
+.order-info  {
+    position: fixed;
+    top: 0; 
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+}
+
+
+
+
+.order-info-container {  
+    display: flex;  
+    position: relative;  
+    width: 100%;
+    height: 100%;
+}
+
+
+.order-info-box {  
+    position: absolute;  
+    top: 50%;  
+    left: 50%;  
+    padding: 8px;
+    transform: translate(-79%, -50%);
+    /* width: 400px; */
+    /* height: 170px; */
+    background-color: rgba(61, 56, 51, 0.9);   
+    border-radius: 4px;
+    z-index: 110;
+
+}
+
+
+.menu-item-label {
+    position:relative;
+    display: inline-block;
+    float: right;
+    margin-right: 10px;
+    margin-bottom: 7px;
+    margin-top: 10px;
+    /* top: -30px; */
+    padding-right: 9px;
+    padding-left: 9px;
+    width: 70px;
+    border-radius: 3px;
+    background-color: #e88f2a;
+    font-family: 'Open Sans', sans-serif;
+    color: #fff;
+    line-height: 24px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.menu-item-special{
+    width: 110px;
+}
+
+
+.order-button {
+    margin: 10px;
+    color: #000;
+    background-color: #faf3eb;
+    cursor: pointer;
+}
+
+/* .order-button:hower {
+    cursor: pointer;
+} */
+
+
+.amount-button-label {
+    display: inline-block;
+}
+
+.dishes-amout {
+    max-width: 35px;
+}
+
+
+.menu-item-title {
+    display: flex;
+    width: 90%;
+    margin: 10px;
+    
+}
+.menu-item-text {
+    margin-top: 40px;
+    margin-left: 10px;
+    color: #fff;
+}
+
+
+.menu-item-title.description {
+    margin: 10px;
+    color: #fff;
+ }
+
+
+
+
+@media screen and (max-width:991px) {
+
+    .order-info-box {  
+
+        width: 66%;
+        left: 51%;
+        transform: translate(-72%, -50%);
+    }
+
+}
+
+
+
+
+@media screen and (max-width:767px) {
+    .order-info-box {  
+
+  
+        width: 85%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+    }
+
+
+    .order-button {
+        width: 100%;
+        margin: 5px auto;
+    }
+
+    .dishes-amout {
+        max-width: 50px;
+    }
+
+}
+
+@media screen and (max-width:479px) {
+
+    .menu-item-label {
+        /* top: -100px; */
+    }
+    .menu-item-text {
+        margin-top: 80px;
+    }
+    
+}
+ 

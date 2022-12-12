@@ -11,26 +11,26 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class DBManager {
+public class ConnectionManager {
 
-    private static final Logger log = LogManager.getLogger(DBManager.class);// todo add logs for class
+    private static final Logger log = LogManager.getLogger(ConnectionManager.class);// todo add logs for class
 
-    private static volatile DBManager instance;
+    private static volatile ConnectionManager instance;
 
     private static DataSource ds = null;
     private static Context envContext;
 
-    private DBManager() {
+    private ConnectionManager() {
     }
 
-    public static DBManager getInstance() throws DBException {
+    public static ConnectionManager getInstance() throws DBException {
         initDataSource();
-        DBManager localInstance = instance;
+        ConnectionManager localInstance = instance;
         if (localInstance == null) {
-            synchronized (DBManager.class) {
+            synchronized (ConnectionManager.class) {
                 localInstance = instance;
                 if (localInstance == null) {
-                    instance = localInstance = new DBManager();
+                    instance = localInstance = new ConnectionManager();
                 }
             }
         }
@@ -60,9 +60,26 @@ public class DBManager {
     }
 
 
+    public void close(AutoCloseable closeable) {
+        synchronized (ConnectionManager.class) {
+            if (closeable != null) {
+                try {
+                    closeable.close();
+                } catch (Exception e) {
+                    log.error("Error closing " + closeable, e);
+                }
+            }
+        }
+    }
 
-
-
-
+    public void setAutoCommit(Connection con, boolean value) {
+        synchronized (ConnectionManager.class) {
+            try {
+                con.setAutoCommit(value);
+            } catch (Exception e) {
+                log.error("Error setting " + value + " in connection " + con, e);
+            }
+        }
+    }
 
 }

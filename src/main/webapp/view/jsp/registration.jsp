@@ -99,26 +99,28 @@
 
 
                         <!-- LOGING IN -->
-                        <form method="post" id="wf-form-Reservation-Form" name="logInForm" data-name="Log in form">
+                        <form method="post" action="login" id="wf-form-Reservation-Form" name="logInForm" data-name="Log in form">
                             <input type="email" id="Email-3" name="email" data-name="Email" placeholder="Email address"
-                                maxlength="32" required="true" class="field w-input">
+                                maxlength="32" required="true" class="field w-input"                                          value="mail@com">
 
                             <input type="password" id="password" name="password" data-name="Password"
                                 placeholder="Password" minlength="8" maxlength="32" required="true"
-                                class="field w-input">
+                                class="field w-input"                                                                     value="mail@com">
 
+                            <div class="error-message"> 
+                                <c:out value="${sessionScope.logInErrorMessage}"/>
+                            </div>
 
                             <input type="submit" value="Log in" data-wait="Please wait..."
                                 class="button submit-button w-button">
                         </form>
                         <div class="sing-in">
                             <div class="section-divider-line"></div>
-                            <div class="intro-title">Do not have account?</div>
+                            <div class="intro-title">Do not have an account?</div>
                             <input type="submit" value="Just make it" data-wait="Please wait..."
                                 class="button submit-button w-button">
                         </div>
-
-
+              
 
                         <!-- REGISTRATION -->
                         <form method="post" action="registration" id="wf-form-Reservation-Form" name="registrationForm" data-name="Reservation Form">
@@ -150,16 +152,15 @@
                                 placeholder="Password" minlength="8" maxlength="32" required="true"
                                 class="field w-input"                                                                      value="mail@com">
 
+                            <div class="error-message"> 
+                                <c:out value="${sessionScope.registrationErrorMessage}"/>
+                            </div>
                             <input type="submit" value="Sing in" data-wait="Please wait..."
                                 class="button submit-button w-button">
                         </form>
+                        
 
-
-                            <div class="section-divider-line"></div>
-
-
-
-
+                        <div class="section-divider-line"></div>
 
                         
                         <div class="success-bg w-form-done">
@@ -171,7 +172,6 @@
                         </div>
                     </div>
                 </div>
-
 
                 <div class="reservation-image-column w-col w-col-3">
                     <div data-ix="fade-in-on-load-4" class="reservation-image-block"></div>

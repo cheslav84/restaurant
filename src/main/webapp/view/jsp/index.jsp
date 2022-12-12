@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="com.epam.havryliuk.restaurant.model.utils.Properties" %>
+<%-- <%@ page import="com.epam.havryliuk.restaurant.model.utils.Properties" %> --%>
 
 <%-- <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
 
@@ -23,6 +23,7 @@
             <link href="view/css/common.css" rel="stylesheet" type="text/css">
             <link href="view/css/menu.css" rel="stylesheet" type="text/css">
             <link href="view/css/sidebar.css" rel="stylesheet" type="text/css">
+            <link href="view/css/order-info.css" rel="stylesheet" type="text/css">
 
             <!-- <script src="view/js/menu.js" type="text/javascript"></script> -->
 
@@ -458,6 +459,60 @@
                     </div>
                 </div>
             </div>
+
+    <div class="order-info">
+        <div class="order-info-container">
+            <div class="order-info-box">
+
+
+                <div class="one-dish-info">
+
+                    <div class="menu-item-label menu-item-weight">
+                        200
+                        <span class="weight-marker"> g</span>
+                    </div>
+
+                    <div class="menu-item-label menu-item-price-reload">
+                        4.50
+                        <span class="price-marker">₴</span>
+                    </div>
+
+                    <div class="menu-item-label menu-item-special">
+                        SPECIAL
+                    </div>
+
+                </div>
+                    <div class="menu-item-text ordering">
+                        <div class="menu-item-title ordering">
+                            Black Eyed Andy
+                        </div>
+                        <div class="menu-item-title description ordering">
+                            i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i
+                            i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i
+                            i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i
+                            i i i i i i i i i i i i i i i i i i .
+                        </div>
+
+                    </div>
+
+                <div class="order-buttons">
+                    <form>
+                        <div class="button order-button button-amount">
+                            <div class="amount-button-label">amount</div>
+                            <input type="text" name="dishes-amout" class="dishes-amout"/>
+                        </div>
+                        <button class="button order-button">continue ordering</button>
+                        <button class="button order-button">confirm my orders</button>
+                    </form>
+                </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+
 
             <jsp:include page="footer.jsp"/>
             <script src="view/js/jquery3.6.1.js" type="text/javascript" crossorigin="anonymous"></script>

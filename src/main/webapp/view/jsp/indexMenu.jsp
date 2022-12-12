@@ -12,20 +12,21 @@
                 class="menu-tabs w-tabs">
                 <div class="menu-tabs-menu w-tab-menu">
 
+
                     <form method="get" name="menu" data-w-tab="Coffee"
                         class="menu-tab-button w-inline-block w-tab-link w--current">
                         <div>Coffee</div>
-                        <input type="submit" name="menuCategory" value="COFFEE" class="menu-hidden-input" />
+                        <input type="submit" name="menuCategory" value="COFFEE" class="menu-hidden-input menu-tab-button ${sessionScope.menuCategory}" />
                     </form>
                     <form method="get" id="lunchMenuButton" data-w-tab="Lunch"
                         class="menu-tab-button w-inline-block w-tab-link">
                         <div>Lunch</div>
-                        <input type="submit" name="menuCategory" value="LUNCH" class="menu-hidden-input" />
+                        <input type="submit" name="menuCategory" value="LUNCH" class="menu-hidden-input menu-tab-button ${sessionScope.menuCategory}" />
                     </form>
                     <form method="get" id="specialsMenuButton" data-w-tab="Every Day Specials"
                         class="menu-tab-button w-inline-block w-tab-link">
                         <div>Every Day Specials</div>
-                        <input type="submit" name="menuCategory" value="SPECIALS" class="menu-hidden-input" />
+                        <input type="submit" name="menuCategory" value="SPECIALS" class="menu-hidden-input menu-tab-button  ${sessionScope.menuCategory}" />
                     </form>
 
                 </div>
@@ -62,7 +63,7 @@
                                             <span class="price-marker">₴</span>
                                         </div>
                                         <a href="" class="order-icon-container">
-                                            <img src="view/pictures/icons/Icon-basket.png" alt="" class="order-icon-img">
+                                            <img src="view/pictures/icons/shopping_basket_active.png" alt="" class="order-icon-img">
                                         </a>
                                     </div>
                                 </c:forEach>

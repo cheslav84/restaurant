@@ -27,29 +27,52 @@ public class RegistrationController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        log.info("\"RegistrationController\", doPost.");//todo move down
+        log.debug("\"RegistrationController\", doPost.");//todo move down
 
-        User user = null;
+        HttpSession session = req.getSession();
+        User user;
+        String redirectionPage;
+
         try {
             UserService service = new UserService();
             user = service.addNewUser(req);
             //todo set userId
             log.info("The user \"" + user.getName() + "\" has been successfully registered.");//todo move down
-            HttpSession session = req.getSession();
             session.setAttribute("loggedUser", user);
-            session.setAttribute("userRole", user.getRole().getUserRole().name());
+//            session.setAttribute("userRole", user.getRole().getUserRole().name());
     //        Cookie cookie = new Cookie("sessionId", session.getId());
     //        resp.addCookie(cookie);
     //        req.getRequestDispatcher("view/jsp/registration.jsp").forward(req, resp);
-
+            session.removeAttribute("registrationErrorMessage");
+            session.removeAttribute("registrationProcess");//todo if that attribute is set - hide login menu is jsp
+            redirectionPage = getRedirectionPage(session);
         } catch (DBException e) {
             log.error("User hasn't been registered. " + e);
-            req.getSession().setAttribute("registrationError", e.getMessage());
-            resp.sendRedirect("registration");
+            redirectionPage = "registration";
+            setErrorMessage(req, e.getMessage());
+            session.setAttribute("registrationProcess", "registrationProcess");
         }
-        req.getSession().removeAttribute("registrationError");
-        resp.sendRedirect("index");
+        resp.sendRedirect(redirectionPage);
     }
 
+
+
+    private String getRedirectionPage(HttpSession session) {
+        String pageFromBeingRedirected = (String) session.getAttribute("pageFromBeingRedirected");//todo set from security filter
+        String redirectionPage;
+        if (pageFromBeingRedirected != null) {
+            redirectionPage = pageFromBeingRedirected;
+        } else {
+            redirectionPage = "index";
+        }
+        session.removeAttribute("pageFromBeingRedirected");
+        return redirectionPage;
+    }
+
+    private void setErrorMessage(HttpServletRequest req, String errorMassage) {
+        if (errorMassage != null){
+            req.getSession().setAttribute("registrationErrorMessage", errorMassage);
+        }
+    }
 }
 

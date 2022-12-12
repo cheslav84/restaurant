@@ -1,6 +1,6 @@
 package com.epam.havryliuk.restaurant.model.database.dao.DaoImpl;
 
-import com.epam.havryliuk.restaurant.model.database.connection.DBManager;
+import com.epam.havryliuk.restaurant.model.database.connection.ConnectionManager;
 import com.epam.havryliuk.restaurant.model.database.dao.DishDao;
 import com.epam.havryliuk.restaurant.model.database.dao.databaseFieds.DishFields;
 import com.epam.havryliuk.restaurant.model.database.dao.queries.DishQuery;
@@ -20,18 +20,18 @@ import java.util.List;
 
 public class DishDaoImpl implements DishDao {
     private static final Logger log = LogManager.getLogger(DishDaoImpl.class);
-    private final DBManager dbManager;
+    private final ConnectionManager connectionManager;
 
     public DishDaoImpl () throws DBException {
-        dbManager = DBManager.getInstance();
+        connectionManager = ConnectionManager.getInstance();
     }
 
     @Override
     public Dish findByName(String name) throws DBException {
         Dish dish = null;
 
-        try (Connection con = dbManager.getConnection();
-                PreparedStatement stmt = con.prepareStatement(DishQuery.FIND_DISH_BY_NAME)) {
+        try (Connection con = connectionManager.getConnection();
+             PreparedStatement stmt = con.prepareStatement(DishQuery.FIND_DISH_BY_NAME)) {
             stmt.setString(1, name);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
@@ -49,17 +49,17 @@ public class DishDaoImpl implements DishDao {
     @Override
     public List<Dish> findByCategory(Category category) throws DBException {
         List<Dish> dishes = new ArrayList<>();
-        try (Connection con = dbManager.getConnection();
-                PreparedStatement stmt = con.prepareStatement(DishQuery.FIND_ALL_BY_CATEGORY)) {
+        try (Connection con = connectionManager.getConnection();
+             PreparedStatement stmt = con.prepareStatement(DishQuery.FIND_ALL_BY_CATEGORY)) {
             stmt.setString(1, category.getCategoryName().name());
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     dishes.add(mapDish(rs));
                 }
             }
-            for (Dish dish : dishes) {
-                System.out.println(dish);
-            }
+//            for (Dish dish : dishes) {
+//                System.out.println(dish);
+//            }
             log.debug("List of dishes (by category) has been received from database. ");
         } catch (SQLException e) {
             log.error("Error in getting list of dishes from database. ", e);
@@ -116,7 +116,7 @@ public class DishDaoImpl implements DishDao {
 
     private List<Dish> getDishes(String query) throws DBException {
         List<Dish> dishes = new ArrayList<>();
-        try (Connection con = dbManager.getConnection();
+        try (Connection con = connectionManager.getConnection();
              PreparedStatement stmt = con.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {

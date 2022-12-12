@@ -26,16 +26,18 @@ public class PassEncryptor {
             SecretKeySpec key = secretKey.generateSecretKey(password.toCharArray(), salt, iterationCount, keyLength);
             encryptedPassword = secretKey.encryptPassword(password, key);
         } catch (GeneralSecurityException | UnsupportedEncodingException e) {
-            log.error("Error occurs encrypting user password. " + e);
-            throw new GeneralSecurityException(e);
+            String errorMessage = "Error occurs encrypting user password.";
+            log.error(errorMessage, e);
+            throw new GeneralSecurityException(errorMessage, e);
         }
 
-        System.out.println("Original password: " + password);
-        System.out.println("Encrypted password: " + encryptedPassword);
-        System.out.println("Encrypted password: " + "90CgNvHrdxwQZVd4XUMELw==:0aba5Q6nTt6DxT84xxi5bA==");
-        System.out.println(encryptedPassword.equals("wGNL1DTtcS9pF11rpkk7Fg==:6SmOO/e5lB7QyaPnR/UyJA=="));
-        System.out.println(encryptedPassword.equals("90CgNvHrdxwQZVd4XUMELw==:0aba5Q6nTt6DxT84xxi5bA=="));
-        return encryptedPassword;
+//        System.out.println("Original password: " + password);
+//        System.out.println("Encrypted password: " + encryptedPassword);
+//        System.out.println("Encrypted password: " + "90CgNvHrdxwQZVd4XUMELw==:0aba5Q6nTt6DxT84xxi5bA==");
+//        System.out.println(encryptedPassword.equals("wGNL1DTtcS9pF11rpkk7Fg==:6SmOO/e5lB7QyaPnR/UyJA=="));
+//        System.out.println(encryptedPassword.equals("90CgNvHrdxwQZVd4XUMELw==:0aba5Q6nTt6DxT84xxi5bA=="));
+//        return encryptedPassword;//todo
+        return password;
     }
 
     static class secretKey {

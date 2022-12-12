@@ -1,14 +1,14 @@
 package com.epam.havryliuk.restaurant.model.database.dao.DaoImpl;
 
-import com.epam.havryliuk.restaurant.model.database.connection.DBManager;
+import com.epam.havryliuk.restaurant.model.database.connection.ConnectionManager;
 import com.epam.havryliuk.restaurant.model.database.dao.DAO;
-import com.epam.havryliuk.restaurant.model.database.dao.databaseFieds.CategoryFields;
 import com.epam.havryliuk.restaurant.model.database.dao.databaseFieds.RoleFields;
 import com.epam.havryliuk.restaurant.model.database.dao.queries.UserQuery;
 import com.epam.havryliuk.restaurant.model.entity.Role;
 import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.entity.UserDetails;
 import com.epam.havryliuk.restaurant.model.database.dao.databaseFieds.UserFields;
+import com.epam.havryliuk.restaurant.model.entity.constants.UserRole;
 import com.epam.havryliuk.restaurant.model.exceptions.DBException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,25 +22,25 @@ import java.util.List;
 //public class UserDAO<T extends User> implements DAO<Long, User> {
 public class UserDAO implements DAO<User> {
     private static final Logger log = LogManager.getLogger(UserDAO.class);
-    private final DBManager dbManager;
+    private final ConnectionManager connectionManager;
 
     public UserDAO() throws DBException {
-        dbManager = DBManager.getInstance();
+        connectionManager = ConnectionManager.getInstance();
     }
 
     /**
-     * by email.
+     * by login.
      */
     @Override
-    public User findByName(String name) throws DBException {
+    public User findByName(String login) throws DBException {
         User user = null;
-        try (Connection con = dbManager.getConnection();
+        try (Connection con = connectionManager.getConnection();
              PreparedStatement stmt = con.prepareStatement(UserQuery.FIND_USER_BY_LOGIN)) {
-            stmt.setString(1, name);
+            stmt.setString(1, login);
             user = extractUser(stmt);
             log.debug("The \"" + user + "\" user received from database.");
         } catch (SQLException e) {
-            log.error("Error in getting user \"" + name + "\" from database.", e);
+            log.error("Error in getting user \"" + login + "\" from database.", e);
             throw new DBException(e);
         }
         return user;
@@ -49,7 +49,7 @@ public class UserDAO implements DAO<User> {
     @Override
     public User findById(long id) throws DBException {// todo зробити абстрактний клас зі всіма аналогічними методами і передаваити як аргумент query?
         User user = null;
-        try (Connection con = dbManager.getConnection();
+        try (Connection con = connectionManager.getConnection();
              PreparedStatement stmt = con.prepareStatement(UserQuery.FIND_USER_BY_ID)) {
             stmt.setLong(1, id);
             user = extractUser(stmt);
@@ -61,7 +61,7 @@ public class UserDAO implements DAO<User> {
         return user;
     }
 
-    private User extractUser(PreparedStatement stmt) throws SQLException {
+    private User extractUser(PreparedStatement stmt) throws SQLException, DBException {
         User user = null;
         try (ResultSet rs = stmt.executeQuery()) {
             if (rs.next()) {
@@ -71,11 +71,72 @@ public class UserDAO implements DAO<User> {
         return user;
     }
 
+    /**
+     * As method create(user) accesses the database two times, for correct transaction
+     * connection has to be set to the false value.
+     * @param user
+     * @return
+     * @throws DBException
+     */
     @Override
     public boolean create(User user) throws DBException {
-        try (Connection con = dbManager.getConnection();
-             PreparedStatement stmt = con.prepareStatement(UserQuery.ADD_USER,
-                     Statement.RETURN_GENERATED_KEYS)) {
+        Connection con = null;
+        PreparedStatement stmt = null;
+        try {
+            con = connectionManager.getConnection();
+            con.setAutoCommit(false);
+
+            checkIfLoginUnique(con, user.getEmail());
+            addUser(user, con);
+
+            log.debug("The \"" + user.getName() + "\" user has been added to database.");
+        } catch (SQLException e) {
+            String message = "Something went wrong. Try to sign in later please.";
+            log.error("Error in inserting user \"" + user.getName() + "\" to database.", e);
+            throw new DBException(message, e);
+        } finally {
+            connectionManager.setAutoCommit(con, true);
+            connectionManager.close(con);
+        }
+        return true;
+    }
+
+
+    /**
+     * Checking for User email uniqueness. Trying to get from database user with the same
+     * email (login), if it presents there method throws DBException with the message
+     * "The user with such login is already exists. Try to use another one."
+     * @param con
+     * @param login
+     * @throws DBException
+     */
+    private void checkIfLoginUnique(Connection con, String login) throws DBException {
+        User user = null;
+        PreparedStatement stmt = null;
+        try {
+            stmt = con.prepareStatement(UserQuery.FIND_USER_BY_LOGIN);
+            stmt.setString(1, login);
+            user = extractUser(stmt);
+            log.debug("The \"" + user + "\" user received from database.");
+            if (user != null){
+                String message = "The user with such login is already exists. Try to use another one.";
+                log.error(message);
+                throw new DBException(message);
+            }
+        } catch (SQLException e) {
+            log.error("Error in getting user \"" + login + "\" from database.", e);
+            throw new DBException(e);
+        } finally {
+            connectionManager.close(stmt);
+        }
+    }
+
+
+    private void addUser(User user, Connection con) throws DBException {
+        PreparedStatement stmt = null;
+        try {
+            stmt = con.prepareStatement(UserQuery.ADD_USER,
+                    Statement.RETURN_GENERATED_KEYS);
             setUserParameters(user, stmt);
             int insertionAmount = stmt.executeUpdate();
             if (insertionAmount > 0) {
@@ -85,18 +146,22 @@ public class UserDAO implements DAO<User> {
                     }
                 }
             }
-            log.debug("The \"" + user.getName() + "\" user has been added to database.");
         } catch (SQLException e) {
-            log.error("Error in inserting user \"" + user.getName() + "\" to database.", e);
-            throw new DBException(e);
+            throw new RuntimeException(e);
+        } finally {
+            connectionManager.close(stmt);
         }
-        return true;
+
     }
+
+
+
+
 
     @Override
     public List<User> findAll() throws DBException {
         List<User> users = new ArrayList<>();
-        try (Connection con = dbManager.getConnection();
+        try (Connection con = connectionManager.getConnection();
              PreparedStatement stmt = con.prepareStatement(UserQuery.FIND_ALL_USERS);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
@@ -112,7 +177,7 @@ public class UserDAO implements DAO<User> {
 
     @Override
     public boolean update(User user) throws DBException {
-        try (Connection con = dbManager.getConnection();
+        try (Connection con = connectionManager.getConnection();
              PreparedStatement stmt = con.prepareStatement(UserQuery.UPDATE_USER)) {
             setUserParameters(user, stmt);
             stmt.executeUpdate();
@@ -128,7 +193,7 @@ public class UserDAO implements DAO<User> {
 
     @Override
     public boolean delete(User user) throws DBException {
-        try (Connection con = dbManager.getConnection();
+        try (Connection con = connectionManager.getConnection();
              PreparedStatement stmt = con.prepareStatement(UserQuery.DELETE_USER)) {
             stmt.setString(1, user.getEmail());
             stmt.executeUpdate();
@@ -142,7 +207,7 @@ public class UserDAO implements DAO<User> {
 
     @Override
     public boolean delete(long id) throws DBException {
-        try (Connection con = dbManager.getConnection();
+        try (Connection con = connectionManager.getConnection();
              PreparedStatement stmt = con.prepareStatement(UserQuery.DELETE_USER_BY_ID)) {
             stmt.setLong(1, id);
             stmt.executeUpdate();
@@ -174,7 +239,7 @@ public class UserDAO implements DAO<User> {
         stmt.setLong(k++, roleId);
     }
 
-    private User mapUser(ResultSet rs) throws SQLException {
+    private User mapUser(ResultSet rs) throws SQLException, DBException {
         long id = rs.getLong(UserFields.USER_ID);
         String email = rs.getString(UserFields.USER_EMAIL);
         String password = rs.getString(UserFields.USER_PASSWORD);
@@ -183,13 +248,28 @@ public class UserDAO implements DAO<User> {
         String gender = rs.getString(UserFields.USER_GENDER);
         boolean isOverEighteen = rs.getBoolean(UserFields.USER_IS_AGE_OVER_EIGHTEEN);
         Date accountCreationDate = rs.getTimestamp(UserFields.USER_ACCOUNT_CREATION_DATE);
-        Role role = mapRoleForUser(rs);
+        Role role = getUserRole(rs);
+//        Role role = Role.getInstance(Role.UserRole.valueOf(roleName));
         UserDetails userDetails = null;
-        if (role.getUserRole() == Role.UserRole.MANAGER) { // todo краще витягувати всі дані відразу, чи зайвий раз сходити в базу,
+        if (role.getUserRole() == UserRole.MANAGER) { //todo
             userDetails = mapUserDetails(rs);
         }
         return User.getInstance(id, email, password, name, surname,
                 gender, isOverEighteen, accountCreationDate, role, userDetails);
+    }
+
+    private Role getUserRole(ResultSet rs) throws SQLException, DBException {
+        String roleName = rs.getString(RoleFields.ROLE_NAME);
+        Role role = Role.getInstance(UserRole.valueOf(roleName));
+        if (role.getUserRole().equals(UserRole.MANAGER) ||
+                role.getUserRole().equals(UserRole.CLIENT)) {
+            return role;
+        } else {
+            String errorMessage ="UserRole can't be instantiated";
+            log.debug(errorMessage);
+            throw new DBException(errorMessage);
+        }
+
     }
 
     private UserDetails mapUserDetails(ResultSet rs) throws SQLException {// todo винести потім в UserDetailsDao
@@ -199,9 +279,5 @@ public class UserDAO implements DAO<User> {
         return UserDetails.getInstance(birthDate, passport, bankAccount);
     }
 
-    private Role mapRoleForUser(ResultSet rs) throws SQLException {// todo винести потім в RoleDao
-        String roleName = rs.getString(RoleFields.ROLE_NAME);
-        return Role.getInstance(Role.UserRole.valueOf(roleName));
-    }
 
 }

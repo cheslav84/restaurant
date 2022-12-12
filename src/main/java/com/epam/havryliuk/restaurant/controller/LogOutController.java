@@ -25,7 +25,8 @@ public class LogOutController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         log.debug("\"/logout\" request doGet in LoginController");
 
-        req.getSession().removeAttribute("loggedUser");
+        req.getSession().invalidate();
+//        req.getSession().removeAttribute("loggedUser");
         resp.sendRedirect("index");
     }
 }
