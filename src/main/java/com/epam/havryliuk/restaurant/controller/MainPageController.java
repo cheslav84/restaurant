@@ -39,6 +39,8 @@ public class MainPageController extends HttpServlet {
             //req.setAttribute("message", "Message");//todo inform user!!!
         }
 
+        dishService.hideOrderInfoOnReloadPage(req);
+
         req.setAttribute("dishes", dishes);
         req.getRequestDispatcher("view/jsp/index.jsp").forward(req, resp);
     }

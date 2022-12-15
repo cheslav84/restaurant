@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
 <!DOCTYPE html>
 <html data-wf-domain="easy-times.webflow.io" data-wf-page="55d5c046965aff177731c33f"
       data-wf-site="559f85c38bde14cf4b3723cf"

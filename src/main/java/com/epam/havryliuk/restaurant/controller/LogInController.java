@@ -16,6 +16,8 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
+import static com.epam.havryliuk.restaurant.controller.RequestAttributes.*;
+
 
 //todo read about PRG pattern
 
@@ -35,7 +37,7 @@ public class LogInController extends HttpServlet {
 
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         log.debug("\"/login\" request doPost in LoginController");
 
         User user;
@@ -45,9 +47,8 @@ public class LogInController extends HttpServlet {
             UserService service = new UserService();
             user = service.getLoggedInUser(req);
             HttpSession session = req.getSession();
-            session.setAttribute("loggedUser", user);
-//            session.setAttribute("userRole", user.getRole().getUserRole());
-            session.removeAttribute("logInErrorMessage");
+            session.setAttribute(LOGGED_USER, user);
+            session.removeAttribute(LOGIN_ERROR_MESSAGE);
             redirectionPage = getRedirectionPage(session);
             log.debug("User logged in.");// todo rename
         } catch (NoSuchEntityException e) {
@@ -60,7 +61,6 @@ public class LogInController extends HttpServlet {
             log.error(e.getMessage());
         }
 
-//        req.getRequestDispatcher(redirectionPage).forward(req, resp);
         resp.sendRedirect(redirectionPage);
     }
 
@@ -73,13 +73,13 @@ public class LogInController extends HttpServlet {
         } else {
             redirectionPage = "index";
         }
-        session.removeAttribute("pageFromBeingRedirected");
+        session.removeAttribute(PAGE_FROM_BEING_REDIRECTED);
         return redirectionPage;
     }
 
     private void setErrorMessage(HttpServletRequest req, String errorMassage) {
         if (errorMassage != null){
-            req.getSession().setAttribute("logInErrorMessage", errorMassage);
+            req.getSession().setAttribute(LOGIN_ERROR_MESSAGE, errorMassage);
         }
     }
 

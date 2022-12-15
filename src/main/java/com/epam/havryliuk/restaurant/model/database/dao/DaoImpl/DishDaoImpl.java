@@ -57,9 +57,6 @@ public class DishDaoImpl implements DishDao {
                     dishes.add(mapDish(rs));
                 }
             }
-//            for (Dish dish : dishes) {
-//                System.out.println(dish);
-//            }
             log.debug("List of dishes (by category) has been received from database. ");
         } catch (SQLException e) {
             log.error("Error in getting list of dishes from database. ", e);
@@ -91,7 +88,24 @@ public class DishDaoImpl implements DishDao {
 
     @Override
     public Dish findById(long id) throws DBException {
-        return null;
+        Dish dish = null;
+
+        try (Connection con = connectionManager.getConnection();
+             PreparedStatement stmt = con.prepareStatement(DishQuery.FIND_DISH_BY_ID)) {
+            stmt.setLong(1, id);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    dish = mapDish(rs);
+                }
+            }
+            log.debug("The dish with \"id=" + id + "\" has been received from database.");
+        } catch (SQLException e) {
+            String errorMessage = "Error in getting with \"id=" + id + "\" from database. ";
+            log.error(errorMessage, e);
+
+            throw new DBException(errorMessage, e);
+        }
+        return dish;
     }
 
     @Override

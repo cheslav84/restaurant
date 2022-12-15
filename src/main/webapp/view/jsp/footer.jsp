@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 
             <div class="footer wf-section">
@@ -8,6 +9,12 @@
                     <div class="footer-row w-row">
                         <div class="footer-col-left w-col w-col-6">
                         </div>
+
+                        <div class="footer-col-left w-col w-col-10">
+                            <a href="http://http://easy-times.webflow.io/" target="_blank" class="bottom-footer-link template-by">Template by Studio Corvus
+                            </a>
+                        </div>
+
                         <div class="footer-col-right w-col w-col-6">
                             <a href="http://www.facebook.com/" target="_blank"
                                 class="footer-social-block w-inline-block">

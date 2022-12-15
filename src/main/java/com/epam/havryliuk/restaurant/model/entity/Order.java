@@ -2,22 +2,20 @@ package com.epam.havryliuk.restaurant.model.entity;
 
 import java.util.Date;
 
-public class Booking implements Entity{
+public class Order implements Entity{
     private Long id;
-    private String name;
     private String address;
     private String phoneNumber;
-    private boolean payment;
+    private boolean payed;
     private Date creationDate;
     private Date closeDate;
     private BookingStatus bookingStatus;
 
-    public static Booking getInstance(String name, String address, String phoneNumber) {
-        Booking booking = new Booking();
-        booking.setName(name);
-        booking.setAddress(address);
-        booking.setPhoneNumber(phoneNumber);
-        return booking;
+    public static Order getInstance(String address, String phoneNumber) {
+        Order order = new Order();
+        order.setAddress(address);
+        order.setPhoneNumber(phoneNumber);
+        return order;
     }
 
     public Long getId() {
@@ -26,14 +24,6 @@ public class Booking implements Entity{
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getAddress() {
@@ -52,12 +42,12 @@ public class Booking implements Entity{
         this.phoneNumber = phoneNumber;
     }
 
-    public boolean isPayment() {
-        return payment;
+    public boolean isPayed() {
+        return payed;
     }
 
-    public void setPayment(boolean payment) {
-        this.payment = payment;
+    public void setPayed(boolean payment) {
+        this.payed = payment;
     }
 
     public Date getCreationDate() {
@@ -89,18 +79,16 @@ public class Booking implements Entity{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Booking that = (Booking) o;
+        Order order = (Order) o;
 
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (address != null ? !address.equals(that.address) : that.address != null) return false;
-        if (phoneNumber != null ? !phoneNumber.equals(that.phoneNumber) : that.phoneNumber != null) return false;
-        return creationDate != null ? creationDate.equals(that.creationDate) : that.creationDate == null;
+        if (address != null ? !address.equals(order.address) : order.address != null) return false;
+        if (phoneNumber != null ? !phoneNumber.equals(order.phoneNumber) : order.phoneNumber != null) return false;
+        return creationDate != null ? creationDate.equals(order.creationDate) : order.creationDate == null;
     }
 
     @Override
     public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + (address != null ? address.hashCode() : 0);
+        int result = address != null ? address.hashCode() : 0;
         result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
         result = 31 * result + (creationDate != null ? creationDate.hashCode() : 0);
         return result;

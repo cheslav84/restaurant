@@ -31,7 +31,7 @@
 }
 
 
-.colse-icon {
+.close-icon {
     width: 20px;
     position: absolute;
     right: 18px;
@@ -39,7 +39,7 @@
     cursor: pointer;
 }
 
-.colse-icon:hover {
+.close-icon:hover {
     transform: rotate(90deg);
 }
 
@@ -96,6 +96,7 @@
 
 .dishes-amout {
     max-width: 35px;
+    text-align: center;
 }
 
 
@@ -111,6 +112,7 @@
 }
 
 .menu-item-title.ordering {
+    margin-top: 6px;
     float: left;
     color: #fff;
  }
@@ -122,33 +124,24 @@
 
  }
 
+ label.order-label {
+    display: inline;
+    float: left;
+    width: 30%;
+    font-family: Oswald, sans-serif;
+    color: #fff;
+    font-size: 14px;
+    font-weight: normal;
+    font-style: ;
+    line-height: 40px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+}
 
- /* .close {
-    position: absolute;
-    right: 32px;
-    top: 32px;
-    width: 32px;
-    height: 32px;
-    opacity: 0.3;
-  }
-  .close:hover {
-    opacity: 1;
-  }
-  .close:before, .close:after {
-    position: absolute;
-    left: 15px;
-    content: ' ';
-    height: 33px;
-    width: 2px;
-    background-color: #333;
-  }
-  .close:before {
-    transform: rotate(45deg);
-  }
-  .close:after {
-    transform: rotate(-45deg);
-  } */
-
+.order-field {
+    width: 70%;
+}
 
 
 @media screen and (max-width:991px) {
@@ -158,6 +151,11 @@
         left: 51%;
         transform: translate(-72%, -50%);
     }
+    .menu-item-title.ordering {
+        margin-top: 1px;
+
+     }
+    
 
 }
 
@@ -190,7 +188,16 @@
 
 @media screen and (max-width:479px) {
 
+    .menu-item-label {
+        float: left;
+    }
 
-    
+    .menu-item-weight {
+        margin-right: 10px;
+    }
+
+    .menu-item-price {
+        margin-right: 60px;
+    }
 }
   

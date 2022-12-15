@@ -11,6 +11,8 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
+import static com.epam.havryliuk.restaurant.controller.RequestAttributes.*;
+
 
 //todo read about PRG pattern
 
@@ -38,19 +40,19 @@ public class RegistrationController extends HttpServlet {
             user = service.addNewUser(req);
             //todo set userId
             log.info("The user \"" + user.getName() + "\" has been successfully registered.");//todo move down
-            session.setAttribute("loggedUser", user);
+            session.setAttribute(LOGGED_USER, user);
 //            session.setAttribute("userRole", user.getRole().getUserRole().name());
     //        Cookie cookie = new Cookie("sessionId", session.getId());
     //        resp.addCookie(cookie);
     //        req.getRequestDispatcher("view/jsp/registration.jsp").forward(req, resp);
-            session.removeAttribute("registrationErrorMessage");
-            session.removeAttribute("registrationProcess");//todo if that attribute is set - hide login menu is jsp
+            session.removeAttribute(REGISTRATION_ERROR_MESSAGE);
+            session.removeAttribute(REGISTRATION_PROCESS);//todo if that attribute is set - hide login menu is jsp
             redirectionPage = getRedirectionPage(session);
         } catch (DBException e) {
             log.error("User hasn't been registered. " + e);
             redirectionPage = "registration";
             setErrorMessage(req, e.getMessage());
-            session.setAttribute("registrationProcess", "registrationProcess");
+            session.setAttribute(REGISTRATION_PROCESS, REGISTRATION_PROCESS);
         }
         resp.sendRedirect(redirectionPage);
     }
@@ -58,20 +60,20 @@ public class RegistrationController extends HttpServlet {
 
 
     private String getRedirectionPage(HttpSession session) {
-        String pageFromBeingRedirected = (String) session.getAttribute("pageFromBeingRedirected");//todo set from security filter
+        String pageFromBeingRedirected = (String) session.getAttribute(PAGE_FROM_BEING_REDIRECTED);//todo set from security filter
         String redirectionPage;
         if (pageFromBeingRedirected != null) {
             redirectionPage = pageFromBeingRedirected;
         } else {
             redirectionPage = "index";
         }
-        session.removeAttribute("pageFromBeingRedirected");
+        session.removeAttribute(PAGE_FROM_BEING_REDIRECTED);
         return redirectionPage;
     }
 
     private void setErrorMessage(HttpServletRequest req, String errorMassage) {
         if (errorMassage != null){
-            req.getSession().setAttribute("registrationErrorMessage", errorMassage);
+            req.getSession().setAttribute(REGISTRATION_ERROR_MESSAGE, errorMassage);
         }
     }
 }

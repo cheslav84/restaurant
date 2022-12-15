@@ -45,8 +45,8 @@ public class UserService {
             return user;//todo think of refactoring
         }
 
-        String password  = req.getParameter("password");
-        final String email = req.getParameter("email");
+        String password  = req.getParameter("password").trim();
+        final String email = req.getParameter("email").trim();
             try {
                 validateEmail(email);
                 validatePassword(password);
@@ -118,10 +118,10 @@ public class UserService {
 //            log.error("Failed to encrypt password. ", e);
 //            //todo redirect to error page...
 //        }
-        final String email = req.getParameter("email");
-        final String name = req.getParameter("name");
-        final String surname = req.getParameter("surname");
-        final String gender = req.getParameter("userGender");
+        final String email = req.getParameter("email").trim();
+        final String name = req.getParameter("name").trim();
+        final String surname = req.getParameter("surname").trim();
+        final String gender = req.getParameter("userGender").trim();
         final boolean isOverEighteen = req.getParameter("userOverEighteenAge") != null;
         final Role userRole = Role.getInstance(UserRole.CLIENT);
 

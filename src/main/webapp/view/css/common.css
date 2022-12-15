@@ -10,6 +10,9 @@ html {
   -webkit-text-size-adjust: 100%
 }
 
+
+
+
 body {
   margin: 0
 }
@@ -3333,6 +3336,8 @@ li {
   background-color: #e88f2a;
 }
 
+
+
 .image-background-section {
   padding: 0px;
   background-color: #fff;
@@ -3578,11 +3583,12 @@ li {
 }
 
 .bottom-footer-link {
-  color: #faf3eb;
+  font-size: 8px;
+  color: gray;
 }
 
 .bottom-footer-link:hover {
-  color: #fff;
+  color: ##ab9f91;
 }
 
 .style-block {
@@ -3704,6 +3710,8 @@ li {
   background-color: #3d3833;
   color: #fff;
 }
+
+
 
 @media (max-width: 991px) {
   body {
@@ -4802,3 +4810,4 @@ li {
     text-align: center;
   }
 }
+

@@ -13,7 +13,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 
 
-@WebFilter( urlPatterns = { "/basket" },
+@WebFilter( urlPatterns = { "/basket", "/order" },
         initParams = { @WebInitParam(name = "FORWARD_PATH", value = "view/jsp/registration.jsp") })
 public class AuthFilter implements Filter {
     private static final Logger log = LogManager.getLogger(AuthFilter.class);// todo add logs for class

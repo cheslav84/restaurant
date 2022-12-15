@@ -12,6 +12,7 @@ import java.util.Properties;
 
      private static final Properties properties;
      public static String ADD_DISH;
+     public static String FIND_DISH_BY_ID;
      public static String FIND_DISH_BY_NAME;
      public static String FIND_ALL_ORDERED_BY_NAME;
      public static String FIND_ALL_ORDERED_BY_PRICE;
@@ -29,6 +30,7 @@ import java.util.Properties;
         private static void initialiseVariable() {
             ADD_DISH = (String) properties.get("dish.ADD_DISH");
             FIND_DISH_BY_NAME = (String) properties.get("dish.FIND_DISH_BY_NAME");
+            FIND_DISH_BY_ID = (String) properties.get("dish.FIND_DISH_BY_ID");
             FIND_ALL_ORDERED_BY_NAME = (String) properties.get("dish.FIND_ALL_ORDERED_BY_NAME");
             FIND_ALL_ORDERED_BY_PRICE = (String) properties.get("dish.FIND_ALL_ORDERED_BY_PRICE");
             FIND_ALL_ORDERED_BY_CATEGORY = (String) properties.get("dish.FIND_ALL_ORDERED_BY_CATEGORY");

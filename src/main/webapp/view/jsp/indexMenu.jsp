@@ -15,6 +15,7 @@
 
                     <form method="get" name="menu" data-w-tab="Coffee"
                         class="menu-tab-button w-inline-block w-tab-link w--current">
+                        <%-- <input type=hidden value=""> --%>
                         <div>Coffee</div>
                         <input type="submit" name="menuCategory" value="COFFEE" class="menu-hidden-input menu-tab-button ${sessionScope.menuCategory}" />
                     </form>
@@ -40,7 +41,7 @@
 
 
                                 <c:forEach var="dish" items="${requestScope.dishes}">
-                                    <div role="listitem" class="menu-list-item w-dyn-item w-col w-col-6">
+                                    <div role="listitem"  class="menu-list-item w-dyn-item w-col w-col-6">
                                         <div class="menu-image-container">
                                             <div style="background-image: url('view/pictures/dish_pictures/${dish.image}');"
                                                 class="menu-item-image-box">
@@ -62,9 +63,11 @@
                                             <c:out value="${dish.price}" />
                                             <span class="price-marker">₴</span>
                                         </div>
+                                        
+                                        <form method="get" action="showOrderInfo" name="dishOrder">
 
-                                            <div id="order-menu-button" name="order-menu-button" class="button order-menu-button">Order</div>
-                        
+                                            <button value="${dish.id}" name="dishId" class="button order-menu-button">Order</button>
+                                        </form>
 
                                         <%-- <a href="" class="order-icon-container">
                                             <img src="view/pictures/icons/shopping_basket_active.png" alt="" class="order-icon-img">
@@ -77,94 +80,7 @@
                         </div>
                     </div>
 
-                    <%-- <div data-w-tab="Lunch" class="menu-tab-pane w-tab-pane">
-                        <div class="menu-white-wrapper w-dyn-list">
-
-
-                            <div role="list" class="w-clearfix w-dyn-items w-row">
-
-
-                                <c:forEach var="dish" items="${requestScope.dishes}">
-                                    <div role="listitem" class="menu-list-item w-dyn-item w-col w-col-6">
-                                        <div class="menu-image-container">
-                                            <div style="background-image: url('pictures/dish_pictures/brew-coffee.webp');"
-                                                class="menu-item-image-box">
-                                            </div>
-                                        </div>
-                                        <div class="menu-item-text">
-                                            <div class="menu-item-title">
-                                                <c:out value="${dish.name}" />
-                                            </div>
-                                            <div class="menu-item-title description">
-                                                <c:out value="${dish.description}" />
-                                            </div>
-                                            <div class="menu-item-title weight">
-                                                <c:out value="${dish.weight}" />
-                                                <span class="weight-marker"> g</span>
-                                            </div>
-                                        </div>
-                                        <div class="menu-item-price">
-                                            <c:out value="${dish.price}" />
-                                            <span class="price-marker">₴</span>
-                                        </div>
-                                        <a href="" class="order-icon-container">
-                                            <img src="pictures/icons/Icon-basket.png" alt="" class="order-icon-img">
-                                        </a>
-                                    </div>
-                                </c:forEach>
-
-
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div data-w-tab="Every Day Specials" class="menu-tab-pane w-tab-pane">
-                        <div class="menu-white-wrapper w-dyn-list">
-
-
-                            <div role="list" class="w-clearfix w-dyn-items w-row">
-
-
-                                <c:forEach var="dish" items="${requestScope.dishes}">
-                                    <div role="listitem" class="menu-list-item w-dyn-item w-col w-col-6">
-                                        <div class="menu-image-container">
-                                            <div style="background-image: url('pictures/dish_pictures/brew-coffee.webp');"
-                                                class="menu-item-image-box">
-                                            </div>
-                                        </div>
-                                        <div class="menu-item-text">
-                                            <div class="menu-item-title">
-                                                <c:out value="${dish.name}" />
-                                            </div>
-                                            <div class="menu-item-title description">
-                                                <c:out value="${dish.description}" />
-                                            </div>
-                                            <div class="menu-item-title weight">
-                                                <c:out value="${dish.weight}" />
-                                                <span class="weight-marker"> g</span>
-                                            </div>
-                                        </div>
-                                        <div class="menu-item-price">
-                                            <c:out value="${dish.price}" />
-                                            <span class="price-marker">₴</span>
-                                        </div>
-                                        
-    
-                                        
-                                        <a href="" class="order-icon-container">
-                                            <img src="pictures/icons/Icon-basket.png" alt="" class="order-icon-img">
-                                        </a>
-                                    </div>  
-                                </c:forEach>
-
-
-
-
-
-                            </div>
-                        </div>
-                    </div> --%>
+                    
                 </div>
             </div>
             <a href="menu.html" class="button">View our complete menu</a>

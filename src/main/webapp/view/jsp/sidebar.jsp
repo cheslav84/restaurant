@@ -25,7 +25,7 @@
             </div>
 
             <div class="ordering">
-                <a href="/basket" target="_blank" class="nav-social-button w-inline-block order-link"> My orders
+                <a href="basket" class="nav-social-button w-inline-block order-link"> My orders
                     <img src="view/pictures/icons/shopping_basket_unactive.png" alt="" class="nav-social-icon basket-image">
                 </a>
             </div>
