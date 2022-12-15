@@ -93,7 +93,7 @@ public class UserDAO implements DAO<User> {
         } catch (SQLException e) {
             String message = "Something went wrong. Try to sign in later please.";
             log.error("Error in inserting user \"" + user.getName() + "\" to database.", e);
-            throw new DBException(message, e);
+            connectionManager.rollback(con);
         } finally {
             connectionManager.setAutoCommit(con, true);
             connectionManager.close(con);
@@ -132,7 +132,7 @@ public class UserDAO implements DAO<User> {
     }
 
 
-    private void addUser(User user, Connection con) throws DBException {
+    private void addUser(User user, Connection con) throws DBException, SQLException {
         PreparedStatement stmt = null;
         try {
             stmt = con.prepareStatement(UserQuery.ADD_USER,
@@ -147,7 +147,8 @@ public class UserDAO implements DAO<User> {
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            log.error("Error adding user to database.", e);
+            throw new SQLException(e);
         } finally {
             connectionManager.close(stmt);
         }

@@ -2,12 +2,14 @@
 
   $(document).ready(function() {
 
+    
     const orderInfo = document.querySelector('#hide-order-info');
    
-    const showDishInfo = orderInfo.classList.contains('showDishInfo'); // true
+    const showDishInfo = orderInfo.classList.contains('showDishInfo');
+    // const showErrorOrderInfo = orderInfo.classList.contains('showOrderInfoError');
 
-    
-  
+    // alert ("showDishInfo" + showDishInfo);
+    // alert ("showOrderInfoError" + showErrorOrderInfo);
 
     if ( showDishInfo ) {
         // alert();
@@ -25,6 +27,7 @@
   $('#close-cross-button').click(function() {
     $('#hide-order-info').addClass('hidden');
     $('#hide-order-info').removeClass('notHidden');
+    // $('#hide-order-info').removeClass('showOrderInfoError');
   });
 
 

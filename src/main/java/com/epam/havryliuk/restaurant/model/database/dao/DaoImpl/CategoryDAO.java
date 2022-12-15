@@ -19,7 +19,8 @@ public class CategoryDAO implements DAO<Category> {
     private final ConnectionManager connectionManager;
 
     public CategoryDAO() throws DBException {
-        connectionManager = ConnectionManager.getInstance();    }
+        connectionManager = ConnectionManager.getInstance();
+    }
 
     @Override
     public Category findByName(String name) throws DBException {

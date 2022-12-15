@@ -5,7 +5,7 @@
 <c:if test="${sessionScope.currentDish ne null}">
 
 <c:set var = "dish" scope = "request" value = "${sessionScope.currentDish}"/>
-    <div id="hide-order-info" class="order-info hidden ${requestScope.showDishInfo}">
+    <div id="hide-order-info" class="order-info hidden ${requestScope.showDishInfo} ">
         <div class="order-info-container">
             <div class="order-info-box">
 
@@ -63,6 +63,10 @@
                             <label for="phone" class="order-label">Cell phone:</label>
                             <input type="text" id="phone" name="deliveryPhone" placeholder="Enter your cell phone" maxlength="13" class="field w-input order-field" placeholder="+380961150083" value="+380961150083">
                         </div>
+
+                        <div class="error-message" >
+                            <c:out value="${sessionScope.errorMessage}" />
+                        </div>   
 
                         <div class="button order-button button-amount">
                             <div class="amount-button-label">amount</div>

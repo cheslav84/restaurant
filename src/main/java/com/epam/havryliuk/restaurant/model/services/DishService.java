@@ -14,6 +14,9 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import static com.epam.havryliuk.restaurant.controller.RequestAttributes.CURRENT_DISH;
+import static com.epam.havryliuk.restaurant.controller.RequestAttributes.SHOW_DISH_INFO;
+
 public class DishService {
     private static final Logger log = LogManager.getLogger(DishService.class);
 
@@ -57,21 +60,21 @@ public class DishService {
         }
 
         HttpSession session = req.getSession();
-        session.setAttribute("currentDish", dish);
-        session.setAttribute("showDishInfo", "showDishInfo");// value to show ordering menu of concrete dish
+        session.setAttribute(CURRENT_DISH, dish);
+        session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);// value to show ordering menu of concrete dish
     }
 
     public void hideOrderInfoOnReloadPage(HttpServletRequest req)  {
         HttpSession session = req.getSession();
-        if (session.getAttribute("showDishInfo") != null){
-            if (req.getAttribute("showDishInfo") == null) {
-                req.setAttribute("showDishInfo", "showDishInfo");
+        if (session.getAttribute(SHOW_DISH_INFO) != null){
+            if (req.getAttribute(SHOW_DISH_INFO) == null) {
+                req.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
                 log.debug("NEW request for or");
             } else  {
-                req.removeAttribute("showDishInfo");
+                req.removeAttribute(SHOW_DISH_INFO);
                 log.debug("This is a REFRESH");
             }
-        session.removeAttribute("showDishInfo");
+        session.removeAttribute(SHOW_DISH_INFO);
         }
     }
 

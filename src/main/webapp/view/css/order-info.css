@@ -143,6 +143,17 @@
     width: 70%;
 }
 
+.error-message {
+    margin-top: 15px;
+    /* margin: 15px auto; */
+    font-family: Satisfy, sans-serif;
+    color: #eda03b;
+    text-align: center;
+    font-size: 15px;
+    line-height: 16px;
+    text-shadow: none;
+  }
+
 
 @media screen and (max-width:991px) {
 

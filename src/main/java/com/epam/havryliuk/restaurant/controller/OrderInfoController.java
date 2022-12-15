@@ -37,10 +37,6 @@ public class OrderInfoController extends HttpServlet {
         DishService dishService = new DishService();
         dishService.getDishInfo(req);//todo може винести реквести з рівня сервісів???
 
-
-
-        //todo додати до першого запиту поля для введення адреси та телефону, тут же створюємо баскет та додаємо до його до сесії.
-
         resp.sendRedirect("index");
     }
 

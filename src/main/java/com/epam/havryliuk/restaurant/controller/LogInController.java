@@ -60,13 +60,14 @@ public class LogInController extends HttpServlet {
             setErrorMessage(req, e.getMessage());
             log.error(e.getMessage());
         }
+        System.out.println("log in req.getHeaderNames(): " +req.getHeader("Referer"));
 
         resp.sendRedirect(redirectionPage);
     }
 
 
     private String getRedirectionPage(HttpSession session) {
-        String pageFromBeingRedirected = (String) session.getAttribute("pageFromBeingRedirected");//todo set from security filter
+        String pageFromBeingRedirected = (String) session.getAttribute(PAGE_FROM_BEING_REDIRECTED);//todo set from security filter
         String redirectionPage;
         if (pageFromBeingRedirected != null) {
             redirectionPage = pageFromBeingRedirected;

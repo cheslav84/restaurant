@@ -16,6 +16,8 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.util.List;
 
+import static com.epam.havryliuk.restaurant.controller.RequestAttributes.*;
+
 
 //todo read about PRG pattern
 
@@ -41,7 +43,7 @@ public class MainPageController extends HttpServlet {
 
         dishService.hideOrderInfoOnReloadPage(req);
 
-        req.setAttribute("dishes", dishes);
+        req.setAttribute(DISHES, dishes);
         req.getRequestDispatcher("view/jsp/index.jsp").forward(req, resp);
     }
 
@@ -49,10 +51,10 @@ public class MainPageController extends HttpServlet {
     @NotNull
     private String getCurrentMenu(HttpServletRequest req) {
         HttpSession session = req.getSession();
-        String lastVisitedMenu = (String) session.getAttribute("menuCategory");
-        String currentMenu = req.getParameter("menuCategory");
+        String lastVisitedMenu = (String) session.getAttribute(MENU_CATEGORY);
+        String currentMenu = req.getParameter(MENU_CATEGORY);
         if (currentMenu != null) {
-            session.setAttribute("menuCategory", currentMenu);
+            session.setAttribute(MENU_CATEGORY, currentMenu);
         } else {
             if (lastVisitedMenu != null) {
                 currentMenu = lastVisitedMenu;

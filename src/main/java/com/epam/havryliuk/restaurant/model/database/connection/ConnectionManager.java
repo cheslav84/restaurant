@@ -18,7 +18,6 @@ public class ConnectionManager {
     private static volatile ConnectionManager instance;
 
     private static DataSource ds = null;
-    private static Context envContext;
 
     private ConnectionManager() {
     }
@@ -39,10 +38,11 @@ public class ConnectionManager {
 
     public Connection getConnection() throws DBException {
         try {
-            Connection conn = ds.getConnection();
-            return conn;
+            return ds.getConnection();
         } catch (SQLException e) {
-            throw new DBException(e);
+            String errorMessage = "Database connection wasn't established";
+            log.error(errorMessage, e);
+            throw new DBException(errorMessage, e);
         }
     }
 
@@ -51,8 +51,8 @@ public class ConnectionManager {
     private static void initDataSource() throws DBException {
         try {
             Context initContext = new InitialContext();
-            envContext = (Context)initContext.lookup("java:/comp/env");
-            ds = (DataSource)envContext.lookup("jdbc/Restaurant");
+            Context envContext = (Context) initContext.lookup("java:/comp/env");
+            ds = (DataSource) envContext.lookup("jdbc/Restaurant");
         } catch (NamingException e) {
             log.error("Can't get Initial context for DataSource.", e);
             throw new DBException(e);
@@ -60,26 +60,41 @@ public class ConnectionManager {
     }
 
 
-    public void close(AutoCloseable closeable) {
+    public void close(AutoCloseable closeable) throws DBException {
         synchronized (ConnectionManager.class) {
             if (closeable != null) {
                 try {
                     closeable.close();
                 } catch (Exception e) {
                     log.error("Error closing " + closeable, e);
+                    throw new DBException(e);
                 }
             }
         }
     }
 
-    public void setAutoCommit(Connection con, boolean value) {
+    public void setAutoCommit(Connection con, boolean value) throws DBException {
         synchronized (ConnectionManager.class) {
             try {
                 con.setAutoCommit(value);
             } catch (Exception e) {
                 log.error("Error setting " + value + " in connection " + con, e);
+                throw new DBException(e);
             }
         }
     }
+
+
+    public void rollback(Connection con) throws DBException {
+        synchronized (ConnectionManager.class) {
+            try {
+                con.rollback();
+            } catch (Exception e) {
+                log.error("Enable to roll back connection" + con, e);
+                throw new DBException(e);
+            }
+        }
+    }
+
 
 }

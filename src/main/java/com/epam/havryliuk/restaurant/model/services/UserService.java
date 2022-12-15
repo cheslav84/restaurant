@@ -31,9 +31,9 @@ public class UserService {
     }
 
 
-
     /**
      * getUserDatabaseSession method
+     *
      * @param req
      * @return
      * @throws NoSuchEntityException
@@ -45,25 +45,26 @@ public class UserService {
             return user;//todo think of refactoring
         }
 
-        String password  = req.getParameter("password").trim();
+        String password = req.getParameter("password").trim();
         final String email = req.getParameter("email").trim();
-            try {
-                validateEmail(email);
-                validatePassword(password);
 
-                DAO<User> userDao = new UserDAO();
-                user = userDao.findByName(email);//todo think of renaming
-                if (user == null) {
-                    throw new NoSuchEntityException("Login is incorrect!");
-                }
+        try {
+            validateEmail(email);
+            validatePassword(password);
 
-                checkIfPasswordsCoincide(PassEncryptor.encrypt(password), user.getPassword());// todo при вводі одного і того ж паролю до енкриптора різні результати. З'ясувати
-
-                log.debug("User got from database. Login and password are correct.");
-            } catch (BadCredentialsException | DBException e) {
-                log.error("Bad credentials: " + e.getMessage(), e);
-                throw new NoSuchEntityException(e.getMessage(), e);
+            DAO<User> userDao = new UserDAO();
+            user = userDao.findByName(email);//todo think of renaming
+            if (user == null) {
+                throw new NoSuchEntityException("User with such login doesn't exist.");
             }
+
+            checkIfPasswordsCoincide(PassEncryptor.encrypt(password), user.getPassword());// todo при вводі одного і того ж паролю до енкриптора різні результати. З'ясувати
+
+            log.debug("User got from database. Login and password are correct.");
+        } catch (BadCredentialsException | DBException e) {
+            log.error("Bad credentials: " + e.getMessage(), e);
+            throw new NoSuchEntityException(e.getMessage(), e);
+        }
         return user;
     }
 
@@ -74,7 +75,7 @@ public class UserService {
 
 
     private void checkIfPasswordsCoincide(String password, String encryptedPassword) throws NoSuchEntityException {
-        if (!password.equals(encryptedPassword)){
+        if (!password.equals(encryptedPassword)) {
             String errorMessage = "Entered password is wrong.";
             log.error(errorMessage);
             throw new NoSuchEntityException(errorMessage);
@@ -84,7 +85,7 @@ public class UserService {
 
     private void validateEmail(String email) throws BadCredentialsException {
         //todo
-        if (email == null){
+        if (email == null) {
             String loginError = "Email null"; //todo add concrete cause
             throw new BadCredentialsException(loginError);
         }
@@ -92,7 +93,7 @@ public class UserService {
 
     private void validatePassword(String password) throws BadCredentialsException {
         //todo
-        if (password == null){
+        if (password == null) {
             String passwordError = "Password null"; //todo add concrete cause
             throw new BadCredentialsException(passwordError);
         }
@@ -111,7 +112,7 @@ public class UserService {
     @NotNull
     private User mapUser(HttpServletRequest req) {
 
-        String password  = req.getParameter("password");
+        String password = req.getParameter("password");
 //        try {
 //            password = PassEncryptor.encrypt(password);// todo при вводі одного і того ж паролю різні результати. З'ясувати
 //        } catch (GeneralSecurityException e) {
