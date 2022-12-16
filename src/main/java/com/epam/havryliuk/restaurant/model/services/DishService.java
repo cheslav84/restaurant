@@ -69,10 +69,10 @@ public class DishService {
         if (session.getAttribute(SHOW_DISH_INFO) != null){
             if (req.getAttribute(SHOW_DISH_INFO) == null) {
                 req.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
-                log.debug("NEW request for or");
+//                log.debug("NEW request for or");
             } else  {
                 req.removeAttribute(SHOW_DISH_INFO);
-                log.debug("This is a REFRESH");
+//                log.debug("This is a REFRESH");
             }
         session.removeAttribute(SHOW_DISH_INFO);
         }

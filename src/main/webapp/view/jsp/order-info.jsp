@@ -54,15 +54,17 @@
                 <%-- <div class="order-buttons"> --%>
                     <form method="post" action="addToOrder">
 
-                        <div class="address-info">
-                            <label for="address" class="order-label">Delivery address:</label>
-                            <input type="text" id="address" name="deliveryAddress" placeholder="Enter your delivery address" maxlength="1024" class="field w-input order-field"  placeholder="Your address" value="Kyiv, Peremohy str.">
-                        </div>
+                        <%-- <c:if test="${sessionScope.deliveryDetails ne null}"> --%>
+                            <div class="address-info">
+                                <label for="address" class="order-label">Delivery address:</label>
+                                <input type="text" id="address" name="deliveryAddress" placeholder="Enter your delivery address" maxlength="1024" class="field w-input order-field"  placeholder="Address" value="${sessionScope.order.address}">
+                            </div>
 
-                        <div class="phone-info">
-                            <label for="phone" class="order-label">Cell phone:</label>
-                            <input type="text" id="phone" name="deliveryPhone" placeholder="Enter your cell phone" maxlength="13" class="field w-input order-field" placeholder="+380961150083" value="+380961150083">
-                        </div>
+                            <div class="phone-info">
+                                <label for="phone" class="order-label">Cell phone:</label>
+                                <input type="text" id="phone" name="deliveryPhone" placeholder="Enter your cell phone" maxlength="13" class="field w-input order-field" placeholder="Phone number" value="${sessionScope.order.phoneNumber}">
+                            </div>
+                        <%-- </c:if> --%>
 
                         <div class="error-message" >
                             <c:out value="${sessionScope.errorMessage}" />

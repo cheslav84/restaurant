@@ -23,66 +23,6 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public Order geByUserIdAddressStatus(long userId, String address, BookingStatus bookingStatus) throws DBException {//todo think if it could be a list
-        Order order = null;
-
-        try (Connection con = connectionManager.getConnection();
-            PreparedStatement stmt = con.prepareStatement(OrderQuery.GET_BY_USER_ID_ADDRESS_AND_STATUS)) {
-            int k=0;
-            stmt.setLong(++k, userId);
-            stmt.setString(++k, address);
-            stmt.setString(++k, bookingStatus.name());
-
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    order = mapOrder(rs);
-                }
-            }
-            log.debug("Searched order is absent in database");
-        } catch (SQLException e) {
-            String errorMassage = "Searched order is absent in database";
-            log.error("errorMassage", e);
-            throw new DBException(errorMassage, e);
-        }
-        return order;
-    }
-
-
-    private Order mapOrder(ResultSet rs) throws SQLException, DBException {
-        long id = rs.getLong(OrderFields.ORDER_ID);
-        String address = rs.getString(OrderFields.ORDER_ADDRESS);
-        String phoneNumber = rs.getString(OrderFields.ORDER_PHONE_NUMBER);
-        boolean isPayed = rs.getBoolean(OrderFields.ORDER_PAYMENT);
-        Date creationDate = rs.getTimestamp(OrderFields.ORDER_CREATION_DATE);
-        Date closeDate = rs.getTimestamp(OrderFields.ORDER_CLOSE_DATE);
-
-        return Order.getInstance(id, address, phoneNumber, isPayed, creationDate, closeDate);
-    }
-
-
-
-
-    @Override
-    public boolean addNewDishes(Dish dishes, int amount) throws DBException {
-        return false;
-    }
-
-    @Override
-    public boolean changeBookingStatus(Dish dish, BookingStatus status) throws DBException {
-        return false;
-    }
-
-    @Override
-    public List<Order> getByUserSortedByTime() throws DBException {
-        return null;
-    }
-
-    @Override
-    public List<Order> getByBookingStatus(BookingStatus status) throws DBException {
-        return null;
-    }
-
-    @Override
     public boolean create(Order order) throws DBException {
         Connection con = null;
         try {
@@ -102,6 +42,76 @@ public class OrderDaoImpl implements OrderDao {
         return true;
     }
 
+    @Override
+    public Order geByUserIdAddressStatus(long userId, String address, BookingStatus bookingStatus) throws DBException {//todo think if it could be a list
+        Order order = null;
+
+        try (Connection con = connectionManager.getConnection();
+            PreparedStatement stmt = con.prepareStatement(OrderQuery.GET_BY_USER_ID_ADDRESS_AND_STATUS)) {
+            int k=0;
+            stmt.setLong(++k, userId);
+            stmt.setString(++k, address);
+            stmt.setString(++k, bookingStatus.name());
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    order = mapOrder(rs);
+                }
+            }
+            log.debug("Order has been received from database.");
+        } catch (SQLException e) {
+            String errorMassage = "Searched order is absent in database";
+            log.error(errorMassage, e);
+            throw new DBException(errorMassage, e);
+        }
+        return order;
+    }
+
+    @Override
+    public boolean addNewDishesToOrder(Order order, Dish dish, int amount) throws DBException {
+        try (Connection con = connectionManager.getConnection();
+             PreparedStatement stmt = con.prepareStatement(OrderQuery.ADD_DISH_TO_BASKET)) {
+            int k=0;
+            stmt.setLong(++k, order.getId());
+            stmt.setLong(++k, dish.getId());
+            stmt.setInt(++k, amount);
+            stmt.setBigDecimal(++k, dish.getPrice());
+            stmt.executeUpdate();
+            log.debug("Dish has been added to database");
+        } catch (SQLException e) {
+            String errorMassage = "Something went wrong. Dish haven't been added to basket. Try please again later.";
+            log.error(errorMassage, e);
+            throw new DBException(errorMassage, e);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean changeBookingStatus(Dish dish, BookingStatus status) throws DBException {
+        return false;
+    }
+
+    @Override
+    public List<Order> getByUserSortedByTime() throws DBException {
+        return null;
+    }
+
+    @Override
+    public List<Order> getByBookingStatus(BookingStatus status) throws DBException {
+        return null;
+    }
+
+
+    private Order mapOrder(ResultSet rs) throws SQLException {
+        long id = rs.getLong(OrderFields.ORDER_ID);
+        String address = rs.getString(OrderFields.ORDER_ADDRESS);
+        String phoneNumber = rs.getString(OrderFields.ORDER_PHONE_NUMBER);
+        boolean isPayed = rs.getBoolean(OrderFields.ORDER_PAYMENT);
+        Date creationDate = rs.getTimestamp(OrderFields.ORDER_CREATION_DATE);
+        Date closeDate = rs.getTimestamp(OrderFields.ORDER_CLOSE_DATE);
+
+        return Order.getInstance(id, address, phoneNumber, isPayed, creationDate, closeDate);
+    }
 
     private void addOrder(Order order, Connection con) throws DBException, SQLException {
         PreparedStatement stmt = null;
@@ -109,7 +119,6 @@ public class OrderDaoImpl implements OrderDao {
             stmt = con.prepareStatement(OrderQuery.ADD_ORDER, Statement.RETURN_GENERATED_KEYS);
             setOrderParameters(order, stmt);
             int insertionAmount = stmt.executeUpdate();
-            long orderId;
             if (insertionAmount > 0) {
                 try (ResultSet rs = stmt.getGeneratedKeys()) {
                     if (rs.next()) {
@@ -140,7 +149,7 @@ public class OrderDaoImpl implements OrderDao {
             log.debug("Searched order creation date has not been found in database");
         } catch (SQLException e) {
             String errorMassage = "Searched order is absent in database";
-            log.error("errorMassage", e);
+            log.error(errorMassage, e);
             throw new SQLException(errorMassage, e);
         }
         return date;

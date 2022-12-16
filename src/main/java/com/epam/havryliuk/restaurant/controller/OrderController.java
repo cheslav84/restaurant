@@ -1,8 +1,6 @@
 package com.epam.havryliuk.restaurant.controller;
 
 import com.epam.havryliuk.restaurant.model.entity.Order;
-import com.epam.havryliuk.restaurant.model.entity.Dish;
-import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.exceptions.BadCredentialsException;
 import com.epam.havryliuk.restaurant.model.exceptions.NoSuchEntityException;
 import com.epam.havryliuk.restaurant.model.services.OrderService;
@@ -15,9 +13,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
-import java.util.Enumeration;
 
 import static com.epam.havryliuk.restaurant.controller.RequestAttributes.*;
 
@@ -36,21 +35,53 @@ public class OrderController extends HttpServlet {
 
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
-//        addDishToBasket(req);
-        //todo check if basket in session
-        //todo check if it exist in database (this user, status booking)
-        //todo (create basket if new order, add it to session)
-        //todo add dish to basket
+//        OrderService orderService = new OrderService();
+//        Order order = getOrder(req, orderService);
+//        saveDishToOrder(req, orderService, order);
+
+        String redirectionPage = getRedirectionPage(req);
+        resp.sendRedirect(redirectionPage);
+    }
+
+    @NotNull
+    private String getRedirectionPage(HttpServletRequest req) {
+        String redirectionPage;
+        String continueOrder = req.getParameter("continue");
+        log.debug("continueOrder: " + continueOrder);
+        if (continueOrder == null) {
+            redirectionPage = "basket";
+        } else {
+            redirectionPage = URLUtil.getRefererPage(req);
+        }
+            log.debug("redirectionPage " + redirectionPage);
+        return redirectionPage;
+    }
+
+    private void saveDishToOrder(HttpServletRequest req, OrderService orderService, Order order) {
         HttpSession session = req.getSession();
+        try {
+            orderService.addDishToOrder(req, order);
+            session.removeAttribute(CURRENT_DISH);
+        } catch (NoSuchEntityException e) {
+            String errorMessage = e.getMessage();
+            session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
+            session.setAttribute(ERROR_MESSAGE, errorMessage);
+            log.error(errorMessage, e);
+        }
+    }
 
-        OrderService orderService = new OrderService();
+    @Nullable
+    private Order getOrder(HttpServletRequest req, OrderService orderService) {
+        HttpSession session = req.getSession();
         Order order = (Order) session.getAttribute(ORDER);
+        log.debug("Order in session: " + order);
         if (order == null) {
             try {
                 order = orderService.getOrder(req);
                 log.debug(order);
+                session.setAttribute(ORDER, order);
                 session.removeAttribute(ERROR_MESSAGE);
             } catch (NoSuchEntityException | BadCredentialsException e) {
                 String errorMessage = e.getMessage();
@@ -59,43 +90,8 @@ public class OrderController extends HttpServlet {
                 log.error(errorMessage, e);
             }
         }
-
-
-        String redirectionPage = URLUtil.getRefererPage(req);
-
-
-        int dishesAmount = Integer.parseInt(req.getParameter("amount").trim());//todo try-catch
-        log.debug("Request for \"" + dishesAmount + "\" has been received.");
-
-
-        Dish currentDish = (Dish) session.getAttribute(CURRENT_DISH);//todo може теоретично бути null якщо ми його точно ложили в сесію?... подумати
-        session.removeAttribute(CURRENT_DISH);
-
-        User currentUser = (User) session.getAttribute(LOGGED_USER);
-        orderService.addDishesToUserBasket(currentUser, currentDish, dishesAmount);
-
-
-        String continueOrder = req.getParameter("continue");
-        if (continueOrder == null) {
-            redirectionPage = "basket";
-        }
-
-
-        resp.sendRedirect(redirectionPage);
+        return order;
     }
-
-
-//    private void addDishToBasket(HttpServletRequest req) {
-//
-////        Map<Dish, Integer> basket = (Map<Dish, Integer>) req.getSession().getAttribute("basket");//todo можна зберігати в сесії, чи кожного разу записуємо в базу?
-////        if(basket == null) {
-////            basket = new HashMap<>();
-////            session.setAttribute("basket", basket);
-////        }
-//        basket.put(currentDish, dishesAmount);
-//
-//    }
-//}
 
 
 }

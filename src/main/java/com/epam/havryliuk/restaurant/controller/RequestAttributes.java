@@ -2,7 +2,7 @@ package com.epam.havryliuk.restaurant.controller;
 
 public class RequestAttributes {
 
-    public static final String ORDER = "basket";
+    public static final String ORDER = "order";
     public static final String DISHES = "dishes";
     public static final String MENU_CATEGORY = "menuCategory";
     public static final String LOGGED_USER = "loggedUser";

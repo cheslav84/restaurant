@@ -13,7 +13,7 @@ public class OrderQuery {
     public static String GET_BY_USER_ID_ADDRESS_AND_STATUS;
     public static String ADD_ORDER;
     public static String GET_CREATION_DATE_BY_ID;
-//    public static String FIND_USER_BY_LOGIN;
+    public static String ADD_DISH_TO_BASKET;
 //    public static String FIND_ALL_USERS;
 //    public static String UPDATE_USER;
 //    public static String DELETE_USER;
@@ -29,7 +29,7 @@ public class OrderQuery {
         GET_BY_USER_ID_ADDRESS_AND_STATUS = (String) properties.get("order.GET_BY_USER_ID_ADDRESS_AND_STATUS");
         ADD_ORDER = (String) properties.get("order.ADD_ORDER");
         GET_CREATION_DATE_BY_ID = (String) properties.get("order.GET_CREATION_DATE_BY_ID");
-//           FIND_USER_BY_LOGIN = (String) properties.get("user.FIND_USER_BY_LOGIN");
+        ADD_DISH_TO_BASKET = (String) properties.get("basket.ADD_DISH_TO_BASKET");
 //           FIND_ALL_USERS = (String) properties.get("user.FIND_ALL_USERS");
 //           UPDATE_USER = (String) properties.get("user.UPDATE_USER");
 //           DELETE_USER = (String) properties.get("user.DELETE_USER");

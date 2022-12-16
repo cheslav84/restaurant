@@ -15,15 +15,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 
-import java.util.Date;
-
+import static com.epam.havryliuk.restaurant.controller.RequestAttributes.CURRENT_DISH;
 import static com.epam.havryliuk.restaurant.controller.RequestAttributes.LOGGED_USER;
 
 public class OrderService {
     private static final Logger log = LogManager.getLogger(OrderService.class);
-
-
-
 
 
     /**
@@ -43,13 +39,27 @@ public class OrderService {
         checkDeliveryAddress(deliveryAddress);
         checkDeliveryPhone(deliveryPhone);
 
-        HttpSession session = req.getSession();
-        User user = getCurrentUser(session);
+        User user = getCurrentUser(req);
 
         Order order;
         try {
             OrderDao  orderDao = new OrderDaoImpl();
             order = orderDao.geByUserIdAddressStatus(user.getId(), deliveryAddress, BookingStatus.BOOKING);
+
+            log.debug("geByUserIdAddressStatus - userId: " + user.getId() + ", deliveryAddress: " + deliveryAddress + ", BookingStatus: " + BookingStatus.BOOKING);
+            log.debug("Received order: " + order);
+
+            //todo / перевірити чи замовленню не більше, примірок, дні три. Якщо більше - видалити це замовлення
+            //todo / та створити нове. Ідея полягає в тому, що створення замовлення і додавання продуктів в кошик
+            //todo / розглядаються як окремі процеси. Юзер може додати один продукт до кошику ввечері, інший вранці.
+            //todo / при цьому фіксується ціна на цей продукт в момент додвавання до кошику. Але, щоб не виникло
+            //todo / ситуації, коли Юзер додав одне блюдо пів року тому, а сьогодні інше та підтвердив замовлення.
+            //todo / В такому випадку, ціна на попереднє блюдо може бути абсолютно не актуальною.
+            //todo /
+            //todo / Або, як альтернативне рішення, до моменту підтвердження замовлення ціна береться із меню,
+            //todo / а в після підтвердження фіксується в кошику.
+
+
             if(order == null) {
                 order = Order.getInstance(deliveryAddress, deliveryPhone, false, user, BookingStatus.BOOKING);
                 orderDao.create(order);
@@ -62,23 +72,34 @@ public class OrderService {
     }
 
 
-    private void checkDeliveryAddress(String deliveryAddress) throws BadCredentialsException {
-            //todo
-            if (deliveryAddress == null){
-                String error = "The address is incorrect.";
-                throw new BadCredentialsException(error);
-            }
-    }
-    private void checkDeliveryPhone(String deliveryPhone) throws BadCredentialsException {
-        //todo
-        if (deliveryPhone == null){
-            String error = "The phone is incorrect.";
-            throw new BadCredentialsException(error);
+    public void addDishToOrder(HttpServletRequest req, Order order) throws NoSuchEntityException {
+        Dish dish = getCurrentDish(req);
+        int dishesAmount = getDishesAmount(req);
+        try {
+            OrderDao orderDao = new OrderDaoImpl();
+            orderDao.addNewDishesToOrder(order, dish, dishesAmount);
+        } catch (DBException e) {
+            log.error(e.getMessage(), e);
+            throw new NoSuchEntityException(e);
         }
     }
 
+    private int getDishesAmount(HttpServletRequest req) throws NoSuchEntityException {
+        int dishesAmount;
+        try {
+            dishesAmount = Integer.parseInt(req.getParameter("amount").trim());//todo try-catch
+            log.debug("Request for \"" + dishesAmount + "\" has been received.");
+        } catch (NumberFormatException e) {
+            String errorMessage = "Enter amount of dishes you want to order please.";
+            log.error(errorMessage);
+            throw new NoSuchEntityException(errorMessage);
+        }
+        return dishesAmount;
+    }
 
-    private User getCurrentUser(HttpSession session) throws NoSuchEntityException {
+
+    private User getCurrentUser(HttpServletRequest req) throws NoSuchEntityException {
+        HttpSession session = req.getSession();
         User user = (User) session.getAttribute(LOGGED_USER);
         if (user == null) {
             String errorMessage = "The user has been logged out.";
@@ -88,49 +109,31 @@ public class OrderService {
         return user;
     }
 
-
-    public void addDishesToUserBasket(User user, Dish dish, int amount){
-
-        try {
-            OrderDao orderDao = new OrderDaoImpl();
-        } catch (DBException e) {
-            throw new RuntimeException(e);
+    private Dish getCurrentDish(HttpServletRequest req) throws NoSuchEntityException {
+        HttpSession session = req.getSession();
+       Dish dish = (Dish) session.getAttribute(CURRENT_DISH);
+        if (dish == null) {
+            String errorMessage = "Choose the dish to add it to basket.";
+            log.error(errorMessage);
+            throw new NoSuchEntityException(errorMessage);
         }
-
-        Order order = new Order();
-//        basketDao.create()
-
+        return dish;
     }
 
+    private void checkDeliveryAddress(String deliveryAddress) throws BadCredentialsException {
+        //todo
+        if (deliveryAddress == null){
+            String error = "The address is incorrect.";
+            throw new BadCredentialsException(error);
+        }
+    }
 
+    private void checkDeliveryPhone(String deliveryPhone) throws BadCredentialsException {
+        //todo
+        if (deliveryPhone == null){
+            String error = "The phone is incorrect.";
+            throw new BadCredentialsException(error);
+        }
+    }
 
-//    public void addDishToBasket(HttpServletRequest req) {
-//
-//
-//        int dishesAmount  = Integer.parseInt(req.getParameter("amount").trim());
-//        log.debug("Request for \"" + dishesAmount + "\" has been received.");
-//
-//        String continueOrder = req.getParameter("continue");
-//
-//        Map<Dish, Integer> basket = (Map<Dish, Integer>) req.getSession().getAttribute("basket");//todo можна зберігати в сесії, чи кожного разу записуємо в базу?
-//        HttpSession session = req.getSession();
-//        if(basket == null) {
-//            basket = new HashMap<>();
-//            session.setAttribute("basket", basket);
-//        }
-//
-//        Dish currentDish = (Dish) session.getAttribute("currentDish");
-//        session.removeAttribute("currentDish");
-//        basket.put(currentDish, dishesAmount);
-//
-//        String redirectionPage;
-//        if (continueOrder == null) {
-//            redirectionPage = "basket";
-//        } else {
-//            redirectionPage = "menu";
-//        }
-//
-//
-//
-//    }
 }
