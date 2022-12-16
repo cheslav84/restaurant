@@ -7,6 +7,8 @@ public class RequestAttributes {
     public static final String MENU_CATEGORY = "menuCategory";
     public static final String LOGGED_USER = "loggedUser";
     public static final String CURRENT_DISH = "currentDish";
+    public static final String DELIVERY_ADDRESS = "deliveryAddress";
+    public static final String DELIVERY_PHONE = "deliveryPhone";
 
     public static final String PAGE_FROM_BEING_REDIRECTED = "pageFromBeingRedirected";//todo change from URLUtil class
 

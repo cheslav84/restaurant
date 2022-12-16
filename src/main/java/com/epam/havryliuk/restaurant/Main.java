@@ -5,6 +5,9 @@ import com.epam.havryliuk.restaurant.model.entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 public class Main {
     private static final Logger log = LogManager.getLogger(Main.class);
@@ -12,9 +15,25 @@ public class Main {
     static User user;
     public static void main(String[] args) {
 
+//        String deliveryPhone = "+38 (096)-55 0-10-25";
+        String deliveryPhone = " (196)-55 0-10-25";
+        String onlyNumbers = deliveryPhone.replaceAll("[\\s()-]", "");
+        System.out.println(onlyNumbers);
 
-        String categoryName = "COFFEE";
-        Category category;
+        if (deliveryPhone != null){
+
+
+            String patterns = "^(\\+[1-9]{1}[0-9]{11})|([0]{1}[0-9]{9})$";
+
+            Pattern pattern = Pattern.compile(patterns);
+            Matcher matcher = pattern.matcher(onlyNumbers);
+            if (matcher.matches()) {
+                System.out.println(true);
+            } else {
+                System.out.println(false);
+            }
+        }
+
 
 
 //

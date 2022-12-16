@@ -9,6 +9,8 @@ import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.exceptions.BadCredentialsException;
 import com.epam.havryliuk.restaurant.model.exceptions.DBException;
 import com.epam.havryliuk.restaurant.model.exceptions.NoSuchEntityException;
+import com.epam.havryliuk.restaurant.model.utils.URLUtil;
+import com.epam.havryliuk.restaurant.model.utils.Validator;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
@@ -36,19 +38,25 @@ public class OrderService {
 
         String deliveryAddress = req.getParameter("deliveryAddress");
         String deliveryPhone = req.getParameter("deliveryPhone");
-        checkDeliveryAddress(deliveryAddress);
-        checkDeliveryPhone(deliveryPhone);
-
-        User user = getCurrentUser(req);
+//        URLUtil.isAddressCorrect(deliveryAddress);
+//        URLUtil.isPhoneCorrect(deliveryPhone);
 
         Order order;
         try {
-            OrderDao  orderDao = new OrderDaoImpl();
+            User user = getCurrentUser(req);
+            OrderDao orderDao = new OrderDaoImpl();
             order = orderDao.geByUserIdAddressStatus(user.getId(), deliveryAddress, BookingStatus.BOOKING);
-
             log.debug("geByUserIdAddressStatus - userId: " + user.getId() + ", deliveryAddress: " + deliveryAddress + ", BookingStatus: " + BookingStatus.BOOKING);
-            log.debug("Received order: " + order);
-
+            if(order == null) {
+                order = Order.getInstance(deliveryAddress, deliveryPhone, false, user, BookingStatus.BOOKING);
+                orderDao.create(order);
+            }
+        } catch (DBException e) {
+            log.error(e);
+            throw new NoSuchEntityException(e.getMessage(), e);
+        }
+        return order;
+    }
             //todo / перевірити чи замовленню не більше, примірок, дні три. Якщо більше - видалити це замовлення
             //todo / та створити нове. Ідея полягає в тому, що створення замовлення і додавання продуктів в кошик
             //todo / розглядаються як окремі процеси. Юзер може додати один продукт до кошику ввечері, інший вранці.
@@ -60,21 +68,10 @@ public class OrderService {
             //todo / а в після підтвердження фіксується в кошику.
 
 
-            if(order == null) {
-                order = Order.getInstance(deliveryAddress, deliveryPhone, false, user, BookingStatus.BOOKING);
-                orderDao.create(order);
-            }
-        } catch (DBException e) {
-            log.error(e);
-            throw new NoSuchEntityException(e.getMessage(), e);
-        }
-        return order;
-    }
-
-
-    public void addDishToOrder(HttpServletRequest req, Order order) throws NoSuchEntityException {
+    public void addDishToOrder(HttpServletRequest req, Order order) throws NoSuchEntityException, BadCredentialsException {
         Dish dish = getCurrentDish(req);
         int dishesAmount = getDishesAmount(req);
+
         try {
             OrderDao orderDao = new OrderDaoImpl();
             orderDao.addNewDishesToOrder(order, dish, dishesAmount);
@@ -84,15 +81,17 @@ public class OrderService {
         }
     }
 
-    private int getDishesAmount(HttpServletRequest req) throws NoSuchEntityException {
+    private int getDishesAmount(HttpServletRequest req) throws BadCredentialsException {
         int dishesAmount;
+
         try {
-            dishesAmount = Integer.parseInt(req.getParameter("amount").trim());//todo try-catch
+            dishesAmount = Integer.parseInt(req.getParameter("amount").trim());
+            if(!Validator.isDishesAmountCorrect(dishesAmount)) {
+                throw new BadCredentialsException("The the number of dishes is incorrect.");
+            }
             log.debug("Request for \"" + dishesAmount + "\" has been received.");
         } catch (NumberFormatException e) {
-            String errorMessage = "Enter amount of dishes you want to order please.";
-            log.error(errorMessage);
-            throw new NoSuchEntityException(errorMessage);
+            throw new BadCredentialsException("Enter amount of dishes you want to order please.");
         }
         return dishesAmount;
     }
@@ -111,7 +110,7 @@ public class OrderService {
 
     private Dish getCurrentDish(HttpServletRequest req) throws NoSuchEntityException {
         HttpSession session = req.getSession();
-       Dish dish = (Dish) session.getAttribute(CURRENT_DISH);
+        Dish dish = (Dish) session.getAttribute(CURRENT_DISH);
         if (dish == null) {
             String errorMessage = "Choose the dish to add it to basket.";
             log.error(errorMessage);
@@ -120,20 +119,6 @@ public class OrderService {
         return dish;
     }
 
-    private void checkDeliveryAddress(String deliveryAddress) throws BadCredentialsException {
-        //todo
-        if (deliveryAddress == null){
-            String error = "The address is incorrect.";
-            throw new BadCredentialsException(error);
-        }
-    }
 
-    private void checkDeliveryPhone(String deliveryPhone) throws BadCredentialsException {
-        //todo
-        if (deliveryPhone == null){
-            String error = "The phone is incorrect.";
-            throw new BadCredentialsException(error);
-        }
-    }
 
 }

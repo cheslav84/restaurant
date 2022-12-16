@@ -5,6 +5,8 @@ import com.epam.havryliuk.restaurant.model.exceptions.BadCredentialsException;
 import com.epam.havryliuk.restaurant.model.exceptions.NoSuchEntityException;
 import com.epam.havryliuk.restaurant.model.services.OrderService;
 import com.epam.havryliuk.restaurant.model.utils.URLUtil;
+import com.epam.havryliuk.restaurant.model.utils.Validator;
+import com.mysql.cj.Session;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -37,15 +39,86 @@ public class OrderController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
-//        OrderService orderService = new OrderService();
-//        Order order = getOrder(req, orderService);
-//        saveDishToOrder(req, orderService, order);
+        OrderService orderService = new OrderService();
+
+        HttpSession session = req.getSession();
+        Order order = (Order) session.getAttribute(ORDER);
+
+        if (order != null) {
+            saveDishToOrder(req, orderService, order);
+            log.debug("Order in session: " + order);
+        } else {
+            try {
+                checkDeliveryCredentials(req, orderService);
+                order = orderService.getOrder(req);
+
+                log.debug(order);
+                session.setAttribute(ORDER, order);
+                session.removeAttribute(ERROR_MESSAGE);
+                session.removeAttribute(DELIVERY_ADDRESS);
+                session.removeAttribute(DELIVERY_PHONE);
+            } catch (NoSuchEntityException | BadCredentialsException e) {
+                String errorMessage = e.getMessage();
+                session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
+                session.setAttribute(ERROR_MESSAGE, errorMessage);
+                log.error(errorMessage, e);
+            }
+                if (order != null) {// think of refactoring
+                saveDishToOrder(req, orderService, order);
+            }
+        }
 
         String redirectionPage = getRedirectionPage(req);
         resp.sendRedirect(redirectionPage);
     }
 
-    @NotNull
+    private void checkDeliveryCredentials(HttpServletRequest req, OrderService orderService) throws BadCredentialsException {
+
+        String deliveryAddress = req.getParameter("deliveryAddress");
+        String deliveryPhone = req.getParameter("deliveryPhone");
+
+        HttpSession session = req.getSession();
+
+        if(!Validator.isAddressCorrect(deliveryAddress)) {
+            String error = "The address is incorrect.";
+            throw new BadCredentialsException(error);
+        }
+        session.setAttribute(DELIVERY_ADDRESS, deliveryAddress);
+
+        if(!Validator.isPhoneCorrect(deliveryPhone)) {
+            String error = "The phone is incorrect.";
+            throw new BadCredentialsException(error);
+        }
+        session.setAttribute(DELIVERY_PHONE, deliveryPhone);
+
+
+    }
+
+
+
+
+    private void saveDishToOrder(HttpServletRequest req, OrderService orderService, Order order) {
+        HttpSession session = req.getSession();
+        try {
+            orderService.addDishToOrder(req, order);
+            session.removeAttribute(CURRENT_DISH);
+        } catch (NoSuchEntityException | BadCredentialsException e) {
+            String errorMessage = e.getMessage();
+            session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
+            session.setAttribute(ERROR_MESSAGE, errorMessage);
+            log.error(errorMessage, e);
+        }
+    }
+
+    /**
+     * Returns String page that is going to be redirected to.
+     * If user press "continue ordering" button, then request will
+     * receive such parameter, and response will be redirected to the
+     * page the request have been done from. Otherwise, user will be
+     * redirected to his basket page.
+     * @param req
+     * @return
+     */
     private String getRedirectionPage(HttpServletRequest req) {
         String redirectionPage;
         String continueOrder = req.getParameter("continue");
@@ -59,39 +132,28 @@ public class OrderController extends HttpServlet {
         return redirectionPage;
     }
 
-    private void saveDishToOrder(HttpServletRequest req, OrderService orderService, Order order) {
-        HttpSession session = req.getSession();
-        try {
-            orderService.addDishToOrder(req, order);
-            session.removeAttribute(CURRENT_DISH);
-        } catch (NoSuchEntityException e) {
-            String errorMessage = e.getMessage();
-            session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
-            session.setAttribute(ERROR_MESSAGE, errorMessage);
-            log.error(errorMessage, e);
-        }
-    }
+//    @Nullable
+//    private Order getOrder(HttpServletRequest req, OrderService orderService) {
+//        HttpSession session = req.getSession();
+//        Order order = (Order) session.getAttribute(ORDER);
+//        log.debug("Order in session: " + order);
+//        if (order == null) {
+//            try {
+//                order = orderService.getOrder(req);
+//                log.debug(order);
+//                session.setAttribute(ORDER, order);
+//                session.removeAttribute(ERROR_MESSAGE);
+//            } catch (NoSuchEntityException | BadCredentialsException e) {
+//                String errorMessage = e.getMessage();
+//                session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
+//                session.setAttribute(ERROR_MESSAGE, errorMessage);
+//                log.error(errorMessage, e);
+//            }
+//        }
+//        return order;
+//    }
 
-    @Nullable
-    private Order getOrder(HttpServletRequest req, OrderService orderService) {
-        HttpSession session = req.getSession();
-        Order order = (Order) session.getAttribute(ORDER);
-        log.debug("Order in session: " + order);
-        if (order == null) {
-            try {
-                order = orderService.getOrder(req);
-                log.debug(order);
-                session.setAttribute(ORDER, order);
-                session.removeAttribute(ERROR_MESSAGE);
-            } catch (NoSuchEntityException | BadCredentialsException e) {
-                String errorMessage = e.getMessage();
-                session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
-                session.setAttribute(ERROR_MESSAGE, errorMessage);
-                log.error(errorMessage, e);
-            }
-        }
-        return order;
-    }
+
 
 
 }
