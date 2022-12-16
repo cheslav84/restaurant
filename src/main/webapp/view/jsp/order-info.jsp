@@ -70,19 +70,21 @@
                             <c:out value="${sessionScope.errorMessage}" />
                         </div>   
 
-                        <div class="button order-button button-amount">
-                            <div class="amount-button-label">amount</div>
-                            <input type="text" name="amount" class="dishes-amout"/>
+                        <div class="order-info-buttons">
+                            <div class="button order-button button-amount">
+                                <div class="amount-button-label">amount</div>
+                                <input type="text" name="amount" class="dishes-amout"/>
+                            </div>
+            
+
+                            <%-- <input type="hidden" name="dishId" value="${dish.id}" /> --%>
+
+                                <%-- <input type="submit" name="continue" value="continue" data-wait="Please wait..." class="button order-button">
+                                <input type="submit" name="confirm"  value="confirm" data-wait="Please wait..." class="button order-button"> --%>
+
+                            <button name="continue" value="continue" class="button order-button">continue ordering</button>
+                            <button class="button order-button">order this dish</button>
                         </div>
-         
-
-                        <%-- <input type="hidden" name="dishId" value="${dish.id}" /> --%>
-
-                            <%-- <input type="submit" name="continue" value="continue" data-wait="Please wait..." class="button order-button">
-                            <input type="submit" name="confirm"  value="confirm" data-wait="Please wait..." class="button order-button"> --%>
-
-                        <button name="continue" value="continue" class="button order-button">continue ordering</button>
-                        <button class="button order-button">order this dish</button>
                     </form>
                 <%-- </div> --%>
 

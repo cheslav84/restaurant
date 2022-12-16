@@ -994,6 +994,7 @@ textarea.w-select {
   }
 
 
+
 }
 
 @media screen and (max-width:767px) {
@@ -3588,7 +3589,7 @@ li {
 }
 
 .bottom-footer-link:hover {
-  color: ##ab9f91;
+  color: #ab9f91;
 }
 
 .style-block {
@@ -3817,6 +3818,8 @@ li {
   }
 
   .menu-tab-button {
+    padding-right: 25px;
+    padding-left: 25px;
     line-height: 20px;
   }
 

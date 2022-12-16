@@ -123,7 +123,8 @@ public class OrderController extends HttpServlet {
         String redirectionPage;
         String continueOrder = req.getParameter("continue");
         log.debug("continueOrder: " + continueOrder);
-        if (continueOrder == null) {
+        String errorMessage = (String) req.getSession().getAttribute(ERROR_MESSAGE);
+        if (continueOrder == null && errorMessage == null) {
             redirectionPage = "basket";
         } else {
             redirectionPage = URLUtil.getRefererPage(req);

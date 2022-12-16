@@ -72,11 +72,19 @@
     margin-right: 40px;
 }
 
+.order-info-buttons {
+    display: flex;
+    justify-content: center;
+ }
+
 .order-button {
-    margin: 10px;
+    margin: 5px;
+    padding: 4px 18px;
     color: #000;
     background-color: #faf3eb;
     cursor: pointer;
+    font-size: 12px;
+    line-height: 25px;
 }
 
 .button-amount {
@@ -99,8 +107,6 @@
     text-align: center;
 }
 
-
-
 .menu-item-text.ordering{
     display: block;
     float: left;
@@ -115,37 +121,46 @@
     margin-top: 6px;
     float: left;
     color: #fff;
+    font-size: 20px;
  }
+
 
 .menu-item-title.description.ordering{
     margin-top: 5px;
     float: left;
     color: #fff;
-
+    font-size: medium;
+    line-height: 18px
  }
 
+
  label.order-label {
-    display: inline;
-    float: left;
+    display: inline-block;
+    /* float: left; */
     width: 30%;
     font-family: Oswald, sans-serif;
     color: #fff;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: normal;
-    font-style: ;
+    /* font-style: ; */
     line-height: 40px;
     text-align: center;
     text-decoration: none;
     text-transform: uppercase;
 }
 
+
 .order-field {
     width: 70%;
+    height: 32px;
+    float: right;
 }
 
 .error-message {
-    margin-top: 15px;
-    /* margin: 15px auto; */
+    display: inline-block;
+    /* margin-top: 15px; */
+    margin: 15px auto;
+    width: 100%;
     font-family: Satisfy, sans-serif;
     color: #eda03b;
     text-align: center;
@@ -181,6 +196,40 @@
         transform: translate(-50%, -50%);
 
     }
+    
+    .menu-item-title.description.ordering{
+        width: 100%;
+        text-align: center;
+    }
+
+    .order-label {
+        float: left;
+        margin-top: -4px;
+        margin-bottom: -8px;
+
+        text-align: left !important;
+        width: 100% !important;
+    }
+
+    .label.order-label {
+        line-height: 40px;
+        margin-top: -4px;
+        margin-bottom: -8px;
+        width: auto;
+        text-align: left;
+    }
+    
+
+    .order-field {
+        width: 100%;
+        /* height: 32px;
+        float: right; */
+    }
+    
+
+    .order-info-buttons {
+        display: block;
+     }
 
     .order-button {
         width: 100%;
@@ -195,6 +244,7 @@
         max-width: 50px;
     }
 
+
 }
 
 @media screen and (max-width:479px) {
@@ -206,8 +256,8 @@
     .menu-item-weight {
         margin-right: 10px;
     }
-
-    .menu-item-price {
+    
+    .menu-item-price-reload {
         margin-right: 60px;
     }
 }
