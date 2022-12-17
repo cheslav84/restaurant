@@ -34,8 +34,8 @@
         <div class="w-container">
             <a href="index.html" aria-current="page" class="logo-container w-clearfix w-nav-brand w--current">
                 <img src="view/pictures/icons/VH_logo_white.png" alt="" class="logo-icon">
-                <h1 class="logo-text">V&H VICTORY</h1>
-                <h2 class="logo-text subtitle">Cafe&nbsp;&amp; Restaurant</h2>
+                <h1 class="logo-text">V&amp;H VICTORY</h1>
+                <h2 class="logo-text subtitle">Cafe&nbsp;&amp;&nbsp;Restaurant</h2>
             </a>
             <div class="menu-divider w-hidden-small w-hidden-tiny"></div>
             <div class="menu-button w-nav-button">

@@ -1,7 +1,7 @@
 package com.epam.havryliuk.restaurant.model.database.dao.DaoImpl;
 
 import com.epam.havryliuk.restaurant.model.database.connection.ConnectionManager;
-import com.epam.havryliuk.restaurant.model.database.dao.DAO;
+import com.epam.havryliuk.restaurant.model.database.dao.AbstractDao;
 import com.epam.havryliuk.restaurant.model.database.dao.databaseFieds.RoleFields;
 import com.epam.havryliuk.restaurant.model.database.dao.queries.UserQuery;
 import com.epam.havryliuk.restaurant.model.entity.Role;
@@ -9,7 +9,7 @@ import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.entity.UserDetails;
 import com.epam.havryliuk.restaurant.model.database.dao.databaseFieds.UserFields;
 import com.epam.havryliuk.restaurant.model.entity.constants.UserRole;
-import com.epam.havryliuk.restaurant.model.exceptions.DBException;
+import com.epam.havryliuk.restaurant.model.exceptions.DAOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,20 +19,19 @@ import java.util.Date;
 import java.util.List;
 
 
-//public class UserDAO<T extends User> implements DAO<Long, User> {
-public class UserDAO implements DAO<User> {
-    private static final Logger log = LogManager.getLogger(UserDAO.class);
+public class UserDao extends AbstractDao<User> {
+    private static final Logger log = LogManager.getLogger(UserDao.class);
     private final ConnectionManager connectionManager;
 
-    public UserDAO() throws DBException {
+    public UserDao() throws DAOException {
         connectionManager = ConnectionManager.getInstance();
     }
 
     /**
      * by login.
      */
-    @Override
-    public User findByName(String login) throws DBException {
+//    @Override
+    public User findByName(String login) throws DAOException {
         User user = null;
         try (Connection con = connectionManager.getConnection();
              PreparedStatement stmt = con.prepareStatement(UserQuery.FIND_USER_BY_LOGIN)) {
@@ -41,13 +40,13 @@ public class UserDAO implements DAO<User> {
             log.debug("The \"" + user + "\" user received from database.");
         } catch (SQLException e) {
             log.error("Error in getting user \"" + login + "\" from database.", e);
-            throw new DBException(e);
+            throw new DAOException(e);
         }
         return user;
     }
 
     @Override
-    public User findById(long id) throws DBException {// todo зробити абстрактний клас зі всіма аналогічними методами і передаваити як аргумент query?
+    public User findById(long id) throws DAOException {// todo зробити абстрактний клас зі всіма аналогічними методами і передаваити як аргумент query?
         User user = null;
         try (Connection con = connectionManager.getConnection();
              PreparedStatement stmt = con.prepareStatement(UserQuery.FIND_USER_BY_ID)) {
@@ -56,12 +55,12 @@ public class UserDAO implements DAO<User> {
             log.debug("The user with id \"" + id + "\" received from database.");
         } catch (SQLException e) {
             log.error("Error in getting user with id \"" + id + "\" from database.", e);
-            throw new DBException(e);
+            throw new DAOException(e);
         }
         return user;
     }
 
-    private User extractUser(PreparedStatement stmt) throws SQLException, DBException {
+    private User extractUser(PreparedStatement stmt) throws SQLException, DAOException {
         User user = null;
         try (ResultSet rs = stmt.executeQuery()) {
             if (rs.next()) {
@@ -76,10 +75,10 @@ public class UserDAO implements DAO<User> {
      * connection has to be set to the false value.
      * @param user
      * @return
-     * @throws DBException
+     * @throws DAOException
      */
     @Override
-    public boolean create(User user) throws DBException {
+    public boolean create(User user) throws DAOException {
         Connection con = null;
         PreparedStatement stmt = null;
         try {
@@ -108,9 +107,9 @@ public class UserDAO implements DAO<User> {
      * "The user with such login is already exists. Try to use another one."
      * @param con
      * @param login
-     * @throws DBException
+     * @throws DAOException
      */
-    private void checkIfLoginUnique(Connection con, String login) throws DBException {
+    private void checkIfLoginUnique(Connection con, String login) throws DAOException {
         User user = null;
         PreparedStatement stmt = null;
         try {
@@ -121,18 +120,18 @@ public class UserDAO implements DAO<User> {
             if (user != null){
                 String message = "The user with such login is already exists. Try to use another one.";
                 log.error(message);
-                throw new DBException(message);
+                throw new DAOException(message);
             }
         } catch (SQLException e) {
             log.error("Error in getting user \"" + login + "\" from database.", e);
-            throw new DBException(e);
+            throw new DAOException(e);
         } finally {
             connectionManager.close(stmt);
         }
     }
 
 
-    private void addUser(User user, Connection con) throws DBException, SQLException {
+    private void addUser(User user, Connection con) throws DAOException, SQLException {
         PreparedStatement stmt = null;
         try {
             stmt = con.prepareStatement(UserQuery.ADD_USER,
@@ -160,7 +159,7 @@ public class UserDAO implements DAO<User> {
 
 
     @Override
-    public List<User> findAll() throws DBException {
+    public List<User> findAll() throws DAOException {
         List<User> users = new ArrayList<>();
         try (Connection con = connectionManager.getConnection();
              PreparedStatement stmt = con.prepareStatement(UserQuery.FIND_ALL_USERS);
@@ -171,13 +170,13 @@ public class UserDAO implements DAO<User> {
             log.debug("List of user have been received from database.");
         } catch (SQLException e) {
             log.debug("Error in getting list of user from database.", e);
-            throw new DBException(e);
+            throw new DAOException(e);
         }
         return users;
     }
 
     @Override
-    public boolean update(User user) throws DBException {
+    public User update(User user) throws DAOException {//todo в такому випадку беремо юзера з бази?
         try (Connection con = connectionManager.getConnection();
              PreparedStatement stmt = con.prepareStatement(UserQuery.UPDATE_USER)) {
             setUserParameters(user, stmt);
@@ -187,13 +186,13 @@ public class UserDAO implements DAO<User> {
         } catch (SQLException e) {
             log.error("The user with id \"" + user.getId() +
                     "\", has not been updated", e);
-            throw new DBException(e);
+            throw new DAOException(e);
         }
-        return true;
+        return user;
     }
 
     @Override
-    public boolean delete(User user) throws DBException {
+    public boolean delete(User user) throws DAOException {
         try (Connection con = connectionManager.getConnection();
              PreparedStatement stmt = con.prepareStatement(UserQuery.DELETE_USER)) {
             stmt.setString(1, user.getEmail());
@@ -201,13 +200,13 @@ public class UserDAO implements DAO<User> {
             log.debug("The user \"" + user.getName() + "\", has been successfully deleted.");
         } catch (SQLException e) {
             log.error("The user \"" + user.getName() + "\", has not been deleted.", e);
-            throw new DBException(e);
+            throw new DAOException(e);
         }
         return true;
     }
 
     @Override
-    public boolean delete(long id) throws DBException {
+    public boolean delete(long id) throws DAOException {
         try (Connection con = connectionManager.getConnection();
              PreparedStatement stmt = con.prepareStatement(UserQuery.DELETE_USER_BY_ID)) {
             stmt.setLong(1, id);
@@ -215,17 +214,17 @@ public class UserDAO implements DAO<User> {
             log.debug("The user with id \"" + id + "\", has been successfully deleted");
         } catch (SQLException e) {
             log.error("The user with id \"" + id + "\", has not been deleted.", e);
-            throw new DBException(e);
+            throw new DAOException(e);
         }
         return true;
     }
 
 
-    private void setUserParameters(User user, PreparedStatement stmt) throws SQLException, DBException {
+    private void setUserParameters(User user, PreparedStatement stmt) throws SQLException, DAOException {
         Role userRole = user.getRole();
         long roleId = userRole.getId();
         if (roleId == 0){
-            RoleDAO roleDAO = new RoleDAO();
+            RoleDao roleDAO = new RoleDao();
             userRole = roleDAO.findByName(userRole.getUserRole().name());
             roleId = userRole.getId();
         }
@@ -240,7 +239,7 @@ public class UserDAO implements DAO<User> {
         stmt.setLong(k++, roleId);
     }
 
-    private User mapUser(ResultSet rs) throws SQLException, DBException {
+    private User mapUser(ResultSet rs) throws SQLException, DAOException {
         long id = rs.getLong(UserFields.USER_ID);
         String email = rs.getString(UserFields.USER_EMAIL);
         String password = rs.getString(UserFields.USER_PASSWORD);
@@ -259,7 +258,7 @@ public class UserDAO implements DAO<User> {
                 gender, isOverEighteen, accountCreationDate, role, userDetails);
     }
 
-    private Role getUserRole(ResultSet rs) throws SQLException, DBException {
+    private Role getUserRole(ResultSet rs) throws SQLException, DAOException {
         String roleName = rs.getString(RoleFields.ROLE_NAME);
         Role role = Role.getInstance(UserRole.valueOf(roleName));
         if (role.getUserRole().equals(UserRole.MANAGER) ||
@@ -268,7 +267,7 @@ public class UserDAO implements DAO<User> {
         } else {
             String errorMessage ="UserRole can't be instantiated";
             log.debug(errorMessage);
-            throw new DBException(errorMessage);
+            throw new DAOException(errorMessage);
         }
 
     }

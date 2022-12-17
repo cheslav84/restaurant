@@ -1,32 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
 
 <head>
     <title>Menu</title>
-    <link href="./Menu_files/easy-times.webflow.303b06344.css" rel="stylesheet" type="text/css">
-    <!--    <link rel="stylesheet" href="./Menu_files/css" media="all">-->
+
     <link href="view/css/common.css" rel="stylesheet" type="text/css">
-
+    <link href="view/css/sidebar.css" rel="stylesheet" type="text/css">
     <link href="view/css/basket.css" rel="stylesheet" type="text/css">
-
-
-
-    <link rel="stylesheet" href="./Menu_files/menu.css" media="all">
-    <link rel="stylesheet" href="./Menu_files/dishes.css" media="all">
-    <link rel="stylesheet" href="./Menu_files/basket.css" media="all">
 
 </head>
 
 <body>
+    <jsp:include page="../sidebar.jsp"/>
+
     <div id="top" class="page-header">
         <div class="page-header-overlay orders-header">
             <div class="container w-container orders-container">
                 <div class="section-intro-block">
                     <h2 data-ix="fade-in-on-load" class="section-intro-title">My orders</h2>
-                    <h2 data-ix="fade-in-on-load-2" class="section-intro-title subtitle">Easy times
-                        Cafe&nbsp;&amp;&nbsp;Restaurant</h2>
+                    <h2 data-ix="fade-in-on-load-2" class="section-intro-title subtitle">V&amp;H VICTORY</h2>
+                    <h2 data-ix="fade-in-on-load-2" class="section-intro-title subtitle smaler">Cafe and Restaurant</h2>
                 </div>
             </div>
         </div>
@@ -332,29 +328,14 @@
         </div>
 
 
-
-
-
-
-
-
-
     </div>
 
 
 
+    <jsp:include page="../footer.jsp"/>
 
-
-
-
-
-
-
-    <script src="./js/jquery-3.5.1.min.dc5e7f18c8.js" type="text/javascript"
-        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-    <script src="./js/webflow.4348bf66e.js" type="text/javascript"></script>
-    <!--[if lte IE 9]>
-<script src="//cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif]-->
+    <script src="view/js/jquery3.6.1.js" type="text/javascript" crossorigin="anonymous"></script>
+    <script src="view/js/webflow.e.js" type="text/javascript"></script>
 </body>
 
 </html>

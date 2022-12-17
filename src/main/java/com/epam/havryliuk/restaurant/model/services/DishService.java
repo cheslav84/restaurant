@@ -1,10 +1,9 @@
 package com.epam.havryliuk.restaurant.model.services;
 
-import com.epam.havryliuk.restaurant.model.database.dao.DaoImpl.DishDaoImpl;
-import com.epam.havryliuk.restaurant.model.database.dao.DishDao;
+import com.epam.havryliuk.restaurant.model.database.dao.DaoImpl.DishDao;
 import com.epam.havryliuk.restaurant.model.entity.Category;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
-import com.epam.havryliuk.restaurant.model.exceptions.DBException;
+import com.epam.havryliuk.restaurant.model.exceptions.DAOException;
 import com.epam.havryliuk.restaurant.model.exceptions.NoSuchEntityException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -32,9 +31,9 @@ public class DishService {
         DishDao dishDao;
         List<Dish> dishes;
         try {
-            dishDao = new DishDaoImpl();
+            dishDao = new DishDao();
             dishes = dishDao.findByCategory(category);
-        } catch (DBException e) {
+        } catch (DAOException e) {
             e.printStackTrace();
             throw new NoSuchElementException("Such list of Dishes hasn't been found.");
         }
@@ -50,11 +49,11 @@ public class DishService {
         Dish dish;
         DishDao dishDao;
         try {
-            dishDao = new DishDaoImpl();
+            dishDao = new DishDao();
             dish = dishDao.findById(dishId);
             log.debug("\"/dish\" " + dish + " has been received from database.");
 
-        } catch (DBException e) {
+        } catch (DAOException e) {
             e.printStackTrace();
             throw new NoSuchElementException("Such dish hasn't been found.");
         }

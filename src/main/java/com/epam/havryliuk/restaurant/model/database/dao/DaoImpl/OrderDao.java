@@ -1,12 +1,11 @@
 package com.epam.havryliuk.restaurant.model.database.dao.DaoImpl;
 
 import com.epam.havryliuk.restaurant.model.database.connection.ConnectionManager;
-import com.epam.havryliuk.restaurant.model.database.dao.OrderDao;
+import com.epam.havryliuk.restaurant.model.database.dao.AbstractDao;
 import com.epam.havryliuk.restaurant.model.database.dao.databaseFieds.OrderFields;
 import com.epam.havryliuk.restaurant.model.database.dao.queries.OrderQuery;
 import com.epam.havryliuk.restaurant.model.entity.*;
-import com.epam.havryliuk.restaurant.model.exceptions.DBException;
-import com.epam.havryliuk.restaurant.model.services.OrderService;
+import com.epam.havryliuk.restaurant.model.exceptions.DAOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,16 +13,16 @@ import java.sql.*;
 import java.util.Date;
 import java.util.List;
 
-public class OrderDaoImpl implements OrderDao {
-    private static final Logger log = LogManager.getLogger(OrderService.class);
+public class OrderDao extends AbstractDao<Order> {
+    private static final Logger log = LogManager.getLogger(OrderDao.class);
     private final ConnectionManager connectionManager;
 
-    public OrderDaoImpl() throws DBException {
+    public OrderDao() throws DAOException {
         connectionManager = ConnectionManager.getInstance();
     }
 
     @Override
-    public boolean create(Order order) throws DBException {
+    public boolean create(Order order) throws DAOException {
         Connection con = null;
         try {
             con = connectionManager.getConnection();
@@ -34,7 +33,7 @@ public class OrderDaoImpl implements OrderDao {
             String message = "Something went wrong. Try to make an order later please.";
             log.error("Error in inserting order to database.", e);
             connectionManager.rollback(con);
-            throw new DBException(message, e);
+            throw new DAOException(message, e);
         } finally {
             connectionManager.setAutoCommit(con, true);
             connectionManager.close(con);
@@ -42,8 +41,8 @@ public class OrderDaoImpl implements OrderDao {
         return true;
     }
 
-    @Override
-    public Order geByUserIdAddressStatus(long userId, String address, BookingStatus bookingStatus) throws DBException {//todo think if it could be a list
+//    @Override
+    public Order geByUserIdAddressStatus(long userId, String address, BookingStatus bookingStatus) throws DAOException {//todo think if it could be a list
         Order order = null;
 
         try (Connection con = connectionManager.getConnection();
@@ -62,13 +61,13 @@ public class OrderDaoImpl implements OrderDao {
         } catch (SQLException e) {
             String errorMassage = "Searched order is absent in database";
             log.error(errorMassage, e);
-            throw new DBException(errorMassage, e);
+            throw new DAOException(errorMassage, e);
         }
         return order;
     }
 
-    @Override
-    public boolean addNewDishesToOrder(Order order, Dish dish, int amount) throws DBException {
+//    @Override
+    public boolean addNewDishesToOrder(Order order, Dish dish, int amount) throws DAOException {
         try (Connection con = connectionManager.getConnection();
              PreparedStatement stmt = con.prepareStatement(OrderQuery.ADD_DISH_TO_BASKET)) {
             int k=0;
@@ -81,24 +80,24 @@ public class OrderDaoImpl implements OrderDao {
         } catch (SQLException e) {
             String errorMassage = "Something went wrong. Dish haven't been added to basket. Try please again later.";
             log.error(errorMassage, e);
-            throw new DBException(errorMassage, e);
+            throw new DAOException(errorMassage, e);
         }
         return false;
     }
 
-    @Override
-    public boolean changeBookingStatus(Dish dish, BookingStatus status) throws DBException {
-        return false;
+//    @Override
+    public boolean changeBookingStatus(Dish dish, BookingStatus status) throws DAOException {
+        throw new UnsupportedOperationException();
     }
 
-    @Override
-    public List<Order> getByUserSortedByTime() throws DBException {
-        return null;
+//    @Override
+    public List<Order> getByUserSortedByTime() throws DAOException {
+        throw new UnsupportedOperationException();
     }
 
-    @Override
-    public List<Order> getByBookingStatus(BookingStatus status) throws DBException {
-        return null;
+//    @Override
+    public List<Order> getByBookingStatus(BookingStatus status) throws DAOException {
+        throw new UnsupportedOperationException();
     }
 
 
@@ -113,7 +112,7 @@ public class OrderDaoImpl implements OrderDao {
         return Order.getInstance(id, address, phoneNumber, isPayed, creationDate, closeDate);
     }
 
-    private void addOrder(Order order, Connection con) throws DBException, SQLException {
+    private void addOrder(Order order, Connection con) throws DAOException, SQLException {
         PreparedStatement stmt = null;
         try {
             stmt = con.prepareStatement(OrderQuery.ADD_ORDER, Statement.RETURN_GENERATED_KEYS);
@@ -164,33 +163,29 @@ public class OrderDaoImpl implements OrderDao {
         stmt.setLong(k++, order.getBookingStatus().getId());
     }
 
+
     @Override
-    public Order findByName(String name) throws DBException {
-        return null;
+    public Order findById(long id) throws DAOException {
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public Order findById(long id) throws DBException {
-        return null;
+    public List<Order> findAll() throws DAOException {
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public List<Order> findAll() throws DBException {
-        return null;
+    public Order update(Order entity) throws DAOException {
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean update(Order entity) throws DBException {
-        return false;
+    public boolean delete(Order entity) throws DAOException {
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean delete(Order entity) throws DBException {
-        return false;
-    }
-
-    @Override
-    public boolean delete(long id) throws DBException {
-        return false;
+    public boolean delete(long id) throws DAOException {
+        throw new UnsupportedOperationException();
     }
 }

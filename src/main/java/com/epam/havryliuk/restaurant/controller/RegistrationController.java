@@ -1,7 +1,7 @@
 package com.epam.havryliuk.restaurant.controller;
 
 import com.epam.havryliuk.restaurant.model.entity.User;
-import com.epam.havryliuk.restaurant.model.exceptions.DBException;
+import com.epam.havryliuk.restaurant.model.exceptions.DAOException;
 import com.epam.havryliuk.restaurant.model.services.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -48,7 +48,7 @@ public class RegistrationController extends HttpServlet {
             session.removeAttribute(REGISTRATION_ERROR_MESSAGE);
             session.removeAttribute(REGISTRATION_PROCESS);//todo if that attribute is set - hide login menu is jsp
             redirectionPage = getRedirectionPage(session);
-        } catch (DBException e) {
+        } catch (DAOException e) {
             log.error("User hasn't been registered. " + e);
             redirectionPage = "registration";
             setErrorMessage(req, e.getMessage());

@@ -1,15 +1,13 @@
 package com.epam.havryliuk.restaurant.model.services;
 
-import com.epam.havryliuk.restaurant.model.database.dao.OrderDao;
-import com.epam.havryliuk.restaurant.model.database.dao.DaoImpl.OrderDaoImpl;
+import com.epam.havryliuk.restaurant.model.database.dao.DaoImpl.OrderDao;
 import com.epam.havryliuk.restaurant.model.entity.BookingStatus;
 import com.epam.havryliuk.restaurant.model.entity.Order;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
 import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.exceptions.BadCredentialsException;
-import com.epam.havryliuk.restaurant.model.exceptions.DBException;
+import com.epam.havryliuk.restaurant.model.exceptions.DAOException;
 import com.epam.havryliuk.restaurant.model.exceptions.NoSuchEntityException;
-import com.epam.havryliuk.restaurant.model.utils.URLUtil;
 import com.epam.havryliuk.restaurant.model.utils.Validator;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -44,14 +42,14 @@ public class OrderService {
         Order order;
         try {
             User user = getCurrentUser(req);
-            OrderDao orderDao = new OrderDaoImpl();
+            OrderDao orderDao = new OrderDao();
             order = orderDao.geByUserIdAddressStatus(user.getId(), deliveryAddress, BookingStatus.BOOKING);
             log.debug("geByUserIdAddressStatus - userId: " + user.getId() + ", deliveryAddress: " + deliveryAddress + ", BookingStatus: " + BookingStatus.BOOKING);
             if(order == null) {
                 order = Order.getInstance(deliveryAddress, deliveryPhone, false, user, BookingStatus.BOOKING);
                 orderDao.create(order);
             }
-        } catch (DBException e) {
+        } catch (DAOException e) {
             log.error(e);
             throw new NoSuchEntityException(e.getMessage(), e);
         }
@@ -73,9 +71,9 @@ public class OrderService {
         int dishesAmount = getDishesAmount(req);
 
         try {
-            OrderDao orderDao = new OrderDaoImpl();
+            OrderDao orderDao = new OrderDao();
             orderDao.addNewDishesToOrder(order, dish, dishesAmount);
-        } catch (DBException e) {
+        } catch (DAOException e) {
             log.error(e.getMessage(), e);
             throw new NoSuchEntityException(e);
         }

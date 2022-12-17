@@ -1,13 +1,13 @@
 package com.epam.havryliuk.restaurant.model.database.dao.DaoImpl;
 
 import com.epam.havryliuk.restaurant.model.database.connection.ConnectionManager;
-import com.epam.havryliuk.restaurant.model.database.dao.DAO;
+import com.epam.havryliuk.restaurant.model.database.dao.AbstractDao;
 import com.epam.havryliuk.restaurant.model.database.dao.databaseFieds.RoleFields;
 import com.epam.havryliuk.restaurant.model.database.dao.queries.RoleQuery;
 import com.epam.havryliuk.restaurant.model.database.dao.queries.UserQuery;
 import com.epam.havryliuk.restaurant.model.entity.Role;
 import com.epam.havryliuk.restaurant.model.entity.constants.UserRole;
-import com.epam.havryliuk.restaurant.model.exceptions.DBException;
+import com.epam.havryliuk.restaurant.model.exceptions.DAOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,16 +17,16 @@ import java.util.List;
 
 
 //public class UserDAO<T extends User> implements DAO<Long, User> {
-public class RoleDAO implements DAO<Role> {
-    private static final Logger log = LogManager.getLogger(RoleDAO.class);
+public class RoleDao extends AbstractDao<Role> {
+    private static final Logger log = LogManager.getLogger(RoleDao.class);
     private final ConnectionManager connectionManager;
 
-    public RoleDAO() throws DBException {
+    public RoleDao() throws DAOException {
         connectionManager = ConnectionManager.getInstance();
     }
 
-    @Override
-    public Role findByName(String name) throws DBException {
+//    @Override
+    public Role findByName(String name) throws DAOException {
         Role role = null;
         try (Connection con = connectionManager.getConnection();
              PreparedStatement stmt = con.prepareStatement(RoleQuery.FIND_ROLE_BY_NAME)) {
@@ -35,13 +35,13 @@ public class RoleDAO implements DAO<Role> {
             log.debug("The \"" + role + "\" role received from database.");
         } catch (SQLException e) {
             log.error("Error in getting role \"" + name + "\" from database.", e);
-            throw new DBException(e);
+            throw new DAOException(e);
         }
         return role;
     }
 
     @Override
-    public Role findById(long id) throws DBException {
+    public Role findById(long id) throws DAOException {
         Role role = null;
         try (Connection con = connectionManager.getConnection();
              PreparedStatement stmt = con.prepareStatement(RoleQuery.FIND_ROLE_BY_ID)) {
@@ -50,7 +50,7 @@ public class RoleDAO implements DAO<Role> {
             log.debug("The role with id \"" + id + "\" received from database.");
         } catch (SQLException e) {
             log.error("Error in getting role with id \"" + id + "\" from database.", e);
-            throw new DBException(e);
+            throw new DAOException(e);
         }
         return role;
     }
@@ -66,7 +66,7 @@ public class RoleDAO implements DAO<Role> {
     }
 
     @Override
-    public boolean create(Role role) throws DBException {
+    public boolean create(Role role) throws DAOException {
         try (Connection con = connectionManager.getConnection();
              PreparedStatement stmt = con.prepareStatement(RoleQuery.ADD_ROLE,
                      Statement.RETURN_GENERATED_KEYS)) {
@@ -82,13 +82,13 @@ public class RoleDAO implements DAO<Role> {
             log.debug("The \"" + role.getUserRole().name() + "\" role has been added to database.");
         } catch (SQLException e) {
             log.error("Error in inserting role \"" + role.getUserRole().name() + "\" to database.", e);
-            throw new DBException(e);
+            throw new DAOException(e);
         }
         return true;
     }
 
     @Override
-    public List<Role> findAll() throws DBException {
+    public List<Role> findAll() throws DAOException {
         List<Role> roles = new ArrayList<>();
         try (Connection con = connectionManager.getConnection();
              PreparedStatement stmt = con.prepareStatement(RoleQuery.FIND_ALL_ROLES);
@@ -99,13 +99,13 @@ public class RoleDAO implements DAO<Role> {
             log.debug("List of roles have been received from database.");
         } catch (SQLException e) {
             log.debug("Error in getting list of roles from database.", e);
-            throw new DBException(e);
+            throw new DAOException(e);
         }
         return roles;
     }
 
     @Override
-    public boolean update(Role role) throws DBException {
+    public Role update(Role role) throws DAOException {
         try (Connection con = connectionManager.getConnection();
              PreparedStatement stmt = con.prepareStatement(RoleQuery.UPDATE_ROLE)) {
             stmt.setString(1, role.getUserRole().name());
@@ -115,13 +115,13 @@ public class RoleDAO implements DAO<Role> {
         } catch (SQLException e) {
             log.error("The role with id \"" + role.getId() +
                     "\", has not been updated", e);
-            throw new DBException(e);
+            throw new DAOException(e);
         }
-        return true;
+        return role;
     }
 
     @Override
-    public boolean delete(Role role) throws DBException {
+    public boolean delete(Role role) throws DAOException {
         try (Connection con = connectionManager.getConnection();
              PreparedStatement stmt = con.prepareStatement(UserQuery.DELETE_USER)) {
             stmt.setString(1, role.getUserRole().name());
@@ -129,13 +129,13 @@ public class RoleDAO implements DAO<Role> {
             log.debug("The user \"" + role.getUserRole().name() + "\", has been successfully deleted.");
         } catch (SQLException e) {
             log.error("The user \"" + role.getUserRole().name() + "\", has not been deleted.", e);
-            throw new DBException(e);
+            throw new DAOException(e);
         }
         return true;
     }
 
     @Override
-    public boolean delete(long id) throws DBException {
+    public boolean delete(long id) throws DAOException {
         try (Connection con = connectionManager.getConnection();
              PreparedStatement stmt = con.prepareStatement(UserQuery.DELETE_USER_BY_ID)) {
             stmt.setLong(1, id);
@@ -143,7 +143,7 @@ public class RoleDAO implements DAO<Role> {
             log.debug("The role with id \"" + id + "\", has been successfully deleted");
         } catch (SQLException e) {
             log.error("The role with id \"" + id + "\", has not been deleted.", e);
-            throw new DBException(e);
+            throw new DAOException(e);
         }
         return true;
     }

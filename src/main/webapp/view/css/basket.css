@@ -24,6 +24,15 @@
     padding-top: 41px;
 }
 
+.section-intro-title.subtitle.smaler {
+    font-size: 12px;
+}
+
+.section-intro-title.subtitle {
+    
+    margin-bottom: 6px;
+}
+
 .orders-container {
 
 }

@@ -1,12 +1,12 @@
 package com.epam.havryliuk.restaurant.model.database.dao.DaoImpl;
 
 import com.epam.havryliuk.restaurant.model.database.connection.ConnectionManager;
-import com.epam.havryliuk.restaurant.model.database.dao.DAO;
+import com.epam.havryliuk.restaurant.model.database.dao.AbstractDao;
 import com.epam.havryliuk.restaurant.model.database.dao.databaseFieds.CategoryFields;
 import com.epam.havryliuk.restaurant.model.database.dao.queries.CategoryQuery;
 import com.epam.havryliuk.restaurant.model.entity.Category;
 import com.epam.havryliuk.restaurant.model.entity.constants.CategoryName;
-import com.epam.havryliuk.restaurant.model.exceptions.DBException;
+import com.epam.havryliuk.restaurant.model.exceptions.DAOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,16 +14,16 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryDAO implements DAO<Category> {
-    private static final Logger log = LogManager.getLogger(CategoryDAO.class);
-    private final ConnectionManager connectionManager;
+public class CategoryDao extends AbstractDao<Category> {
+    private static final Logger log = LogManager.getLogger(CategoryDao.class);
+//    private final ConnectionManager connectionManager;
 
-    public CategoryDAO() throws DBException {
+    public CategoryDao() throws DAOException {
         connectionManager = ConnectionManager.getInstance();
     }
 
-    @Override
-    public Category findByName(String name) throws DBException {
+//    @Override
+    public Category findByName(String name) throws DAOException {
         Category category = null;
         try (Connection con = connectionManager.getConnection();
              PreparedStatement stmt = con.prepareStatement(CategoryQuery.FIND_CATEGORY_BY_NAME)) {
@@ -36,13 +36,13 @@ public class CategoryDAO implements DAO<Category> {
             log.debug("The \"" + category + "\" category received from database.");
         } catch (SQLException e) {
             log.error("Error in getting category \"" + name + "\" from database.", e);
-            throw new DBException(e);
+            throw new DAOException(e);
         }
         return category;
     }
 
     @Override
-    public Category findById(long id) throws DBException {
+    public Category findById(long id) throws DAOException {
         Category category = null;
         try (Connection con = connectionManager.getConnection();
              PreparedStatement stmt = con.prepareStatement(CategoryQuery.FIND_CATEGORY_BY_ID)) {
@@ -55,14 +55,14 @@ public class CategoryDAO implements DAO<Category> {
             log.debug("The category with id \"" + id + "\" received from database.");
         } catch (SQLException e) {
             log.error("Error in getting category with id \"" + id + "\" from database.", e);
-            throw new DBException(e);
+            throw new DAOException(e);
         }
         return category;
     }
 
     @Override
-    public boolean create(Category category) throws DBException {
-        throw new UnsupportedOperationException("The \"Category\" list is unmodified.");
+    public boolean create(Category category) throws DAOException {
+        throw new UnsupportedOperationException("The \"Category\" list is unmodifiable.");
 
 //        Connection con = connectionPool.getConnection();
 //        try  {
@@ -94,7 +94,7 @@ public class CategoryDAO implements DAO<Category> {
 //    }
 
     @Override
-    public List<Category> findAll() throws DBException {
+    public List<Category> findAll() throws DAOException {
         List<Category> categories = new ArrayList<>();
 
          try (Connection con = connectionManager.getConnection();
@@ -106,15 +106,15 @@ public class CategoryDAO implements DAO<Category> {
             log.debug("List of categories have been received from database.");
         } catch (SQLException e) {
             log.debug("Error in getting list of categories from database.", e);
-            throw new DBException(e);
+            throw new DAOException(e);
         }
         return categories;
     }
 
 
     @Override
-    public boolean update(Category category) throws DBException {
-        throw new UnsupportedOperationException("The \"Category\" list is unmodified.");
+    public Category update(Category category) throws DAOException {
+        throw new UnsupportedOperationException("The \"Category\" list is unmodifiable.");
 //        Connection con = connectionPool.getConnection();
 //        try (PreparedStatement stmt = con.prepareStatement(CategoryQuery.UPDATE_CATEGORY)) {
 //            stmt.setString(1, category.getCategoryName().name());
@@ -131,8 +131,8 @@ public class CategoryDAO implements DAO<Category> {
     }
 
     @Override
-    public boolean delete(Category category) throws DBException {
-        throw new UnsupportedOperationException("The \"Category\" list is unmodified.");
+    public boolean delete(Category category) throws DAOException {
+        throw new UnsupportedOperationException("The \"Category\" list is unmodifiable.");
 //        Connection con = connectionPool.getConnection();
 //        try (PreparedStatement stmt = con.prepareStatement(CategoryQuery.DELETE_CATEGORY_BY_NAME)) {
 //            stmt.setString(1, category.getCategoryName().name());
@@ -146,8 +146,8 @@ public class CategoryDAO implements DAO<Category> {
     }
 
     @Override
-    public boolean delete(long id) throws DBException {
-        throw new UnsupportedOperationException("The \"Category\" list is unmodified.");
+    public boolean delete(long id) throws DAOException {
+        throw new UnsupportedOperationException("The \"Category\" list is unmodifiable.");
 //        Connection con = connectionPool.getConnection();
 //        try (PreparedStatement stmt = con.prepareStatement(CategoryQuery.DELETE_CATEGORY_BY_ID)) {
 //            stmt.setLong(1, id);

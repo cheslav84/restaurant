@@ -1,12 +1,12 @@
 package com.epam.havryliuk.restaurant.model.services;
 
-import com.epam.havryliuk.restaurant.model.database.dao.DAO;
+import com.epam.havryliuk.restaurant.model.database.dao.AbstractDao;
 import com.epam.havryliuk.restaurant.model.entity.Role;
 import com.epam.havryliuk.restaurant.model.entity.User;
-import com.epam.havryliuk.restaurant.model.database.dao.DaoImpl.UserDAO;
+import com.epam.havryliuk.restaurant.model.database.dao.DaoImpl.UserDao;
 import com.epam.havryliuk.restaurant.model.entity.constants.UserRole;
 import com.epam.havryliuk.restaurant.model.exceptions.BadCredentialsException;
-import com.epam.havryliuk.restaurant.model.exceptions.DBException;
+import com.epam.havryliuk.restaurant.model.exceptions.DAOException;
 import com.epam.havryliuk.restaurant.model.exceptions.NoSuchEntityException;
 import com.epam.havryliuk.restaurant.model.utils.PassEncryptor;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,11 +22,11 @@ public class UserService {
 
 //    DAO<User> userDao;
 
-    public User addNewUser(HttpServletRequest request) throws DBException {
+    public User addNewUser(HttpServletRequest request) throws DAOException {
         final User user = mapUser(request);
 
-        DAO<User> userDao = new UserDAO();
-        userDao.create(user);//todo get id
+        AbstractDao<User> userAbstractDao = new UserDao();
+        userAbstractDao.create(user);//todo get id
         return user;
     }
 
@@ -52,7 +52,7 @@ public class UserService {
             validateEmail(email);
             validatePassword(password);
 
-            DAO<User> userDao = new UserDAO();
+            UserDao userDao = new UserDao();
             user = userDao.findByName(email);//todo think of renaming
             if (user == null) {
                 throw new NoSuchEntityException("User with such login doesn't exist.");
@@ -61,7 +61,7 @@ public class UserService {
             checkIfPasswordsCoincide(PassEncryptor.encrypt(password), user.getPassword());// todo при вводі одного і того ж паролю до енкриптора різні результати. З'ясувати
 
             log.debug("User got from database. Login and password are correct.");
-        } catch (BadCredentialsException | DBException e) {
+        } catch (BadCredentialsException | DAOException e) {
             log.error("Bad credentials: " + e.getMessage(), e);
             throw new NoSuchEntityException(e.getMessage(), e);
         }
