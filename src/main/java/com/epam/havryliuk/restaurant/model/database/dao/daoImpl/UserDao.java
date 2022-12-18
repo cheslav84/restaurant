@@ -1,6 +1,5 @@
-package com.epam.havryliuk.restaurant.model.database.dao.DaoImpl;
+package com.epam.havryliuk.restaurant.model.database.dao.daoImpl;
 
-import com.epam.havryliuk.restaurant.model.database.connection.ConnectionManager;
 import com.epam.havryliuk.restaurant.model.database.dao.AbstractDao;
 import com.epam.havryliuk.restaurant.model.database.dao.databaseFieds.RoleFields;
 import com.epam.havryliuk.restaurant.model.database.dao.queries.UserQuery;
@@ -21,35 +20,39 @@ import java.util.List;
 
 public class UserDao extends AbstractDao<User> {
     private static final Logger log = LogManager.getLogger(UserDao.class);
-    private final ConnectionManager connectionManager;
+//    private final ConnectionManager connectionManager;
+//
+//    public UserDao() throws DAOException {
+//        connectionManager = ConnectionManager.getInstance();
+//    }
 
-    public UserDao() throws DAOException {
-        connectionManager = ConnectionManager.getInstance();
-    }
+//    public UserDao(Connection connection) {
+//        super(connection);
+//    }
+//
 
     /**
      * by login.
      */
 //    @Override
-    public User findByName(String login) throws DAOException {
+    public User findByEmail(String email) throws DAOException {
         User user = null;
-        try (Connection con = connectionManager.getConnection();
-             PreparedStatement stmt = con.prepareStatement(UserQuery.FIND_USER_BY_LOGIN)) {
-            stmt.setString(1, login);
+//        Connection con = connectionManager.getConnection();
+        try (PreparedStatement stmt = connection.prepareStatement(UserQuery.FIND_USER_BY_LOGIN)) {
+            stmt.setString(1, email);
             user = extractUser(stmt);
             log.debug("The \"" + user + "\" user received from database.");
         } catch (SQLException e) {
-            log.error("Error in getting user \"" + login + "\" from database.", e);
+            log.error("Error in getting user \"" + email + "\" from database.", e);
             throw new DAOException(e);
         }
         return user;
     }
 
     @Override
-    public User findById(long id) throws DAOException {// todo зробити абстрактний клас зі всіма аналогічними методами і передаваити як аргумент query?
+    public User findById(long id) throws DAOException {
         User user = null;
-        try (Connection con = connectionManager.getConnection();
-             PreparedStatement stmt = con.prepareStatement(UserQuery.FIND_USER_BY_ID)) {
+          try (PreparedStatement stmt = connection.prepareStatement(UserQuery.FIND_USER_BY_ID)) {
             stmt.setLong(1, id);
             user = extractUser(stmt);
             log.debug("The user with id \"" + id + "\" received from database.");
@@ -79,63 +82,10 @@ public class UserDao extends AbstractDao<User> {
      */
     @Override
     public boolean create(User user) throws DAOException {
-        Connection con = null;
-        PreparedStatement stmt = null;
-        try {
-            con = connectionManager.getConnection();
-            con.setAutoCommit(false);
-
-            checkIfLoginUnique(con, user.getEmail());
-            addUser(user, con);
-
-            log.debug("The \"" + user.getName() + "\" user has been added to database.");
-        } catch (SQLException e) {
-            String message = "Something went wrong. Try to sign in later please.";
-            log.error("Error in inserting user \"" + user.getName() + "\" to database.", e);
-            connectionManager.rollback(con);
-        } finally {
-            connectionManager.setAutoCommit(con, true);
-            connectionManager.close(con);
-        }
-        return true;
-    }
-
-
-    /**
-     * Checking for User email uniqueness. Trying to get from database user with the same
-     * email (login), if it presents there method throws DBException with the message
-     * "The user with such login is already exists. Try to use another one."
-     * @param con
-     * @param login
-     * @throws DAOException
-     */
-    private void checkIfLoginUnique(Connection con, String login) throws DAOException {
-        User user = null;
-        PreparedStatement stmt = null;
-        try {
-            stmt = con.prepareStatement(UserQuery.FIND_USER_BY_LOGIN);
-            stmt.setString(1, login);
-            user = extractUser(stmt);
-            log.debug("The \"" + user + "\" user received from database.");
-            if (user != null){
-                String message = "The user with such login is already exists. Try to use another one.";
-                log.error(message);
-                throw new DAOException(message);
-            }
-        } catch (SQLException e) {
-            log.error("Error in getting user \"" + login + "\" from database.", e);
-            throw new DAOException(e);
-        } finally {
-            connectionManager.close(stmt);
-        }
-    }
-
-
-    private void addUser(User user, Connection con) throws DAOException, SQLException {
-        PreparedStatement stmt = null;
-        try {
-            stmt = con.prepareStatement(UserQuery.ADD_USER,
-                    Statement.RETURN_GENERATED_KEYS);
+//        Connection con = null;
+//        PreparedStatement stmt = null;
+        try(PreparedStatement stmt = connection.prepareStatement(UserQuery.ADD_USER,
+                Statement.RETURN_GENERATED_KEYS)) {
             setUserParameters(user, stmt);
             int insertionAmount = stmt.executeUpdate();
             if (insertionAmount > 0) {
@@ -145,14 +95,71 @@ public class UserDao extends AbstractDao<User> {
                     }
                 }
             }
+//            connection.setAutoCommit(false);
+//            checkIfLoginUnique(con, user.getEmail());
+//            addUser(user, con);
+            log.debug("The \"" + user.getName() + "\" user has been added to database.");
         } catch (SQLException e) {
-            log.error("Error adding user to database.", e);
-            throw new SQLException(e);
-        } finally {
-            connectionManager.close(stmt);
+            String message = "Something went wrong. Try to sign in later please.";
+            log.error("Error in inserting user \"" + user.getName() + "\" to database.", e);
+//            connectionManager.rollback(con);
         }
-
+//        finally {
+//            connectionManager.setAutoCommit(con, true);
+//            connectionManager.close(con);
+//        }
+        return true;
     }
+
+
+//    /**
+//     * Checking for User email uniqueness. Trying to get from database user with the same
+//     * email (login), if it presents there method throws DBException with the message
+//     * "The user with such login is already exists. Try to use another one."
+//     * @param con
+//     * @param login
+//     * @throws DAOException
+//     */
+//    public void checkIfLoginUnique(String login) throws DAOException {
+////        User user = null;
+//        try(PreparedStatement stmt = connection.prepareStatement(UserQuery.FIND_USER_BY_LOGIN)  {
+//            stmt.setString(1, login);
+//            User user = extractUser(stmt);
+//            log.debug("The \"" + user + "\" user received from database.");
+//            if (user != null){
+//                String message = "The user with such login is already exists. Try to use another one.";
+//                log.error(message);
+//                throw new DAOException(message);
+//            }
+//        } catch (SQLException e) {
+//            log.error("Error in getting user \"" + login + "\" from database.", e);
+//            throw new DAOException(e);
+//        }
+//    }
+
+
+//    private void addUser(User user, Connection con) throws DAOException, SQLException {
+//        PreparedStatement stmt = null;
+//        try {
+//            stmt = con.prepareStatement(UserQuery.ADD_USER,
+//                    Statement.RETURN_GENERATED_KEYS);
+//            setUserParameters(user, stmt);
+//            int insertionAmount = stmt.executeUpdate();
+//            if (insertionAmount > 0) {
+//                try (ResultSet rs = stmt.getGeneratedKeys()) {
+//                    if (rs.next()) {
+//                        user.setId(rs.getLong(1));
+//                    }
+//                }
+//            }
+//        } catch (SQLException e) {
+//            log.error("Error adding user to database.", e);
+//            throw new SQLException(e);
+//        } finally {
+//            connectionManager.close(stmt);
+//        }
+//
+//    }
 
 
 
@@ -161,8 +168,7 @@ public class UserDao extends AbstractDao<User> {
     @Override
     public List<User> findAll() throws DAOException {
         List<User> users = new ArrayList<>();
-        try (Connection con = connectionManager.getConnection();
-             PreparedStatement stmt = con.prepareStatement(UserQuery.FIND_ALL_USERS);
+        try ( PreparedStatement stmt = connection.prepareStatement(UserQuery.FIND_ALL_USERS);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 users.add(mapUser(rs));
@@ -177,8 +183,7 @@ public class UserDao extends AbstractDao<User> {
 
     @Override
     public User update(User user) throws DAOException {//todo в такому випадку беремо юзера з бази?
-        try (Connection con = connectionManager.getConnection();
-             PreparedStatement stmt = con.prepareStatement(UserQuery.UPDATE_USER)) {
+        try ( PreparedStatement stmt = connection.prepareStatement(UserQuery.UPDATE_USER)) {
             setUserParameters(user, stmt);
             stmt.executeUpdate();
             log.debug("The user with id \"" + user.getId() +
@@ -193,8 +198,7 @@ public class UserDao extends AbstractDao<User> {
 
     @Override
     public boolean delete(User user) throws DAOException {
-        try (Connection con = connectionManager.getConnection();
-             PreparedStatement stmt = con.prepareStatement(UserQuery.DELETE_USER)) {
+        try ( PreparedStatement stmt = connection.prepareStatement(UserQuery.DELETE_USER)) {
             stmt.setString(1, user.getEmail());
             stmt.executeUpdate();
             log.debug("The user \"" + user.getName() + "\", has been successfully deleted.");
@@ -207,8 +211,7 @@ public class UserDao extends AbstractDao<User> {
 
     @Override
     public boolean delete(long id) throws DAOException {
-        try (Connection con = connectionManager.getConnection();
-             PreparedStatement stmt = con.prepareStatement(UserQuery.DELETE_USER_BY_ID)) {
+        try ( PreparedStatement stmt = connection.prepareStatement(UserQuery.DELETE_USER_BY_ID)) {
             stmt.setLong(1, id);
             stmt.executeUpdate();
             log.debug("The user with id \"" + id + "\", has been successfully deleted");
@@ -221,13 +224,13 @@ public class UserDao extends AbstractDao<User> {
 
 
     private void setUserParameters(User user, PreparedStatement stmt) throws SQLException, DAOException {
-        Role userRole = user.getRole();
-        long roleId = userRole.getId();
-        if (roleId == 0){
-            RoleDao roleDAO = new RoleDao();
-            userRole = roleDAO.findByName(userRole.getUserRole().name());
-            roleId = userRole.getId();
-        }
+//        Role userRole = user.getRole();
+//        long roleId = user.getRole().getId();
+//        if (roleId == 0){
+//            RoleDao roleDAO = new RoleDao();
+//            userRole = roleDAO.findByName(userRole.getUserRole().name());
+//            roleId = userRole.getId();
+//        }
 
         int k = 1;
         stmt.setString(k++, user.getEmail());
@@ -236,8 +239,9 @@ public class UserDao extends AbstractDao<User> {
         stmt.setString(k++, user.getSurname());
         stmt.setString(k++, user.getGender());
         stmt.setBoolean(k++, user.isOverEighteen());
-        stmt.setLong(k++, roleId);
+        stmt.setLong(k++, user.getRole().getId());
     }
+
 
     private User mapUser(ResultSet rs) throws SQLException, DAOException {
         long id = rs.getLong(UserFields.USER_ID);

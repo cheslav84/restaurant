@@ -12,11 +12,10 @@ public class User implements Entity{
     private boolean isOverEighteen;
     private Date accountCreationDate;
     private Role role;
-
     private UserDetails userDetails;
 
     public static User getInstance(String email, String password, String name, String surname,
-                                    String gender, boolean isOverEighteen, Role role) {
+                                    String gender, boolean isOverEighteen) {
         User user = new User();
         user.setEmail(email);
         user.setPassword(password);
@@ -24,7 +23,6 @@ public class User implements Entity{
         user.setSurname(surname);
         user.setGender(gender);
         user.setOverEighteen(isOverEighteen);
-        user.setRole(role);
         return user;
     }
 
@@ -34,9 +32,10 @@ public class User implements Entity{
     public static User getInstance(Long id, String email, String password, String name,
                                    String surname, String gender, boolean isOverEighteen,
                                    Date accountCreationDate, Role role,  UserDetails userDetails) {
-        User user = getInstance(email, password, name, surname,gender, isOverEighteen, role);
+        User user = getInstance(email, password, name, surname,gender, isOverEighteen);
         user.setId(id);
         user.setAccountCreationDate(accountCreationDate);
+        user.setRole(role);
         user.setUserDetails(userDetails);
         return user;
     }

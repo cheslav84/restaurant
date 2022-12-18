@@ -1,19 +1,22 @@
 package com.epam.havryliuk.restaurant.model.services;
 
-import com.epam.havryliuk.restaurant.model.database.dao.DaoImpl.OrderDao;
+import com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction;
+import com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao;
 import com.epam.havryliuk.restaurant.model.entity.BookingStatus;
 import com.epam.havryliuk.restaurant.model.entity.Order;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
 import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.exceptions.BadCredentialsException;
 import com.epam.havryliuk.restaurant.model.exceptions.DAOException;
-import com.epam.havryliuk.restaurant.model.exceptions.NoSuchEntityException;
+import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.utils.Validator;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+
+import java.util.Date;
 
 import static com.epam.havryliuk.restaurant.controller.RequestAttributes.CURRENT_DISH;
 import static com.epam.havryliuk.restaurant.controller.RequestAttributes.LOGGED_USER;
@@ -29,29 +32,32 @@ public class OrderService {
      * Other data, like id and creation is formed by database.
      * @param req
      * @return
-     * @throws NoSuchEntityException
+     * @throws ServiceException
      * @throws BadCredentialsException
      */
-    public Order getOrder(HttpServletRequest req) throws NoSuchEntityException, BadCredentialsException {
-
+    public Order getOrder(HttpServletRequest req) throws ServiceException, BadCredentialsException {
         String deliveryAddress = req.getParameter("deliveryAddress");
         String deliveryPhone = req.getParameter("deliveryPhone");
-//        URLUtil.isAddressCorrect(deliveryAddress);
-//        URLUtil.isPhoneCorrect(deliveryPhone);
 
+        EntityTransaction transaction = new EntityTransaction();
         Order order;
         try {
-            User user = getCurrentUser(req);
+            User user = getCurrentUser(req);//todo think of renaming - non informative
             OrderDao orderDao = new OrderDao();
+            transaction.init(orderDao);
             order = orderDao.geByUserIdAddressStatus(user.getId(), deliveryAddress, BookingStatus.BOOKING);
             log.debug("geByUserIdAddressStatus - userId: " + user.getId() + ", deliveryAddress: " + deliveryAddress + ", BookingStatus: " + BookingStatus.BOOKING);
             if(order == null) {
                 order = Order.getInstance(deliveryAddress, deliveryPhone, false, user, BookingStatus.BOOKING);
                 orderDao.create(order);
+                Date creationDate = orderDao.getCreationDate(order.getId());
+                order.setCreationDate(creationDate);
             }
         } catch (DAOException e) {
-            log.error(e);
-            throw new NoSuchEntityException(e.getMessage(), e);
+            log.error(e.getMessage(), e);
+            throw new ServiceException(e.getMessage(), e);
+        } finally {
+            transaction.end();
         }
         return order;
     }
@@ -66,16 +72,19 @@ public class OrderService {
             //todo / а в після підтвердження фіксується в кошику.
 
 
-    public void addDishToOrder(HttpServletRequest req, Order order) throws NoSuchEntityException, BadCredentialsException {
+    public void addDishToOrder(HttpServletRequest req, Order order) throws ServiceException, BadCredentialsException {
         Dish dish = getCurrentDish(req);
         int dishesAmount = getDishesAmount(req);
-
+        EntityTransaction transaction = new EntityTransaction();
         try {
             OrderDao orderDao = new OrderDao();
+            transaction.init(orderDao);
             orderDao.addNewDishesToOrder(order, dish, dishesAmount);
         } catch (DAOException e) {
             log.error(e.getMessage(), e);
-            throw new NoSuchEntityException(e);
+            throw new ServiceException(e);
+        } finally {
+            transaction.end();
         }
     }
 
@@ -95,24 +104,24 @@ public class OrderService {
     }
 
 
-    private User getCurrentUser(HttpServletRequest req) throws NoSuchEntityException {
+    private User getCurrentUser(HttpServletRequest req) throws ServiceException {// todo move to User service
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute(LOGGED_USER);
         if (user == null) {
             String errorMessage = "The user has been logged out.";
             log.error(errorMessage);
-            throw new NoSuchEntityException(errorMessage);
+            throw new ServiceException(errorMessage);
         }
         return user;
     }
 
-    private Dish getCurrentDish(HttpServletRequest req) throws NoSuchEntityException {
+    private Dish getCurrentDish(HttpServletRequest req) throws ServiceException {
         HttpSession session = req.getSession();
         Dish dish = (Dish) session.getAttribute(CURRENT_DISH);
         if (dish == null) {
-            String errorMessage = "Choose the dish to add it to basket.";
+            String errorMessage = "Choose the dish for adding it to basket.";
             log.error(errorMessage);
-            throw new NoSuchEntityException(errorMessage);
+            throw new ServiceException(errorMessage);
         }
         return dish;
     }

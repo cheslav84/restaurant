@@ -2,12 +2,10 @@ package com.epam.havryliuk.restaurant.controller;
 
 import com.epam.havryliuk.restaurant.model.entity.Order;
 import com.epam.havryliuk.restaurant.model.exceptions.BadCredentialsException;
-import com.epam.havryliuk.restaurant.model.exceptions.NoSuchEntityException;
+import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.services.OrderService;
 import com.epam.havryliuk.restaurant.model.utils.URLUtil;
 import com.epam.havryliuk.restaurant.model.utils.Validator;
-import com.mysql.cj.Session;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,8 +13,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 
@@ -49,7 +45,7 @@ public class OrderController extends HttpServlet {
             log.debug("Order in session: " + order);
         } else {
             try {
-                checkDeliveryCredentials(req, orderService);
+                checkDeliveryCredentials(req, orderService);// todo move to service
                 order = orderService.getOrder(req);
 
                 log.debug(order);
@@ -57,7 +53,7 @@ public class OrderController extends HttpServlet {
                 session.removeAttribute(ERROR_MESSAGE);
                 session.removeAttribute(DELIVERY_ADDRESS);
                 session.removeAttribute(DELIVERY_PHONE);
-            } catch (NoSuchEntityException | BadCredentialsException e) {
+            } catch (ServiceException | BadCredentialsException e) {
                 String errorMessage = e.getMessage();
                 session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
                 session.setAttribute(ERROR_MESSAGE, errorMessage);
@@ -102,7 +98,7 @@ public class OrderController extends HttpServlet {
         try {
             orderService.addDishToOrder(req, order);
             session.removeAttribute(CURRENT_DISH);
-        } catch (NoSuchEntityException | BadCredentialsException e) {
+        } catch (ServiceException | BadCredentialsException e) {
             String errorMessage = e.getMessage();
             session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
             session.setAttribute(ERROR_MESSAGE, errorMessage);

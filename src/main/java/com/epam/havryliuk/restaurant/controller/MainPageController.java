@@ -1,7 +1,7 @@
 package com.epam.havryliuk.restaurant.controller;
 
 import com.epam.havryliuk.restaurant.model.entity.Dish;
-import com.epam.havryliuk.restaurant.model.exceptions.NoSuchEntityException;
+import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.services.DishService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -29,14 +29,14 @@ public class MainPageController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         log.debug("\"/index\" request doGet MenuController");
 
-        String currentMenu = getCurrentMenu(req);
+        String currentMenu = getCurrentMenu(req);//todo привести у відповідність - перенести в сервіс. якщо передаємо реквест у сервіс робити це всюди однаково
 
         DishService dishService = new DishService();
         List<Dish> dishes = null;
         try {
             dishes = dishService.getMenuByCategory(currentMenu);
             log.debug("List of dishes received by servlet and going to be sending to client side.");
-        } catch (NoSuchEntityException e) {
+        } catch (ServiceException e) {
             log.error("List of dishes hasn't been received.");
             //req.setAttribute("message", "Message");//todo inform user!!!
         }

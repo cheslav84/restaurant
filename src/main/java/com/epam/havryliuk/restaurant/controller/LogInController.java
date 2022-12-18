@@ -1,7 +1,7 @@
 package com.epam.havryliuk.restaurant.controller;
 
 import com.epam.havryliuk.restaurant.model.entity.User;
-import com.epam.havryliuk.restaurant.model.exceptions.NoSuchEntityException;
+import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.services.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -11,7 +11,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -51,7 +50,7 @@ public class LogInController extends HttpServlet {
             session.removeAttribute(LOGIN_ERROR_MESSAGE);
             redirectionPage = getRedirectionPage(session);
             log.debug("User logged in.");// todo rename
-        } catch (NoSuchEntityException e) {
+        } catch (ServiceException e) {
             redirectionPage = "registration";
             setErrorMessage(req, e.getMessage());
             log.error(e.getMessage());// todo rename

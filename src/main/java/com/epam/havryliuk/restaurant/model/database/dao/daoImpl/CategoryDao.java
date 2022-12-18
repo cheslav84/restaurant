@@ -1,4 +1,4 @@
-package com.epam.havryliuk.restaurant.model.database.dao.DaoImpl;
+package com.epam.havryliuk.restaurant.model.database.dao.daoImpl;
 
 import com.epam.havryliuk.restaurant.model.database.connection.ConnectionManager;
 import com.epam.havryliuk.restaurant.model.database.dao.AbstractDao;
@@ -18,15 +18,14 @@ public class CategoryDao extends AbstractDao<Category> {
     private static final Logger log = LogManager.getLogger(CategoryDao.class);
 //    private final ConnectionManager connectionManager;
 
-    public CategoryDao() throws DAOException {
-        connectionManager = ConnectionManager.getInstance();
-    }
+//    public CategoryDao() throws DAOException {
+//        connectionManager = ConnectionManager.getInstance();
+//    }
 
 //    @Override
     public Category findByName(String name) throws DAOException {
         Category category = null;
-        try (Connection con = connectionManager.getConnection();
-             PreparedStatement stmt = con.prepareStatement(CategoryQuery.FIND_CATEGORY_BY_NAME)) {
+        try ( PreparedStatement stmt = connection.prepareStatement(CategoryQuery.FIND_CATEGORY_BY_NAME)) {
             stmt.setString(1, name);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
@@ -44,8 +43,7 @@ public class CategoryDao extends AbstractDao<Category> {
     @Override
     public Category findById(long id) throws DAOException {
         Category category = null;
-        try (Connection con = connectionManager.getConnection();
-             PreparedStatement stmt = con.prepareStatement(CategoryQuery.FIND_CATEGORY_BY_ID)) {
+        try (PreparedStatement stmt = connection.prepareStatement(CategoryQuery.FIND_CATEGORY_BY_ID)) {
             stmt.setLong(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
@@ -97,8 +95,7 @@ public class CategoryDao extends AbstractDao<Category> {
     public List<Category> findAll() throws DAOException {
         List<Category> categories = new ArrayList<>();
 
-         try (Connection con = connectionManager.getConnection();
-              PreparedStatement stmt = con.prepareStatement(CategoryQuery.FIND_ALL_CATEGORIES);
+         try ( PreparedStatement stmt = connection.prepareStatement(CategoryQuery.FIND_ALL_CATEGORIES);
               ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 categories.add(mapCategory(rs));

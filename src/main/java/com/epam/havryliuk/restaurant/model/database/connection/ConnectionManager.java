@@ -22,7 +22,7 @@ public class ConnectionManager {
     private ConnectionManager() {
     }
 
-    public static ConnectionManager getInstance() throws DAOException {
+    public static ConnectionManager getInstance() {
         initDataSource();
         ConnectionManager localInstance = instance;
         if (localInstance == null) {
@@ -36,65 +36,63 @@ public class ConnectionManager {
         return localInstance;
     }
 
-    public Connection getConnection() throws DAOException {
+    public Connection getConnection() throws SQLException {
         try {
             return ds.getConnection();
         } catch (SQLException e) {
-            String errorMessage = "Database connection wasn't established";
+            String errorMessage = "Database connection wasn't established.";
             log.error(errorMessage, e);
-            throw new DAOException(errorMessage, e);
+            throw new SQLException(errorMessage, e);
         }
     }
 
 
 
-    private static void initDataSource() throws DAOException {
+    private static void initDataSource() {
         try {
             Context initContext = new InitialContext();
             Context envContext = (Context) initContext.lookup("java:/comp/env");
             ds = (DataSource) envContext.lookup("jdbc/Restaurant");
         } catch (NamingException e) {
             log.error("Can't get Initial context for DataSource.", e);
-            throw new DAOException(e);
         }
     }
 
 
-    public void close(AutoCloseable closeable) throws DAOException {
+    public void close(AutoCloseable closeable) {
         synchronized (ConnectionManager.class) {
             if (closeable != null) {
                 try {
                     closeable.close();
                 } catch (Exception e) {
                     log.error("Error closing " + closeable, e);
-                    throw new DAOException(e);
                 }
             }
         }
     }
-
-    public void setAutoCommit(Connection con, boolean value) throws DAOException {
-        synchronized (ConnectionManager.class) {
-            try {
-                con.setAutoCommit(value);
-            } catch (Exception e) {
-                log.error("Error setting " + value + " in connection " + con, e);
-                throw new DAOException(e);
-            }
-        }
-    }
-
-
-    public void rollback(Connection con) throws DAOException {
-        synchronized (ConnectionManager.class) {
-            try {
-                con.rollback();
-            } catch (Exception e) {
-                log.error("Enable to roll back connection" + con, e);
-                throw new DAOException(e);
-            }
-        }
-    }
+//
+//    public void setAutoCommit(Connection con, boolean value) throws DAOException {
+//        synchronized (ConnectionManager.class) {
+//            try {
+//                con.setAutoCommit(value);
+//            } catch (Exception e) {
+//                log.error("Error setting " + value + " in connection " + con, e);
+//                throw new DAOException(e);
+//            }
+//        }
+//    }
+//
+//
+//    public void rollback(Connection con) throws DAOException {
+//        synchronized (ConnectionManager.class) {
+//            try {
+//                con.rollback();
+//            } catch (Exception e) {
+//                log.error("Enable to roll back connection" + con, e);
+//                throw new DAOException(e);
+//            }
+//        }
+//    }
 
 
 }

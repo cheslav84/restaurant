@@ -1,4 +1,4 @@
-package com.epam.havryliuk.restaurant.model.database.dao.DaoImpl;
+package com.epam.havryliuk.restaurant.model.database.dao.daoImpl;
 
 import com.epam.havryliuk.restaurant.model.database.connection.ConnectionManager;
 import com.epam.havryliuk.restaurant.model.database.dao.AbstractDao;
@@ -15,29 +15,51 @@ import java.util.List;
 
 public class OrderDao extends AbstractDao<Order> {
     private static final Logger log = LogManager.getLogger(OrderDao.class);
-    private final ConnectionManager connectionManager;
-
-    public OrderDao() throws DAOException {
-        connectionManager = ConnectionManager.getInstance();
-    }
+//    private final ConnectionManager connectionManager;
+//
+//    public OrderDao() throws DAOException {
+//        connectionManager = ConnectionManager.getInstance();
+//    }
 
     @Override
     public boolean create(Order order) throws DAOException {
-        Connection con = null;
-        try {
-            con = connectionManager.getConnection();
-            con.setAutoCommit(false);
-            addOrder(order, con);
+//        Connection con = null;
+        //            con = connectionManager.getConnection();
+//            con.setAutoCommit(false);
+//            addOrder(order, con);
+
+//            PreparedStatement stmt = null;
+
+        try (PreparedStatement stmt = connection.prepareStatement(OrderQuery.ADD_ORDER, Statement.RETURN_GENERATED_KEYS)) {
+
+                setOrderParameters(order, stmt);
+                int insertionAmount = stmt.executeUpdate();
+                if (insertionAmount > 0) {
+                    try (ResultSet rs = stmt.getGeneratedKeys()) {
+                        if (rs.next()) {
+                            order.setId(rs.getLong(1));
+                        }
+                    }
+                }
+
+
+//                Date creationDate = getCreationDate(con, order.getId());
+//                order.setCreationDate(creationDate);
+//
+
+
+
             log.debug("The order has been added to database.");
         } catch (SQLException e) {
             String message = "Something went wrong. Try to make an order later please.";
             log.error("Error in inserting order to database.", e);
-            connectionManager.rollback(con);
+//            connectionManager.rollback(con);
             throw new DAOException(message, e);
-        } finally {
-            connectionManager.setAutoCommit(con, true);
-            connectionManager.close(con);
         }
+//        finally {
+//            connectionManager.setAutoCommit(con, true);
+//            connectionManager.close(con);
+//        }
         return true;
     }
 
@@ -45,8 +67,7 @@ public class OrderDao extends AbstractDao<Order> {
     public Order geByUserIdAddressStatus(long userId, String address, BookingStatus bookingStatus) throws DAOException {//todo think if it could be a list
         Order order = null;
 
-        try (Connection con = connectionManager.getConnection();
-            PreparedStatement stmt = con.prepareStatement(OrderQuery.GET_BY_USER_ID_ADDRESS_AND_STATUS)) {
+        try ( PreparedStatement stmt = connection.prepareStatement(OrderQuery.GET_BY_USER_ID_ADDRESS_AND_STATUS)) {
             int k=0;
             stmt.setLong(++k, userId);
             stmt.setString(++k, address);
@@ -68,8 +89,7 @@ public class OrderDao extends AbstractDao<Order> {
 
 //    @Override
     public boolean addNewDishesToOrder(Order order, Dish dish, int amount) throws DAOException {
-        try (Connection con = connectionManager.getConnection();
-             PreparedStatement stmt = con.prepareStatement(OrderQuery.ADD_DISH_TO_BASKET)) {
+        try (PreparedStatement stmt = connection.prepareStatement(OrderQuery.ADD_DISH_TO_BASKET)) {
             int k=0;
             stmt.setLong(++k, order.getId());
             stmt.setLong(++k, dish.getId());
@@ -112,33 +132,33 @@ public class OrderDao extends AbstractDao<Order> {
         return Order.getInstance(id, address, phoneNumber, isPayed, creationDate, closeDate);
     }
 
-    private void addOrder(Order order, Connection con) throws DAOException, SQLException {
-        PreparedStatement stmt = null;
-        try {
-            stmt = con.prepareStatement(OrderQuery.ADD_ORDER, Statement.RETURN_GENERATED_KEYS);
-            setOrderParameters(order, stmt);
-            int insertionAmount = stmt.executeUpdate();
-            if (insertionAmount > 0) {
-                try (ResultSet rs = stmt.getGeneratedKeys()) {
-                    if (rs.next()) {
-                        order.setId(rs.getLong(1));
-                    }
-                }
-            }
-            Date creationDate = getCreationDate(con, order.getId());
-            order.setCreationDate(creationDate);
-        } catch (SQLException e) {
-            log.error("Error in inserting order to database.", e);
-            throw new SQLException(e);
-        } finally {
-            connectionManager.close(stmt);
-        }
-    }
+//    private void addOrder(Order order, Connection con) throws DAOException, SQLException {
+//        PreparedStatement stmt = null;
+//        try {
+//            stmt = con.prepareStatement(OrderQuery.ADD_ORDER, Statement.RETURN_GENERATED_KEYS);
+//            setOrderParameters(order, stmt);
+//            int insertionAmount = stmt.executeUpdate();
+//            if (insertionAmount > 0) {
+//                try (ResultSet rs = stmt.getGeneratedKeys()) {
+//                    if (rs.next()) {
+//                        order.setId(rs.getLong(1));
+//                    }
+//                }
+//            }
+//            Date creationDate = getCreationDate(con, order.getId());
+//            order.setCreationDate(creationDate);
+//        } catch (SQLException e) {
+//            log.error("Error in inserting order to database.", e);
+//            throw new SQLException(e);
+//        } finally {
+//            connectionManager.close(stmt);
+//        }
+//    }
 
 
-    private Date getCreationDate(Connection con, long orderId) throws SQLException {
+    public Date getCreationDate(long orderId) throws DAOException {
         Date date = null;
-        try (PreparedStatement stmt = con.prepareStatement(OrderQuery.GET_CREATION_DATE_BY_ID)) {
+        try (PreparedStatement stmt = connection.prepareStatement(OrderQuery.GET_CREATION_DATE_BY_ID)) {
             stmt.setLong(1, orderId);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
@@ -149,7 +169,7 @@ public class OrderDao extends AbstractDao<Order> {
         } catch (SQLException e) {
             String errorMassage = "Searched order is absent in database";
             log.error(errorMassage, e);
-            throw new SQLException(errorMassage, e);
+            throw new DAOException(errorMassage, e);
         }
         return date;
     }

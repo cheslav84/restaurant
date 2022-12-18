@@ -1,14 +1,15 @@
 package com.epam.havryliuk.restaurant.model.services;
 
-import com.epam.havryliuk.restaurant.model.database.dao.AbstractDao;
-import com.epam.havryliuk.restaurant.model.entity.Role;
+import com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction;
+import com.epam.havryliuk.restaurant.model.database.dao.daoImpl.RoleDao;
 import com.epam.havryliuk.restaurant.model.entity.User;
-import com.epam.havryliuk.restaurant.model.database.dao.DaoImpl.UserDao;
+import com.epam.havryliuk.restaurant.model.database.dao.daoImpl.UserDao;
 import com.epam.havryliuk.restaurant.model.entity.constants.UserRole;
 import com.epam.havryliuk.restaurant.model.exceptions.BadCredentialsException;
 import com.epam.havryliuk.restaurant.model.exceptions.DAOException;
-import com.epam.havryliuk.restaurant.model.exceptions.NoSuchEntityException;
+import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.utils.PassEncryptor;
+import com.epam.havryliuk.restaurant.model.utils.Validator;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
@@ -22,50 +23,82 @@ public class UserService {
 
 //    DAO<User> userDao;
 
-    public User addNewUser(HttpServletRequest request) throws DAOException {
+    public User addNewUser(HttpServletRequest request) throws ServiceException {
         final User user = mapUser(request);
+        EntityTransaction transaction = new EntityTransaction();
+        UserDao userDao = new UserDao();
+        RoleDao roleDao = new RoleDao();
+        try {
+            transaction.initTransaction(userDao, roleDao);
 
-        AbstractDao<User> userAbstractDao = new UserDao();
-        userAbstractDao.create(user);//todo get id
+            //todo див. ст. 442 Блінова нову (втановлюється тип транзакції).
+            // Може виникнути phantom reads. Можливо додати до EntityTransaction
+            // методи що встановлюють її у TRANSACTION_SERIALIZABLE ... подумати
+
+            checkIfLoginDoesNotExist(user, userDao);
+            RoleService roleService = new RoleService();
+            roleService.setRoleForUser(roleDao, UserRole.CLIENT, user);
+            userDao.create(user);
+            transaction.commit();
+            log.debug("The user was successfully created.");
+        } catch (DAOException e) {
+            log.error("Error in creating the user.");
+            throw new ServiceException(e);
+        } finally {
+            transaction.endTransaction();
+        }
         return user;
     }
 
-
-    /**
-     * getUserDatabaseSession method
-     *
-     * @param req
-     * @return
-     * @throws NoSuchEntityException
-     */
-
-    public User getLoggedInUser(HttpServletRequest req) throws NoSuchEntityException, GeneralSecurityException {
-        User user = getUserFromSession(req);
-        if (user != null) {
-            return user;//todo think of refactoring
+    private void checkIfLoginDoesNotExist(User user, UserDao userDao) throws DAOException {
+        if (userDao.findByEmail(user.getEmail()) != null){
+            String message = "The user with such login is already exists. Try to use another one.";
+            log.error(message);
+            throw new DAOException(message);
         }
+    }
 
-        String password = req.getParameter("password").trim();
+
+    public User getLoggedInUser(HttpServletRequest req) throws ServiceException, GeneralSecurityException {
+        User user = getUserFromSession(req);
+        return (user == null) ? getUserFromDatabase(req) : user;
+    }
+
+
+    @NotNull
+    private User getUserFromDatabase(HttpServletRequest req) throws ServiceException, GeneralSecurityException {
         final String email = req.getParameter("email").trim();
+        final String password = req.getParameter("password").trim();
+        validateEmailAndPassword(email, password);//todo refactor
 
+        User user;
+        EntityTransaction transaction = new EntityTransaction();
         try {
-            validateEmail(email);
-            validatePassword(password);
-
             UserDao userDao = new UserDao();
-            user = userDao.findByName(email);//todo think of renaming
+            transaction.init(userDao);
+            user = userDao.findByEmail(email);
             if (user == null) {
-                throw new NoSuchEntityException("User with such login doesn't exist.");
+                throw new ServiceException("User with such login doesn't exist.");
             }
-
             checkIfPasswordsCoincide(PassEncryptor.encrypt(password), user.getPassword());// todo при вводі одного і того ж паролю до енкриптора різні результати. З'ясувати
-
             log.debug("User got from database. Login and password are correct.");
-        } catch (BadCredentialsException | DAOException e) {
+        } catch (DAOException e) {
             log.error("Bad credentials: " + e.getMessage(), e);
-            throw new NoSuchEntityException(e.getMessage(), e);
+            throw new ServiceException(e.getMessage(), e);
+        } finally {
+            transaction.end();
         }
         return user;
+    }
+
+    private void validateEmailAndPassword(String email, String password) throws ServiceException {
+        try {
+            Validator.validateEmail(email);
+            Validator.validatePassword(password);
+        } catch (BadCredentialsException e) {
+            log.error("Bad credentials: " + e.getMessage(), e);
+            throw new ServiceException(e.getMessage(), e);
+        }
     }
 
     private User getUserFromSession(HttpServletRequest req) {
@@ -74,30 +107,32 @@ public class UserService {
     }
 
 
-    private void checkIfPasswordsCoincide(String password, String encryptedPassword) throws NoSuchEntityException {
+    private void checkIfPasswordsCoincide(String password, String encryptedPassword) throws ServiceException {
         if (!password.equals(encryptedPassword)) {
             String errorMessage = "Entered password is wrong.";
             log.error(errorMessage);
-            throw new NoSuchEntityException(errorMessage);
+            throw new ServiceException(errorMessage);
         }
     }
 
 
-    private void validateEmail(String email) throws BadCredentialsException {
-        //todo
-        if (email == null) {
-            String loginError = "Email null"; //todo add concrete cause
-            throw new BadCredentialsException(loginError);
-        }
-    }
+//    private void validateEmail(String email) throws BadCredentialsException {
+//        //todo
+//        if (email == null) {
+//            String loginError = "Email null"; //todo add concrete cause
+//            throw new BadCredentialsException(loginError);
+//        }
+//    }
+//
+//    private void validatePassword(String password) throws BadCredentialsException {
+//        //todo
+//        if (password == null) {
+//            String passwordError = "Password null"; //todo add concrete cause
+//            throw new BadCredentialsException(passwordError);
+//        }
+//    }
 
-    private void validatePassword(String password) throws BadCredentialsException {
-        //todo
-        if (password == null) {
-            String passwordError = "Password null"; //todo add concrete cause
-            throw new BadCredentialsException(passwordError);
-        }
-    }
+
 
 
 //    public UserService() throws DBException {
@@ -124,11 +159,10 @@ public class UserService {
         final String surname = req.getParameter("surname").trim();
         final String gender = req.getParameter("userGender").trim();
         final boolean isOverEighteen = req.getParameter("userOverEighteenAge") != null;
-        final Role userRole = Role.getInstance(UserRole.CLIENT);
+//        final Role userRole = Role.getInstance(UserRole.CLIENT);
 
         //todo validate data (email, password etc.)
 
-        final User user = User.getInstance(email, password, name, surname, gender, isOverEighteen, userRole);
-        return user;
+        return User.getInstance(email, password, name, surname, gender, isOverEighteen);
     }
 }

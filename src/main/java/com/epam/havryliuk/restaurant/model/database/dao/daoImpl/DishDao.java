@@ -1,4 +1,4 @@
-package com.epam.havryliuk.restaurant.model.database.dao.DaoImpl;
+package com.epam.havryliuk.restaurant.model.database.dao.daoImpl;
 
 import com.epam.havryliuk.restaurant.model.database.connection.ConnectionManager;
 import com.epam.havryliuk.restaurant.model.database.dao.AbstractDao;

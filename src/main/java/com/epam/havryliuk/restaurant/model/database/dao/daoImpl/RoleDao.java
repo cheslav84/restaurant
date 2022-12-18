@@ -1,4 +1,4 @@
-package com.epam.havryliuk.restaurant.model.database.dao.DaoImpl;
+package com.epam.havryliuk.restaurant.model.database.dao.daoImpl;
 
 import com.epam.havryliuk.restaurant.model.database.connection.ConnectionManager;
 import com.epam.havryliuk.restaurant.model.database.dao.AbstractDao;
@@ -19,17 +19,16 @@ import java.util.List;
 //public class UserDAO<T extends User> implements DAO<Long, User> {
 public class RoleDao extends AbstractDao<Role> {
     private static final Logger log = LogManager.getLogger(RoleDao.class);
-    private final ConnectionManager connectionManager;
-
-    public RoleDao() throws DAOException {
-        connectionManager = ConnectionManager.getInstance();
-    }
+//    private final ConnectionManager connectionManager;
+//
+//    public RoleDao() throws DAOException {
+//        connectionManager = ConnectionManager.getInstance();
+//    }
 
 //    @Override
     public Role findByName(String name) throws DAOException {
         Role role = null;
-        try (Connection con = connectionManager.getConnection();
-             PreparedStatement stmt = con.prepareStatement(RoleQuery.FIND_ROLE_BY_NAME)) {
+        try ( PreparedStatement stmt = connection.prepareStatement(RoleQuery.FIND_ROLE_BY_NAME)) {
             stmt.setString(1, name);
             role = extractRole(stmt);
             log.debug("The \"" + role + "\" role received from database.");
@@ -43,8 +42,7 @@ public class RoleDao extends AbstractDao<Role> {
     @Override
     public Role findById(long id) throws DAOException {
         Role role = null;
-        try (Connection con = connectionManager.getConnection();
-             PreparedStatement stmt = con.prepareStatement(RoleQuery.FIND_ROLE_BY_ID)) {
+        try (PreparedStatement stmt = connection.prepareStatement(RoleQuery.FIND_ROLE_BY_ID)) {
             stmt.setLong(1, id);
             role = extractRole(stmt);
             log.debug("The role with id \"" + id + "\" received from database.");
@@ -67,8 +65,7 @@ public class RoleDao extends AbstractDao<Role> {
 
     @Override
     public boolean create(Role role) throws DAOException {
-        try (Connection con = connectionManager.getConnection();
-             PreparedStatement stmt = con.prepareStatement(RoleQuery.ADD_ROLE,
+        try ( PreparedStatement stmt = connection.prepareStatement(RoleQuery.ADD_ROLE,
                      Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, role.getUserRole().name());
             int insertionAmount = stmt.executeUpdate();
@@ -90,8 +87,7 @@ public class RoleDao extends AbstractDao<Role> {
     @Override
     public List<Role> findAll() throws DAOException {
         List<Role> roles = new ArrayList<>();
-        try (Connection con = connectionManager.getConnection();
-             PreparedStatement stmt = con.prepareStatement(RoleQuery.FIND_ALL_ROLES);
+        try ( PreparedStatement stmt = connection.prepareStatement(RoleQuery.FIND_ALL_ROLES);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 roles.add(mapRole(rs));
@@ -106,8 +102,7 @@ public class RoleDao extends AbstractDao<Role> {
 
     @Override
     public Role update(Role role) throws DAOException {
-        try (Connection con = connectionManager.getConnection();
-             PreparedStatement stmt = con.prepareStatement(RoleQuery.UPDATE_ROLE)) {
+        try ( PreparedStatement stmt = connection.prepareStatement(RoleQuery.UPDATE_ROLE)) {
             stmt.setString(1, role.getUserRole().name());
             stmt.executeUpdate();
             log.debug("The role with id \"" + role.getId() +
@@ -122,8 +117,7 @@ public class RoleDao extends AbstractDao<Role> {
 
     @Override
     public boolean delete(Role role) throws DAOException {
-        try (Connection con = connectionManager.getConnection();
-             PreparedStatement stmt = con.prepareStatement(UserQuery.DELETE_USER)) {
+        try ( PreparedStatement stmt = connection.prepareStatement(UserQuery.DELETE_USER)) {
             stmt.setString(1, role.getUserRole().name());
             stmt.executeUpdate();
             log.debug("The user \"" + role.getUserRole().name() + "\", has been successfully deleted.");
@@ -136,8 +130,7 @@ public class RoleDao extends AbstractDao<Role> {
 
     @Override
     public boolean delete(long id) throws DAOException {
-        try (Connection con = connectionManager.getConnection();
-             PreparedStatement stmt = con.prepareStatement(UserQuery.DELETE_USER_BY_ID)) {
+        try (PreparedStatement stmt = connection.prepareStatement(UserQuery.DELETE_USER_BY_ID)) {
             stmt.setLong(1, id);
             stmt.executeUpdate();
             log.debug("The role with id \"" + id + "\", has been successfully deleted");

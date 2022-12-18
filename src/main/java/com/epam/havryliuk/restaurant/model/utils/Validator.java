@@ -1,5 +1,6 @@
 package com.epam.havryliuk.restaurant.model.utils;
 
+import com.epam.havryliuk.restaurant.model.exceptions.BadCredentialsException;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.regex.Matcher;
@@ -33,5 +34,21 @@ public class Validator {
 
     public static boolean isDishesAmountCorrect(int dishesAmount) {
         return dishesAmount > 0;
+    }
+
+    public static void validateEmail(String email) throws BadCredentialsException {
+        //todo
+        if (email == null) {
+            String loginError = "Email null"; //todo add concrete cause
+            throw new BadCredentialsException(loginError);
+        }
+    }
+
+    public static void validatePassword(String password) throws BadCredentialsException {
+        //todo
+        if (password == null) {
+            String passwordError = "Password null"; //todo add concrete cause
+            throw new BadCredentialsException(passwordError);
+        }
     }
 }
