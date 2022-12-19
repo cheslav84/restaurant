@@ -1,6 +1,8 @@
 package com.epam.havryliuk.restaurant.model.entity;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Order implements Entity{
     private Long id;
@@ -9,9 +11,9 @@ public class Order implements Entity{
     private boolean isPayed;
     private Date creationDate;
     private Date closeDate;
-
     private User user;
     private BookingStatus bookingStatus;
+    private Map<Dish, Integer> dishes;
 
 //    public static Order getInstance(String address, String phoneNumber,
 //                                    boolean isPayed, BookingStatus bookingStatus) {
@@ -23,27 +25,70 @@ public class Order implements Entity{
 //        return order;
 //    }
 
-    public static Order getInstance(long id, String address, String phoneNumber,
-                                    boolean isPayed, Date creationDate, Date closeDate) {
-        Order order = new Order();
-        order.setId(id);
-        order.setAddress(address);
-        order.setPhoneNumber(phoneNumber);
-        order.setPayed(isPayed);
-        order.setCreationDate(creationDate);
-        order.setCloseDate(closeDate);
-        return order;
-    }
+//    public static Order getInstance(long id,
+//                                    String address,
+//                                    String phoneNumber,
+//                                    boolean isPayed,
+//                                    Date creationDate,
+//                                    Date closeDate,
+//                                    User user,
+//                                    BookingStatus bookingStatus) {
+//        Order order = new Order();
+//        order.setId(id);
+//        order.setAddress(address);
+//        order.setPhoneNumber(phoneNumber);
+//        order.setPayed(isPayed);
+//        order.setCreationDate(creationDate);
+//        order.setCloseDate(closeDate);
+//        order.setUser(user);
+//        order.setBookingStatus(bookingStatus);
+//        order.setDishes(new HashMap<>());
+//        return order;
+//    }
 
-    public static Order getInstance(String address, String phoneNumber,boolean isPayed,
-                                    User user, BookingStatus bookingStatus) {
+
+
+    public static Order getInstance(String address,
+                                    String phoneNumber,
+                                    boolean isPayed,
+                                    User user,
+                                    BookingStatus bookingStatus) {
         Order order = new Order();
         order.setAddress(address);
         order.setPhoneNumber(phoneNumber);
         order.setPayed(isPayed);
         order.setUser(user);
         order.setBookingStatus(bookingStatus);
+        order.setDishes(new HashMap<>());
         return order;
+    }
+
+
+    public static Order getInstance(long id,
+                                    String address,
+                                    String phoneNumber,
+                                    boolean isPayed,
+                                    Date creationDate,
+                                    Date closeDate,
+                                    User user,
+                                    BookingStatus bookingStatus) {
+        Order order =getInstance( address, phoneNumber, isPayed, user, bookingStatus);
+        order.setId(id);
+        order.setCreationDate(creationDate);
+        order.setCloseDate(closeDate);
+        return order;
+    }
+
+    public Map<Dish, Integer> getDishes() {
+        return dishes;
+    }
+
+    public void addDishes(Dish dish, int amount){
+        dishes.put(dish, amount);
+    }
+
+    public void setDishes(Map<Dish, Integer> dishes) {
+        this.dishes = dishes;
     }
 
     public Long getId() {

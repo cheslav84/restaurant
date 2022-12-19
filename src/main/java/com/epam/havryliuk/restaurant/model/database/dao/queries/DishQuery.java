@@ -18,6 +18,7 @@ import java.util.Properties;
      public static String FIND_ALL_ORDERED_BY_PRICE;
      public static String FIND_ALL_ORDERED_BY_CATEGORY;
      public static String FIND_ALL_BY_CATEGORY;
+     public static String FIND_ALL_BY_ORDER;
      public static String UPDATE_DISH;
      public static String  DELETE_DISH;
 
@@ -35,6 +36,7 @@ import java.util.Properties;
             FIND_ALL_ORDERED_BY_PRICE = (String) properties.get("dish.FIND_ALL_ORDERED_BY_PRICE");
             FIND_ALL_ORDERED_BY_CATEGORY = (String) properties.get("dish.FIND_ALL_ORDERED_BY_CATEGORY");
             FIND_ALL_BY_CATEGORY = (String) properties.get("dish.FIND_ALL_BY_CATEGORY");
+            FIND_ALL_BY_ORDER = (String) properties.get("dish.FIND_ALL_BY_ORDER");
             UPDATE_DISH = (String) properties.get("dish.UPDATE_DISH");
             DELETE_DISH = (String) properties.get("dish.DELETE_DISH");
 

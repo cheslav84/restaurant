@@ -1,4 +1,4 @@
-package com.epam.havryliuk.restaurant.controller;
+package com.epam.havryliuk.restaurant.controller.dishServlets;
 
 import com.epam.havryliuk.restaurant.model.entity.Dish;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;

@@ -1,6 +1,7 @@
 package com.epam.havryliuk.restaurant.model.services;
 
 import com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction;
+import com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao;
 import com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao;
 import com.epam.havryliuk.restaurant.model.entity.BookingStatus;
 import com.epam.havryliuk.restaurant.model.entity.Order;
@@ -17,12 +18,43 @@ import org.apache.logging.log4j.Logger;
 
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 import static com.epam.havryliuk.restaurant.controller.RequestAttributes.CURRENT_DISH;
 import static com.epam.havryliuk.restaurant.controller.RequestAttributes.LOGGED_USER;
 
 public class OrderService {
     private static final Logger log = LogManager.getLogger(OrderService.class);
+
+
+    public List<Order> getAllUserOrders(HttpServletRequest req) throws ServiceException {
+        User user = getCurrentUser(req);//todo think of renaming - non informative
+        OrderDao orderDao = new OrderDao();
+        DishDao dishDao = new DishDao();
+        EntityTransaction transaction = new EntityTransaction();
+        List<Order> orders;
+        try {
+            transaction.initTransaction(orderDao, dishDao);
+            orders = orderDao.getByUserSortedByTime(user);
+            for (Order order : orders) {
+                order.setDishes(dishDao.getOrderDishes(order));
+            }
+            transaction.commit();
+            //todo чи потрібно такі запипити виконувати в транзакції, якщо ми лише читаємо
+            // з бази даних, наприклад встановити відповідні ключі для транзкації для виключення
+            // dirty reads, наприклад? А якщо dirty reads не можливі (за логікою програми)?
+            log.debug("The order list was successfully created.");
+        } catch (DAOException e) {
+            String message = "The orders is temporary unavailable, try again later pleese.";
+            log.error(message, e);
+            throw new ServiceException(message, e);
+        } finally {
+            transaction.endTransaction();
+        }
+        return orders;
+    }
+
 
 
     /**
@@ -38,16 +70,19 @@ public class OrderService {
     public Order getOrder(HttpServletRequest req) throws ServiceException, BadCredentialsException {
         String deliveryAddress = req.getParameter("deliveryAddress");
         String deliveryPhone = req.getParameter("deliveryPhone");
+        User user = getCurrentUser(req);//todo think of renaming - non informative
 
         EntityTransaction transaction = new EntityTransaction();
         Order order;
         try {
-            User user = getCurrentUser(req);//todo think of renaming - non informative
             OrderDao orderDao = new OrderDao();
             transaction.init(orderDao);
-            order = orderDao.geByUserIdAddressStatus(user.getId(), deliveryAddress, BookingStatus.BOOKING);
+            order = orderDao.geByUserAddressStatus(user, deliveryAddress, BookingStatus.BOOKING);
             log.debug("geByUserIdAddressStatus - userId: " + user.getId() + ", deliveryAddress: " + deliveryAddress + ", BookingStatus: " + BookingStatus.BOOKING);
-            if(order == null) {
+            if(order != null) {
+//                order.setBookingStatus(BookingStatus.BOOKING);
+                order.setUser(user);
+            } else {
                 order = Order.getInstance(deliveryAddress, deliveryPhone, false, user, BookingStatus.BOOKING);
                 orderDao.create(order);
                 Date creationDate = orderDao.getCreationDate(order.getId());
@@ -61,28 +96,23 @@ public class OrderService {
         }
         return order;
     }
-            //todo / перевірити чи замовленню не більше, примірок, дні три. Якщо більше - видалити це замовлення
-            //todo / та створити нове. Ідея полягає в тому, що створення замовлення і додавання продуктів в кошик
-            //todo / розглядаються як окремі процеси. Юзер може додати один продукт до кошику ввечері, інший вранці.
-            //todo / при цьому фіксується ціна на цей продукт в момент додвавання до кошику. Але, щоб не виникло
-            //todo / ситуації, коли Юзер додав одне блюдо пів року тому, а сьогодні інше та підтвердив замовлення.
-            //todo / В такому випадку, ціна на попереднє блюдо може бути абсолютно не актуальною.
-            //todo /
-            //todo / Або, як альтернативне рішення, до моменту підтвердження замовлення ціна береться із меню,
-            //todo / а в після підтвердження фіксується в кошику.
-
 
     public void addDishToOrder(HttpServletRequest req, Order order) throws ServiceException, BadCredentialsException {
         Dish dish = getCurrentDish(req);
         int dishesAmount = getDishesAmount(req);
+        order.addDishes(dish, dishesAmount);
         EntityTransaction transaction = new EntityTransaction();
         try {
             OrderDao orderDao = new OrderDao();
             transaction.init(orderDao);
             orderDao.addNewDishesToOrder(order, dish, dishesAmount);
+            //todo два рази вказуємо одні і ті ж значення (dish, dishesAmount), одного разу додаємо до замовлення яке
+            // знаходиться в пам'яті (в сесії), а другий раз коли хочемо записати в базу даних. Можна використати
+            // LinkedHashMap, і діставати останній доданий, але тоді доведеться по лінках шукати останній елемент,
+            // що теж не є ефективним.
         } catch (DAOException e) {
             log.error(e.getMessage(), e);
-            throw new ServiceException(e);
+            throw new ServiceException(e.getMessage(), e);
         } finally {
             transaction.end();
         }

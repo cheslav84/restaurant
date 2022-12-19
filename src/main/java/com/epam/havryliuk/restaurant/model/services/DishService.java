@@ -53,14 +53,19 @@ public class DishService {
         log.debug("\"/dishId\" " + dishId + " has been received from user.");
         Dish dish;
         DishDao dishDao;
+        EntityTransaction transaction = new EntityTransaction();
         try {
             dishDao = new DishDao();
+            transaction.init(dishDao);
+
             dish = dishDao.findById(dishId);
             log.debug("\"/dish\" " + dish + " has been received from database.");
 
         } catch (DAOException e) {
             e.printStackTrace();
             throw new NoSuchElementException("Such dish hasn't been found.");
+        } finally {
+            transaction.end();
         }
 
         HttpSession session = req.getSession();

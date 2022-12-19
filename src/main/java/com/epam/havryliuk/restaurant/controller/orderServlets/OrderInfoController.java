@@ -1,4 +1,4 @@
-package com.epam.havryliuk.restaurant.controller;
+package com.epam.havryliuk.restaurant.controller.orderServlets;
 
 import com.epam.havryliuk.restaurant.model.services.DishService;
 import jakarta.servlet.ServletException;
@@ -30,7 +30,7 @@ public class OrderInfoController extends HttpServlet {
 
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         log.debug("\"/login\" request doGet in OrderController");
 
 

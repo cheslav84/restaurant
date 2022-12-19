@@ -1,4 +1,4 @@
-package com.epam.havryliuk.restaurant.controller;
+package com.epam.havryliuk.restaurant.controller.dishServlets;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -11,7 +11,7 @@ import java.io.IOException;
 
 @MultipartConfig
 @WebServlet("/uploadFile")
-public class FileUploadController extends HttpServlet {
+public class DishImageUploadController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

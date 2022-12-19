@@ -1,4 +1,4 @@
-package com.epam.havryliuk.restaurant.controller;
+package com.epam.havryliuk.restaurant.controller.userServlets;
 
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

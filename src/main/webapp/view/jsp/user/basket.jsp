@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
@@ -30,9 +33,82 @@
 
     <div class="section menu-page-section wf-section">
 
-        <div class="container w-container">
 
 
+        <c:forEach var="order" items="${sessionScope.orders}">
+        <c:if test="${order ne null}">
+        <div class="container w-container order-container">
+
+            <div class="menu-page-tabs-content w-tab-content">
+
+
+                <div class="menu-page-tab-pane w-tab-pane w--tab-active order-content">
+                    <h3 class="order-date">
+                        <fmt:formatDate type = "both"  dateStyle="LONG" timeStyle="SHORT"  value="${order.creationDate}" />
+                    </h3>
+                    <div class="section-divider-line order-divider"></div>
+                    <c:forEach var="dish" items="${order.dishes}">
+
+                        <div role="listitem" class="menu-list-item w-dyn-item w-col w-col-6 order-list">
+                            <div class="one-dish-info"></div>
+                            <div class="menu-image-container">
+                                <div style="background-image: url('view/pictures/dish_pictures/${dish.key.image}');"
+                                    class="menu-item-image-box">
+                                </div>
+                            </div>
+                            <div class="menu-item-label menu-item-amount">
+                                <c:out value="${dish.value}"/>
+                                <span class="weight-marker"> pcs</span>
+                            </div>
+                            <div class="menu-item-label menu-item-weight">
+                                <c:out value="${dish.key.weight}"/>
+                                <span class="weight-marker"> g</span>
+                            </div>
+                            <div class="menu-item-label menu-item-price-reload">
+                                <c:out value="${dish.key.price}"/>
+                                <span class="price-marker">₴</span>
+                            </div>
+                            <div class="menu-item-text order-item">
+                                <div class="menu-item-title order-title">
+                                    <c:out value="${dish.key.name}" />
+                                </div>
+                                <div class="menu-item-title description order-description">
+                                    <c:out value="${dish.key.description}" />
+                                </div>
+                            </div>
+                            <button class="button order-edit-button">
+                                Edit
+                            </button>
+                        </div>
+
+                    </c:forEach>
+
+                    <button class="button order-edit-button">
+                        Edit
+                    </button>
+                </div>
+            </div>
+            <input type="text" name="address" placeholder="Enter your delivery address" maxlength="1024" class="field w-input" value="${order.address}">
+            <input type="text" name="phone" placeholder="Enter your phone" maxlength="13" class="field w-input" value="${order.phoneNumber}">
+
+            <button class="button order-confirm-button">
+                Contirue ordering
+            </button>
+            <button class="button order-confirm-button">
+                Confirm my orders
+            </button>
+        </div>
+        </c:if>
+        <c:if test="${order eq null}">
+            <div class="one-dish-info">Your basket is empty</div>
+            <button class="button order-edit-button">
+                        Go to menu
+            </button>
+        </c:if>
+        </c:forEach>
+
+
+        <%-- <div class="container w-container order-container">
 
             <div class="menu-page-tabs-content w-tab-content">
 
@@ -40,8 +116,8 @@
                 <div class="menu-page-tab-pane w-tab-pane w--tab-active order-content">
                     <h3 class="order-date">December 23, 2022</h3>
 
-                    <!-- <div class="intro-title order-date">December 23, 2022</div> -->
                     <div class="section-divider-line order-divider"></div>
+
 
                     <div role="listitem" class="menu-list-item w-dyn-item w-col w-col-6 order-list">
                         <div class="one-dish-info"></div>
@@ -55,33 +131,32 @@
                             <span class="weight-marker"> pcs</span>
                         </div>
                         <div class="menu-item-label menu-item-weight">
-                            <!-- <c:out value="${dish.weight}" /> -->
                             200
                             <span class="weight-marker"> g</span>
                         </div>
                         <div class="menu-item-label menu-item-price-reload">
-                            <!-- <c:out value="${dish.price}" /> -->
                             4.50
                             <span class="price-marker">₴</span>
                         </div>
                         <div class="menu-item-text order-item">
                             <div class="menu-item-title order-title">
-                                <!-- <c:out value="${dish.name}" /> -->
                                 Black Eyed Andy
                             </div>
                             <div class="menu-item-title description order-description">
-                                <!-- <c:out value="${dish.description}" /> -->
                                 i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i
                                 i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i
                                 i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i
                                 i i i i i i i i i i i i i i i i i i .
                             </div>
                         </div>
+
                         <button class="button order-edit-button">
                             Edit
                         </button>
                     </div>
-                </div>
+
+
+
 
                 <div role="listitem" class="menu-list-item w-dyn-item w-col w-col-6 order-list">
                     <div class="one-dish-info"></div>
@@ -95,22 +170,18 @@
                         <span class="weight-marker"> pcs</span>
                     </div>
                     <div class="menu-item-label menu-item-weight">
-                        <!-- <c:out value="${dish.weight}" /> -->
                         200
                         <span class="weight-marker"> g</span>
                     </div>
                     <div class="menu-item-label menu-item-price-reload">
-                        <!-- <c:out value="${dish.price}" /> -->
                         4.50
                         <span class="price-marker">₴</span>
                     </div>
                     <div class="menu-item-text order-item">
                         <div class="menu-item-title order-title">
-                            <!-- <c:out value="${dish.name}" /> -->
                             Black Eyed Andy
                         </div>
                         <div class="menu-item-title description order-description">
-                            <!-- <c:out value="${dish.description}" /> -->
                             Lorem ipsum dolor sit amet consectetur
                             adipiscing.
                         </div>
@@ -129,12 +200,12 @@
             <button class="button order-confirm-button">
                 Confirm my orders
             </button>
-        </div>
-
-        <div class="container w-container">
+        </div> --%>
 
 
 
+
+        <%-- <div class="container w-container order-container">
 
             <div class="menu-page-tabs-content w-tab-content">
 
@@ -142,7 +213,6 @@
                 <div class="menu-page-tab-pane w-tab-pane w--tab-active order-content">
                     <h3 class="order-date">December 23, 2022</h3>
 
-                    <!-- <div class="intro-title order-date">December 23, 2022</div> -->
                     <div class="section-divider-line order-divider"></div>
 
                     <div role="listitem" class="menu-list-item w-dyn-item w-col w-col-6 order-list">
@@ -157,22 +227,18 @@
                             <span class="weight-marker"> pcs</span>
                         </div>
                         <div class="menu-item-label menu-item-weight">
-                            <!-- <c:out value="${dish.weight}" /> -->
                             200
                             <span class="weight-marker"> g</span>
                         </div>
                         <div class="menu-item-label menu-item-price-reload">
-                            <!-- <c:out value="${dish.price}" /> -->
                             4.50
                             <span class="price-marker">₴</span>
                         </div>
                         <div class="menu-item-text order-item">
                             <div class="menu-item-title order-title">
-                                <!-- <c:out value="${dish.name}" /> -->
                                 Black Eyed Andy
                             </div>
                             <div class="menu-item-title description order-description">
-                                <!-- <c:out value="${dish.description}" /> -->
                                 i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i
                                 i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i
                                 i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i
@@ -197,22 +263,18 @@
                         <span class="weight-marker"> pcs</span>
                     </div>
                     <div class="menu-item-label menu-item-weight">
-                        <!-- <c:out value="${dish.weight}" /> -->
                         200
                         <span class="weight-marker"> g</span>
                     </div>
                     <div class="menu-item-label menu-item-price-reload">
-                        <!-- <c:out value="${dish.price}" /> -->
                         4.50
                         <span class="price-marker">₴</span>
                     </div>
                     <div class="menu-item-text order-item">
                         <div class="menu-item-title order-title">
-                            <!-- <c:out value="${dish.name}" /> -->
                             Black Eyed Andy
                         </div>
                         <div class="menu-item-title description order-description">
-                            <!-- <c:out value="${dish.description}" /> -->
                             Lorem ipsum dolor sit amet consectetur
                             adipiscing.
                         </div>
@@ -227,9 +289,9 @@
                 In delivery to address: 
             </div>
 
-        </div>
+        </div> --%>
 
-        <div class="container w-container">
+        <%-- <div class="container w-container order-container">
 
 
 
@@ -240,7 +302,6 @@
                 <div class="menu-page-tab-pane w-tab-pane w--tab-active order-content">
                     <h3 class="order-date">December 23, 2022</h3>
 
-                    <!-- <div class="intro-title order-date">December 23, 2022</div> -->
                     <div class="section-divider-line order-divider"></div>
 
                     <div role="listitem" class="menu-list-item w-dyn-item w-col w-col-6 order-list">
@@ -255,22 +316,18 @@
                             <span class="weight-marker"> pcs</span>
                         </div>
                         <div class="menu-item-label menu-item-weight">
-                            <!-- <c:out value="${dish.weight}" /> -->
                             200
                             <span class="weight-marker"> g</span>
                         </div>
                         <div class="menu-item-label menu-item-price-reload">
-                            <!-- <c:out value="${dish.price}" /> -->
                             4.50
                             <span class="price-marker">₴</span>
                         </div>
                         <div class="menu-item-text order-item">
                             <div class="menu-item-title order-title">
-                                <!-- <c:out value="${dish.name}" /> -->
                                 Black Eyed Andy
                             </div>
                             <div class="menu-item-title description order-description">
-                                <!-- <c:out value="${dish.description}" /> -->
                                 i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i
                                 i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i
                                 i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i
@@ -295,22 +352,18 @@
                         <span class="weight-marker"> pcs</span>
                     </div>
                     <div class="menu-item-label menu-item-weight">
-                        <!-- <c:out value="${dish.weight}" /> -->
                         200
                         <span class="weight-marker"> g</span>
                     </div>
                     <div class="menu-item-label menu-item-price-reload">
-                        <!-- <c:out value="${dish.price}" /> -->
                         4.50
                         <span class="price-marker">₴</span>
                     </div>
                     <div class="menu-item-text order-item">
                         <div class="menu-item-title order-title">
-                            <!-- <c:out value="${dish.name}" /> -->
                             Black Eyed Andy
                         </div>
                         <div class="menu-item-title description order-description">
-                            <!-- <c:out value="${dish.description}" /> -->
                             Lorem ipsum dolor sit amet consectetur
                             adipiscing.
                         </div>
@@ -325,7 +378,7 @@
                 Delivered to address
             </div>
 
-        </div>
+        </div> --%>
 
 
     </div>

@@ -1,37 +1,38 @@
 package com.epam.havryliuk.restaurant.model.database.dao.daoImpl;
 
-import com.epam.havryliuk.restaurant.model.database.connection.ConnectionManager;
 import com.epam.havryliuk.restaurant.model.database.dao.AbstractDao;
 import com.epam.havryliuk.restaurant.model.database.dao.databaseFieds.DishFields;
+import com.epam.havryliuk.restaurant.model.database.dao.databaseFieds.OrderFields;
 import com.epam.havryliuk.restaurant.model.database.dao.queries.DishQuery;
+import com.epam.havryliuk.restaurant.model.entity.BookingStatus;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
 import com.epam.havryliuk.restaurant.model.entity.Category;
+import com.epam.havryliuk.restaurant.model.entity.Order;
 import com.epam.havryliuk.restaurant.model.exceptions.DAOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DishDao extends AbstractDao<Dish> {
     private static final Logger log = LogManager.getLogger(DishDao.class);
-    private final ConnectionManager connectionManager;
-
-    public DishDao() throws DAOException {
-        connectionManager = ConnectionManager.getInstance();
-    }
+//    private final ConnectionManager connectionManager;
+//
+//    public DishDao() throws DAOException {
+//        connectionManager = ConnectionManager.getInstance();
+//    }
 
 //    @Override
     public Dish findByName(String name) throws DAOException {
         Dish dish = null;
-
-        try (Connection con = connectionManager.getConnection();
-             PreparedStatement stmt = con.prepareStatement(DishQuery.FIND_DISH_BY_NAME)) {
+        try (PreparedStatement stmt = connection.prepareStatement(DishQuery.FIND_DISH_BY_NAME)) {
             stmt.setString(1, name);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
@@ -49,8 +50,7 @@ public class DishDao extends AbstractDao<Dish> {
 //    @Override
     public List<Dish> findByCategory(Category category) throws DAOException {
         List<Dish> dishes = new ArrayList<>();
-        try (Connection con = connectionManager.getConnection();
-             PreparedStatement stmt = con.prepareStatement(DishQuery.FIND_ALL_BY_CATEGORY)) {
+        try (PreparedStatement stmt = connection.prepareStatement(DishQuery.FIND_ALL_BY_CATEGORY)) {
             stmt.setString(1, category.getCategoryName().name());
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
@@ -90,8 +90,7 @@ public class DishDao extends AbstractDao<Dish> {
     public Dish findById(long id) throws DAOException {
         Dish dish = null;
 
-        try (Connection con = connectionManager.getConnection();
-             PreparedStatement stmt = con.prepareStatement(DishQuery.FIND_DISH_BY_ID)) {
+        try (PreparedStatement stmt = connection.prepareStatement(DishQuery.FIND_DISH_BY_ID)) {
             stmt.setLong(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
@@ -130,8 +129,7 @@ public class DishDao extends AbstractDao<Dish> {
 
     private List<Dish> getDishes(String query) throws DAOException {
         List<Dish> dishes = new ArrayList<>();
-        try (Connection con = connectionManager.getConnection();
-             PreparedStatement stmt = con.prepareStatement(query);
+        try ( PreparedStatement stmt = connection.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 dishes.add(mapDish(rs));
@@ -144,7 +142,39 @@ public class DishDao extends AbstractDao<Dish> {
         return dishes;
     }
 
-    private Dish mapDish(ResultSet rs) throws SQLException, DAOException {
+
+    /**
+     * Method gets returns dishes, and dishes amount for corespondent dish in order consequently.
+     * If order is not confirmed yet (user just put it to his basket), will be displayed
+     * the actual price of a dish. Otherwise, user will get the fixed price of a dish for the
+     * moment of the confirmation an order.
+     * @param order
+     * @return
+     * @throws DAOException
+     */
+    public Map<Dish, Integer> getOrderDishes(Order order) throws DAOException {
+        Map<Dish, Integer>  dishes = new HashMap<>();
+        try (PreparedStatement stmt = connection.prepareStatement(DishQuery.FIND_ALL_BY_ORDER)) {
+            stmt.setLong(1, order.getId());
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Dish dish = mapDish(rs);
+                    if (order.getBookingStatus() != BookingStatus.BOOKING) {
+                         dish.setPrice(rs.getBigDecimal(OrderFields.ORDER_DISH_FIXED_PRICE));
+                    }
+                    Integer amountInOrder = rs.getInt(OrderFields.ORDER_DISH_AMOUNT_IN_ORDER);
+                    dishes.put(dish, amountInOrder);
+                }
+            }
+            log.debug("List of dishes (by category) has been received from database. ");
+        } catch (SQLException e) {
+            log.error("Error in getting list of dishes from database. ", e);
+            throw new DAOException(e);
+        }
+        return dishes;
+    }
+
+    private Dish mapDish(ResultSet rs) throws SQLException {
         long id = rs.getLong(DishFields.DISH_ID);
         String name = rs.getString(DishFields.DISH_NAME);
         String description = rs.getString(DishFields.DISH_DESCRIPTION);

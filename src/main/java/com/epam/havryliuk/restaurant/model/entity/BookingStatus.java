@@ -20,6 +20,10 @@ public enum BookingStatus {
     public long getId() {
         return id;
     }
+
+    public static BookingStatus getStatus (long id) {
+        return BookingStatus.values()[(int) id];
+    }
 }
 
 

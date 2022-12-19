@@ -102,6 +102,7 @@ public class Dish implements Entity {//todo implements Serializable (to save Obj
 //        this.category = category;
 //    }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -109,18 +110,16 @@ public class Dish implements Entity {//todo implements Serializable (to save Obj
 
         Dish dish = (Dish) o;
 
-        if (weight != dish.weight) return false;
-        if (name != null ? !name.equals(dish.name) : dish.name != null) return false;
-        if (description != null ? !description.equals(dish.description) : dish.description != null) return false;
-        return price != null ? price.equals(dish.price) : dish.price == null;
+        if (id != dish.id) return false;
+        if (spirits != dish.spirits) return false;
+        return name != null ? name.equals(dish.name) : dish.name == null;
     }
 
     @Override
     public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + weight;
-        result = 31 * result + (price != null ? price.hashCode() : 0);
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (spirits ? 1 : 0);
         return result;
     }
 

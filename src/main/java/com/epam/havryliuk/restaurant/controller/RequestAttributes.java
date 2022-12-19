@@ -14,7 +14,6 @@ public class RequestAttributes {
 
     public static final String SHOW_DISH_INFO = "showDishInfo";//todo try to make one
 
-
     public static final String ERROR_MESSAGE = "errorMessage";//todo try to make one
     public static final String LOGIN_ERROR_MESSAGE = "logInErrorMessage";//todo try to make one
     public static final String REGISTRATION_ERROR_MESSAGE = "registrationErrorMessage";//todo try to make one

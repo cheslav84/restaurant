@@ -1,4 +1,4 @@
-package com.epam.havryliuk.restaurant.controller;
+package com.epam.havryliuk.restaurant.controller.orderServlets;
 
 import com.epam.havryliuk.restaurant.model.entity.Order;
 import com.epam.havryliuk.restaurant.model.exceptions.BadCredentialsException;

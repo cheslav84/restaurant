@@ -1,28 +1,35 @@
-package com.epam.havryliuk.restaurant.controller;
+package com.epam.havryliuk.restaurant.controller.userServlets;
 
 import com.epam.havryliuk.restaurant.model.entity.User;
-import com.epam.havryliuk.restaurant.model.exceptions.DAOException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.services.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.*;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 
 import static com.epam.havryliuk.restaurant.controller.RequestAttributes.*;
 
 
 //todo read about PRG pattern
 
-@WebServlet("/registration")
-public class RegistrationController extends HttpServlet {
-    private static final Logger log = LogManager.getLogger(RegistrationController.class);// todo add logs for class
+@WebServlet("/login")
+public class LogInController extends HttpServlet {
+    private static final Logger log = LogManager.getLogger(LogInController.class);// todo add logs for class
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        log.debug("\"/login\" request doGet in LoginController");
+
+        HttpSession session = req.getSession();
+
         //todo ask from which page user came
         req.getRequestDispatcher("view/jsp/registration.jsp").forward(req, resp);
     }
@@ -30,34 +37,32 @@ public class RegistrationController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        log.debug("\"RegistrationController\", doPost.");//todo move down
+        log.debug("\"/login\" request doPost in LoginController");
 
-        HttpSession session = req.getSession();
         User user;
         String redirectionPage;
 
         try {
             UserService service = new UserService();
-            user = service.addNewUser(req);
-            //todo set userId
-            log.info("The user \"" + user.getName() + "\" has been successfully registered.");//todo move down
+            user = service.getLoggedInUser(req);
+            HttpSession session = req.getSession();
             session.setAttribute(LOGGED_USER, user);
-//            session.setAttribute("userRole", user.getRole().getUserRole().name());
-    //        Cookie cookie = new Cookie("sessionId", session.getId());
-    //        resp.addCookie(cookie);
-    //        req.getRequestDispatcher("view/jsp/registration.jsp").forward(req, resp);
-            session.removeAttribute(REGISTRATION_ERROR_MESSAGE);
-            session.removeAttribute(REGISTRATION_PROCESS);//todo if that attribute is set - hide login menu is jsp
+            session.removeAttribute(LOGIN_ERROR_MESSAGE);
             redirectionPage = getRedirectionPage(session);
+            log.debug("User logged in.");// todo rename
         } catch (ServiceException e) {
-            log.error("User hasn't been registered. " + e);
             redirectionPage = "registration";
             setErrorMessage(req, e.getMessage());
-            session.setAttribute(REGISTRATION_PROCESS, REGISTRATION_PROCESS);
+            log.error(e.getMessage());// todo rename
+        } catch (GeneralSecurityException e) {
+            redirectionPage = "errorPage";
+            setErrorMessage(req, e.getMessage());
+            log.error(e.getMessage());
         }
+        System.out.println("log in req.getHeaderNames(): " +req.getHeader("Referer"));
+
         resp.sendRedirect(redirectionPage);
     }
-
 
 
     private String getRedirectionPage(HttpSession session) {
@@ -74,8 +79,10 @@ public class RegistrationController extends HttpServlet {
 
     private void setErrorMessage(HttpServletRequest req, String errorMassage) {
         if (errorMassage != null){
-            req.getSession().setAttribute(REGISTRATION_ERROR_MESSAGE, errorMassage);
+            req.getSession().setAttribute(LOGIN_ERROR_MESSAGE, errorMassage);
         }
     }
+
+
 }
 
