@@ -19,14 +19,32 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
+import java.util.NoSuchElementException;
 
-import static com.epam.havryliuk.restaurant.controller.RequestAttributes.CURRENT_DISH;
-import static com.epam.havryliuk.restaurant.controller.RequestAttributes.LOGGED_USER;
+import static com.epam.havryliuk.restaurant.controller.RequestAttributes.*;
 
 public class OrderService {
     private static final Logger log = LogManager.getLogger(OrderService.class);
 
+
+    public void confirmOrder(HttpServletRequest req) throws ServiceException {
+        long orderId = Long.parseLong(req.getParameter("orderId"));//todo теоретично може бути ексепшн, якщо з боку фронта прийде невірне значення
+        log.debug("\"/orderId\" " + orderId + " has been received from user.");
+        OrderDao orderDao;
+        EntityTransaction transaction = new EntityTransaction();
+        try {
+            orderDao = new OrderDao();
+            transaction.init(orderDao);
+            orderDao.changeOrderStatus(orderId, BookingStatus.NEW);
+            log.debug("\"order status\" has been changed to " + BookingStatus.NEW);
+        } catch (DAOException e) {
+            String message = "Something went wrong. Try to confirm your order later please.";
+            log.debug(message, e);
+            throw new ServiceException(message);
+        } finally {
+            transaction.end();
+        }
+    }
 
     public List<Order> getAllUserOrders(HttpServletRequest req) throws ServiceException {
         User user = getCurrentUser(req);//todo think of renaming - non informative
@@ -54,8 +72,6 @@ public class OrderService {
         }
         return orders;
     }
-
-
 
     /**
      * Returns an order that firstly tries to get from database. If such order doesn't exist -
@@ -118,6 +134,41 @@ public class OrderService {
         }
     }
 
+    public void removeDishFromOrder(HttpServletRequest req) throws ServiceException  {
+        long orderId = Long.parseLong(req.getParameter("orderId"));
+        long dishId = Long.parseLong(req.getParameter("dishId"));
+        log.debug("\"orderId\" " + orderId + " has been received.");
+        log.debug("\"dishId\" " + dishId + " has been received.");
+
+        OrderDao orderDao;
+        EntityTransaction transaction = new EntityTransaction();
+        try {
+            orderDao = new OrderDao();
+            transaction.init(orderDao);
+
+
+            int dishesInOrder = orderDao.findDishesNumberInOrder(orderId);
+            if (dishesInOrder == 1) {
+                orderDao.delete(orderId);
+            } else {
+                orderDao.deleteDishFromOrderById(orderId,dishId);
+            }
+
+            //todo get number of dishes in order (number of records)
+            // if the last record - delete it
+
+
+            log.debug("Dish has been removed from order.");
+        } catch (DAOException e) {
+            log.debug(e.getMessage(), e);
+            throw new ServiceException(e);
+        } finally {
+            transaction.end();
+        }
+
+    }
+
+
     private int getDishesAmount(HttpServletRequest req) throws BadCredentialsException {
         int dishesAmount;
 
@@ -132,7 +183,6 @@ public class OrderService {
         }
         return dishesAmount;
     }
-
 
     private User getCurrentUser(HttpServletRequest req) throws ServiceException {// todo move to User service
         HttpSession session = req.getSession();

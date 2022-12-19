@@ -89,7 +89,6 @@ public class DishDao extends AbstractDao<Dish> {
     @Override
     public Dish findById(long id) throws DAOException {
         Dish dish = null;
-
         try (PreparedStatement stmt = connection.prepareStatement(DishQuery.FIND_DISH_BY_ID)) {
             stmt.setLong(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -99,10 +98,8 @@ public class DishDao extends AbstractDao<Dish> {
             }
             log.debug("The dish with \"id=" + id + "\" has been received from database.");
         } catch (SQLException e) {
-            String errorMessage = "Error in getting with \"id=" + id + "\" from database. ";
-            log.error(errorMessage, e);
-
-            throw new DAOException(errorMessage, e);
+            log.error( "Error in getting with \"id=" + id + "\" from database. ", e);
+            throw new DAOException(e);
         }
         return dish;
     }

@@ -20,8 +20,8 @@ import static com.epam.havryliuk.restaurant.controller.RequestAttributes.*;
 
 
 @WebServlet("/addToOrder")
-public class OrderController extends HttpServlet {
-    private static final Logger log = LogManager.getLogger(OrderController.class);// todo add logs for class
+public class AddToOrderController extends HttpServlet {
+    private static final Logger log = LogManager.getLogger(AddToOrderController.class);// todo add logs for class
 
 //    @Override
 //    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -38,7 +38,7 @@ public class OrderController extends HttpServlet {
         OrderService orderService = new OrderService();
 
         HttpSession session = req.getSession();
-        Order order = (Order) session.getAttribute(ORDER);
+        Order order = (Order) session.getAttribute(CURRENT_ORDER);
 
         if (order != null) {
             saveDishToOrder(req, orderService, order);
@@ -49,7 +49,7 @@ public class OrderController extends HttpServlet {
                 order = orderService.getOrder(req);
 
                 log.debug(order);
-                session.setAttribute(ORDER, order);
+                session.setAttribute(CURRENT_ORDER, order);
                 session.removeAttribute(ERROR_MESSAGE);
                 session.removeAttribute(DELIVERY_ADDRESS);
                 session.removeAttribute(DELIVERY_PHONE);

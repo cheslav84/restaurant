@@ -43,7 +43,7 @@ public class MainPageController extends HttpServlet {
 
         dishService.hideOrderInfoOnReloadPage(req);
 
-        req.setAttribute(DISHES, dishes);
+        req.setAttribute(DISH_LIST, dishes);
         req.getRequestDispatcher("view/jsp/index.jsp").forward(req, resp);
     }
 

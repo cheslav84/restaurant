@@ -47,8 +47,6 @@ public class DishService {
     }
 
     public void getDishInfo(HttpServletRequest req){
-//        List<Dish> dishes = new ArrayList<>();
-
         long dishId = Long.parseLong(req.getParameter("dishId"));
         log.debug("\"/dishId\" " + dishId + " has been received from user.");
         Dish dish;
@@ -72,6 +70,8 @@ public class DishService {
         session.setAttribute(CURRENT_DISH, dish);
         session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);// value to show ordering menu of concrete dish
     }
+
+
 
     public void hideOrderInfoOnReloadPage(HttpServletRequest req)  {
         HttpSession session = req.getSession();

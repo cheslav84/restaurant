@@ -1,9 +1,7 @@
 package com.epam.havryliuk.restaurant.model.database.dao.daoImpl;
 
-import com.epam.havryliuk.restaurant.model.database.connection.ConnectionManager;
 import com.epam.havryliuk.restaurant.model.database.dao.AbstractDao;
 import com.epam.havryliuk.restaurant.model.database.dao.databaseFieds.OrderFields;
-import com.epam.havryliuk.restaurant.model.database.dao.queries.DishQuery;
 import com.epam.havryliuk.restaurant.model.database.dao.queries.OrderQuery;
 import com.epam.havryliuk.restaurant.model.entity.*;
 import com.epam.havryliuk.restaurant.model.exceptions.DAOException;
@@ -74,7 +72,7 @@ public class OrderDao extends AbstractDao<Order> {
             log.error(errorMassage, e);
             throw new DAOException(errorMassage, e);
         }
-        return false;
+        return true;
     }
 
     public boolean changeBookingStatus(Order order, BookingStatus status) throws DAOException {
@@ -114,30 +112,6 @@ public class OrderDao extends AbstractDao<Order> {
         return Order.getInstance(id, address, phoneNumber, isPayed, creationDate, closeDate, user, bookingStatus);
     }
 
-//    private void addOrder(Order order, Connection con) throws DAOException, SQLException {
-//        PreparedStatement stmt = null;
-//        try {
-//            stmt = con.prepareStatement(OrderQuery.ADD_ORDER, Statement.RETURN_GENERATED_KEYS);
-//            setOrderParameters(order, stmt);
-//            int insertionAmount = stmt.executeUpdate();
-//            if (insertionAmount > 0) {
-//                try (ResultSet rs = stmt.getGeneratedKeys()) {
-//                    if (rs.next()) {
-//                        order.setId(rs.getLong(1));
-//                    }
-//                }
-//            }
-//            Date creationDate = getCreationDate(con, order.getId());
-//            order.setCreationDate(creationDate);
-//        } catch (SQLException e) {
-//            log.error("Error in inserting order to database.", e);
-//            throw new SQLException(e);
-//        } finally {
-//            connectionManager.close(stmt);
-//        }
-//    }
-
-
     public Date getCreationDate(long orderId) throws DAOException {
         Date date = null;
         try (PreparedStatement stmt = connection.prepareStatement(OrderQuery.GET_CREATION_DATE_BY_ID)) {
@@ -166,9 +140,41 @@ public class OrderDao extends AbstractDao<Order> {
     }
 
 
+
     @Override
     public Order findById(long id) throws DAOException {
         throw new UnsupportedOperationException();
+
+//        Order order = null;
+//        try (PreparedStatement stmt = connection.prepareStatement(OrderQuery.FIND_ORDER_BY_ID)) {
+//            stmt.setLong(1, id);
+//            try (ResultSet rs = stmt.executeQuery()) {
+//                if (rs.next()) {
+//                    order = mapOrder(rs);
+//                }
+//            }
+//            log.debug("The order with \"id=" + id + "\" has been received from database.");
+//        } catch (SQLException e) {
+//            log.error("Error in getting order with \"id=" + id + "\" from database. ", e);
+//            throw new DAOException(e);
+//        }
+//        return order;
+    }
+
+
+    public boolean changeOrderStatus(long id, BookingStatus bookingStatus) throws DAOException {
+        try (PreparedStatement stmt = connection.prepareStatement(OrderQuery.CHANGE_ORDER_STATUS_BY_ID)) {
+            int k = 1;
+            stmt.setLong(k++, id);
+            stmt.setString(k++, bookingStatus.name());
+            stmt.executeUpdate();
+            log.debug("The status in order with id \"" + id +
+                    "\", has been successfully changed");
+        } catch (SQLException e) {
+            log.error("The status in order has not been changed", e);
+            throw new DAOException(e);
+        }
+        return true;
     }
 
     @Override
@@ -188,8 +194,46 @@ public class OrderDao extends AbstractDao<Order> {
 
     @Override
     public boolean delete(long id) throws DAOException {
-        throw new UnsupportedOperationException();
+        try (PreparedStatement stmt = connection.prepareStatement(OrderQuery.DELETE_ORDER_BY_ID)) {
+            stmt.setLong(1, id);
+            stmt.executeUpdate();
+            log.debug("Order has been removed from order in database");
+        } catch (SQLException e) {
+            String errorMassage = "Something went wrong. Order haven't been removed. Try please again later.";
+            log.error(errorMassage, e);
+            throw new DAOException(errorMassage, e);
+        }
+        return true;    }
+
+    public boolean deleteDishFromOrderById(long orderId, long dishId) throws DAOException {
+        try (PreparedStatement stmt = connection.prepareStatement(OrderQuery.REMOVE_DISH_FROM_ORDER)) {
+            int k=0;
+            stmt.setLong(++k, orderId);
+            stmt.setLong(++k, dishId);
+            stmt.executeUpdate();
+            log.debug("Dish has been removed from order in database");
+        } catch (SQLException e) {
+            String errorMassage = "Something went wrong. Dish haven't been removed. Try please again later.";
+            log.error(errorMassage, e);
+            throw new DAOException(errorMassage, e);
+        }
+        return true;
     }
 
-
+    public int findDishesNumberInOrder(long orderId) throws DAOException {
+        int numberOfDishes = 0;
+        try (PreparedStatement stmt = connection.prepareStatement(OrderQuery.GET_NUMBER_DISHES_IN_ORDER)) {
+            stmt.setLong(1, orderId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    numberOfDishes = rs.getInt(OrderFields.NUMBER_OF_DISHES);
+                }
+            }
+            log.debug("Number of dishes in order has been received from database.");
+        } catch (SQLException e) {
+            log.error("Number of dishes in order has not been received from database.", e);
+            throw new DAOException(e);
+        }
+        return numberOfDishes;
+    }
 }

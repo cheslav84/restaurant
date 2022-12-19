@@ -43,7 +43,7 @@ public class UserDao extends AbstractDao<User> {
             user = extractUser(stmt);
             log.debug("The \"" + user + "\" user received from database.");
         } catch (SQLException e) {
-            log.error("Error in getting user \"" + email + "\" from database.", e);
+            log.error("Error in getting user from database.", e);
             throw new DAOException(e);
         }
         return user;
@@ -57,7 +57,7 @@ public class UserDao extends AbstractDao<User> {
             user = extractUser(stmt);
             log.debug("The user with id \"" + id + "\" received from database.");
         } catch (SQLException e) {
-            log.error("Error in getting user with id \"" + id + "\" from database.", e);
+            log.error("Error in getting user with id from database.", e);
             throw new DAOException(e);
         }
         return user;
@@ -101,7 +101,7 @@ public class UserDao extends AbstractDao<User> {
             log.debug("The \"" + user.getName() + "\" user has been added to database.");
         } catch (SQLException e) {
             String message = "Something went wrong. Try to sign in later please.";
-            log.error("Error in inserting user \"" + user.getName() + "\" to database.", e);
+            log.error("Error in inserting user to database.", e);
 //            connectionManager.rollback(con);
         }
 //        finally {
@@ -189,11 +189,10 @@ public class UserDao extends AbstractDao<User> {
             log.debug("The user with id \"" + user.getId() +
                     "\", has been successfully updated");
         } catch (SQLException e) {
-            log.error("The user with id \"" + user.getId() +
-                    "\", has not been updated", e);
+            log.error("The user has not been updated", e);
             throw new DAOException(e);
         }
-        return user;
+        return user;//todo навіщо тут повертати того ж самого юзера?
     }
 
     @Override
@@ -203,7 +202,7 @@ public class UserDao extends AbstractDao<User> {
             stmt.executeUpdate();
             log.debug("The user \"" + user.getName() + "\", has been successfully deleted.");
         } catch (SQLException e) {
-            log.error("The user \"" + user.getName() + "\", has not been deleted.", e);
+            log.error("The user  has not been deleted.", e);
             throw new DAOException(e);
         }
         return true;
@@ -216,7 +215,7 @@ public class UserDao extends AbstractDao<User> {
             stmt.executeUpdate();
             log.debug("The user with id \"" + id + "\", has been successfully deleted");
         } catch (SQLException e) {
-            log.error("The user with id \"" + id + "\", has not been deleted.", e);
+            log.error("The user has not been deleted.", e);
             throw new DAOException(e);
         }
         return true;

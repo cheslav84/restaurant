@@ -22,7 +22,7 @@ public enum BookingStatus {
     }
 
     public static BookingStatus getStatus (long id) {
-        return BookingStatus.values()[(int) id];
+        return BookingStatus.values()[(int) id - 1];
     }
 }
 

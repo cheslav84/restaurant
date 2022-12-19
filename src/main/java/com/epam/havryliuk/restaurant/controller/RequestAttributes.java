@@ -2,11 +2,12 @@ package com.epam.havryliuk.restaurant.controller;
 
 public class RequestAttributes {
 
-    public static final String ORDER = "order";
-    public static final String DISHES = "dishes";
+    public static final String CURRENT_ORDER = "currentOrder";
+    public static final String ORDER_LIST = "orders";
+    public static final String DISH_LIST = "dishes";
+    public static final String CURRENT_DISH = "currentDish";
     public static final String MENU_CATEGORY = "menuCategory";
     public static final String LOGGED_USER = "loggedUser";
-    public static final String CURRENT_DISH = "currentDish";
     public static final String DELIVERY_ADDRESS = "deliveryAddress";
     public static final String DELIVERY_PHONE = "deliveryPhone";
 

@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.epam.havryliuk.restaurant.controller.RequestAttributes.ERROR_MESSAGE;
+import static com.epam.havryliuk.restaurant.controller.RequestAttributes.ORDER_LIST;
 
 
 @WebServlet("/basket")
@@ -34,32 +35,17 @@ public class BasketController extends HttpServlet {
 
         try {
             List<Order> orders = orderService.getAllUserOrders(req);
-            session.setAttribute("orders", orders);
+
+            session.setAttribute(ORDER_LIST, orders);
             session.removeAttribute(ERROR_MESSAGE);
+
         } catch (ServiceException e) {
             log.error(e.getMessage());
             session.setAttribute(ERROR_MESSAGE, e.getMessage());
         }
 
-
-//        List<Order> orders = new ArrayList<>();
-//        Order order = (Order) req.getSession().getAttribute(RequestAttributes.ORDER);
-//        orders.add(order);
-//        req.getSession().setAttribute("orders", orders);
-//        if (order == null) {
-//            orderService.getAllUserOrders(req);
-//        }
-//
-//        System.out.println(order);
-//        try {
-//            List<Map<Dish, Integer>> orders = orderService.getAllUserOrders(req);
-//        } catch (ServiceException e) {
-//            throw new RuntimeException(e);
-//        }
-
         req.getRequestDispatcher("view/jsp/user/basket.jsp").forward(req, resp);
     }
-
 
 
 
