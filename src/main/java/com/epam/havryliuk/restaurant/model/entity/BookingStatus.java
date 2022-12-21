@@ -15,7 +15,7 @@ public enum BookingStatus {
         this.id = id;
     }
 
-    private long id;
+    private final long id;
 
     public long getId() {
         return id;

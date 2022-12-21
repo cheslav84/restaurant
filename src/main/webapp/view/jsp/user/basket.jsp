@@ -33,7 +33,7 @@
 
     <div class="section menu-page-section wf-section">
 
-
+        <div class="error-message"><c:if test="${sessionScope.errorMessage}"></c:if></div>
 
         <c:forEach var="order" items="${sessionScope.orders}">
         <c:if test="${order ne null}">
@@ -44,7 +44,7 @@
 
                 <div class="menu-page-tab-pane w-tab-pane w--tab-active order-content">
                     <h3 class="order-date">
-                        <fmt:formatDate type = "both"  dateStyle="LONG" timeStyle="SHORT"  value="${order.creationDate}" />
+                        <fmt:formatDate type = "both" dateStyle="long" timeStyle="short" value="${order.creationDate}" />
                     </h3>
                     <div class="section-divider-line order-divider"></div>
                     <c:forEach var="dish" items="${order.dishes}">
@@ -76,27 +76,35 @@
                                     <c:out value="${dish.key.description}" />
                                 </div>
                             </div>
-                            <button class="button order-edit-button">
-                                Edit
-                            </button>
+                            <c:if test="${order.bookingStatus == 'BOOKING'}">
+                                <form method="post" action="removeFromOrder" name="confirmOrder">
+                                    <input type="hidden" name="orderId" value="${order.id}"> 
+                                    <button value="${dish.key.id}" name="dishId" class="button order-edit-button">
+                                        Delete
+                                    </button>
+                                </form>
+                            </c:if>
                         </div>
-
                     </c:forEach>
-
-                    <button class="button order-edit-button">
-                        Edit
-                    </button>
                 </div>
             </div>
-            <input type="text" name="address" placeholder="Enter your delivery address" maxlength="1024" class="field w-input" value="${order.address}">
-            <input type="text" name="phone" placeholder="Enter your phone" maxlength="13" class="field w-input" value="${order.phoneNumber}">
 
-            <button class="button order-confirm-button">
-                Contirue ordering
-            </button>
-            <button class="button order-confirm-button">
-                Confirm my orders
-            </button>
+           
+           <c:out value="${order.bookingStatus}" />
+
+
+
+            <c:if test="${order.bookingStatus == 'BOOKING'}">
+                <input type="text" name="address" placeholder="Enter your delivery address" maxlength="1024" class="field w-input" value="${order.address}">
+                <input type="text" name="phone" placeholder="Enter your phone" maxlength="13" class="field w-input" value="${order.phoneNumber}">
+     
+                <form method="post" action="confirmOrder" name="confirmOrder">
+                    <a href="index" class="button order-confirm-button">Contirue ordering</a>
+                    <button value="${order.id}" name="orderId" class="button order-confirm-button">Confirm my orders</button>
+                </form>
+            </c:if>
+            
+
         </div>
         </c:if>
         <c:if test="${order eq null}">
@@ -105,6 +113,7 @@
                         Go to menu
             </button>
         </c:if>
+
         </c:forEach>
 
 
@@ -205,7 +214,7 @@
 
 
 
-        <%-- <div class="container w-container order-container">
+        <div class="container w-container order-container">
 
             <div class="menu-page-tabs-content w-tab-content">
 
@@ -289,9 +298,9 @@
                 In delivery to address: 
             </div>
 
-        </div> --%>
+        </div>
 
-        <%-- <div class="container w-container order-container">
+        <div class="container w-container order-container">
 
 
 
@@ -378,7 +387,7 @@
                 Delivered to address
             </div>
 
-        </div> --%>
+        </div>
 
 
     </div>

@@ -40,7 +40,5 @@ public class OrderQuery {
         GET_NUMBER_DISHES_IN_ORDER = (String) properties.get("order.GET_NUMBER_DISHES_IN_ORDER");
         DELETE_ORDER_BY_ID = (String) properties.get("order.DELETE_ORDER_BY_ID");
 
-
-
     }
 }

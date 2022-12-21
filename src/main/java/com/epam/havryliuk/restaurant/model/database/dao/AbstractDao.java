@@ -20,10 +20,9 @@ public abstract class AbstractDao<T extends Entity> {
     }
 
     public abstract boolean create(T entity) throws DAOException;
-//    public abstract T findByName(String name) throws DBException;// todo як шукати в таких випадках? Ім'я не є унікальним ні в юзера, ні в блюда. Можна за іншим ідентефікатором. Чи видалити взагалі з інтерфейсу?
     public abstract T findById(long id) throws DAOException;
     public abstract List<T> findAll() throws DAOException;
-    public abstract T update(T entity) throws DAOException;
+    public abstract T update(T entity) throws DAOException;//todo повертати boolean???
     public abstract boolean delete(T entity) throws DAOException;
     public abstract boolean delete(long id) throws DAOException;
 

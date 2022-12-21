@@ -18,12 +18,9 @@ import java.util.List;
 
 import static com.epam.havryliuk.restaurant.controller.RequestAttributes.*;
 
-
-//todo read about PRG pattern
-
 @WebServlet("/index")
 public class MainPageController extends HttpServlet {
-    private static final Logger log = LogManager.getLogger(MainPageController.class);// todo add logs for class
+    private static final Logger log = LogManager.getLogger(MainPageController.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -38,7 +35,7 @@ public class MainPageController extends HttpServlet {
             log.debug("List of dishes received by servlet and going to be sending to client side.");
         } catch (ServiceException e) {
             log.error("List of dishes hasn't been received.");
-            //req.setAttribute("message", "Message");//todo inform user!!!
+//            req.setAttribute(ERROR_MESSAGE, "Message");//todo inform user!!!
         }
 
         dishService.hideOrderInfoOnReloadPage(req);
@@ -64,12 +61,6 @@ public class MainPageController extends HttpServlet {
         }
         return currentMenu;
     }
-
-//    @Override
-//    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-//        response.sendRedirect("index");
-//    }
 
 }
 

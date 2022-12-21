@@ -54,7 +54,7 @@
                 <%-- <div class="order-buttons"> --%>
                     <form method="post" action="addToOrder">
 
-                        <c:if test="${sessionScope.order eq null}">
+                        <c:if test="${sessionScope.currentOrder eq null}">
                             <div class="address-info">
                                 <label for="address" class="order-label">Delivery address:</label>
                                 <input type="text" id="address" name="deliveryAddress" placeholder="Enter your delivery address" minlength="13" maxlength="100" class="field w-input order-field"  placeholder="Address" value="${sessionScope.deliveryAddress}">

@@ -22,15 +22,7 @@ import static com.epam.havryliuk.restaurant.controller.RequestAttributes.*;
 
 @WebServlet("/confirmOrder")
 public class ConfirmOrderController extends HttpServlet {
-    private static final Logger log = LogManager.getLogger(ConfirmOrderController.class);// todo add logs for class
-
-//    @Override
-//    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        log.debug("\"/BasketController\" request doGet.");
-//
-//
-//        req.getRequestDispatcher("view/jsp/user/basket.jsp").forward(req, resp);
-//    }
+    private static final Logger log = LogManager.getLogger(ConfirmOrderController.class);
 
 
     @Override

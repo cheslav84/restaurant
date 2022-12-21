@@ -38,8 +38,6 @@
 
 
                             <div role="list" class="w-clearfix w-dyn-items w-row">
-
-
                                 <c:forEach var="dish" items="${requestScope.dishes}">
                                     <div role="listitem"  class="menu-list-item w-dyn-item w-col w-col-6">
                                         <div class="menu-image-container">
@@ -65,7 +63,6 @@
                                         </div>
                                         
                                         <form method="get" action="showOrderInfo" name="dishOrder">
-
                                             <button value="${dish.id}" name="dishId" class="button order-menu-button">Order</button>
                                         </form>
 

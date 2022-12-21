@@ -1,6 +1,5 @@
 package com.epam.havryliuk.restaurant.model.database.dao.daoImpl;
 
-import com.epam.havryliuk.restaurant.model.database.connection.ConnectionManager;
 import com.epam.havryliuk.restaurant.model.database.dao.AbstractDao;
 import com.epam.havryliuk.restaurant.model.database.dao.databaseFieds.RoleFields;
 import com.epam.havryliuk.restaurant.model.database.dao.queries.RoleQuery;
@@ -16,16 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-//public class UserDAO<T extends User> implements DAO<Long, User> {
 public class RoleDao extends AbstractDao<Role> {
     private static final Logger log = LogManager.getLogger(RoleDao.class);
-//    private final ConnectionManager connectionManager;
-//
-//    public RoleDao() throws DAOException {
-//        connectionManager = ConnectionManager.getInstance();
-//    }
 
-//    @Override
+
     public Role findByName(String name) throws DAOException {
         Role role = null;
         try ( PreparedStatement stmt = connection.prepareStatement(RoleQuery.FIND_ROLE_BY_NAME)) {
@@ -41,7 +34,7 @@ public class RoleDao extends AbstractDao<Role> {
 
     @Override
     public Role findById(long id) throws DAOException {
-        Role role = null;
+        Role role;
         try (PreparedStatement stmt = connection.prepareStatement(RoleQuery.FIND_ROLE_BY_ID)) {
             stmt.setLong(1, id);
             role = extractRole(stmt);
@@ -142,21 +135,10 @@ public class RoleDao extends AbstractDao<Role> {
     }
 
 
-//    private void setRoleParameters(@NotNull Role role, PreparedStatement stmt) throws SQLException {
-//       stmt.setString(1, role.getUserRole().name());
-//    }
-
     private Role mapRole(ResultSet rs) throws SQLException {
         long id = rs.getLong(RoleFields.ROLE_ID);
         String role = rs.getString(RoleFields.ROLE_NAME);
         return Role.getInstance(id, UserRole.valueOf(role));
     }
-
-
-
-//    private Role mapRoleForUser(ResultSet rs) throws SQLException {// todo винести потім в RoleDao
-//        String roleName = rs.getString(CategoryFields.CATEGORY_NAME);
-//        return Role.getInstance(Role.UserRole.valueOf(roleName));
-//    }
 
 }

@@ -2,7 +2,7 @@ package com.epam.havryliuk.restaurant.model.entity;
 
 import java.math.BigDecimal;
 
-public class Dish implements Entity {//todo implements Serializable (to save Objects in session)
+public class Dish implements Entity {
     private long id;
     private String name;
     private String description;
@@ -13,7 +13,7 @@ public class Dish implements Entity {//todo implements Serializable (to save Obj
     private boolean spirits;// todo add field
 
     private String image;
-//    private Category category;
+//    private Category category;// todo need to add list of Category?
 
     public Dish() {
     }
@@ -28,13 +28,11 @@ public class Dish implements Entity {//todo implements Serializable (to save Obj
 
     public static Dish getInstance(long id, String name, String description, int weight, BigDecimal price,
                                    int amount, String image) {
-//                                   int amount, String image, Category category) {
         Dish dish = getInstance(name, price, amount);
         dish.setId(id);
         dish.setDescription(description);
         dish.setWeight(weight);
         dish.setImage(image);
-//        dish.setCategory(category);
         return dish;
     }
 
@@ -94,15 +92,6 @@ public class Dish implements Entity {//todo implements Serializable (to save Obj
         this.image = image;
     }
 
-//    public Category getCategory() {
-//        return category;
-//    }
-//
-//    public void setCategory(Category category) {
-//        this.category = category;
-//    }
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -124,7 +113,7 @@ public class Dish implements Entity {//todo implements Serializable (to save Obj
     }
 
     @Override
-    public String toString() {//todo represent like jsp?
+    public String toString() {
         return "Dish{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
@@ -132,7 +121,6 @@ public class Dish implements Entity {//todo implements Serializable (to save Obj
                 ", price=" + price +
                 ", amount=" + amount +
                 ", image='" + image + '\'' +
-//                ", category=" + category +
                 '}' + "\n" ;
     }
 }

@@ -13,7 +13,7 @@ import java.sql.SQLException;
 
 public class ConnectionManager {
 
-    private static final Logger log = LogManager.getLogger(ConnectionManager.class);// todo add logs for class
+    private static final Logger log = LogManager.getLogger(ConnectionManager.class);
 
     private static volatile ConnectionManager instance;
 
@@ -30,6 +30,7 @@ public class ConnectionManager {
                 localInstance = instance;
                 if (localInstance == null) {
                     instance = localInstance = new ConnectionManager();
+                    log.debug("Connection manager has been initialised.");
                 }
             }
         }
@@ -70,29 +71,5 @@ public class ConnectionManager {
             }
         }
     }
-//
-//    public void setAutoCommit(Connection con, boolean value) throws DAOException {
-//        synchronized (ConnectionManager.class) {
-//            try {
-//                con.setAutoCommit(value);
-//            } catch (Exception e) {
-//                log.error("Error setting " + value + " in connection " + con, e);
-//                throw new DAOException(e);
-//            }
-//        }
-//    }
-//
-//
-//    public void rollback(Connection con) throws DAOException {
-//        synchronized (ConnectionManager.class) {
-//            try {
-//                con.rollback();
-//            } catch (Exception e) {
-//                log.error("Enable to roll back connection" + con, e);
-//                throw new DAOException(e);
-//            }
-//        }
-//    }
-
 
 }

@@ -13,12 +13,9 @@ import java.io.IOException;
 
 import static com.epam.havryliuk.restaurant.controller.RequestAttributes.*;
 
-
-//todo read about PRG pattern
-
 @WebServlet("/registration")
 public class RegistrationController extends HttpServlet {
-    private static final Logger log = LogManager.getLogger(RegistrationController.class);// todo add logs for class
+    private static final Logger log = LogManager.getLogger(RegistrationController.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -29,7 +26,7 @@ public class RegistrationController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        log.debug("\"RegistrationController\", doPost.");//todo move down
+        log.debug("\"RegistrationController\", doPost.");
 
         HttpSession session = req.getSession();
         User user;
@@ -38,16 +35,14 @@ public class RegistrationController extends HttpServlet {
         try {
             UserService service = new UserService();
             user = service.addNewUser(req);
-            //todo set userId
-            log.info("The user \"" + user.getName() + "\" has been successfully registered.");//todo move down
             session.setAttribute(LOGGED_USER, user);
-//            session.setAttribute("userRole", user.getRole().getUserRole().name());
     //        Cookie cookie = new Cookie("sessionId", session.getId());
     //        resp.addCookie(cookie);
     //        req.getRequestDispatcher("view/jsp/registration.jsp").forward(req, resp);
             session.removeAttribute(REGISTRATION_ERROR_MESSAGE);
-            session.removeAttribute(REGISTRATION_PROCESS);//todo if that attribute is set - hide login menu is jsp
+            session.removeAttribute(REGISTRATION_PROCESS);//todo if that attribute is set - hide login menu in jsp
             redirectionPage = getRedirectionPage(session);
+            log.info("The user \"" + user.getName() + "\" has been successfully registered.");
         } catch (ServiceException e) {
             log.error("User hasn't been registered. " + e);
             redirectionPage = "registration";

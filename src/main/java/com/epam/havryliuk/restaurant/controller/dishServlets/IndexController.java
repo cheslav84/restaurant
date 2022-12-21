@@ -11,19 +11,17 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 
 
-//todo read about PRG pattern
-
 @WebServlet("/")
 public class IndexController extends HttpServlet {
-    private static final Logger log = LogManager.getLogger(IndexController.class);// todo add logs for class
+    private static final Logger log = LogManager.getLogger(IndexController.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        log.debug("\"/\" req doGet IndexController");
+//        log.debug("\"/\" req doGet IndexController");//todo
         resp.sendRedirect("index");
     }
 
-    
+
 }
 
 

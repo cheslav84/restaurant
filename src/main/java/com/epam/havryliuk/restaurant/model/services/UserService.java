@@ -50,6 +50,13 @@ public class UserService {
         return user;
     }
 
+    /**
+     * Checking for User email uniqueness. Trying to get from database user with the same
+     * email (login), if it presents there method throws DBException with correspondent message
+     * @param user
+     * @param userDao
+     * @throws DAOException
+     */
     private void checkIfLoginDoesNotExist(User user, UserDao userDao) throws DAOException {
         if (userDao.findByEmail(user.getEmail()) != null){
             String message = "The user with such login is already exists. Try to use another one.";

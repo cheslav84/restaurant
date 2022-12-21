@@ -9,7 +9,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class PropertiesLoader {
-    private static final Logger log = LogManager.getLogger(PropertiesLoader.class);// todo add logs for class
+    private static final Logger log = LogManager.getLogger(PropertiesLoader.class);
 
        public static Properties getProperties (String path) throws PropertyInitializationException {
            Properties properties = new Properties();

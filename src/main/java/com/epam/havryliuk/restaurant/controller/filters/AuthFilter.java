@@ -12,11 +12,13 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
+import static com.epam.havryliuk.restaurant.controller.RequestAttributes.LOGGED_USER;
 
-@WebFilter( urlPatterns = { "/basket", "/order", "/addToOrder", "/showOrderInfo"},
+
+@WebFilter( urlPatterns = { "/basket", "/order", "/addToOrder", "/removeFromOrder", "/showOrderInfo"},
         initParams = { @WebInitParam(name = "FORWARD_PATH", value = "view/jsp/registration.jsp") })
 public class AuthFilter implements Filter {
-    private static final Logger log = LogManager.getLogger(AuthFilter.class);// todo add logs for class
+    private static final Logger log = LogManager.getLogger(AuthFilter.class);
 
     private String indexPath;
 
@@ -47,7 +49,7 @@ public class AuthFilter implements Filter {
 
     private boolean isUserLoggedIn(HttpServletRequest httpRequest) {
         HttpSession session = httpRequest.getSession();
-            User loggedUser = (User) session.getAttribute("loggedUser");
+            User loggedUser = (User) session.getAttribute(LOGGED_USER);
             return loggedUser != null;
     }
 

@@ -18,17 +18,13 @@ import java.security.GeneralSecurityException;
 import static com.epam.havryliuk.restaurant.controller.RequestAttributes.*;
 
 
-//todo read about PRG pattern
-
 @WebServlet("/login")
 public class LogInController extends HttpServlet {
-    private static final Logger log = LogManager.getLogger(LogInController.class);// todo add logs for class
+    private static final Logger log = LogManager.getLogger(LogInController.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         log.debug("\"/login\" request doGet in LoginController");
-
-        HttpSession session = req.getSession();
 
         //todo ask from which page user came
         req.getRequestDispatcher("view/jsp/registration.jsp").forward(req, resp);
@@ -49,7 +45,7 @@ public class LogInController extends HttpServlet {
             session.setAttribute(LOGGED_USER, user);
             session.removeAttribute(LOGIN_ERROR_MESSAGE);
             redirectionPage = getRedirectionPage(session);
-            log.debug("User logged in.");// todo rename
+            log.debug("User logged in.");
         } catch (ServiceException e) {
             redirectionPage = "registration";
             setErrorMessage(req, e.getMessage());

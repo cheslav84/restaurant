@@ -16,16 +16,13 @@ import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
 import java.util.Date;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import static com.epam.havryliuk.restaurant.controller.RequestAttributes.*;
 
 public class OrderService {
     private static final Logger log = LogManager.getLogger(OrderService.class);
-
 
     public void confirmOrder(HttpServletRequest req) throws ServiceException {
         long orderId = Long.parseLong(req.getParameter("orderId"));//todo теоретично може бути ексепшн, якщо з боку фронта прийде невірне значення
@@ -64,7 +61,7 @@ public class OrderService {
             // dirty reads, наприклад? А якщо dirty reads не можливі (за логікою програми)?
             log.debug("The order list was successfully created.");
         } catch (DAOException e) {
-            String message = "The orders is temporary unavailable, try again later pleese.";
+            String message = "The orders is temporary unavailable, try again later please.";
             log.error(message, e);
             throw new ServiceException(message, e);
         } finally {
@@ -94,15 +91,15 @@ public class OrderService {
             OrderDao orderDao = new OrderDao();
             transaction.init(orderDao);
             order = orderDao.geByUserAddressStatus(user, deliveryAddress, BookingStatus.BOOKING);
-            log.debug("geByUserIdAddressStatus - userId: " + user.getId() + ", deliveryAddress: " + deliveryAddress + ", BookingStatus: " + BookingStatus.BOOKING);
             if(order != null) {
-//                order.setBookingStatus(BookingStatus.BOOKING);
                 order.setUser(user);
+                log.debug("Order has been received from database: " + order);
             } else {
                 order = Order.getInstance(deliveryAddress, deliveryPhone, false, user, BookingStatus.BOOKING);
                 orderDao.create(order);
                 Date creationDate = orderDao.getCreationDate(order.getId());
                 order.setCreationDate(creationDate);
+                log.debug("Has been created new order: " + order);
             }
         } catch (DAOException e) {
             log.error(e.getMessage(), e);
@@ -153,9 +150,6 @@ public class OrderService {
             } else {
                 orderDao.deleteDishFromOrderById(orderId,dishId);
             }
-
-            //todo get number of dishes in order (number of records)
-            // if the last record - delete it
 
 
             log.debug("Dish has been removed from order.");

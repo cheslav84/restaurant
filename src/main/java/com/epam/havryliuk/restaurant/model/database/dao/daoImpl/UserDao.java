@@ -20,24 +20,10 @@ import java.util.List;
 
 public class UserDao extends AbstractDao<User> {
     private static final Logger log = LogManager.getLogger(UserDao.class);
-//    private final ConnectionManager connectionManager;
-//
-//    public UserDao() throws DAOException {
-//        connectionManager = ConnectionManager.getInstance();
-//    }
 
-//    public UserDao(Connection connection) {
-//        super(connection);
-//    }
-//
 
-    /**
-     * by login.
-     */
-//    @Override
     public User findByEmail(String email) throws DAOException {
         User user = null;
-//        Connection con = connectionManager.getConnection();
         try (PreparedStatement stmt = connection.prepareStatement(UserQuery.FIND_USER_BY_LOGIN)) {
             stmt.setString(1, email);
             user = extractUser(stmt);
@@ -51,7 +37,7 @@ public class UserDao extends AbstractDao<User> {
 
     @Override
     public User findById(long id) throws DAOException {
-        User user = null;
+        User user;
           try (PreparedStatement stmt = connection.prepareStatement(UserQuery.FIND_USER_BY_ID)) {
             stmt.setLong(1, id);
             user = extractUser(stmt);
@@ -73,17 +59,8 @@ public class UserDao extends AbstractDao<User> {
         return user;
     }
 
-    /**
-     * As method create(user) accesses the database two times, for correct transaction
-     * connection has to be set to the false value.
-     * @param user
-     * @return
-     * @throws DAOException
-     */
     @Override
     public boolean create(User user) throws DAOException {
-//        Connection con = null;
-//        PreparedStatement stmt = null;
         try(PreparedStatement stmt = connection.prepareStatement(UserQuery.ADD_USER,
                 Statement.RETURN_GENERATED_KEYS)) {
             setUserParameters(user, stmt);
@@ -95,74 +72,14 @@ public class UserDao extends AbstractDao<User> {
                     }
                 }
             }
-//            connection.setAutoCommit(false);
-//            checkIfLoginUnique(con, user.getEmail());
-//            addUser(user, con);
             log.debug("The \"" + user.getName() + "\" user has been added to database.");
         } catch (SQLException e) {
             String message = "Something went wrong. Try to sign in later please.";
             log.error("Error in inserting user to database.", e);
-//            connectionManager.rollback(con);
+            throw new DAOException(message, e);
         }
-//        finally {
-//            connectionManager.setAutoCommit(con, true);
-//            connectionManager.close(con);
-//        }
         return true;
     }
-
-
-//    /**
-//     * Checking for User email uniqueness. Trying to get from database user with the same
-//     * email (login), if it presents there method throws DBException with the message
-//     * "The user with such login is already exists. Try to use another one."
-//     * @param con
-//     * @param login
-//     * @throws DAOException
-//     */
-//    public void checkIfLoginUnique(String login) throws DAOException {
-////        User user = null;
-//        try(PreparedStatement stmt = connection.prepareStatement(UserQuery.FIND_USER_BY_LOGIN)  {
-//            stmt.setString(1, login);
-//            User user = extractUser(stmt);
-//            log.debug("The \"" + user + "\" user received from database.");
-//            if (user != null){
-//                String message = "The user with such login is already exists. Try to use another one.";
-//                log.error(message);
-//                throw new DAOException(message);
-//            }
-//        } catch (SQLException e) {
-//            log.error("Error in getting user \"" + login + "\" from database.", e);
-//            throw new DAOException(e);
-//        }
-//    }
-
-
-//    private void addUser(User user, Connection con) throws DAOException, SQLException {
-//        PreparedStatement stmt = null;
-//        try {
-//            stmt = con.prepareStatement(UserQuery.ADD_USER,
-//                    Statement.RETURN_GENERATED_KEYS);
-//            setUserParameters(user, stmt);
-//            int insertionAmount = stmt.executeUpdate();
-//            if (insertionAmount > 0) {
-//                try (ResultSet rs = stmt.getGeneratedKeys()) {
-//                    if (rs.next()) {
-//                        user.setId(rs.getLong(1));
-//                    }
-//                }
-//            }
-//        } catch (SQLException e) {
-//            log.error("Error adding user to database.", e);
-//            throw new SQLException(e);
-//        } finally {
-//            connectionManager.close(stmt);
-//        }
-//
-//    }
-
-
-
 
 
     @Override
@@ -182,7 +99,7 @@ public class UserDao extends AbstractDao<User> {
     }
 
     @Override
-    public User update(User user) throws DAOException {//todo в такому випадку беремо юзера з бази?
+    public User update(User user) throws DAOException {
         try ( PreparedStatement stmt = connection.prepareStatement(UserQuery.UPDATE_USER)) {
             setUserParameters(user, stmt);
             stmt.executeUpdate();

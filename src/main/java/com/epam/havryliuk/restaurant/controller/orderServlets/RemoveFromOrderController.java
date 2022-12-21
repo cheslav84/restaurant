@@ -1,11 +1,7 @@
 package com.epam.havryliuk.restaurant.controller.orderServlets;
 
-import com.epam.havryliuk.restaurant.model.entity.Order;
-import com.epam.havryliuk.restaurant.model.exceptions.BadCredentialsException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.services.OrderService;
-import com.epam.havryliuk.restaurant.model.utils.URLUtil;
-import com.epam.havryliuk.restaurant.model.utils.Validator;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,8 +17,7 @@ import static com.epam.havryliuk.restaurant.controller.RequestAttributes.*;
 
 @WebServlet("/removeFromOrder")
 public class RemoveFromOrderController extends HttpServlet {
-    private static final Logger log = LogManager.getLogger(RemoveFromOrderController.class);// todo add logs for class
-
+    private static final Logger log = LogManager.getLogger(RemoveFromOrderController.class);
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -39,11 +34,8 @@ public class RemoveFromOrderController extends HttpServlet {
                 session.setAttribute(ERROR_MESSAGE, errorMessage);
                 log.error(errorMessage, e);
             }
-
         resp.sendRedirect("basket");
     }
-
-
 
 }
 

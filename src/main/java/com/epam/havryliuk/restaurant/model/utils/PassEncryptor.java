@@ -15,7 +15,7 @@ import java.security.GeneralSecurityException;
 import java.util.Base64;
 
 public class PassEncryptor {
-    private static final Logger log = LogManager.getLogger(PassEncryptor.class);// todo add logs for class
+    private static final Logger log = LogManager.getLogger(PassEncryptor.class);
     public static String encrypt(String password) throws GeneralSecurityException {
         final byte[] salt = ("622836429").getBytes();
         final int iterationCount = 10000;
