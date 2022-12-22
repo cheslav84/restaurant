@@ -25,47 +25,6 @@
 <body>
     <jsp:include page="sidebar.jsp"/>
 
-    <!-- <div data-animation="default" class="navbar-left w-nav" data-easing2="ease" data-easing="ease" data-collapse="small"
-        role="banner" data-no-scroll="1" data-duration="400" data-doc-height="1">
-        <div class="menu-overlay">
-            <div class="w-container">
-                <a href="index.html" aria-current="page" class="logo-container w-clearfix w-nav-brand w--current">
-                    <img src="./icons/Icon-coffee.png" alt="" class="logo-icon">
-                    <h1 class="logo-text">Easy Times</h1>
-                    <h2 class="logo-text subtitle">Cafe&nbsp;&amp; Restaurant</h2>
-                </a>
-                <div class="menu-divider w-hidden-small w-hidden-tiny"></div>
-                <div class="menu-button w-nav-button">
-                    <div class="w-icon-nav-menu"></div>
-                </div>
-                <nav role="navigation" class="nav-menu w-nav-menu">
-
-                    <a href="/index" aria-current="page" class="nav-link w-nav-link w--current"
-                        style="max-width: 940px;">Home</a>
-
-                    <a href="menu.html" class="nav-link w-nav-link" style="max-width: 940px;">Menu</a>
-                    <a href="reservation.html" class="nav-link w-nav-link" style="max-width: 940px;">Reservation</a>
-                    <a href="gallery.html" class="nav-link w-nav-link" style="max-width: 940px;">Gallery</a>
-                    <a href="parties.html" class="nav-link w-nav-link" style="max-width: 940px;">Parties &amp;
-                        Events</a>
-                    <a href="about-us.html" class="nav-link w-nav-link" style="max-width: 940px;">About us</a>
-                    <a href="blog.html" class="nav-link w-nav-link" style="max-width: 940px;">Blog</a>
-                    <a href="contact.html" class="nav-link w-nav-link" style="max-width: 940px;">Contact us</a>
-                    <a href="registration.jsp" class="nav-link w-nav-link" style="max-width: 940px;">Registration</a>
-
-                </nav>
-                <div class="menu-divider w-hidden-small w-hidden-tiny"></div>
-                <div class="nav-contact-block w-hidden-small w-hidden-tiny">
-                    <a href="http://www.facebook.com/" target="_blank" class="nav-social-button w-inline-block">
-                        <img src="WEB-INF/pictures/icons/Icon-facebook.png" alt="" class="nav-social-icon"></a>
-                    <a href="http://www.twitter.com/" target="_blank" class="nav-social-button w-inline-block">
-                        <img src="WEB-INF/pictures/icons/Icon-twitter.png" alt="" class="nav-social-icon">
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="w-nav-overlay" data-wf-ignore=""></div>
-    </div> -->
     <div id="top" class="page-header reservations">
         <div class="page-header-overlay">
             <div class="container w-container">
@@ -99,7 +58,8 @@
 
 
                         <!-- LOGING IN -->
-                        <form method="post" action="login" id="wf-form-Reservation-Form" name="logInForm" data-name="Log in form">
+                        <form method="post" action="controller?action=login" id="wf-form-Reservation-Form" name="logInForm" data-name="Log in form">
+                        <%-- <input type="hidden" name="command" value="login" /> --%>
                             <input type="email" id="Email-3" name="email" data-name="Email" placeholder="Email address"
                                 maxlength="32" required="true" class="field w-input"                                          value="mail@com">
 
@@ -108,7 +68,8 @@
                                 class="field w-input"                                                                     value="mail@com">
 
                             <div class="error-message"> 
-                                <c:out value="${sessionScope.logInErrorMessage}"/>
+                                <%-- <c:out value="${sessionScope.logInErrorMessage}"/> --%>
+                                <c:out value="${sessionScope.errorMessage}"/>
                             </div>
 
                             <input type="submit" value="Log in" data-wait="Please wait..."

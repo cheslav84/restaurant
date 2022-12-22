@@ -2,7 +2,7 @@ package com.epam.havryliuk.restaurant.controller.userServlets;
 
 import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
-import com.epam.havryliuk.restaurant.model.services.UserService;
+import com.epam.havryliuk.restaurant.model.service.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;

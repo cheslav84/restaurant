@@ -1,12 +1,12 @@
 package com.epam.havryliuk.restaurant.model.database.dao.daoImpl;
 
 import com.epam.havryliuk.restaurant.model.database.dao.AbstractDao;
-import com.epam.havryliuk.restaurant.model.database.dao.databaseFieds.RoleFields;
-import com.epam.havryliuk.restaurant.model.database.dao.queries.UserQuery;
+import com.epam.havryliuk.restaurant.model.constants.databaseFieds.RoleFields;
+import com.epam.havryliuk.restaurant.model.constants.queries.UserQuery;
 import com.epam.havryliuk.restaurant.model.entity.Role;
 import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.entity.UserDetails;
-import com.epam.havryliuk.restaurant.model.database.dao.databaseFieds.UserFields;
+import com.epam.havryliuk.restaurant.model.constants.databaseFieds.UserFields;
 import com.epam.havryliuk.restaurant.model.entity.constants.UserRole;
 import com.epam.havryliuk.restaurant.model.exceptions.DAOException;
 import org.apache.logging.log4j.LogManager;

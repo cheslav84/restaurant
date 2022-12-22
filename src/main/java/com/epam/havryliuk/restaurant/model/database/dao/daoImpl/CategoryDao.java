@@ -1,9 +1,8 @@
 package com.epam.havryliuk.restaurant.model.database.dao.daoImpl;
 
-import com.epam.havryliuk.restaurant.model.database.connection.ConnectionManager;
 import com.epam.havryliuk.restaurant.model.database.dao.AbstractDao;
-import com.epam.havryliuk.restaurant.model.database.dao.databaseFieds.CategoryFields;
-import com.epam.havryliuk.restaurant.model.database.dao.queries.CategoryQuery;
+import com.epam.havryliuk.restaurant.model.constants.databaseFieds.CategoryFields;
+import com.epam.havryliuk.restaurant.model.constants.queries.CategoryQuery;
 import com.epam.havryliuk.restaurant.model.entity.Category;
 import com.epam.havryliuk.restaurant.model.entity.constants.CategoryName;
 import com.epam.havryliuk.restaurant.model.exceptions.DAOException;

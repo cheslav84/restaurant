@@ -2,7 +2,7 @@ package com.epam.havryliuk.restaurant.controller.dishServlets;
 
 import com.epam.havryliuk.restaurant.model.entity.Dish;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
-import com.epam.havryliuk.restaurant.model.services.DishService;
+import com.epam.havryliuk.restaurant.model.service.DishService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -18,7 +18,7 @@ import java.util.List;
 
 import static com.epam.havryliuk.restaurant.controller.RequestAttributes.*;
 
-@WebServlet("/index")
+@WebServlet("/")
 public class MainPageController extends HttpServlet {
     private static final Logger log = LogManager.getLogger(MainPageController.class);
 

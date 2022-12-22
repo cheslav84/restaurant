@@ -1,6 +1,6 @@
 package com.epam.havryliuk.restaurant.controller.orderServlets;
 
-import com.epam.havryliuk.restaurant.model.services.DishService;
+import com.epam.havryliuk.restaurant.model.service.DishService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
