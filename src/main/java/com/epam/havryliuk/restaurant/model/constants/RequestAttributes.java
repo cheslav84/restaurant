@@ -1,4 +1,4 @@
-package com.epam.havryliuk.restaurant.controller;
+package com.epam.havryliuk.restaurant.model.constants;
 
 public class RequestAttributes {
 
@@ -10,13 +10,13 @@ public class RequestAttributes {
     public static final String LOGGED_USER = "loggedUser";
     public static final String DELIVERY_ADDRESS = "deliveryAddress";
     public static final String DELIVERY_PHONE = "deliveryPhone";
-
     public static final String PAGE_FROM_BEING_REDIRECTED = "pageFromBeingRedirected";//todo change from URLUtil class
+    public static final String SHOW_DISH_INFO = "showDishInfo";
+    public static final String ERROR_MESSAGE = "errorMessage";
+    public static final String ORDER_MESSAGE = "orderMessage";
 
-    public static final String SHOW_DISH_INFO = "showDishInfo";//todo try to make one
 
-    public static final String ERROR_MESSAGE = "errorMessage";//todo try to make one
-    public static final String LOGIN_ERROR_MESSAGE = "logInErrorMessage";//todo try to make one
+//    public static final String LOGIN_ERROR_MESSAGE = "logInErrorMessage";//todo try to make one
     public static final String REGISTRATION_ERROR_MESSAGE = "registrationErrorMessage";//todo try to make one
     public static final String REGISTRATION_PROCESS = "registrationProcess";
 

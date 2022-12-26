@@ -5,6 +5,7 @@ import com.epam.havryliuk.restaurant.model.constants.databaseFieds.OrderFields;
 import com.epam.havryliuk.restaurant.model.constants.queries.OrderQuery;
 import com.epam.havryliuk.restaurant.model.entity.*;
 import com.epam.havryliuk.restaurant.model.exceptions.DAOException;
+import com.epam.havryliuk.restaurant.model.exceptions.DuplicatedEntityException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -58,22 +59,26 @@ public class OrderDao extends AbstractDao<Order> {
         return order;
     }
 
-    public boolean addNewDishesToOrder(Order order, Dish dish, int amount) throws DAOException {
-        try (PreparedStatement stmt = connection.prepareStatement(OrderQuery.ADD_DISH_TO_BASKET)) {
-            int k=0;
-            stmt.setLong(++k, order.getId());
-            stmt.setLong(++k, dish.getId());
-            stmt.setInt(++k, amount);
-            stmt.setBigDecimal(++k, dish.getPrice());
-            stmt.executeUpdate();
-            log.debug("Dish has been added to database");
-        } catch (SQLException e) {
-            String errorMassage = "Something went wrong. Dish haven't been added to basket. Try please again later.";
-            log.error(errorMassage, e);
-            throw new DAOException(errorMassage, e);
-        }
-        return true;
-    }
+//    public boolean addNewDishesToOrder(Order order, Dish dish, int amount) throws DAOException, DuplicatedEntityException {
+//        try (PreparedStatement stmt = connection.prepareStatement(OrderQuery.ADD_DISH_TO_BASKET)) {
+//            int k = 0;
+//            stmt.setLong(++k, order.getId());
+//            stmt.setLong(++k, dish.getId());
+//            stmt.setInt(++k, amount);
+//            stmt.setBigDecimal(++k, dish.getPrice());
+//            stmt.executeUpdate();
+//            log.debug("Dish has been added to database");
+//        }  catch (SQLIntegrityConstraintViolationException e) {
+//            String errorMassage = "Something went wrong. Dish haven't been added to basket. Try please again later.";
+//            log.error(errorMassage, e);
+//            throw new DuplicatedEntityException(errorMassage, e);
+//        }catch (SQLException e) {
+//            String errorMassage = "Something went wrong. Dish haven't been added to basket. Try please again later.";
+//            log.error(errorMassage, e);
+//            throw new DAOException(errorMassage, e);
+//        }
+//        return true;
+//    }
 
     public boolean changeBookingStatus(Order order, BookingStatus status) throws DAOException {
         throw new UnsupportedOperationException();

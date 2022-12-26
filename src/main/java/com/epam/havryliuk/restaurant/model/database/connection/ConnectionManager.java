@@ -1,4 +1,4 @@
-package com.epam.havryliuk.restaurant.controller.filters.connection;
+package com.epam.havryliuk.restaurant.model.database.connection;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

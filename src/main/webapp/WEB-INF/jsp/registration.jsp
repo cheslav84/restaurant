@@ -58,7 +58,7 @@
 
 
                         <!-- LOGING IN -->
-                        <form method="post" action="controller?action=login" id="wf-form-Reservation-Form" name="logInForm" data-name="Log in form">
+                        <form method="post" action="login" id="wf-form-Reservation-Form" name="logInForm" data-name="Log in form">
                         <%-- <input type="hidden" name="command" value="login" /> --%>
                             <input type="email" id="Email-3" name="email" data-name="Email" placeholder="Email address"
                                 maxlength="32" required="true" class="field w-input"                                          value="mail@com">
@@ -84,7 +84,7 @@
               
 
                         <!-- REGISTRATION -->
-                        <form method="post" action="registration" id="wf-form-Reservation-Form" name="registrationForm" data-name="Reservation Form">
+                        <form method="post" action="register" id="wf-form-Reservation-Form" name="registrationForm" data-name="Reservation Form">
                             <input type="text" id="name" name="name" data-name="Name" placeholder="Enter your name"
                                 maxlength="24" class="field w-input"                                                     value="Name">
                             <input type="text" id="name" name="surname" data-name="Surname"

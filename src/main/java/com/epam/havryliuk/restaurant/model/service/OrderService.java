@@ -1,14 +1,13 @@
 package com.epam.havryliuk.restaurant.model.service;
 
 import com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction;
+import com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao;
 import com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao;
 import com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao;
-import com.epam.havryliuk.restaurant.model.entity.BookingStatus;
-import com.epam.havryliuk.restaurant.model.entity.Order;
-import com.epam.havryliuk.restaurant.model.entity.Dish;
-import com.epam.havryliuk.restaurant.model.entity.User;
+import com.epam.havryliuk.restaurant.model.entity.*;
 import com.epam.havryliuk.restaurant.model.exceptions.BadCredentialsException;
 import com.epam.havryliuk.restaurant.model.exceptions.DAOException;
+import com.epam.havryliuk.restaurant.model.exceptions.DuplicatedEntityException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.util.Validator;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,11 +18,10 @@ import org.apache.logging.log4j.Logger;
 import java.util.Date;
 import java.util.List;
 
-import static com.epam.havryliuk.restaurant.controller.RequestAttributes.*;
+import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
 public class OrderService {
     private static final Logger log = LogManager.getLogger(OrderService.class);
-
     public void confirmOrder(HttpServletRequest req) throws ServiceException {
         long orderId = Long.parseLong(req.getParameter("orderId"));//todo теоретично може бути ексепшн, якщо з боку фронта прийде невірне значення
         log.debug("\"/orderId\" " + orderId + " has been received from user.");
@@ -43,17 +41,16 @@ public class OrderService {
         }
     }
 
-    public List<Order> getAllUserOrders(HttpServletRequest req) throws ServiceException {
-        User user = getCurrentUser(req);//todo think of renaming - non informative
+    public List<Order> getAllUserOrders(User user) throws ServiceException {
         OrderDao orderDao = new OrderDao();
-        DishDao dishDao = new DishDao();
+        BasketDao basketDao = new BasketDao();
         EntityTransaction transaction = new EntityTransaction();
         List<Order> orders;
         try {
-            transaction.initTransaction(orderDao, dishDao);
+            transaction.initTransaction(orderDao, basketDao);
             orders = orderDao.getByUserSortedByTime(user);
             for (Order order : orders) {
-                order.setDishes(dishDao.getOrderDishes(order));
+                order.setBaskets(basketDao.getOrderDishes(order));
             }
             transaction.commit();
             //todo чи потрібно такі запипити виконувати в транзакції, якщо ми лише читаємо
@@ -75,16 +72,12 @@ public class OrderService {
      * creates a new one from data that received from user side (delivery address, delivery phone).
      * As that order is new, then payment status is set to false, and the booking status is "Booking".
      * Other data, like id and creation is formed by database.
-     * @param req
+     * @param
      * @return
      * @throws ServiceException
      * @throws BadCredentialsException
      */
-    public Order getOrder(HttpServletRequest req) throws ServiceException, BadCredentialsException {
-        String deliveryAddress = req.getParameter("deliveryAddress");
-        String deliveryPhone = req.getParameter("deliveryPhone");
-        User user = getCurrentUser(req);//todo think of renaming - non informative
-
+    public Order getOrder(User user, String deliveryAddress, String deliveryPhone) throws ServiceException, BadCredentialsException {
         EntityTransaction transaction = new EntityTransaction();
         Order order;
         try {
@@ -110,23 +103,25 @@ public class OrderService {
         return order;
     }
 
-    public void addDishToOrder(HttpServletRequest req, Order order) throws ServiceException, BadCredentialsException {
-        Dish dish = getCurrentDish(req);
-        int dishesAmount = getDishesAmount(req);
-        order.addDishes(dish, dishesAmount);
+    public void addDishToOrder(Order order, Dish dish, int dishesAmount) throws ServiceException, BadCredentialsException, DuplicatedEntityException {
+
+        Basket basket = Basket.getInstance(order, dish, dish.getPrice(), dishesAmount);
+        List<Basket> baskets = order.getBaskets();
+        baskets.add(basket);
+
         EntityTransaction transaction = new EntityTransaction();
+        BasketDao basketDao = new BasketDao();
         try {
-            OrderDao orderDao = new OrderDao();
-            transaction.init(orderDao);
-            orderDao.addNewDishesToOrder(order, dish, dishesAmount);
-            //todo два рази вказуємо одні і ті ж значення (dish, dishesAmount), одного разу додаємо до замовлення яке
-            // знаходиться в пам'яті (в сесії), а другий раз коли хочемо записати в базу даних. Можна використати
-            // LinkedHashMap, і діставати останній доданий, але тоді доведеться по лінках шукати останній елемент,
-            // що теж не є ефективним.
+            transaction.init(basketDao);
+            basketDao.create(basket);
+        }
+        catch (DuplicatedEntityException e) {
+            throw new DuplicatedEntityException(e);
         } catch (DAOException e) {
             log.error(e.getMessage(), e);
             throw new ServiceException(e.getMessage(), e);
-        } finally {
+        }
+        finally {
             transaction.end();
         }
     }
@@ -142,16 +137,12 @@ public class OrderService {
         try {
             orderDao = new OrderDao();
             transaction.init(orderDao);
-
-
             int dishesInOrder = orderDao.findDishesNumberInOrder(orderId);
             if (dishesInOrder == 1) {
                 orderDao.delete(orderId);
             } else {
                 orderDao.deleteDishFromOrderById(orderId,dishId);
             }
-
-
             log.debug("Dish has been removed from order.");
         } catch (DAOException e) {
             log.debug(e.getMessage(), e);
@@ -163,42 +154,42 @@ public class OrderService {
     }
 
 
-    private int getDishesAmount(HttpServletRequest req) throws BadCredentialsException {
-        int dishesAmount;
+//    private int getDishesAmount(HttpServletRequest req) throws BadCredentialsException {
+//        int dishesAmount;
+//
+//        try {
+//            dishesAmount = Integer.parseInt(req.getParameter("amount").trim());
+//            if(!Validator.isDishesAmountCorrect(dishesAmount)) {
+//                throw new BadCredentialsException("The the number of dishes is incorrect.");
+//            }
+//            log.debug("Request for \"" + dishesAmount + "\" has been received.");
+//        } catch (NumberFormatException e) {
+//            throw new BadCredentialsException("Enter amount of dishes you want to order please.");
+//        }
+//        return dishesAmount;
+//    }
 
-        try {
-            dishesAmount = Integer.parseInt(req.getParameter("amount").trim());
-            if(!Validator.isDishesAmountCorrect(dishesAmount)) {
-                throw new BadCredentialsException("The the number of dishes is incorrect.");
-            }
-            log.debug("Request for \"" + dishesAmount + "\" has been received.");
-        } catch (NumberFormatException e) {
-            throw new BadCredentialsException("Enter amount of dishes you want to order please.");
-        }
-        return dishesAmount;
-    }
+//    private User getCurrentUser(HttpServletRequest req) throws ServiceException {// todo move to User service
+//        HttpSession session = req.getSession();
+//        User user = (User) session.getAttribute(LOGGED_USER);
+//        if (user == null) {
+//            String errorMessage = "The user has been logged out.";
+//            log.error(errorMessage);
+//            throw new ServiceException(errorMessage);
+//        }
+//        return user;
+//    }
 
-    private User getCurrentUser(HttpServletRequest req) throws ServiceException {// todo move to User service
-        HttpSession session = req.getSession();
-        User user = (User) session.getAttribute(LOGGED_USER);
-        if (user == null) {
-            String errorMessage = "The user has been logged out.";
-            log.error(errorMessage);
-            throw new ServiceException(errorMessage);
-        }
-        return user;
-    }
-
-    private Dish getCurrentDish(HttpServletRequest req) throws ServiceException {
-        HttpSession session = req.getSession();
-        Dish dish = (Dish) session.getAttribute(CURRENT_DISH);
-        if (dish == null) {
-            String errorMessage = "Choose the dish for adding it to basket.";
-            log.error(errorMessage);
-            throw new ServiceException(errorMessage);
-        }
-        return dish;
-    }
+//    private Dish getCurrentDish(HttpServletRequest req) throws ServiceException {
+//        HttpSession session = req.getSession();
+//        Dish dish = (Dish) session.getAttribute(CURRENT_DISH);
+//        if (dish == null) {
+//            String errorMessage = "Choose the dish for adding it to basket.";
+//            log.error(errorMessage);
+//            throw new ServiceException(errorMessage);
+//        }
+//        return dish;
+//    }
 
 
 

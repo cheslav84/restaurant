@@ -1,5 +1,6 @@
 package com.epam.havryliuk.restaurant.model.service;
 
+import com.epam.havryliuk.restaurant.model.constants.RequestAttributes;
 import com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction;
 import com.epam.havryliuk.restaurant.model.database.dao.daoImpl.RoleDao;
 import com.epam.havryliuk.restaurant.model.entity.User;
@@ -133,9 +134,9 @@ public class UserService {
         }
     }
 
-    private User getUserFromSession(HttpServletRequest req) {
+    public User getUserFromSession(HttpServletRequest req) {
         HttpSession session = req.getSession();
-        return (User) session.getAttribute("loggedUser");
+        return (User) session.getAttribute(RequestAttributes.LOGGED_USER);
     }
 
 

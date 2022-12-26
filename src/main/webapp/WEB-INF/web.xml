@@ -7,16 +7,16 @@
   <display-name>Restaurant</display-name>
 
     <welcome-file-list>
-        <welcome-file>/jsp/index.jsp</welcome-file>
+        <welcome-file>/WEB-INF/jsp/index.jsp</welcome-file>
     </welcome-file-list>
 
     <error-page>
         <error-code>404</error-code>
-        <location>/jsp/errorPage.jsp</location>
+        <location>/WEB-INF/jsp/errorPage.jsp</location>
     </error-page>
     <error-page>
         <exception-type>java.lang.RuntimeException</exception-type>
-        <location>/jsp/errorPage.jsp</location>
+        <location>/WEB-INF/jsp/errorPage.jsp</location>
     </error-page>
 
 

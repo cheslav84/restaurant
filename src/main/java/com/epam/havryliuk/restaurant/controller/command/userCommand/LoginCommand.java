@@ -17,10 +17,9 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.Locale;
 
-import static com.epam.havryliuk.restaurant.controller.RequestAttributes.*;
-import static com.epam.havryliuk.restaurant.controller.RequestAttributes.PAGE_FROM_BEING_REDIRECTED;
+import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
+import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.PAGE_FROM_BEING_REDIRECTED;
 
 public class LoginCommand implements ActionCommand {
     private static final Logger log = LogManager.getLogger(LoginCommand.class);
@@ -30,6 +29,8 @@ public class LoginCommand implements ActionCommand {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        log.debug("log in command");
+
         String page = null;
         String login = request.getParameter(PARAM_NAME_LOGIN);
         String pass = request.getParameter(PARAM_NAME_PASSWORD);
@@ -43,16 +44,18 @@ public class LoginCommand implements ActionCommand {
             page = getRedirectionPage(session);//todo
             log.debug("User logged in.");
         } catch (ServiceException e) {
-            page = ConfigurationManager.getProperty(AppPagesPath.REGISTRATION);
+            page = AppPagesPath.REDIRECT_REGISTRATION;
             session.setAttribute(ERROR_MESSAGE,
-                    MessageManager.UA.getProperty("message.loginError"));//todo change local
+                    MessageManager.EN.getProperty("message.loginError"));//todo change local
             log.error(e.getMessage());
         } catch (GeneralSecurityException e) {
-            page = ConfigurationManager.getProperty(AppPagesPath.REGISTRATION);
+            page = AppPagesPath.REDIRECT_REGISTRATION;
             session.setAttribute(ERROR_MESSAGE,
-                    MessageManager.UA.getProperty("message.passwordError"));//todo change local
+                    MessageManager.EN.getProperty("message.passwordError"));//todo change local
             log.error(e.getMessage());
         }
+        System.err.println("page + "+ page);
+
         response.sendRedirect(page);
     }
 
@@ -64,7 +67,7 @@ public class LoginCommand implements ActionCommand {
         if (pageFromBeingRedirected != null) {
             redirectionPage = pageFromBeingRedirected;
         } else {
-            redirectionPage = "index";
+            redirectionPage = AppPagesPath.REDIRECT_INDEX;
         }
         session.removeAttribute(PAGE_FROM_BEING_REDIRECTED);
         return redirectionPage;

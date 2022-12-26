@@ -10,8 +10,11 @@ import java.util.Properties;
 public class AppPagesPath {
     private static final Logger log = LogManager.getLogger(AppPagesPath.class);
     private static final Properties properties;
-    public static String INDEX;
-    public static String REGISTRATION;
+    public static String FORWARD_INDEX;
+    public static String REDIRECT_INDEX;
+    public static String MENU;
+    public static String FORWARD_REGISTRATION;
+    public static String REDIRECT_REGISTRATION;
     public static String ERROR;
 
 
@@ -22,11 +25,12 @@ public class AppPagesPath {
     }
 
        private static void initialiseVariable() {
-           INDEX = (String) properties.get("path.page.index");
-           REGISTRATION = (String) properties.get("path.page.registration");
+           FORWARD_INDEX = (String) properties.get("path.page.forward.index");
+           REDIRECT_INDEX = (String) properties.get("path.page.redirect.index");
+           FORWARD_REGISTRATION = (String) properties.get("path.page.forward.registration");
+           REDIRECT_REGISTRATION = (String) properties.get("path.page.redirect.registration");
            ERROR = (String) properties.get("path.page.error");
-
-
+           MENU = (String) properties.get("path.page.menu");
 
        }
 }

@@ -4,8 +4,6 @@ package com.epam.havryliuk.restaurant.controller;
 import com.epam.havryliuk.restaurant.controller.command.ActionCommand;
 import com.epam.havryliuk.restaurant.controller.command.CommandFactory;
 import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
-import com.epam.havryliuk.restaurant.model.resource.ConfigurationManager;
-import com.epam.havryliuk.restaurant.model.resource.MessageManager;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -18,7 +16,9 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 
 
-@WebServlet("/controller")
+@WebServlet(name = "Controller", urlPatterns = {"/page/*", "/auth/*",  "/login", "/register", "/logout", "/showOrderInfo", "/menu/*", "/locale/*",
+                            "/client/*", "/admin/*", "/index", "/makeOrder", "/basket"})
+//@WebServlet("/")
 public class Controller extends HttpServlet {
     private static final Logger log = LogManager.getLogger(Controller.class);
 
@@ -41,7 +41,7 @@ public class Controller extends HttpServlet {
             response.sendRedirect(request.getContextPath() + AppPagesPath.ERROR);//todo
         }
 
-//        String page = command.execute(request, response);
+//        String page = null;
 //
 //        if (page != null) {
 //            response.sendRedirect(page);

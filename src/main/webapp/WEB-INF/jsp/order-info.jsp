@@ -9,7 +9,6 @@
         <div class="order-info-container">
             <div class="order-info-box">
 
-
                 <div class="one-dish-info">
                     <img src="view/pictures/icons/close-icon.png" alt="Close icon" id="close-cross-button" class="close-icon">
 
@@ -19,13 +18,11 @@
                     <div class="menu-item-label menu-item-weight">
 
                         <c:out value="${dish.weight}" />
-                        <%-- 200 --%>
                         <span class="weight-marker"> g</span>
                     </div>
 
                     <div class="menu-item-label menu-item-price-reload">
                         <c:out value="${dish.price}" />
-                        <%-- 4.50 --%>
                         <span class="price-marker">₴</span>
                     </div>
 
@@ -52,7 +49,7 @@
                     </div>
 
                 <%-- <div class="order-buttons"> --%>
-                    <form method="post" action="addToOrder">
+                    <form method="post" action="makeOrder">
 
                         <c:if test="${sessionScope.currentOrder eq null}">
                             <div class="address-info">
@@ -68,6 +65,7 @@
 
                         <div class="error-message" >
                             <c:out value="${sessionScope.errorMessage}" />
+                            <c:out value="${sessionScope.orderMessage}" />
                         </div>   
 
                         <div class="order-info-buttons">

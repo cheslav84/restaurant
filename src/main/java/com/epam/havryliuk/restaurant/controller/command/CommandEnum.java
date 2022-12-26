@@ -1,18 +1,30 @@
 package com.epam.havryliuk.restaurant.controller.command;
 
-import com.epam.havryliuk.restaurant.controller.command.userCommand.LoginCommand;
-import com.epam.havryliuk.restaurant.controller.command.userCommand.LogoutCommand;
+import com.epam.havryliuk.restaurant.controller.command.dishCommand.IndexCommand;
+import com.epam.havryliuk.restaurant.controller.command.dishCommand.MenuCommand;
+import com.epam.havryliuk.restaurant.controller.command.orderCommand.MakeOrderCommand;
+import com.epam.havryliuk.restaurant.controller.command.orderCommand.OrderInfoCommand;
+import com.epam.havryliuk.restaurant.controller.command.userCommand.*;
 
 public enum CommandEnum {
-    LOGIN {
-        {
-            this.command = new LoginCommand();
-        }
+    PAGE {
+        { this.command = new PageCommand(); }
+    }, INDEX {
+        { this.command = new IndexCommand(); }
+    }, MENU {
+        { this.command = new MenuCommand(); }
+    }, SHOWORDERINFO {
+        { this.command = new OrderInfoCommand(); }
+    }, MAKEORDER {
+        { this.command = new MakeOrderCommand(); }
+    }, LOGIN {
+        { this.command = new LoginCommand(); }
     }, LOGOUT {
-        {
-            this.command = new LogoutCommand();
-        }
+        { this.command = new LogoutCommand(); }
+    }, REGISTER {
+        { this.command = new RegisterCommand(); }
     };
+
     ActionCommand command;
 
     public ActionCommand getCurrentCommand() {

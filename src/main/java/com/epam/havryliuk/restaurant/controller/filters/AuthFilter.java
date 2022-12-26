@@ -1,5 +1,6 @@
 package com.epam.havryliuk.restaurant.controller.filters;
 
+import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
 import com.epam.havryliuk.restaurant.model.entity.User;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
@@ -12,21 +13,19 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
-import static com.epam.havryliuk.restaurant.controller.RequestAttributes.LOGGED_USER;
+import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.LOGGED_USER;
 
 
-@WebFilter( urlPatterns = { "/basket", "/order", "/addToOrder", "/removeFromOrder", "/showOrderInfo"},
-        initParams = { @WebInitParam(name = "FORWARD_PATH", value = "view/jsp/registration.jsp") })
+@WebFilter( urlPatterns = { "/basket", "/order",  "/removeFromOrder", "/makeOrder", "/showOrderInfo"},
+        initParams = { @WebInitParam(name = "FORWARD_PATH", value = "WEB-INF/jsp/registration.jsp") })
+//@WebFilter( urlPatterns = { "/basket", "/order", "/addToOrder", "/removeFromOrder", "/showOrderInfo"})
 public class AuthFilter implements Filter {
     private static final Logger log = LogManager.getLogger(AuthFilter.class);
 
-    private String indexPath;
+    private String forwardPath;
 
     public void init(FilterConfig fConfig) throws ServletException {
-        log.debug("\"/FilterConfig\" init starts.");
-        indexPath = fConfig.getInitParameter("FORWARD_PATH");
-        log.debug("\"/FilterConfig\" set redirection path to: " + indexPath);
-
+        String forwardPath = "WEB-INF/jsp/registration.jsp";
     }
 
 
@@ -41,7 +40,10 @@ public class AuthFilter implements Filter {
         log.debug("\"HttpServletMapping()\" " + httpRequest.getHttpServletMapping());
 
         if (!isUserLoggedIn(httpRequest)) {
-            httpRequest.getRequestDispatcher(indexPath).forward(httpRequest, httpResponse);
+//            httpRequest.getRequestDispatcher("WEB-INF/jsp/errorPage.jsp").forward(httpRequest, httpResponse);
+            httpRequest.getRequestDispatcher("WEB-INF/jsp/registration.jsp").forward(httpRequest, httpResponse);
+//            httpResponse.sendRedirect("registration");
+//            httpRequest.getRequestDispatcher(forwardPath).forward(httpRequest, httpResponse);
         }
         log.debug("User logged in. ");
         chain.doFilter(request, response);

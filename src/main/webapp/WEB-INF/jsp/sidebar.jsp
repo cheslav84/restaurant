@@ -24,22 +24,23 @@
             <nav role="navigation" class="nav-menu w-nav-menu">
                 <a href="index" id="index-nav" aria-current="page" class="nav-link w-nav-link w--current"
                     style="max-width: 940px;">Home</a>
-                <a href="menu" id="menu-nav" class="nav-link w-nav-link" style="max-width: 940px;">Menu</a>
+
+                <a href="page?path=menu" id="menu-nav" class="nav-link w-nav-link" style="max-width: 940px;">Menu</a>
 
                 <c:if test="${sessionScope.loggedUser eq null}">
-                    <a href="login" id="login-nav" class="nav-link w-nav-link" style="max-width: 940px;">Log in</a>
+                    <a href="page?path=registration" id="login-nav" class="nav-link w-nav-link" style="max-width: 940px;">Log in</a>
                 </c:if>
 
                 <c:if test="${sessionScope.loggedUser ne null}">
-                    <a href="basket" id="basket-nav" class="nav-link w-nav-link" style="max-width: 940px;">My orders</a>
+                    <a href="page?path=basket" id="basket-nav" class="nav-link w-nav-link" style="max-width: 940px;">My orders</a>
                 </c:if>
 
 
                  <c:if test="${sessionScope.loggedUser ne null}">
                      <c:if test="${sessionScope.loggedUser.role == 'MANAGER'}">
-                          <a href="managerPage" aria-current="page" class="nav-link w-nav-link">Manager page</a>
+                          <a href="page?path=managerPage" aria-current="page" class="nav-link w-nav-link">Manager page</a>
                      </c:if>
-                     <a href="${pageContext.request.contextPath}/logout" key="logout" aria-current="page" class="nav-link w-nav-link">Log out</a>
+                     <a href="logout" aria-current="page" class="nav-link w-nav-link">Log out</a>
                  </c:if>
 
 

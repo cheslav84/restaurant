@@ -12,19 +12,20 @@
                 class="menu-tabs w-tabs">
                 <div class="menu-tabs-menu w-tab-menu">
 
-
-                    <form method="get" name="menu" data-w-tab="Coffee"
+                    <form method="get" action="index" id="coffeeMenuButton" name="menu" data-w-tab="Coffee"
                         class="menu-tab-button w-inline-block w-tab-link w--current">
-                        <%-- <input type=hidden value=""> --%>
                         <div>Coffee</div>
                         <input type="submit" name="menuCategory" value="COFFEE" class="menu-hidden-input menu-tab-button ${sessionScope.menuCategory}" />
                     </form>
-                    <form method="get" id="lunchMenuButton" data-w-tab="Lunch"
+
+                    
+                    <form method="get" action="index" id="lunchMenuButton" data-w-tab="Lunch"
                         class="menu-tab-button w-inline-block w-tab-link">
                         <div>Lunch</div>
                         <input type="submit" name="menuCategory" value="LUNCH" class="menu-hidden-input menu-tab-button ${sessionScope.menuCategory}" />
                     </form>
-                    <form method="get" id="specialsMenuButton" data-w-tab="Every Day Specials"
+
+                    <form method="get" action="index" id="specialsMenuButton" data-w-tab="Every Day Specials"
                         class="menu-tab-button w-inline-block w-tab-link">
                         <div>Every Day Specials</div>
                         <input type="submit" name="menuCategory" value="SPECIALS" class="menu-hidden-input menu-tab-button  ${sessionScope.menuCategory}" />
@@ -66,9 +67,6 @@
                                             <button value="${dish.id}" name="dishId" class="button order-menu-button">Order</button>
                                         </form>
 
-                                        <%-- <a href="" class="order-icon-container">
-                                            <img src="view/pictures/icons/shopping_basket_active.png" alt="" class="order-icon-img">
-                                        </a> --%>
                                     </div>
                                 </c:forEach>
 

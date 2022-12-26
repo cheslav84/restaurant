@@ -1,6 +1,6 @@
 package com.epam.havryliuk.restaurant.model.database.dao;
 
-import com.epam.havryliuk.restaurant.controller.filters.connection.ConnectionManager;
+import com.epam.havryliuk.restaurant.model.database.connection.ConnectionManager;
 import com.epam.havryliuk.restaurant.model.entity.Entity;
 import com.epam.havryliuk.restaurant.model.exceptions.DAOException;
 import org.apache.logging.log4j.LogManager;

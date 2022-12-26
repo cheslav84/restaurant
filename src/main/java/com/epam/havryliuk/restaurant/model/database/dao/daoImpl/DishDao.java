@@ -140,38 +140,38 @@ public class DishDao extends AbstractDao<Dish> {
     }
 
 
-    /**
-     * Method gets returns dishes, and dishes amount for corespondent dish in order consequently.
-     * If order is not confirmed yet (user just put it to his basket), will be displayed
-     * the actual price of a dish. Otherwise, user will get the fixed price of a dish for the
-     * moment of the confirmation an order.
-     * @param order
-     * @return
-     * @throws DAOException
-     */
-    public Map<Dish, Integer> getOrderDishes(Order order) throws DAOException {
-        Map<Dish, Integer>  dishes = new HashMap<>();
-        try (PreparedStatement stmt = connection.prepareStatement(DishQuery.FIND_ALL_BY_ORDER)) {
-            stmt.setLong(1, order.getId());
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    Dish dish = mapDish(rs);
-                    if (order.getBookingStatus() != BookingStatus.BOOKING) {
-                         dish.setPrice(rs.getBigDecimal(OrderFields.ORDER_DISH_FIXED_PRICE));
-                    }
-                    Integer amountInOrder = rs.getInt(OrderFields.ORDER_DISH_AMOUNT_IN_ORDER);
-                    dishes.put(dish, amountInOrder);
-                }
-            }
-            log.debug("List of dishes (by category) has been received from database. ");
-        } catch (SQLException e) {
-            log.error("Error in getting list of dishes from database. ", e);
-            throw new DAOException(e);
-        }
-        return dishes;
-    }
+//    /**
+//     * Method gets returns dishes, and dishes amount for corespondent dish in order consequently.
+//     * If order is not confirmed yet (user just put it to his basket), will be displayed
+//     * the actual price of a dish. Otherwise, user will get the fixed price of a dish for the
+//     * moment of the confirmation an order.
+//     * @param order
+//     * @return
+//     * @throws DAOException
+//     */
+//    public Map<Dish, Integer> getOrderDishes(Order order) throws DAOException {
+//        Map<Dish, Integer>  dishes = new HashMap<>();
+//        try (PreparedStatement stmt = connection.prepareStatement(DishQuery.FIND_ALL_BY_ORDER)) {
+//            stmt.setLong(1, order.getId());
+//            try (ResultSet rs = stmt.executeQuery()) {
+//                while (rs.next()) {
+//                    Dish dish = mapDish(rs);
+//                    if (order.getBookingStatus() != BookingStatus.BOOKING) {
+//                         dish.setPrice(rs.getBigDecimal(OrderFields.ORDER_DISH_FIXED_PRICE));
+//                    }
+//                    Integer amountInOrder = rs.getInt(OrderFields.ORDER_DISH_AMOUNT_IN_ORDER);
+//                    dishes.put(dish, amountInOrder);
+//                }
+//            }
+//            log.debug("List of dishes (by category) has been received from database. ");
+//        } catch (SQLException e) {
+//            log.error("Error in getting list of dishes from database. ", e);
+//            throw new DAOException(e);
+//        }
+//        return dishes;
+//    }
 
-    private Dish mapDish(ResultSet rs) throws SQLException {
+    Dish mapDish(ResultSet rs) throws SQLException {
         long id = rs.getLong(DishFields.DISH_ID);
         String name = rs.getString(DishFields.DISH_NAME);
         String description = rs.getString(DishFields.DISH_DESCRIPTION);

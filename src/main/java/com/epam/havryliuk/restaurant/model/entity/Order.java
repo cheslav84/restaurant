@@ -1,8 +1,6 @@
 package com.epam.havryliuk.restaurant.model.entity;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Order implements Entity{
     private Long id;
@@ -13,7 +11,7 @@ public class Order implements Entity{
     private Date closeDate;
     private User user;
     private BookingStatus bookingStatus;
-    private Map<Dish, Integer> dishes;
+    private List<Basket> baskets;
 
 //    public static Order getInstance(String address, String phoneNumber,
 //                                    boolean isPayed, BookingStatus bookingStatus) {
@@ -59,7 +57,7 @@ public class Order implements Entity{
         order.setPayed(isPayed);
         order.setUser(user);
         order.setBookingStatus(bookingStatus);
-        order.setDishes(new HashMap<>());
+        order.setBaskets(new ArrayList<>());
         return order;
     }
 
@@ -79,19 +77,8 @@ public class Order implements Entity{
         return order;
     }
 
-    public Map<Dish, Integer> getDishes() {
-        return dishes;
-    }
-
-    public void addDishes(Dish dish, int amount){
-        dishes.put(dish, amount);
-    }
-
-    public void setDishes(Map<Dish, Integer> dishes) {
-        this.dishes = dishes;
-    }
-
     public Long getId() {
+
         return id;
     }
 
@@ -119,8 +106,8 @@ public class Order implements Entity{
         return isPayed;
     }
 
-    public void setPayed(boolean payment) {
-        this.isPayed = payment;
+    public void setPayed(boolean payed) {
+        isPayed = payed;
     }
 
     public Date getCreationDate() {
@@ -139,10 +126,6 @@ public class Order implements Entity{
         this.closeDate = closeDate;
     }
 
-    public BookingStatus getBookingStatus() {
-        return bookingStatus;
-    }
-
     public User getUser() {
         return user;
     }
@@ -151,43 +134,19 @@ public class Order implements Entity{
         this.user = user;
     }
 
+    public BookingStatus getBookingStatus() {
+        return bookingStatus;
+    }
+
     public void setBookingStatus(BookingStatus bookingStatus) {
         this.bookingStatus = bookingStatus;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Order order = (Order) o;
-
-        if (address != null ? !address.equals(order.address) : order.address != null) return false;
-        if (phoneNumber != null ? !phoneNumber.equals(order.phoneNumber) : order.phoneNumber != null) return false;
-        if (creationDate != null ? !creationDate.equals(order.creationDate) : order.creationDate != null) return false;
-        return user != null ? user.equals(order.user) : order.user == null;
+    public List<Basket> getBaskets() {
+        return baskets;
     }
 
-    @Override
-    public int hashCode() {
-        int result = address != null ? address.hashCode() : 0;
-        result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
-        result = 31 * result + (creationDate != null ? creationDate.hashCode() : 0);
-        result = 31 * result + (user != null ? user.hashCode() : 0);
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Order{" +
-                "id=" + id +
-                ", address='" + address + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", isPayed=" + isPayed +
-                ", creationDate=" + creationDate +
-                ", closeDate=" + closeDate +
-                ", user=" + user +
-                ", bookingStatus=" + bookingStatus +
-                '}';
+    public void setBaskets(List<Basket> baskets) {
+        this.baskets = baskets;
     }
 }

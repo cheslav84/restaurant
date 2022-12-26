@@ -14,8 +14,8 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import static com.epam.havryliuk.restaurant.controller.RequestAttributes.CURRENT_DISH;
-import static com.epam.havryliuk.restaurant.controller.RequestAttributes.SHOW_DISH_INFO;
+import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.CURRENT_DISH;
+import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.SHOW_DISH_INFO;
 
 public class DishService {
     private static final Logger log = LogManager.getLogger(DishService.class);
@@ -46,19 +46,12 @@ public class DishService {
 
     }
 
-    public void getDishInfo(HttpServletRequest req){
-        long dishId = Long.parseLong(req.getParameter("dishId"));
-        log.debug("\"/dishId\" " + dishId + " has been received from user.");
-        Dish dish;
-        DishDao dishDao;
+    public Dish getDish(long dishId){
         EntityTransaction transaction = new EntityTransaction();
         try {
-            dishDao = new DishDao();
+            DishDao dishDao = new DishDao();
             transaction.init(dishDao);
-
-            dish = dishDao.findById(dishId);
-            log.debug("\"/dish\" " + dish + " has been received from database.");
-
+            return dishDao.findById(dishId);
         } catch (DAOException e) {
             e.printStackTrace();
             throw new NoSuchElementException("Such dish hasn't been found.");
@@ -66,25 +59,10 @@ public class DishService {
             transaction.end();
         }
 
-        HttpSession session = req.getSession();
-        session.setAttribute(CURRENT_DISH, dish);
-        session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);// value to show ordering menu of concrete dish
     }
 
 
 
-    public void hideOrderInfoOnReloadPage(HttpServletRequest req)  {
-        HttpSession session = req.getSession();
-        if (session.getAttribute(SHOW_DISH_INFO) != null){
-            if (req.getAttribute(SHOW_DISH_INFO) == null) {
-                req.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
-//                log.debug("NEW request for or");
-            } else  {
-                req.removeAttribute(SHOW_DISH_INFO);
-//                log.debug("This is a REFRESH");
-            }
-        session.removeAttribute(SHOW_DISH_INFO);
-        }
-    }
+
 
 }

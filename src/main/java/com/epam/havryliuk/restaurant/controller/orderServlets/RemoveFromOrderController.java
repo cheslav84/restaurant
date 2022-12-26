@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
-import static com.epam.havryliuk.restaurant.controller.RequestAttributes.*;
+import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
 
 @WebServlet("/removeFromOrder")
