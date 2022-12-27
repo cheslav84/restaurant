@@ -23,6 +23,8 @@ public enum CommandEnum {
         { this.command = new BasketCommand(); }
     }, REMOVEFROMORDER {
         { this.command = new RemoveFromOrderCommand(); }
+    }, CONFIRMORDER {
+        { this.command = new RemoveFromOrderCommand(); }
     }, LOGIN {
         { this.command = new LoginCommand(); }
     }, LOGOUT {

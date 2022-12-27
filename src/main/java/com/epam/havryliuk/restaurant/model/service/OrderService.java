@@ -23,9 +23,7 @@ import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 public class OrderService {
     private static final Logger log = LogManager.getLogger(OrderService.class);
 
-    public void confirmOrder(HttpServletRequest req) throws ServiceException {
-        long orderId = Long.parseLong(req.getParameter("orderId"));//todo теоретично може бути ексепшн, якщо з боку фронта прийде невірне значення
-        log.debug("\"/orderId\" " + orderId + " has been received from user.");
+    public void confirmOrder(long orderId) throws ServiceException {
         OrderDao orderDao;
         EntityTransaction transaction = new EntityTransaction();
         try {

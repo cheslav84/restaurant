@@ -1,5 +1,6 @@
 package com.epam.havryliuk.restaurant.model.database.connection;
 
+import com.epam.havryliuk.restaurant.model.constants.DatabaseContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -51,8 +52,8 @@ public class ConnectionManager {
     private static void initDataSource() {
         try {
             Context initContext = new InitialContext();
-            Context envContext = (Context) initContext.lookup("java:/comp/env");
-            ds = (DataSource) envContext.lookup("jdbc/Restaurant");
+            Context envContext = (Context) initContext.lookup(DatabaseContext.CONTEXT);
+            ds = (DataSource) envContext.lookup(DatabaseContext.SOURCE);
         } catch (NamingException e) {
             log.error("Can't get Initial context for DataSource.", e);
         }

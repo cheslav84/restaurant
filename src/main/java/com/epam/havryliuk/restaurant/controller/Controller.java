@@ -17,7 +17,7 @@ import java.io.IOException;
 
 
 @WebServlet(name = "Controller", urlPatterns = {"/page/*", "/auth/*",  "/login", "/register", "/logout", "/showOrderInfo", "/menu/*", "/locale/*",
-                            "/client/*", "/admin/*", "/index", "/makeOrder", "/basket", "/removeFromOrder"})
+                            "/client/*", "/admin/*", "/index", "/makeOrder", "/basket", "/removeFromOrder", "/confirmOrder"})
 //@WebServlet("/")
 public class Controller extends HttpServlet {
     private static final Logger log = LogManager.getLogger(Controller.class);

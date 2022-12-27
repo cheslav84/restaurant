@@ -26,8 +26,8 @@ public class Dish implements Entity {
         return dish;
     }
 
-    public static Dish getInstance(long id, String name, String description, int weight, BigDecimal price,
-                                   int amount, String image) {
+    public static Dish getInstance(long id, String name, String description, int weight,
+                                   BigDecimal price, int amount, String image) {
         Dish dish = getInstance(name, price, amount);
         dish.setId(id);
         dish.setDescription(description);
