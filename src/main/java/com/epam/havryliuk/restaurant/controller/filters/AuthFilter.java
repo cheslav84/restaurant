@@ -41,8 +41,8 @@ public class AuthFilter implements Filter {
 
         if (!isUserLoggedIn(httpRequest)) {
 //            httpRequest.getRequestDispatcher("WEB-INF/jsp/errorPage.jsp").forward(httpRequest, httpResponse);
-            httpRequest.getRequestDispatcher("WEB-INF/jsp/registration.jsp").forward(httpRequest, httpResponse);
-//            httpResponse.sendRedirect("registration");
+//            httpRequest.getRequestDispatcher("WEB-INF/jsp/registration.jsp").forward(httpRequest, httpResponse);
+            httpResponse.sendRedirect("register");
 //            httpRequest.getRequestDispatcher(forwardPath).forward(httpRequest, httpResponse);
         }
         log.debug("User logged in. ");

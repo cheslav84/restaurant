@@ -5,7 +5,6 @@ import com.epam.havryliuk.restaurant.model.constants.databaseFieds.OrderFields;
 import com.epam.havryliuk.restaurant.model.constants.queries.OrderQuery;
 import com.epam.havryliuk.restaurant.model.entity.*;
 import com.epam.havryliuk.restaurant.model.exceptions.DAOException;
-import com.epam.havryliuk.restaurant.model.exceptions.DuplicatedEntityException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -231,7 +230,7 @@ public class OrderDao extends AbstractDao<Order> {
             stmt.setLong(1, orderId);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    numberOfDishes = rs.getInt(OrderFields.NUMBER_OF_DISHES);
+                    numberOfDishes = rs.getInt(OrderFields.NUMBER_OF_DISHES_IN_ORDER);
                 }
             }
             log.debug("Number of dishes in order has been received from database.");

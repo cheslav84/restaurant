@@ -15,6 +15,8 @@ public class AppPagesPath {
     public static String MENU;
     public static String FORWARD_REGISTRATION;
     public static String REDIRECT_REGISTRATION;
+    public static String REDIRECT_BASKET;
+    public static String FORWARD_BASKET;
     public static String ERROR;
 
 
@@ -29,6 +31,10 @@ public class AppPagesPath {
            REDIRECT_INDEX = (String) properties.get("path.page.redirect.index");
            FORWARD_REGISTRATION = (String) properties.get("path.page.forward.registration");
            REDIRECT_REGISTRATION = (String) properties.get("path.page.redirect.registration");
+           REDIRECT_BASKET = (String) properties.get("path.page.redirect.basket");
+           FORWARD_BASKET = (String) properties.get("path.page.forward.basket");
+
+
            ERROR = (String) properties.get("path.page.error");
            MENU = (String) properties.get("path.page.menu");
 

@@ -36,7 +36,7 @@
         <div class="error-message"><c:if test="${sessionScope.errorMessage}"></c:if></div>
 
         <c:forEach var="order" items="${sessionScope.orders}">
-        <c:if test="${order ne null}">
+        <%-- <c:if test="${order ne null}"> --%>
         <div class="container w-container order-container">
 
             <div class="menu-page-tabs-content w-tab-content">
@@ -47,39 +47,39 @@
                         <fmt:formatDate type = "both" dateStyle="long" timeStyle="short" value="${order.creationDate}" />
                     </h3>
                     <div class="section-divider-line order-divider"></div>
-                    <c:forEach var="dish" items="${order.dishes}">
+                    <c:forEach var="basket" items="${order.baskets}">
 
                         <div role="listitem" class="menu-list-item w-dyn-item w-col w-col-6 order-list">
                             <div class="one-dish-info"></div>
                             <div class="menu-image-container">
-                                <div style="background-image: url('view/pictures/dish_pictures/${dish.key.image}');"
+                                <div style="background-image: url('view/pictures/dish_pictures/${basket.dish.image}');"
                                     class="menu-item-image-box">
                                 </div>
                             </div>
                             <div class="menu-item-label menu-item-amount">
-                                <c:out value="${dish.value}"/>
+                                <c:out value="${basket.amount}"/>
                                 <span class="weight-marker"> pcs</span>
                             </div>
                             <div class="menu-item-label menu-item-weight">
-                                <c:out value="${dish.key.weight}"/>
+                                <c:out value="${basket.dish.weight}"/>
                                 <span class="weight-marker"> g</span>
                             </div>
                             <div class="menu-item-label menu-item-price-reload">
-                                <c:out value="${dish.key.price}"/>
+                                <c:out value="${basket.fixedPrice}"/>
                                 <span class="price-marker">₴</span>
                             </div>
                             <div class="menu-item-text order-item">
                                 <div class="menu-item-title order-title">
-                                    <c:out value="${dish.key.name}" />
+                                    <c:out value="${basket.dish.name}" />
                                 </div>
                                 <div class="menu-item-title description order-description">
-                                    <c:out value="${dish.key.description}" />
+                                    <c:out value="${basket.dish.description}" />
                                 </div>
                             </div>
                             <c:if test="${order.bookingStatus == 'BOOKING'}">
                                 <form method="post" action="removeFromOrder" name="confirmOrder">
                                     <input type="hidden" name="orderId" value="${order.id}"> 
-                                    <button value="${dish.key.id}" name="dishId" class="button order-edit-button">
+                                    <button value="${basket.dish.id}" name="dishId" class="button order-edit-button">
                                         Delete
                                     </button>
                                 </form>
@@ -106,7 +106,7 @@
             
 
         </div>
-        </c:if>
+        <%-- </c:if> --%>
         <c:if test="${order eq null}">
             <div class="one-dish-info">Your basket is empty</div>
             <button class="button order-edit-button">

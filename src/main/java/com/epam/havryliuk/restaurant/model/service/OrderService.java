@@ -22,6 +22,7 @@ import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
 public class OrderService {
     private static final Logger log = LogManager.getLogger(OrderService.class);
+
     public void confirmOrder(HttpServletRequest req) throws ServiceException {
         long orderId = Long.parseLong(req.getParameter("orderId"));//todo теоретично може бути ексепшн, якщо з боку фронта прийде невірне значення
         log.debug("\"/orderId\" " + orderId + " has been received from user.");
@@ -68,7 +69,9 @@ public class OrderService {
     }
 
     /**
-     * Returns an order that firstly tries to get from database. If such order doesn't exist -
+     * Returns an order that firstly tries to get from database. The order is considered that
+     * exists in database, if the delivery address is the same as a user wants to deliver to, and the
+     * booking status is "boking" (the order is not confirmed by user). If such order doesn't exist -
      * creates a new one from data that received from user side (delivery address, delivery phone).
      * As that order is new, then payment status is set to false, and the booking status is "Booking".
      * Other data, like id and creation is formed by database.
@@ -103,8 +106,8 @@ public class OrderService {
         return order;
     }
 
-    public void addDishToOrder(Order order, Dish dish, int dishesAmount) throws ServiceException, BadCredentialsException, DuplicatedEntityException {
-
+    public void addDishToOrder(Order order, Dish dish, int dishesAmount)
+            throws ServiceException, BadCredentialsException, DuplicatedEntityException {
         Basket basket = Basket.getInstance(order, dish, dish.getPrice(), dishesAmount);
         List<Basket> baskets = order.getBaskets();
         baskets.add(basket);
@@ -126,16 +129,17 @@ public class OrderService {
         }
     }
 
-    public void removeDishFromOrder(HttpServletRequest req) throws ServiceException  {
-        long orderId = Long.parseLong(req.getParameter("orderId"));
-        long dishId = Long.parseLong(req.getParameter("dishId"));
-        log.debug("\"orderId\" " + orderId + " has been received.");
-        log.debug("\"dishId\" " + dishId + " has been received.");
-
-        OrderDao orderDao;
+    /**
+     * Method removes dishes from order. If it remains the only dish in an order,
+     * that order will be removed completely.
+     * @param orderId received from the user side.
+     * @param dishId received from the user side.
+     * @throws ServiceException
+     */
+    public void removeDishFromOrder(long orderId, long dishId) throws ServiceException  {//todo make basket
         EntityTransaction transaction = new EntityTransaction();
         try {
-            orderDao = new OrderDao();
+            OrderDao orderDao = new OrderDao();
             transaction.init(orderDao);
             int dishesInOrder = orderDao.findDishesNumberInOrder(orderId);
             if (dishesInOrder == 1) {
@@ -150,7 +154,6 @@ public class OrderService {
         } finally {
             transaction.end();
         }
-
     }
 
 

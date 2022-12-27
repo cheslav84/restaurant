@@ -30,20 +30,27 @@ public class BasketCommand implements ActionCommand {
         OrderService orderService = new OrderService();
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(LOGGED_USER);
-        if (user == null) {//todo код дублюється
-            log.error("The user has been logged out.");
-            session.setAttribute(ERROR_MESSAGE, "You should log in to make an order.");
-            request.getRequestDispatcher(AppPagesPath.FORWARD_REGISTRATION).forward(request, response);
-        }
+
+
+//        if (user == null) {//todo код дублюється
+//            log.error("The user has been logged out.");
+//            session.setAttribute(ERROR_MESSAGE, "You should log in to make an order.");
+//            request.getRequestDispatcher(AppPagesPath.FORWARD_REGISTRATION).forward(request, response);
+//        }
+
+
         try {
             List<Order> orders = orderService.getAllUserOrders(user);
+//            List<Order> orders = null;
+//
             session.setAttribute(ORDER_LIST, orders);
             session.removeAttribute(ERROR_MESSAGE);
         } catch (ServiceException e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
             session.setAttribute(ERROR_MESSAGE, e.getMessage());
         }
-        request.getRequestDispatcher("view/jsp/user/basket.jsp").forward(request, response);
+        request.getRequestDispatcher(AppPagesPath.FORWARD_BASKET).forward(request, response);
+//        request.getRequestDispatcher(AppPagesPath.FORWARD_REGISTRATION).forward(request, response);
     }
 
 

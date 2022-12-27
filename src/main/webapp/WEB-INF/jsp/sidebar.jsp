@@ -32,7 +32,7 @@
                 </c:if>
 
                 <c:if test="${sessionScope.loggedUser ne null}">
-                    <a href="page?path=basket" id="basket-nav" class="nav-link w-nav-link" style="max-width: 940px;">My orders</a>
+                    <a href="basket" id="basket-nav" class="nav-link w-nav-link" style="max-width: 940px;">My orders</a>
                 </c:if>
 
 

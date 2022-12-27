@@ -31,16 +31,17 @@ public class MakeOrderCommand implements ActionCommand {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession();
 
-        User user = (User) session.getAttribute(RequestAttributes.LOGGED_USER);;
-        if (user == null) {//todo код дублюється
-            log.error("The user has been logged out.");
-            session.setAttribute(ERROR_MESSAGE, "You should log in to make an order.");
-            response.sendRedirect(AppPagesPath.REDIRECT_REGISTRATION);//todo
-        }
+        User user = (User) session.getAttribute(RequestAttributes.LOGGED_USER);
+//        if (user == null) {//todo код дублюється (виконати через фільтр)
+//            log.error("The user has been logged out.");
+//            session.setAttribute(ERROR_MESSAGE, "You should log in to make an order.");
+//            response.sendRedirect(AppPagesPath.REDIRECT_REGISTRATION);//todo
+//        }
         OrderService orderService = new OrderService();
         Order order = (Order) session.getAttribute(CURRENT_ORDER);
         if (order != null) {
             saveDishToOrder(request, orderService, order);
+            session.removeAttribute(ERROR_MESSAGE);
             log.debug("Order in session: " + order);
         } else {
             makeNewOrder(request, session, user, orderService, order);
@@ -165,9 +166,14 @@ public class MakeOrderCommand implements ActionCommand {
         String redirectionPage;
         String continueOrder = req.getParameter("continue");
         log.debug("continueOrder: " + continueOrder);
+
+
         String errorMessage = (String) req.getSession().getAttribute(ERROR_MESSAGE);
-        if (continueOrder == null && errorMessage == null) {
-            redirectionPage = "basket";//todo
+        String orderMessage = (String) req.getSession().getAttribute(ORDER_MESSAGE);
+
+        if (continueOrder == null && errorMessage == null && orderMessage == null) {
+            redirectionPage = AppPagesPath.REDIRECT_BASKET;
+//            redirectionPage = "basket";
         } else {
             redirectionPage = URLUtil.getRefererPage(req);
         }

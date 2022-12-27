@@ -17,7 +17,7 @@ import java.io.IOException;
 
 
 @WebServlet(name = "Controller", urlPatterns = {"/page/*", "/auth/*",  "/login", "/register", "/logout", "/showOrderInfo", "/menu/*", "/locale/*",
-                            "/client/*", "/admin/*", "/index", "/makeOrder", "/basket"})
+                            "/client/*", "/admin/*", "/index", "/makeOrder", "/basket", "/removeFromOrder"})
 //@WebServlet("/")
 public class Controller extends HttpServlet {
     private static final Logger log = LogManager.getLogger(Controller.class);
@@ -38,7 +38,9 @@ public class Controller extends HttpServlet {
         try {
             command.execute(request, response);
         } catch (Exception e) {
-            response.sendRedirect(request.getContextPath() + AppPagesPath.ERROR);//todo
+            e.printStackTrace();
+            System.err.println("error");
+//            response.sendRedirect(request.getContextPath() + AppPagesPath.ERROR);//todo
         }
 
 //        String page = null;
