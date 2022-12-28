@@ -2,12 +2,10 @@ package com.epam.havryliuk.restaurant.model.service;
 
 import com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction;
 import com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao;
+import com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao;
 import com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao;
 import com.epam.havryliuk.restaurant.model.entity.*;
-import com.epam.havryliuk.restaurant.model.exceptions.BadCredentialsException;
-import com.epam.havryliuk.restaurant.model.exceptions.DAOException;
-import com.epam.havryliuk.restaurant.model.exceptions.DuplicatedEntityException;
-import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
+import com.epam.havryliuk.restaurant.model.exceptions.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -27,7 +25,7 @@ public class OrderService {
             log.debug("\"order status\" has been changed to " + BookingStatus.NEW);
         } catch (DAOException e) {
             String message = "Something went wrong. Try to confirm your order later please.";
-            log.debug(message, e);
+            log.debug(message);
             throw new ServiceException(message);
         } finally {
             transaction.end();
@@ -52,7 +50,7 @@ public class OrderService {
             log.debug("The order list was successfully created.");
         } catch (DAOException e) {
             String message = "The orders is temporary unavailable, try again later please.";
-            log.error(message, e);
+            log.error(message);
             throw new ServiceException(message, e);
         } finally {
             transaction.endTransaction();
@@ -74,9 +72,8 @@ public class OrderService {
             transaction.commit();
             log.debug("The order list was successfully created.");
         } catch (DAOException e) {
-            String message = "The orders is temporary unavailable, try again later please.";
-            log.error(message, e);
-            throw new ServiceException(message, e);
+            log.error("The orders are temporary unavailable, try again later please.");
+            throw new ServiceException(e);
         } finally {
             transaction.end();
         }
@@ -115,7 +112,7 @@ public class OrderService {
                 log.debug("Has been created new order: " + order);
             }
         } catch (DAOException e) {
-            log.error(e.getMessage(), e);
+            log.error(e.getMessage());
             throw new ServiceException(e.getMessage(), e);
         } finally {
             transaction.end();
@@ -123,26 +120,37 @@ public class OrderService {
         return order;
     }
 
-    public void addDishToOrder(Order order, Dish dish, int dishesAmount)
+    public void addDishToOrder(Order order, Dish dish, int dishesAmountInOrder)
             throws ServiceException, BadCredentialsException, DuplicatedEntityException {
-        Basket basket = Basket.getInstance(order, dish, dish.getPrice(), dishesAmount);
+        Basket basket = Basket.getInstance(order, dish, dish.getPrice(), dishesAmountInOrder);
         List<Basket> baskets = order.getBaskets();
         baskets.add(basket);
 
         EntityTransaction transaction = new EntityTransaction();
+        DishDao dishDao = new DishDao();
         BasketDao basketDao = new BasketDao();
         try {
-            transaction.init(basketDao);
+            transaction.initTransaction(basketDao, dishDao);
+            checkAvailableDishes(dish, dishesAmountInOrder, dishDao);
             basketDao.create(basket);
-        }
-        catch (DuplicatedEntityException e) {
+        } catch (DuplicatedEntityException e) {
             throw new DuplicatedEntityException(e);
         } catch (DAOException e) {
-            log.error(e.getMessage(), e);
+            log.error(e.getMessage());
             throw new ServiceException(e.getMessage(), e);
         }
         finally {
-            transaction.end();
+//            transaction.commit();//todo ask
+            transaction.endTransaction();
+        }
+    }
+
+    private void checkAvailableDishes(Dish dish, int dishesAmountInOrder, DishDao dishDao)
+            throws DAOException, IrrelevantDataException {
+        int numberOfDishesInMenu = dishDao.getNumberOfDishes(dish);
+        if (numberOfDishesInMenu < dishesAmountInOrder) {
+            log.error("The request number of dishes exceed available.");
+            throw new IrrelevantDataException();
         }
     }
 
@@ -166,7 +174,7 @@ public class OrderService {
             }
             log.debug("Dish has been removed from order.");
         } catch (DAOException e) {
-            log.debug(e.getMessage(), e);
+            log.debug(e.getMessage());
             throw new ServiceException(e);
         } finally {
             transaction.end();

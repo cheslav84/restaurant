@@ -47,8 +47,6 @@ public class ConnectionManager {
         }
     }
 
-
-
     private static void initDataSource() {
         try {
             Context initContext = new InitialContext();
@@ -59,16 +57,15 @@ public class ConnectionManager {
         }
     }
 
-
     public void close(AutoCloseable closeable) {
-        synchronized (ConnectionManager.class) {
+//        synchronized (ConnectionManager.class) {
             if (closeable != null) {
                 try {
                     closeable.close();
                 } catch (Exception e) {
                     log.error("Error closing " + closeable, e);
                 }
-            }
+//            }
         }
     }
 

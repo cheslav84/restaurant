@@ -17,7 +17,7 @@ public enum CommandEnum {
         { this.command = new MenuCommand(); }
     }, SHOWORDERINFO {
         { this.command = new OrderInfoCommand(); }
-    }, MAKEORDER {
+    }, MAKE_ORDER {
         { this.command = new MakeOrderCommand(); }
     }, BASKET {
         { this.command = new BasketCommand(); }

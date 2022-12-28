@@ -13,4 +13,7 @@ public enum MessageManager {
     public String getProperty(String key) {
         return bundle.getString(key);
     }
+
+
+
 }

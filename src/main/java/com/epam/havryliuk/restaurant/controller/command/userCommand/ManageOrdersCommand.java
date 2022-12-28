@@ -1,9 +1,11 @@
 package com.epam.havryliuk.restaurant.controller.command.userCommand;
 
 import com.epam.havryliuk.restaurant.controller.command.ActionCommand;
+import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
 import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
 import com.epam.havryliuk.restaurant.model.entity.Order;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
+import com.epam.havryliuk.restaurant.model.resource.MessageManager;
 import com.epam.havryliuk.restaurant.model.service.OrderService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,6 +28,8 @@ public class ManageOrdersCommand implements ActionCommand {
         OrderService orderService = new OrderService();
         HttpSession session = request.getSession();
 
+        MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LANGUAGE));
+
 
         try {
             List<Order> orders = orderService.getAllOrders();
@@ -33,7 +37,8 @@ public class ManageOrdersCommand implements ActionCommand {
             session.removeAttribute(ERROR_MESSAGE);
         } catch (ServiceException e) {
             log.error(e.getMessage(), e);
-            session.setAttribute(ERROR_MESSAGE, e.getMessage());
+            request.setAttribute(ERROR_MESSAGE,
+                    messageManager.getProperty(ResponseMessages.ORDERS_ERROR));
         }
         request.getRequestDispatcher(AppPagesPath.FORWARD_MANAGER_PAGE).forward(request, response);
     }

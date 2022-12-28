@@ -7,9 +7,10 @@ import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.database.dao.daoImpl.UserDao;
 import com.epam.havryliuk.restaurant.model.exceptions.BadCredentialsException;
 import com.epam.havryliuk.restaurant.model.exceptions.DAOException;
+import com.epam.havryliuk.restaurant.model.exceptions.DuplicatedEntityException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.util.PassEncryptor;
-import com.epam.havryliuk.restaurant.model.util.Validator;
+import com.epam.havryliuk.restaurant.model.util.validation.Validator;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
@@ -23,7 +24,7 @@ public class UserService {
 
 //    DAO<User> userDao;
 
-    public User addNewUser(HttpServletRequest request) throws ServiceException {
+    public User addNewUser(HttpServletRequest request) throws ServiceException, DuplicatedEntityException {
         final User user = mapUser(request);
         EntityTransaction transaction = new EntityTransaction();
         UserDao userDao = new UserDao();
@@ -42,6 +43,9 @@ public class UserService {
             userDao.create(user);
 //            transaction.commit();
             log.debug("The user was successfully created.");
+        } catch (DuplicatedEntityException e) {
+            log.error("The user with such login is already exists. Try to use another one.");
+            throw new DuplicatedEntityException(e);
         } catch (DAOException e) {
             log.error("Error in creating the user.");
             throw new ServiceException(e);
@@ -60,9 +64,8 @@ public class UserService {
      */
     private void checkIfLoginDoesNotExist(User user, UserDao userDao) throws DAOException {
         if (userDao.findByEmail(user.getEmail()) != null){
-            String message = "The user with such login is already exists. Try to use another one.";
-            log.error(message);
-            throw new DAOException(message);
+            log.error("The user with such login is already exists. Try to use another one.");
+            throw new DuplicatedEntityException() ;
         }
     }
 

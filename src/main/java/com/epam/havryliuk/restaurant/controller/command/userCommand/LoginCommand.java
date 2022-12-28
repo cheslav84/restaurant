@@ -1,14 +1,14 @@
 package com.epam.havryliuk.restaurant.controller.command.userCommand;
 
 import com.epam.havryliuk.restaurant.controller.command.ActionCommand;
+import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
 import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
 import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
-import com.epam.havryliuk.restaurant.model.resource.ConfigurationManager;
 import com.epam.havryliuk.restaurant.model.resource.MessageManager;
 import com.epam.havryliuk.restaurant.model.service.UserService;
 import com.epam.havryliuk.restaurant.model.util.PassEncryptor;
-import com.epam.havryliuk.restaurant.model.util.Validator;
+import com.epam.havryliuk.restaurant.model.util.validation.Validator;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -18,24 +18,25 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
+
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.PAGE_FROM_BEING_REDIRECTED;
+import static com.epam.havryliuk.restaurant.model.constants.RequestParameters.PARAM_NAME_LOGIN;
+import static com.epam.havryliuk.restaurant.model.constants.RequestParameters.PARAM_NAME_PASSWORD;
 
 public class LoginCommand implements ActionCommand {
     private static final Logger log = LogManager.getLogger(LoginCommand.class);
 
-    private static final String PARAM_NAME_LOGIN = "email";
-    private static final String PARAM_NAME_PASSWORD = "password";
-
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        log.debug("log in command");
-
-        String page = null;
+        log.debug("LoginCommand");
         String login = request.getParameter(PARAM_NAME_LOGIN);
         String pass = request.getParameter(PARAM_NAME_PASSWORD);
 
         HttpSession session = request.getSession();
+        MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LANGUAGE));
+
+        String page;
         try {
             User user = new UserService().getUserFromDatabase(login);
             Validator.checkIfPasswordsCoincide(PassEncryptor.encrypt(pass), user.getPassword());// todo при вводі одного і того ж паролю до енкриптора різні результати. З'ясувати
@@ -46,19 +47,16 @@ public class LoginCommand implements ActionCommand {
         } catch (ServiceException e) {
             page = AppPagesPath.REDIRECT_REGISTRATION;
             session.setAttribute(ERROR_MESSAGE,
-                    MessageManager.EN.getProperty("message.loginError"));//todo change local
+                    messageManager.getProperty(ResponseMessages.LOGIN_ERROR));
             log.error(e.getMessage());
         } catch (GeneralSecurityException e) {
             page = AppPagesPath.REDIRECT_REGISTRATION;
             session.setAttribute(ERROR_MESSAGE,
-                    MessageManager.EN.getProperty("message.passwordError"));//todo change local
+                    messageManager.getProperty(ResponseMessages.PASSWORD_ERROR));
             log.error(e.getMessage());
         }
-        System.err.println("page + "+ page);
-
         response.sendRedirect(page);
     }
-
 
 
     private String getRedirectionPage(HttpSession session) {//todo, think maybe delete this

@@ -10,6 +10,8 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
+import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.LANGUAGE;
+import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.LOCALE;
 
 @WebFilter(filterName = "SessionLocaleFilter", urlPatterns = {"/*"})
 public class SessionLocaleFilter implements Filter {
@@ -23,10 +25,16 @@ public class SessionLocaleFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpSession session = httpRequest.getSession();
 
-        if (httpRequest.getParameter("locale") != null) {
-            session.setAttribute("language", httpRequest.getParameter("locale"));
-        } else if (session.getAttribute("language") == null) {
-            session.setAttribute("language", httpRequest.getLocale().getLanguage());
+//        Locale currentLocale = httpRequest.getLocale();
+//        System.out.println(currentLocale.getDisplayLanguage()); //English
+//        System.out.println(currentLocale.getDisplayCountry());	//United States
+//        System.out.println(currentLocale.getLanguage());		//en
+//        System.out.println(currentLocale.getCountry());
+
+        if (httpRequest.getParameter(LOCALE) != null) {
+            session.setAttribute(LANGUAGE, httpRequest.getParameter(LOCALE));
+        } else if (session.getAttribute(LANGUAGE) == null) {
+            session.setAttribute(LANGUAGE, httpRequest.getLocale().getCountry());
         }
         chain.doFilter(request, response);
     }

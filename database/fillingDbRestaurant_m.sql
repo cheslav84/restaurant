@@ -12,7 +12,7 @@ INSERT INTO category (category_name) VALUE ('SPECIALS');
 -- -----------------------------------------------------
 -- COFFEE
 INSERT INTO dish (dish_name, description, weight, price, amount, spirits, image) 
-VALUES ('Single Cup Brew', 'Lorem ipsum dolor sit amet consectetur adipiscing.', '300', '6.50', '20', '0', 'brew-coffee.webp');
+VALUES ('Single Cup Brew', 'Lorem ipsum dolor sit amet consectetur adipiscing.', '300', '6.50', '2', '0', 'brew-coffee.webp');
 INSERT INTO dish_has_category (dish_id, category_id) VALUES (1, 1);
 INSERT INTO dish_has_category (dish_id, category_id) VALUES (1, 5);
 

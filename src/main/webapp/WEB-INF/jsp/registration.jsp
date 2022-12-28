@@ -8,6 +8,8 @@
 <!DOCTYPE html>
 <html>
 
+<fmt:setLocale value="${sessionScope.language}"/>
+<fmt:setBundle basename="menu"/>
 <head>
     <meta content="text/html; charset=UTF-8">
     <title>Registration</title>

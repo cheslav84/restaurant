@@ -1,20 +1,9 @@
 package com.epam.havryliuk.restaurant.controller.command.orderCommand;
 
 import com.epam.havryliuk.restaurant.controller.command.ActionCommand;
-import com.epam.havryliuk.restaurant.model.constants.RequestAttributes;
 import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
-import com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction;
-import com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao;
-import com.epam.havryliuk.restaurant.model.entity.Dish;
-import com.epam.havryliuk.restaurant.model.entity.Order;
-import com.epam.havryliuk.restaurant.model.entity.User;
-import com.epam.havryliuk.restaurant.model.exceptions.BadCredentialsException;
-import com.epam.havryliuk.restaurant.model.exceptions.DAOException;
-import com.epam.havryliuk.restaurant.model.exceptions.DuplicatedEntityException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.service.OrderService;
-import com.epam.havryliuk.restaurant.model.util.URLUtil;
-import com.epam.havryliuk.restaurant.model.util.Validator;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

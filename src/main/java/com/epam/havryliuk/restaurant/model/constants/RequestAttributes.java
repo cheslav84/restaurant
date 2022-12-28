@@ -1,24 +1,23 @@
 package com.epam.havryliuk.restaurant.model.constants;
 
-public class RequestAttributes {
+public interface RequestAttributes {
 
-    public static final String CURRENT_ORDER = "currentOrder";
-    public static final String ORDER_LIST = "orders";
-    public static final String DISH_LIST = "dishes";
-    public static final String CURRENT_DISH = "currentDish";
-    public static final String MENU_CATEGORY = "menuCategory";
-    public static final String LOGGED_USER = "loggedUser";
-    public static final String DELIVERY_ADDRESS = "deliveryAddress";
-    public static final String DELIVERY_PHONE = "deliveryPhone";
-    public static final String PAGE_FROM_BEING_REDIRECTED = "pageFromBeingRedirected";//todo change from URLUtil class
-    public static final String SHOW_DISH_INFO = "showDishInfo";
-    public static final String ERROR_MESSAGE = "errorMessage";
-    public static final String ORDER_MESSAGE = "orderMessage";
-    public static final String LANGUAGE = "language";
+   String CURRENT_ORDER = "currentOrder";
+    String ORDER_LIST = "orders";
+    String DISH_LIST = "dishes";
+    String CURRENT_DISH = "currentDish";
+    String MENU_CATEGORY = "menuCategory";
+    String LOGGED_USER = "loggedUser";
+    String DELIVERY_ADDRESS = "deliveryAddress";
+    String DELIVERY_PHONE = "deliveryPhone";
+    String PAGE_FROM_BEING_REDIRECTED = "pageFromBeingRedirected";//todo change from URLUtil class
+    String SHOW_DISH_INFO = "showDishInfo";
+    String ERROR_MESSAGE = "errorMessage";
+    String ORDER_MESSAGE = "orderMessage";
+    String LANGUAGE = "language";
+    String LOCALE = "locale";
+    String REGISTRATION_ERROR_MESSAGE = "registrationErrorMessage";//todo try to make one
+    String REGISTRATION_PROCESS = "registrationProcess";
 
-
-//    public static final String LOGIN_ERROR_MESSAGE = "logInErrorMessage";//todo try to make one
-    public static final String REGISTRATION_ERROR_MESSAGE = "registrationErrorMessage";//todo try to make one
-    public static final String REGISTRATION_PROCESS = "registrationProcess";
 
 }

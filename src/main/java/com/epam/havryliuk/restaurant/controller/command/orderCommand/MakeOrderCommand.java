@@ -2,16 +2,20 @@ package com.epam.havryliuk.restaurant.controller.command.orderCommand;
 
 import com.epam.havryliuk.restaurant.controller.command.ActionCommand;
 import com.epam.havryliuk.restaurant.model.constants.RequestAttributes;
+import com.epam.havryliuk.restaurant.model.constants.RequestParameters;
+import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
 import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
 import com.epam.havryliuk.restaurant.model.entity.Order;
 import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.exceptions.BadCredentialsException;
 import com.epam.havryliuk.restaurant.model.exceptions.DuplicatedEntityException;
+import com.epam.havryliuk.restaurant.model.exceptions.IrrelevantDataException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
+import com.epam.havryliuk.restaurant.model.resource.MessageManager;
 import com.epam.havryliuk.restaurant.model.service.OrderService;
 import com.epam.havryliuk.restaurant.model.util.URLUtil;
-import com.epam.havryliuk.restaurant.model.util.Validator;
+import com.epam.havryliuk.restaurant.model.util.validation.Validator;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -30,13 +34,9 @@ public class MakeOrderCommand implements ActionCommand {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession();
-
+        //todo перед підтвердженням перевірити чи наявна кількість доступних блюд. !!!! ВАЖЛИВО
+        // якщо кількість блюд що замовляє користувач більша за доступну - вивести повідомлення з наявною кількістю
         User user = (User) session.getAttribute(RequestAttributes.LOGGED_USER);
-//        if (user == null) {//todo код дублюється (виконати через фільтр)
-//            log.error("The user has been logged out.");
-//            session.setAttribute(ERROR_MESSAGE, "You should log in to make an order.");
-//            response.sendRedirect(AppPagesPath.REDIRECT_REGISTRATION);//todo
-//        }
         OrderService orderService = new OrderService();
         Order order = (Order) session.getAttribute(CURRENT_ORDER);
         if (order != null) {
@@ -63,10 +63,10 @@ public class MakeOrderCommand implements ActionCommand {
             session.removeAttribute(DELIVERY_ADDRESS);
             session.removeAttribute(DELIVERY_PHONE);
         } catch (ServiceException | BadCredentialsException e) {
-            String errorMessage = e.getMessage();
+//            String errorMessage = e.getMessage();
+//            session.setAttribute(ERROR_MESSAGE, errorMessage);
             session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
-            session.setAttribute(ERROR_MESSAGE, errorMessage);
-            log.error(errorMessage, e);
+            log.error(e.getMessage(), e);
         }
         if (order != null) {// todo think of refactoring
             saveDishToOrder(request, orderService, order);
@@ -76,12 +76,17 @@ public class MakeOrderCommand implements ActionCommand {
 
     private void checkDeliveryCredentials(String deliveryAddress, String deliveryPhone, HttpSession session)
             throws BadCredentialsException {
+        MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LANGUAGE));
         if(!Validator.isAddressCorrect(deliveryAddress)) {
+            session.setAttribute(ORDER_MESSAGE,
+                    messageManager.getProperty(ResponseMessages.INCORRECT_DELIVERY_ADDRESS));
             String error = "The address is incorrect.";
             throw new BadCredentialsException(error);
         }
         session.setAttribute(DELIVERY_ADDRESS, deliveryAddress);
         if(!Validator.isPhoneCorrect(deliveryPhone)) {
+            session.setAttribute(ORDER_MESSAGE,
+                    messageManager.getProperty(ResponseMessages.INCORRECT_DELIVERY_PHONE));
             String error = "The phone is incorrect.";
             throw new BadCredentialsException(error);
         }
@@ -91,22 +96,29 @@ public class MakeOrderCommand implements ActionCommand {
 
     private void saveDishToOrder(HttpServletRequest req, OrderService orderService, Order order) {
         HttpSession session = req.getSession();
+        MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LANGUAGE));
         try {
             Dish dish = getCurrentDish(req);
             int dishesAmount = getDishesAmount(req);
             orderService.addDishToOrder(order, dish, dishesAmount);
             session.removeAttribute(CURRENT_DISH);
-
+        } catch (IrrelevantDataException e) {
+            log.error("User have tried to add the same dish to order.");
+            session.setAttribute(ORDER_MESSAGE,
+                    messageManager.getProperty(ResponseMessages.UNAVAILABLE_DISHES_AMOUNT));
+//            session.setAttribute(ORDER_MESSAGE, errorMessage);
+            session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
         } catch (DuplicatedEntityException e) {
-            String errorMessage = "The dish is already in your order.";
-            log.error(errorMessage, e);
+            log.error("User have tried to add the same dish to order.");
+            session.setAttribute(ORDER_MESSAGE,
+                    messageManager.getProperty(ResponseMessages.DISH_ALREADY_IN_ORDER));
+//            session.setAttribute(ORDER_MESSAGE, errorMessage);
             session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
-            session.setAttribute(ORDER_MESSAGE, errorMessage);
         } catch (ServiceException | BadCredentialsException e) {
-            String errorMessage = e.getMessage();
+//            String errorMessage = e.getMessage();
+//            session.setAttribute(ERROR_MESSAGE, errorMessage);
             session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
-            session.setAttribute(ERROR_MESSAGE, errorMessage);
-            log.error(errorMessage, e);
+            log.error(e.getMessage(), e);
         }
     }
 
@@ -115,8 +127,11 @@ public class MakeOrderCommand implements ActionCommand {
         HttpSession session = req.getSession();
         Dish dish = (Dish) session.getAttribute(CURRENT_DISH);
         if (dish == null) {
+
+            //todo add message from properties
+
             String errorMessage = "Choose the dish for adding it to basket.";
-            log.error(errorMessage);
+            log.error("Choose the dish for adding it to basket.");
             throw new ServiceException(errorMessage);
         }
         return dish;
@@ -136,14 +151,19 @@ public class MakeOrderCommand implements ActionCommand {
 
     private int getDishesAmount(HttpServletRequest req) throws BadCredentialsException {
         int dishesAmount;
-
+        HttpSession session = req.getSession();
+        MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LANGUAGE));
         try {
-            dishesAmount = Integer.parseInt(req.getParameter("amount").trim());
+            dishesAmount = Integer.parseInt(req.getParameter(RequestParameters.ORDER_DISHES_AMOUNT).trim());
             if(!Validator.isDishesAmountCorrect(dishesAmount)) {
-                throw new BadCredentialsException("The the number of dishes is incorrect.");
+                session.setAttribute(ERROR_MESSAGE,
+                        messageManager.getProperty(ResponseMessages.INCORRECT_NUMBER_OF_DISHES_ERROR));
+                throw new BadCredentialsException("The number of dishes is incorrect.");
             }
             log.debug("Request for \"" + dishesAmount + "\" has been received.");
         } catch (NumberFormatException e) {
+            session.setAttribute(ERROR_MESSAGE,
+                    messageManager.getProperty(ResponseMessages.NUMBER_OF_DISHES_IS_EMPTY_ERROR));
             throw new BadCredentialsException("Enter amount of dishes you want to order please.");
         }
         return dishesAmount;
@@ -158,7 +178,9 @@ public class MakeOrderCommand implements ActionCommand {
      * If user press "continue ordering" button, then request will
      * receive such parameter, and response will be redirected to the
      * page the request have been done from. Otherwise, user will be
-     * redirected to his basket page.
+     * redirected to his basket page. If any error situation occurs,
+     * (any messages should be displayed to user) then user will get
+     * the same page with the proper messages.
      * @param req
      * @return
      */
@@ -166,14 +188,10 @@ public class MakeOrderCommand implements ActionCommand {
         String redirectionPage;
         String continueOrder = req.getParameter("continue");
         log.debug("continueOrder: " + continueOrder);
-
-
         String errorMessage = (String) req.getSession().getAttribute(ERROR_MESSAGE);
         String orderMessage = (String) req.getSession().getAttribute(ORDER_MESSAGE);
-
         if (continueOrder == null && errorMessage == null && orderMessage == null) {
             redirectionPage = AppPagesPath.REDIRECT_BASKET;
-//            redirectionPage = "basket";
         } else {
             redirectionPage = URLUtil.getRefererPage(req);
         }

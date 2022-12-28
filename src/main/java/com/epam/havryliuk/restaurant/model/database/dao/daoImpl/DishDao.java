@@ -41,7 +41,7 @@ public class DishDao extends AbstractDao<Dish> {
             }
             log.debug("The \"" + name + "\" dish has been received from database.");
         } catch (SQLException e) {
-            log.error("Error in getting dish \"" + name +  "\" from database. ", e);
+            log.error("Error in getting dish from database. ", e);
             throw new DAOException(e);
         }
         return dish;
@@ -98,7 +98,7 @@ public class DishDao extends AbstractDao<Dish> {
             }
             log.debug("The dish with \"id=" + id + "\" has been received from database.");
         } catch (SQLException e) {
-            log.error( "Error in getting with \"id=" + id + "\" from database. ", e);
+            log.error( "Error in getting dish from database. ", e);
             throw new DAOException(e);
         }
         return dish;
@@ -181,6 +181,23 @@ public class DishDao extends AbstractDao<Dish> {
         String image = rs.getString(DishFields.DISH_IMAGE);
 //        Category category = mapCategoryForDish(rs);
         return Dish.getInstance(id, name, description, weight, price, amount, image);
+    }
+
+    public int getNumberOfDishes(Dish dish) throws DAOException {
+        int numberOfDishes = 0;
+        try (PreparedStatement stmt = connection.prepareStatement(DishQuery.GET_NUMBER_OF_DISHES)) {
+            stmt.setLong(1, dish.getId());
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    numberOfDishes = rs.getInt(DishFields.DISH_AMOUNT);
+                }
+            }
+            log.debug("The number of dishes has been received from database.");
+        } catch (SQLException e) {
+            log.error( "Error in getting number of dishes from database. ", e);
+            throw new DAOException(e);
+        }
+        return numberOfDishes;
     }
 
 //    private Category mapCategoryForDish(ResultSet rs) throws SQLException { //todo low coupling

@@ -48,8 +48,7 @@
 
                     </div>
 
-                <%-- <div class="order-buttons"> --%>
-                    <form method="post" action="makeOrder">
+                    <form method="post" action="make_order">
 
                         <c:if test="${sessionScope.currentOrder eq null}">
                             <div class="address-info">
@@ -64,7 +63,6 @@
                         </c:if>
 
                         <div class="error-message" >
-                            <c:out value="${sessionScope.errorMessage}" />
                             <c:out value="${sessionScope.orderMessage}" />
                         </div>   
 
@@ -72,20 +70,16 @@
                             <div class="button order-button button-amount">
                                 <div class="amount-button-label">amount</div>
                                 <input type="text" name="amount" class="dishes-amout"/>
+                                <%-- <select name="amount" class="dishes-amout"
+                                    <c:forEach var="i" begin="0" end="${dish.amount}" step="1">
+                                        <option value="${i}">${i}</option>
+                                    </c:forEach>
+                                </select>  --%>
                             </div>
-            
-
-                            <%-- <input type="hidden" name="dishId" value="${dish.id}" /> --%>
-
-                                <%-- <input type="submit" name="continue" value="continue" data-wait="Please wait..." class="button order-button">
-                                <input type="submit" name="confirm"  value="confirm" data-wait="Please wait..." class="button order-button"> --%>
-
                             <button name="continue" value="continue" class="button order-button">continue ordering</button>
                             <button class="button order-button">order this dish</button>
                         </div>
                     </form>
-                <%-- </div> --%>
-
 
             </div>
         </div>

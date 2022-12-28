@@ -1,4 +1,4 @@
-package com.epam.havryliuk.restaurant.model.util;
+package com.epam.havryliuk.restaurant.model.util.validation;
 
 import com.epam.havryliuk.restaurant.model.exceptions.BadCredentialsException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;

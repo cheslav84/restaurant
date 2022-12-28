@@ -17,7 +17,7 @@ import java.io.IOException;
 
 
 @WebServlet(name = "Controller", urlPatterns = {"/page/*", "/auth/*",  "/login", "/register", "/logout",
-        "/showOrderInfo", "/menu/*", "/locale/*", "/client/*", "/admin/*", "/index", "/makeOrder",
+        "/showOrderInfo", "/menu/*", "/locale/*", "/client/*", "/admin/*", "/index", "/make_order",
         "/basket", "/removeFromOrder", "/confirmOrder", "/manage_orders", "/login_page"})
 //@WebServlet("/")
 public class Controller extends HttpServlet {
