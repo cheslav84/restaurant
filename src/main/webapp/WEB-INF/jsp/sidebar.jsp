@@ -12,6 +12,7 @@
 
         <div class="languages">
             <fmt:setLocale value="${sessionScope.language}"/>
+            <%-- <fmt:setLocale value="${sessionScope.locale}"/> --%>
             <fmt:setBundle basename="menu"/>
             <a href="?locale=EN" class="nav-social-button w-inline-block language-link">ENG</a>
             <a href="?locale=UA" class="nav-social-button w-inline-block language-link">UA</a>

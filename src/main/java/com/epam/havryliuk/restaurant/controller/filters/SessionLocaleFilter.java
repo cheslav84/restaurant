@@ -2,12 +2,14 @@ package com.epam.havryliuk.restaurant.controller.filters;
 
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
+
 
 @WebFilter(filterName = "SessionLocaleFilter", urlPatterns = {"/*"})
 public class SessionLocaleFilter implements Filter {
@@ -20,10 +22,11 @@ public class SessionLocaleFilter implements Filter {
 
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpSession session = httpRequest.getSession();
+
         if (httpRequest.getParameter("locale") != null) {
             session.setAttribute("language", httpRequest.getParameter("locale"));
-        } else if (session.getAttribute("locale") == null) {
-            session.setAttribute("language", "UA");
+        } else if (session.getAttribute("language") == null) {
+            session.setAttribute("language", httpRequest.getLocale().getLanguage());
         }
         chain.doFilter(request, response);
     }
