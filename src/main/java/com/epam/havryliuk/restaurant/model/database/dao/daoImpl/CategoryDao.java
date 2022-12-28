@@ -23,14 +23,10 @@ public class CategoryDao extends AbstractDao<Category> {
 
 //    @Override
     public Category findByName(String name) throws DAOException {
-        Category category = null;
+        Category category;
         try ( PreparedStatement stmt = connection.prepareStatement(CategoryQuery.FIND_CATEGORY_BY_NAME)) {
             stmt.setString(1, name);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    category = mapCategory(rs);
-                }
-            }
+            category = extractCategory(stmt);
             log.debug("The \"" + category + "\" category received from database.");
         } catch (SQLException e) {
             log.error("Error in getting category \"" + name + "\" from database.", e);
@@ -41,18 +37,24 @@ public class CategoryDao extends AbstractDao<Category> {
 
     @Override
     public Category findById(long id) throws DAOException {
-        Category category = null;
+        Category category;
         try (PreparedStatement stmt = connection.prepareStatement(CategoryQuery.FIND_CATEGORY_BY_ID)) {
             stmt.setLong(1, id);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    category = mapCategory(rs);
-                }
-            }
+            category = extractCategory(stmt);
             log.debug("The category with id \"" + id + "\" received from database.");
         } catch (SQLException e) {
             log.error("Error in getting category with id \"" + id + "\" from database.", e);
             throw new DAOException(e);
+        }
+        return category;
+    }
+
+    private Category extractCategory(PreparedStatement stmt) throws SQLException {
+        Category category = null;
+        try (ResultSet rs = stmt.executeQuery()) {
+            if (rs.next()) {
+                category = mapCategory(rs);
+            }
         }
         return category;
     }

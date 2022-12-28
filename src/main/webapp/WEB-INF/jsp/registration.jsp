@@ -61,11 +61,11 @@
                         <form method="post" action="login" id="wf-form-Reservation-Form" name="logInForm" data-name="Log in form">
                         <%-- <input type="hidden" name="command" value="login" /> --%>
                             <input type="email" id="Email-3" name="email" data-name="Email" placeholder="Email address"
-                                maxlength="32" required="true" class="field w-input"                                          value="mail@com">
+                                maxlength="32" required="true" class="field w-input"                                          value="v_cheslav@ukr.net">
 
                             <input type="password" id="password" name="password" data-name="Password"
                                 placeholder="Password" minlength="8" maxlength="32" required="true"
-                                class="field w-input"                                                                     value="mail@com">
+                                class="field w-input"                                                                     value="strongPass!@#123">
 
                             <div class="error-message"> 
                                 <%-- <c:out value="${sessionScope.logInErrorMessage}"/> --%>
@@ -147,8 +147,9 @@
 
     
     <jsp:include page="footer.jsp"/>
-    <script src="js/jquery3.6.1.js" type="text/javascript" crossorigin="anonymous"></script>
-    <script src="js/webflow.e.js" type="text/javascript"></script>
+
+    <script src="view/js/jquery3.6.1.js" type="text/javascript" crossorigin="anonymous"></script>
+    <script src="view/js/webflow.e.js" type="text/javascript"></script>
 
 </body>
 

@@ -4,6 +4,7 @@ import com.epam.havryliuk.restaurant.model.exceptions.BadCredentialsException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.security.GeneralSecurityException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -54,10 +55,10 @@ public class Validator {
     }
 
 
-    public static void checkIfPasswordsCoincide(String password, String encryptedPassword) throws ServiceException {
+    public static void checkIfPasswordsCoincide(String password, String encryptedPassword) throws GeneralSecurityException {
         if (!password.equals(encryptedPassword)) {
             String errorMessage = "Entered password is wrong.";
-            throw new ServiceException(errorMessage);
+            throw new GeneralSecurityException(errorMessage);
         }
     }
 }

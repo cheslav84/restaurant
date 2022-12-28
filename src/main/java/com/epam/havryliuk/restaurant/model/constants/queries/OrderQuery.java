@@ -14,6 +14,7 @@ public class OrderQuery {
     public static String ADD_ORDER;
     public static String GET_CREATION_DATE_BY_ID;
     public static String GET_ALL_ORDERS_BY_USER;
+    public static String GET_UNCOMPLETED_ORDERS_SORTED_BY_STATUS_THEN_TIME;
     public static String FIND_ORDER_BY_ID;
     public static String CHANGE_ORDER_STATUS_BY_ID;
     public static String DELETE_ORDER_BY_ID;
@@ -32,6 +33,7 @@ public class OrderQuery {
         ADD_ORDER = (String) properties.get("order.ADD_ORDER");
         GET_CREATION_DATE_BY_ID = (String) properties.get("order.GET_CREATION_DATE_BY_ID");
         GET_ALL_ORDERS_BY_USER = (String) properties.get("order.GET_ALL_ORDERS_BY_USER");
+        GET_UNCOMPLETED_ORDERS_SORTED_BY_STATUS_THEN_TIME = (String) properties.get("order.GET_UNCOMPLETED_ORDERS_SORTED_BY_STATUS_THEN_TIME");
         FIND_ORDER_BY_ID = (String) properties.get("order.FIND_ORDER_BY_ID");
         CHANGE_ORDER_STATUS_BY_ID = (String) properties.get("order.CHANGE_ORDER_STATUS_BY_ID");
         REMOVE_DISH_FROM_ORDER = (String) properties.get("order.REMOVE_DISH_FROM_ORDER");

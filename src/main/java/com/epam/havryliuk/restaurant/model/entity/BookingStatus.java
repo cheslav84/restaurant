@@ -3,7 +3,7 @@ package com.epam.havryliuk.restaurant.model.entity;
 
 //import com.epam.havryliuk.restaurant.model.entity.constants.Status;
 
-public enum BookingStatus {
+public enum BookingStatus implements Entity {
     BOOKING (1),// todo set such id in database
     NEW (2),
     COOKING (3),
@@ -20,6 +20,10 @@ public enum BookingStatus {
     public long getId() {
         return id;
     }
+
+//    public BookingStatus getNextStatus () {
+//            return (this.getId() < 6) ? BookingStatus.values()[(int) this.getId() + 1] : BookingStatus.COMPLETED;
+//    }
 
     public static BookingStatus getStatus (long id) {
         return BookingStatus.values()[(int) id - 1];

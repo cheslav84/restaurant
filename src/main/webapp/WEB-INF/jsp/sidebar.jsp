@@ -4,17 +4,28 @@
 <%-- <%@ taglib prefix="my" tagdir="/WEB-INF/tags"%> --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<fmt:setLocale value="${user.language}"/>
-<fmt:setBundle basename="cra_language"/>
+
 
 <div data-animation="default" class="navbar-left w-nav" data-easing2="ease" data-easing="ease" data-collapse="small"
     role="banner" data-no-scroll="1" data-duration="400" data-doc-height="1">
     <div class="menu-overlay">
+
+        <div class="languages">
+            <fmt:setLocale value="${sessionScope.language}"/>
+            <fmt:setBundle basename="menu"/>
+            <a href="?locale=EN" class="nav-social-button w-inline-block language-link">ENG</a>
+            <a href="?locale=UA" class="nav-social-button w-inline-block language-link">UA</a>
+            <%-- <a href="set_language?language=EN" class="nav-social-button w-inline-block language-link">ENG</a>
+            <a href="set_language?language=UA" class="nav-social-button w-inline-block language-link">UA</a> --%>
+        </div>
+
         <div class="w-container">
             <a href="index.html" aria-current="page" class="logo-container w-clearfix w-nav-brand w--current">
                 <img src="view/pictures/icons/VH_logo_white.png" alt="" class="logo-icon">
-                <h1 class="logo-text">V&H VICTORY</h1>
-                <h2 class="logo-text subtitle">Cafe&nbsp;&amp; Restaurant</h2>
+                <h1 class="logo-text">V&amp;H VICTORY</h1>
+                <h2 class="logo-text subtitle">
+                    <fmt:message key="sidebar.cafe"/>&nbsp;&amp; <fmt:message key="sidebar.restaurant"/>
+                </h2>
             </a>
             <div class="menu-divider w-hidden-small w-hidden-tiny"></div>
             <div class="menu-button w-nav-button">
@@ -23,24 +34,37 @@
 
             <nav role="navigation" class="nav-menu w-nav-menu">
                 <a href="index" id="index-nav" aria-current="page" class="nav-link w-nav-link w--current"
-                    style="max-width: 940px;">Home</a>
+                    style="max-width: 940px;">
+                    <fmt:message key="sidebar.home"/>
+                </a>
 
-                <a href="page?path=menu" id="menu-nav" class="nav-link w-nav-link" style="max-width: 940px;">Menu</a>
+                <a href="page?path=menu" aria-current="page" class="nav-link w-nav-link" style="max-width: 940px;">
+                    <fmt:message key="sidebar.menu"/>
+                </a>
 
                 <c:if test="${sessionScope.loggedUser eq null}">
-                    <a href="page?path=registration" id="login-nav" class="nav-link w-nav-link" style="max-width: 940px;">Log in</a>
+                    <a href="login_page" aria-current="page"  class="nav-link w-nav-link" style="max-width: 940px;">
+                    <%-- <a href="page?path=registration"  class="nav-link w-nav-link" style="max-width: 940px;"> --%>
+                        <fmt:message key="sidebar.login"/>
+                    </a>
                 </c:if>
 
                 <c:if test="${sessionScope.loggedUser ne null}">
-                    <a href="basket" id="basket-nav" class="nav-link w-nav-link" style="max-width: 940px;">My orders</a>
+                    <a href="basket" class="nav-link w-nav-link" style="max-width: 940px;">
+                        <fmt:message key="sidebar.basket"/>
+                    </a>
                 </c:if>
 
 
                  <c:if test="${sessionScope.loggedUser ne null}">
                      <c:if test="${sessionScope.loggedUser.role == 'MANAGER'}">
-                          <a href="page?path=managerPage" aria-current="page" class="nav-link w-nav-link">Manager page</a>
+                          <a href="manage_orders" aria-current="page" class="nav-link w-nav-link">
+                            <fmt:message key="sidebar.managerPage"/>
+                          </a>
                      </c:if>
-                     <a href="logout" aria-current="page" class="nav-link w-nav-link">Log out</a>
+                     <a href="logout" aria-current="page" class="nav-link w-nav-link">
+                        <fmt:message key="sidebar.logout"/>
+                     </a>
                  </c:if>
 
 

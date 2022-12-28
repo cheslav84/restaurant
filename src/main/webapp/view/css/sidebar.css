@@ -1,4 +1,4 @@
-.user-name, .login-page-link, .order-link  {
+.user-name, .login-page-link, .language-link  {
     font-family: Oswald, sans-serif;
     color: #fff;
     font-size: 14px;
@@ -8,9 +8,9 @@
     letter-spacing: 1px;
 }
 
-.user-panel {
+/* .user-panel {
 
-}
+} */
 
 
 .user-info {
@@ -33,17 +33,17 @@
 
 
 
-.ordering {
+.languages {
     margin-top: 12px;
     margin-right: 8px;
     position: relative;
     float: right;
 }
 
-.order-link {
+.language-link {
     float: right;
     position: relative;
-
+    font-size: 12px;
 }
 
 .basket-image {
@@ -57,22 +57,22 @@
 
 
 
-
+/* 
 a.login-page-link:hover {
     color: #e88f2a;
     opacity: 1;
-}
+} */
 
-.order-link:hover {
+.language-link:hover {
     color: #e88f2a;
     opacity: 1;
 
 }
 
-.basket-image:hover {
+/* .basket-image:hover {
     content: url(../pictures/icons/shopping_basket_active.png);
     opacity: 1;
-}
+} */
 
 
 
@@ -82,7 +82,7 @@ a.login-page-link:hover {
         margin-top: 8px;
     }
 
-    .ordering {
+    .languages {
         margin-top: 8px;
     }
 
@@ -95,17 +95,17 @@ a.login-page-link:hover {
       float: left;
   }
 
-  .login-page-link {
+  /* .login-page-link {
   position: absolute;
       padding-left: 6px;
 
-  }
+  } */
 
-  .basket-link {
+  /* .basket-link {
       margin-top: 35px;
       width: 100%;
       padding: 0;
-  }
+  } */
 
 }
 

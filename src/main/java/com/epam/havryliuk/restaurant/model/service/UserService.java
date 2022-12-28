@@ -2,10 +2,9 @@ package com.epam.havryliuk.restaurant.model.service;
 
 import com.epam.havryliuk.restaurant.model.constants.RequestAttributes;
 import com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction;
-import com.epam.havryliuk.restaurant.model.database.dao.daoImpl.RoleDao;
+import com.epam.havryliuk.restaurant.model.entity.Role;
 import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.database.dao.daoImpl.UserDao;
-import com.epam.havryliuk.restaurant.model.entity.constants.UserRole;
 import com.epam.havryliuk.restaurant.model.exceptions.BadCredentialsException;
 import com.epam.havryliuk.restaurant.model.exceptions.DAOException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
@@ -28,25 +27,26 @@ public class UserService {
         final User user = mapUser(request);
         EntityTransaction transaction = new EntityTransaction();
         UserDao userDao = new UserDao();
-        RoleDao roleDao = new RoleDao();
+//        RoleDao roleDao = new RoleDao();
         try {
-            transaction.initTransaction(userDao, roleDao);
-
+//            transaction.initTransaction(userDao, roleDao);
+            transaction.init(userDao);
             //todo див. ст. 442 Блінова нову (втановлюється тип транзакції).
             // Може виникнути phantom reads. Можливо додати до EntityTransaction
             // методи що встановлюють її у TRANSACTION_SERIALIZABLE ... подумати
 
             checkIfLoginDoesNotExist(user, userDao);
-            RoleService roleService = new RoleService();
-            roleService.setRoleForUser(roleDao, UserRole.CLIENT, user);
+//            RoleService roleService = new RoleService();
+//            roleService.setRoleForUser(roleDao, Role.CLIENT, user);
+            user.setRole(Role.CLIENT);
             userDao.create(user);
-            transaction.commit();
+//            transaction.commit();
             log.debug("The user was successfully created.");
         } catch (DAOException e) {
             log.error("Error in creating the user.");
             throw new ServiceException(e);
         } finally {
-            transaction.endTransaction();
+            transaction.end();
         }
         return user;
     }

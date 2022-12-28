@@ -2,23 +2,17 @@ package com.epam.havryliuk.restaurant.model.service;
 
 import com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction;
 import com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao;
-import com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao;
 import com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao;
 import com.epam.havryliuk.restaurant.model.entity.*;
 import com.epam.havryliuk.restaurant.model.exceptions.BadCredentialsException;
 import com.epam.havryliuk.restaurant.model.exceptions.DAOException;
 import com.epam.havryliuk.restaurant.model.exceptions.DuplicatedEntityException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
-import com.epam.havryliuk.restaurant.model.util.Validator;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Date;
 import java.util.List;
-
-import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
 public class OrderService {
     private static final Logger log = LogManager.getLogger(OrderService.class);
@@ -66,10 +60,34 @@ public class OrderService {
         return orders;
     }
 
+    public List<Order> getAllOrders() throws ServiceException {
+        OrderDao orderDao = new OrderDao();
+        EntityTransaction transaction = new EntityTransaction();
+        BasketDao basketDao = new BasketDao();
+        List<Order> orders;
+        try {
+            transaction.initTransaction(orderDao, basketDao);
+            orders = orderDao.getUncompletedOrdersSortedByStatusThenTime();
+            for (Order order : orders) {
+                order.setBaskets(basketDao.getOrderDishes(order));
+            }
+            transaction.commit();
+            log.debug("The order list was successfully created.");
+        } catch (DAOException e) {
+            String message = "The orders is temporary unavailable, try again later please.";
+            log.error(message, e);
+            throw new ServiceException(message, e);
+        } finally {
+            transaction.end();
+        }
+        return orders;
+    }
+
+
     /**
      * Returns an order that firstly tries to get from database. The order is considered that
      * exists in database, if the delivery address is the same as a user wants to deliver to, and the
-     * booking status is "boking" (the order is not confirmed by user). If such order doesn't exist -
+     * booking status is "booking" (the order is not confirmed by user). If such order doesn't exist -
      * creates a new one from data that received from user side (delivery address, delivery phone).
      * As that order is new, then payment status is set to false, and the booking status is "Booking".
      * Other data, like id and creation is formed by database.
@@ -89,7 +107,8 @@ public class OrderService {
                 order.setUser(user);
                 log.debug("Order has been received from database: " + order);
             } else {
-                order = Order.getInstance(deliveryAddress, deliveryPhone, false, user, BookingStatus.BOOKING);
+                order = Order.getInstance(deliveryAddress, deliveryPhone, false, BookingStatus.BOOKING);
+                order.setUser(user);
                 orderDao.create(order);
                 Date creationDate = orderDao.getCreationDate(order.getId());
                 order.setCreationDate(creationDate);
@@ -153,6 +172,8 @@ public class OrderService {
             transaction.end();
         }
     }
+
+
 
 
 //    private int getDishesAmount(HttpServletRequest req) throws BadCredentialsException {

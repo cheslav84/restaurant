@@ -10,7 +10,7 @@
 <!-- <my:user id="123" /> -->
  
         <!DOCTYPE html>
-        <html>
+        <html lang="${sessionScope.language}">
         <head>
             <meta content="text/html; charset=UTF-8">
             <title>Easy Times</title>

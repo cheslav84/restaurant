@@ -122,7 +122,6 @@ public class BasketDao extends AbstractDao<Basket> {
     }
 
 
-
     private Basket mapBasket(ResultSet rs, Order order) throws SQLException {
         DishDao dishDao = new DishDao();
         Dish dish =  dishDao.mapDish(rs);

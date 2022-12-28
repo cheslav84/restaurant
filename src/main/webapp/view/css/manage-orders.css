@@ -1,0 +1,175 @@
+.order-container {
+    padding-bottom: 15px;
+    margin-bottom: 10px;
+    border-bottom: 1.5px;
+    border-bottom-style: dashed;
+    border-color: #e88f2a;
+
+}
+
+.order-details {
+    margin-top: 5px;
+    margin-bottom: 15px;
+    color: #47443e;
+    font-size: 16px;
+    line-height: 22px;
+    font-weight: 700;
+
+}
+
+.order-list {
+    margin-bottom: 2px;
+    padding-right: 10px;
+
+}
+
+.order-title {
+    display: inline-block;
+    float: left; 
+}
+
+
+
+.delivery-title {
+    display: inline-block;
+    float: right;
+}
+
+
+
+
+.menu-list-item {
+    width: 100%;
+}
+
+
+
+
+.orders-header {
+    max-height: 170px;
+    padding-top: 41px;
+}
+
+.section-intro-title.subtitle.smaler {
+    font-size: 12px;
+}
+
+.section-intro-title.subtitle {
+    margin-bottom: 6px;
+}
+
+
+
+
+.order-content {
+    padding-top: 10px;
+}
+
+.order-status {
+    color: #e88f2a;
+    font-size: 18px;
+}
+
+.order-divider {
+    margin: 10px auto;
+    margin-top: 54px;
+}
+
+
+
+
+.order-edit-button {
+    position: absolute;
+    right: 10px;
+    padding: 0px 20px;
+    margin-top: 0px;
+    font-size: 12px;
+    line-height: 31px;
+}
+
+
+
+.menu-item-label {
+    display: inline-block;
+    float: right;
+    margin-right: 10px;
+    margin-bottom: 7px;
+    margin-top: 6px;
+    padding-right: 6px;
+    padding-left: 6px;
+    border-radius: 3px;
+    background-color: #e88f2a;
+    font-family: 'Open Sans', sans-serif;
+    color: #fff;
+    line-height: 18px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.menu-item-amount {
+    margin-right: 10px;
+}
+
+
+
+.menu-item-text.order-item{
+    display: block;
+    margin-top: 0px;
+    margin-left: 10px;
+    width: auto;
+
+}
+
+.menu-item-title.order-title {
+    margin-top: 6px;
+    margin-right: 8px;
+    float: left;
+    color: #333;
+ }
+
+
+
+
+
+
+@media screen and (max-width:991px) {
+
+
+}
+
+
+
+
+@media screen and (max-width:767px) {
+
+
+}
+
+@media screen and (max-width:479px) {
+
+    .menu-item-image-box {
+        max-height: 50px;
+    }
+
+    .order-edit-button {
+        position: relative;
+        right: 0px;
+        /* margin-top: 16px; */
+    }
+    .menu-item-amount {
+        margin-right: 10px;
+
+    }
+    .menu-item-title.description.order-description{
+        margin-top: 0px;
+        /* width: 100%;
+        margin-left: -88px; */
+     }
+
+     
+    .order-list {
+        padding-right: 0px;
+    }
+    
+}
+ 

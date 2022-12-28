@@ -46,7 +46,8 @@ public class OrderDao extends AbstractDao<Order> {
             stmt.setString(++k, bookingStatus.name());
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    order = mapOrder(rs, user);
+                    order = mapOrder(rs);
+                    order.setUser(user);
                 }
             }
             log.debug("Order has been received from database.");
@@ -89,7 +90,25 @@ public class OrderDao extends AbstractDao<Order> {
             stmt.setLong(1, user.getId());
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    orders.add(mapOrder(rs, user));
+                    Order order = mapOrder(rs);
+                    order.setUser(user);
+                    orders.add(order);
+                }
+            }
+            log.debug("List of dishes (by category) has been received from database. ");
+        } catch (SQLException e) {
+            log.error("Error in getting list of dishes from database. ", e);
+            throw new DAOException(e);
+        }
+        return orders;
+    }
+
+    public List<Order> getUncompletedOrdersSortedByStatusThenTime() throws DAOException {
+        List<Order> orders = new ArrayList<>();
+        try (PreparedStatement stmt = connection.prepareStatement(OrderQuery.GET_UNCOMPLETED_ORDERS_SORTED_BY_STATUS_THEN_TIME)) {
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    orders.add(mapOrder(rs));
                 }
             }
             log.debug("List of dishes (by category) has been received from database. ");
@@ -104,7 +123,9 @@ public class OrderDao extends AbstractDao<Order> {
         throw new UnsupportedOperationException();
     }
 
-    private Order mapOrder(ResultSet rs, User user) throws SQLException {
+
+
+    private Order mapOrder(ResultSet rs) throws SQLException {
         long id = rs.getLong(OrderFields.ORDER_ID);
         String address = rs.getString(OrderFields.ORDER_ADDRESS);
         String phoneNumber = rs.getString(OrderFields.ORDER_PHONE_NUMBER);
@@ -113,7 +134,7 @@ public class OrderDao extends AbstractDao<Order> {
         Date closeDate = rs.getTimestamp(OrderFields.ORDER_CLOSE_DATE);
         long bookingStatusId = rs.getLong(OrderFields.ORDER_BOOKING_STATUS);
         BookingStatus bookingStatus = BookingStatus.getStatus(bookingStatusId);
-        return Order.getInstance(id, address, phoneNumber, isPayed, creationDate, closeDate, user, bookingStatus);
+        return Order.getInstance(id, address, phoneNumber, isPayed, creationDate, closeDate, bookingStatus);
     }
 
     public Date getCreationDate(long orderId) throws DAOException {
@@ -166,13 +187,13 @@ public class OrderDao extends AbstractDao<Order> {
     }
 
 
-    public boolean changeOrderStatus(long id, BookingStatus bookingStatus) throws DAOException {
+    public boolean changeOrderStatus(long orderId, BookingStatus bookingStatus) throws DAOException {
         try (PreparedStatement stmt = connection.prepareStatement(OrderQuery.CHANGE_ORDER_STATUS_BY_ID)) {
             int k = 1;
-            stmt.setLong(k++, id);
+            stmt.setLong(k++, orderId);
             stmt.setString(k++, bookingStatus.name());
             stmt.executeUpdate();
-            log.debug("The status in order with id \"" + id +
+            log.debug("The status in order with id \"" + orderId +
                     "\", has been successfully changed");
         } catch (SQLException e) {
             log.error("The status in order has not been changed", e);
@@ -240,4 +261,6 @@ public class OrderDao extends AbstractDao<Order> {
         }
         return numberOfDishes;
     }
+
+
 }

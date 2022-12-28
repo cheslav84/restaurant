@@ -13,49 +13,19 @@ public class Order implements Entity{
     private BookingStatus bookingStatus;
     private List<Basket> baskets;
 
-//    public static Order getInstance(String address, String phoneNumber,
-//                                    boolean isPayed, BookingStatus bookingStatus) {
-//        Order order = new Order();
-//        order.setAddress(address);
-//        order.setPhoneNumber(phoneNumber);
-//        order.setPayed(isPayed);
-//        order.setBookingStatus(bookingStatus);
-//        return order;
-//    }
-
-//    public static Order getInstance(long id,
-//                                    String address,
-//                                    String phoneNumber,
-//                                    boolean isPayed,
-//                                    Date creationDate,
-//                                    Date closeDate,
-//                                    User user,
-//                                    BookingStatus bookingStatus) {
-//        Order order = new Order();
-//        order.setId(id);
-//        order.setAddress(address);
-//        order.setPhoneNumber(phoneNumber);
-//        order.setPayed(isPayed);
-//        order.setCreationDate(creationDate);
-//        order.setCloseDate(closeDate);
-//        order.setUser(user);
-//        order.setBookingStatus(bookingStatus);
-//        order.setDishes(new HashMap<>());
-//        return order;
-//    }
 
 
 
     public static Order getInstance(String address,
                                     String phoneNumber,
                                     boolean isPayed,
-                                    User user,
+//                                    User user,
                                     BookingStatus bookingStatus) {
         Order order = new Order();
         order.setAddress(address);
         order.setPhoneNumber(phoneNumber);
         order.setPayed(isPayed);
-        order.setUser(user);
+//        order.setUser(user);
         order.setBookingStatus(bookingStatus);
         order.setBaskets(new ArrayList<>());
         return order;
@@ -68,14 +38,15 @@ public class Order implements Entity{
                                     boolean isPayed,
                                     Date creationDate,
                                     Date closeDate,
-                                    User user,
                                     BookingStatus bookingStatus) {
-        Order order =getInstance( address, phoneNumber, isPayed, user, bookingStatus);
+        Order order =getInstance( address, phoneNumber, isPayed, bookingStatus);
         order.setId(id);
         order.setCreationDate(creationDate);
         order.setCloseDate(closeDate);
         return order;
     }
+
+
 
     public Long getId() {
 

@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `restaurant`.`booking_status` (
 DROP TABLE IF EXISTS `restaurant`.`role` ;
 
 CREATE TABLE IF NOT EXISTS `restaurant`.`role` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `id` INT NOT NULL,
   `role_name` VARCHAR(16) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `name_UNIQUE` (`role_name` ASC));

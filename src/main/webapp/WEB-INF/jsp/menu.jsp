@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
+
+
 <!DOCTYPE html>
 <html data-wf-domain="easy-times.webflow.io" data-wf-page="55d5c046965aff177731c33f"
       data-wf-site="559f85c38bde14cf4b3723cf"
@@ -9,7 +11,14 @@
     <title>Menu</title>
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <meta content="Webflow" name="generator">
+
+            <link href="view/css/common.css" rel="stylesheet" type="text/css">
+            <link href="view/css/menu.css" rel="stylesheet" type="text/css">
+            <link href="view/css/sidebar.css" rel="stylesheet" type="text/css">
+
     <link href="./Menu_files/easy-times.webflow.303b06344.css" rel="stylesheet" type="text/css">
+
+    
     <script src="./Menu_files/webfont.js.завантаження" type="text/javascript"></script>
     <link rel="stylesheet" href="./Menu_files/css" media="all">
     <script type="text/javascript">
@@ -28,48 +37,12 @@
           rel="apple-touch-icon">
 </head>
 <body>
-<div data-animation="default" class="navbar-left w-nav" data-easing2="ease" data-easing="ease" data-collapse="small"
-     role="banner" data-no-scroll="1" data-duration="400" data-doc-height="1">
-    <div class="menu-overlay">
-        <div class="w-container">
-            <a href="http://easy-times.webflow.io/" class="logo-container w-clearfix w-nav-brand">
-                <img src="./Menu_files/559f87ea0ddfe0783061dffb_Icon-coffee.png" alt="" class="logo-icon">
-                <h1 class="logo-text">Easy Times</h1>
-                <h2 class="logo-text subtitle">Cafe&nbsp;&amp; Restaurant</h2>
-            </a>
-            <div class="menu-divider w-hidden-small w-hidden-tiny"></div>
-            <div class="menu-button w-nav-button">
-                <div class="w-icon-nav-menu"></div>
-            </div>
-            <nav role="navigation" class="nav-menu w-nav-menu">
-                <a href="index.html"class="nav-link w-nav-link w--current" style="max-width: 940px;">Home</a>
-                <a href="menu.html"  aria-current="page" class="nav-link w-nav-link" style="max-width: 940px;">Menu</a>
-                <a href="reservation.html" class="nav-link w-nav-link" style="max-width: 940px;">Reservation</a>
-                <a href="gallery.html" class="nav-link w-nav-link" style="max-width: 940px;">Gallery</a>
-                <a href="parties.html" class="nav-link w-nav-link" style="max-width: 940px;">Parties &amp; Events</a>
-                <a href="about-us.html" class="nav-link w-nav-link" style="max-width: 940px;">About us</a>
-                <a href="blog.html" class="nav-link w-nav-link" style="max-width: 940px;">Blog</a>
-                <a href="contact.html" class="nav-link w-nav-link" style="max-width: 940px;">Contact us</a>
-            </nav>
-            <div class="menu-divider w-hidden-small w-hidden-tiny"></div>
-            <div class="nav-contact-block w-hidden-small w-hidden-tiny">
-                <a href="http://www.facebook.com/" target="_blank" class="nav-social-button w-inline-block"><img
-                    src="./Menu_files/559f866bbcccd97730700260_Icon-facebook.png" alt="" class="nav-social-icon"></a><a
-                    href="http://www.twitter.com/" target="_blank" class="nav-social-button w-inline-block"><img
-                    src="./Menu_files/55d5b366fa59c51977887dd3_Icon-twitter.png" alt="" class="nav-social-icon"></a><a
-                    href="http://www.opentable.com/start/home" target="_blank" class="nav-social-button w-inline-block"><img
-                    src="./Menu_files/56b5bfa6075f9ea44d2bfe8a_Social-Opentable.png" alt="" class="nav-social-icon"></a><a
-                    href="http://www.yelp.com/" target="_blank" class="nav-social-button w-inline-block"><img
-                    src="./Menu_files/56b5bfc493f9ac952b6b78c0_Social-Yelp.png" alt="" class="nav-social-icon"></a>
-                <div class="nav-bottom-text">Copyright © Restuarant</div>
-                <div class="nav-bottom-text _2">Template by <a target="_blank"
-                                                               href="https://webflow.com/templates/designer/corvus"
-                                                               class="link white">Studio Corvus</a></div>
-            </div>
-        </div>
-    </div>
-    <div class="w-nav-overlay" data-wf-ignore=""></div>
-</div>
+
+
+<jsp:include page="sidebar.jsp"/>
+
+
+
 <div id="top" class="page-header wf-section">
     <div class="page-header-overlay menu">
         <div class="container w-container">
@@ -78,6 +51,8 @@
         </div>
     </div>
 </div>
+
+
 <div class="section menu-page-section wf-section">
     <div class="container w-container">
         <div data-duration-in="300" data-duration-out="100" data-current="Coffee" data-easing="ease"
@@ -329,34 +304,15 @@
         </div>
     </div>
 </div>
-<div class="footer wf-section"><a href="http://easy-times.webflow.io/menu#" class="go-to-top-link-block w-inline-block">
-    <img src="./Menu_files/55d5bc08b4ce9258656a0ebd_Icon-Top.png" alt="" class="icon-go-to-top"></a>
-    <div class="container w-container">
-        <div class="footer-row w-row">
-            <div class="footer-col-left w-col w-col-6">
-                <div class="copyright-text">Copyright ©&nbsp;<a href="http://www.studiocorvus.com/" target="_blank"
-                                                                class="bottom-footer-link">Studio Corvus</a></div>
-                <div class="copyright-text">Powered by <a href="http://www.webflow.com/" target="_blank"
-                                                          class="bottom-footer-link">Webflow</a></div>
-            </div>
-            <div class="footer-col-right w-col w-col-6"><a href="http://www.facebook.com/" target="_blank"
-                                                           class="footer-social-block w-inline-block"><img
-                    src="./Menu_files/559f866bbcccd97730700260_Icon-facebook.png" alt="" class="nav-social-icon"></a><a
-                    href="http://www.twitter.com/" target="_blank" class="footer-social-block w-inline-block"><img
-                    src="./Menu_files/55d5b366fa59c51977887dd3_Icon-twitter.png" alt="" class="nav-social-icon"></a><a
-                    href="http://www.opentable.com/start/home" target="_blank"
-                    class="footer-social-block w-inline-block"><img
-                    src="./Menu_files/56b5bfa6075f9ea44d2bfe8a_Social-Opentable.png" alt="" class="nav-social-icon"></a><a
-                    href="http://www.yelp.com/" target="_blank" class="footer-social-block w-inline-block"><img
-                    src="./Menu_files/56b5bfc493f9ac952b6b78c0_Social-Yelp.png" alt="" class="nav-social-icon"></a>
-            </div>
-        </div>
-    </div>
-</div>
-<script src="./js/jquery-3.5.1.min.dc5e7f18c8.js"
-        type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
-        crossorigin="anonymous"></script>
-<script src="./js/webflow.4348bf66e.js" type="text/javascript"></script>
-<!--[if lte IE 9]>
-<script src="//cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif]--></body>
+
+
+
+            <jsp:include page="footer.jsp"/>
+
+            <script src="view/js/jquery3.6.1.js" type="text/javascript" crossorigin="anonymous"></script>
+            <script src="view/js/webflow.e.js" type="text/javascript"></script>
+            <script src="view/js/menu.js" type="text/javascript"></script>
+            <script src="view/js/order-info.js" type="text/javascript"></script>
+
+</body>
 </html>

@@ -1,13 +1,14 @@
 package com.epam.havryliuk.restaurant.model.database.dao.daoImpl;
 
+import com.epam.havryliuk.restaurant.model.constants.databaseFieds.OrderFields;
 import com.epam.havryliuk.restaurant.model.database.dao.AbstractDao;
 import com.epam.havryliuk.restaurant.model.constants.databaseFieds.RoleFields;
 import com.epam.havryliuk.restaurant.model.constants.queries.UserQuery;
+import com.epam.havryliuk.restaurant.model.entity.BookingStatus;
 import com.epam.havryliuk.restaurant.model.entity.Role;
 import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.entity.UserDetails;
 import com.epam.havryliuk.restaurant.model.constants.databaseFieds.UserFields;
-import com.epam.havryliuk.restaurant.model.entity.constants.UserRole;
 import com.epam.havryliuk.restaurant.model.exceptions.DAOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -168,29 +169,30 @@ public class UserDao extends AbstractDao<User> {
         String gender = rs.getString(UserFields.USER_GENDER);
         boolean isOverEighteen = rs.getBoolean(UserFields.USER_IS_AGE_OVER_EIGHTEEN);
         Date accountCreationDate = rs.getTimestamp(UserFields.USER_ACCOUNT_CREATION_DATE);
-        Role role = getUserRole(rs);
-//        Role role = Role.getInstance(Role.UserRole.valueOf(roleName));
+        long roleId = rs.getLong(UserFields.USER_ROLE_ID);
+        Role role = Role.getRole(roleId);
+
         UserDetails userDetails = null;
-        if (role.getUserRole() == UserRole.MANAGER) { //todo
+        if (role == Role.MANAGER) { //todo
             userDetails = mapUserDetails(rs);
         }
         return User.getInstance(id, email, password, name, surname,
                 gender, isOverEighteen, accountCreationDate, role, userDetails);
     }
 
-    private Role getUserRole(ResultSet rs) throws SQLException, DAOException {
-        String roleName = rs.getString(RoleFields.ROLE_NAME);
-        Role role = Role.getInstance(UserRole.valueOf(roleName));
-        if (role.getUserRole().equals(UserRole.MANAGER) ||
-                role.getUserRole().equals(UserRole.CLIENT)) {
-            return role;
-        } else {
-            String errorMessage ="UserRole can't be instantiated";
-            log.debug(errorMessage);
-            throw new DAOException(errorMessage);
-        }
-
-    }
+//    private Role getUserRole(ResultSet rs) throws SQLException, DAOException {
+//        String roleName = rs.getString(RoleFields.ROLE_NAME);
+//        Role role = Role.getInstance(UserRole.valueOf(roleName));
+//        if (role.getUserRole().equals(UserRole.MANAGER) ||
+//                role.getUserRole().equals(UserRole.CLIENT)) {
+//            return role;
+//        } else {
+//            String errorMessage ="UserRole can't be instantiated";
+//            log.debug(errorMessage);
+//            throw new DAOException(errorMessage);
+//        }
+//
+//    }
 
     private UserDetails mapUserDetails(ResultSet rs) throws SQLException {// todo винести потім в UserDetailsDao
         Date birthDate = new Date(rs.getDate(UserFields.MANAGER_BIRTH_DATE).getTime());

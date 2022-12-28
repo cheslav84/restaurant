@@ -16,8 +16,9 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 
 
-@WebServlet(name = "Controller", urlPatterns = {"/page/*", "/auth/*",  "/login", "/register", "/logout", "/showOrderInfo", "/menu/*", "/locale/*",
-                            "/client/*", "/admin/*", "/index", "/makeOrder", "/basket", "/removeFromOrder", "/confirmOrder"})
+@WebServlet(name = "Controller", urlPatterns = {"/page/*", "/auth/*",  "/login", "/register", "/logout",
+        "/showOrderInfo", "/menu/*", "/locale/*", "/client/*", "/admin/*", "/index", "/makeOrder",
+        "/basket", "/removeFromOrder", "/confirmOrder", "/manage_orders", "/login_page"})
 //@WebServlet("/")
 public class Controller extends HttpServlet {
     private static final Logger log = LogManager.getLogger(Controller.class);

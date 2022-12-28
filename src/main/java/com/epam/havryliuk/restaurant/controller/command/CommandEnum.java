@@ -25,13 +25,22 @@ public enum CommandEnum {
         { this.command = new RemoveFromOrderCommand(); }
     }, CONFIRMORDER {
         { this.command = new RemoveFromOrderCommand(); }
+    }, MANAGE_ORDERS {
+        { this.command = new ManageOrdersCommand(); }
     }, LOGIN {
         { this.command = new LoginCommand(); }
+    }, LOGIN_PAGE {
+        { this.command = new LoginPageCommand(); }
     }, LOGOUT {
         { this.command = new LogoutCommand(); }
     }, REGISTER {
         { this.command = new RegisterCommand(); }
-    };
+    }
+
+//    , SET_LANGUAGE {
+//        { this.command = new SetLanguageCommand(); }
+//    }
+    ;
 
     ActionCommand command;
 
