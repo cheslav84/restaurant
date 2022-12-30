@@ -11,14 +11,15 @@ public class AppPagesPath {
     private static final Logger log = LogManager.getLogger(AppPagesPath.class);
     private static final Properties properties;
     public static String FORWARD_INDEX;
+    public static String FORWARD_MENU_PAGE;
     public static String REDIRECT_INDEX;
-    public static String MENU;
+    public static String REDIRECT_MENU;
     public static String FORWARD_REGISTRATION;
     public static String REDIRECT_REGISTRATION;
     public static String REDIRECT_BASKET;
     public static String FORWARD_BASKET;
-    public static String FORWARD_MANAGER_PAGE;
-    public static String ERROR;
+    public static String FORWARD_MANAGE_ORDERS;
+    public static String REDIRECT_ERROR;
 
 
 
@@ -34,14 +35,15 @@ public class AppPagesPath {
            FORWARD_REGISTRATION = (String) properties.get("path.page.forward.registration");
            REDIRECT_REGISTRATION = (String) properties.get("path.page.redirect.registration");
 
-           REDIRECT_BASKET = (String) properties.get("path.page.redirect.basket");
            FORWARD_BASKET = (String) properties.get("path.page.forward.basket");
+           REDIRECT_BASKET = (String) properties.get("path.page.redirect.basket");
 
-           FORWARD_MANAGER_PAGE = (String) properties.get("path.page.forward.managerPage");
+           FORWARD_MANAGE_ORDERS = (String) properties.get("path.page.forward.manageOrders");
 
+           REDIRECT_ERROR = (String) properties.get("path.page.redirect.error");
 
-           ERROR = (String) properties.get("path.page.error");
-           MENU = (String) properties.get("path.page.menu");
+           FORWARD_MENU_PAGE = (String) properties.get("path.page.forward.menu");
+           REDIRECT_MENU = (String) properties.get("path.page.redirect.menu");
 
        }
 }

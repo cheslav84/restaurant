@@ -103,9 +103,12 @@ public class OrderDao extends AbstractDao<Order> {
         return orders;
     }
 
-    public List<Order> getUncompletedOrdersSortedByStatusThenTime() throws DAOException {
+    public List<Order> getOrdersSortedByStatusThenTime(int offset, int noOfRecords) throws DAOException {
         List<Order> orders = new ArrayList<>();
-        try (PreparedStatement stmt = connection.prepareStatement(OrderQuery.GET_UNCOMPLETED_ORDERS_SORTED_BY_STATUS_THEN_TIME)) {
+        try (PreparedStatement stmt = connection.prepareStatement(OrderQuery.GET_CONFIRMED_ORDERS_SORTED_BY_STATUS_THEN_TIME)) {
+           int k = 0;
+            stmt.setInt(++k, offset);
+            stmt.setInt(++k, noOfRecords);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     orders.add(mapOrder(rs));
@@ -117,6 +120,24 @@ public class OrderDao extends AbstractDao<Order> {
             throw new DAOException(e);
         }
         return orders;
+    }
+
+
+    public int getNoOfOrders() throws DAOException {
+        int numberOfOrders = 0;
+        try (PreparedStatement stmt = connection.prepareStatement(OrderQuery.GET_NUMBER_OF_CONFIRMED_ORDERS)) {
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    numberOfOrders = rs.getInt(OrderFields.NUMBER_OF_ORDERS);
+                }
+            }
+            log.debug("Number of orders has been received from database: " + numberOfOrders);
+        } catch (SQLException e) {
+            log.error("Number of orders has not been received from database.");
+            throw new DAOException(e);
+        }
+        return numberOfOrders;
+
     }
 
     public List<Order> getByBookingStatus(BookingStatus status) throws DAOException {
@@ -224,11 +245,11 @@ public class OrderDao extends AbstractDao<Order> {
             stmt.executeUpdate();
             log.debug("Order has been removed from order in database");
         } catch (SQLException e) {
-            String errorMassage = "Something went wrong. Order haven't been removed. Try please again later.";
-            log.error(errorMassage, e);
-            throw new DAOException(errorMassage, e);
+            log.error("Something went wrong. Order haven't been removed.");
+            throw new DAOException(e);
         }
-        return true;    }
+        return true;
+    }
 
     public boolean deleteDishFromOrderById(long orderId, long dishId) throws DAOException {
         try (PreparedStatement stmt = connection.prepareStatement(OrderQuery.REMOVE_DISH_FROM_ORDER)) {
@@ -238,9 +259,8 @@ public class OrderDao extends AbstractDao<Order> {
             stmt.executeUpdate();
             log.debug("Dish has been removed from order in database");
         } catch (SQLException e) {
-            String errorMassage = "Something went wrong. Dish haven't been removed. Try please again later.";
-            log.error(errorMassage, e);
-            throw new DAOException(errorMassage, e);
+            log.error("Something went wrong. Dish haven't been removed. Try please again later.");
+            throw new DAOException(e);
         }
         return true;
     }
@@ -256,11 +276,12 @@ public class OrderDao extends AbstractDao<Order> {
             }
             log.debug("Number of dishes in order has been received from database.");
         } catch (SQLException e) {
-            log.error("Number of dishes in order has not been received from database.", e);
+            log.error("Number of dishes in order has not been received from database.");
             throw new DAOException(e);
         }
         return numberOfDishes;
     }
+
 
 
 }

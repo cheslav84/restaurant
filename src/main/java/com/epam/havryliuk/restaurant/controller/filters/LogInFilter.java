@@ -13,7 +13,7 @@ import java.io.IOException;
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.LOGGED_USER;
 
 
-@WebFilter(filterName = "LogInFilter",  urlPatterns = { "/basket", "/order",  "/removeFromOrder", "/makeOrder", "/showOrderInfo"})
+@WebFilter(filterName = "LogInFilter",  urlPatterns = { "/basket", "/order",  "/set_next_status/*", "/remove_from_order", "/make_order", "/show_order_info"})
 public class LogInFilter implements Filter {
     private static final Logger log = LogManager.getLogger(LogInFilter.class);
 

@@ -4,6 +4,7 @@ public interface RequestAttributes {
 
    String CURRENT_ORDER = "currentOrder";
     String ORDER_LIST = "orders";
+    String ORDER_PRICE_MAP = "ordersAndPrices";
     String DISH_LIST = "dishes";
     String CURRENT_DISH = "currentDish";
     String MENU_CATEGORY = "menuCategory";

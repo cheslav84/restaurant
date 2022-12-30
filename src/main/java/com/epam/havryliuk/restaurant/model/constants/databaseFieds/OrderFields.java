@@ -24,6 +24,7 @@ public class OrderFields {
 //    public static String ORDER_DISH_AMOUNT_IN_ORDER;
 //    public static String ORDER_DISH_FIXED_PRICE;
     public static String NUMBER_OF_DISHES_IN_ORDER;
+    public static String NUMBER_OF_ORDERS;
 
 
     static {
@@ -46,5 +47,6 @@ public class OrderFields {
 //        ORDER_DISH_AMOUNT_IN_ORDER = (String) properties.get("orderDish.amountInOrder");
 //        ORDER_DISH_FIXED_PRICE = (String) properties.get("orderDish.fixedPrice");
         NUMBER_OF_DISHES_IN_ORDER = (String) properties.get("basket.numberOfDishesInOrder");
+        NUMBER_OF_ORDERS = (String) properties.get("order.numberOfOrders");
     }
 }

@@ -23,10 +23,6 @@ public class DishService {
     public List<Dish> getMenuByCategory(String categoryName) throws ServiceException {
         CategoryService categoryService = new CategoryService();
 
-        if (categoryName == "") {
-
-        }//todo забув що щотів зробити..
-
         Category category = categoryService.getCategoryByName(categoryName);
         EntityTransaction transaction = new EntityTransaction();
 
@@ -35,10 +31,10 @@ public class DishService {
         try {
             dishDao = new DishDao();
             transaction.init(dishDao);
-            dishes = dishDao.findByCategory(category);
+            dishes = dishDao.findPresentsByCategory(category);
         } catch (DAOException e) {
-            e.printStackTrace();
-            throw new NoSuchElementException("Such list of Dishes hasn't been found.");
+            log.error("Such list of Dishes hasn't been found.");
+            throw new ServiceException(e);
         } finally {
             transaction.end();
         }
@@ -46,15 +42,15 @@ public class DishService {
 
     }
 
-    public Dish getDish(long dishId){
+    public Dish getDish(long dishId) throws ServiceException {
         EntityTransaction transaction = new EntityTransaction();
         try {
             DishDao dishDao = new DishDao();
             transaction.init(dishDao);
             return dishDao.findById(dishId);
         } catch (DAOException e) {
-            e.printStackTrace();
-            throw new NoSuchElementException("Such dish hasn't been found.");
+            log.error("Such dish hasn't been found.");
+            throw new ServiceException(e);
         } finally {
             transaction.end();
         }

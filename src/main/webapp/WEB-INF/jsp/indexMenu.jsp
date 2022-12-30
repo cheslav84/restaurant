@@ -12,29 +12,23 @@
                 class="menu-tabs w-tabs">
                 <div class="menu-tabs-menu w-tab-menu">
 
-                    <form method="get" action="index" id="coffeeMenuButton" name="menu" data-w-tab="Coffee"
-                        class="menu-tab-button w-inline-block w-tab-link w--current">
+                    <a href="index?menuCategory=COFFEE" data-w-tab="COFFEE" class="menu-tab-button w-inline-block w-tab-link w--current">
                         <div>Coffee</div>
-                        <input type="submit" name="menuCategory" value="COFFEE" class="menu-hidden-input menu-tab-button ${sessionScope.menuCategory}" />
-                    </form>
+                    </a>
 
-                    
-                    <form method="get" action="index" id="lunchMenuButton" data-w-tab="Lunch"
-                        class="menu-tab-button w-inline-block w-tab-link">
+                    <a href="index?menuCategory=LUNCH" data-w-tab="LUNCH" class="menu-tab-button w-inline-block w-tab-link w--current">
                         <div>Lunch</div>
-                        <input type="submit" name="menuCategory" value="LUNCH" class="menu-hidden-input menu-tab-button ${sessionScope.menuCategory}" />
-                    </form>
+                    </a>
 
-                    <form method="get" action="index" id="specialsMenuButton" data-w-tab="Every Day Specials"
-                        class="menu-tab-button w-inline-block w-tab-link">
+                    <a href="index?menuCategory=SPECIALS" data-w-tab="SPECIALS" class="menu-tab-button w-inline-block w-tab-link w--current">
                         <div>Every Day Specials</div>
-                        <input type="submit" name="menuCategory" value="SPECIALS" class="menu-hidden-input menu-tab-button  ${sessionScope.menuCategory}" />
-                    </form>
+                    </a>
 
                 </div>
+
                 <div class="w-tab-content">
 
-                    <div data-w-tab="Coffee" class="menu-tab-pane w-tab-pane w--tab-active">
+                    <div data-w-tab="${sessionScope.menuCategory}" class="menu-tab-pane w-tab-pane w--tab-active">
                         <div class="menu-white-wrapper w-dyn-list">
 
 
@@ -63,22 +57,23 @@
                                             <span class="price-marker">₴</span>
                                         </div>
                                         
-                                        <form method="get" action="showOrderInfo" name="dishOrder">
+                                        <form method="get" action="show_order_info" name="dishOrder">
                                             <button value="${dish.id}" name="dishId" class="button order-menu-button">Order</button>
                                         </form>
 
                                     </div>
                                 </c:forEach>
 
-
                             </div>
                         </div>
                     </div>
+                    <div class="error-message"> 
+                        <c:out value="${requestScope.errorMessage}"/>
+                    </div>
 
-                    
                 </div>
             </div>
-            <a href="menu.html" class="button">View our complete menu</a>
+            <a href="menu" class="button">View our complete menu</a>
         </div>
     </div>
 </div>

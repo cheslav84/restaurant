@@ -2,7 +2,6 @@
 
   $(document).ready(function() {
 
-    
     const orderInfo = document.querySelector('#hide-order-info');
    
     const showDishInfo = orderInfo.classList.contains('showDishInfo');

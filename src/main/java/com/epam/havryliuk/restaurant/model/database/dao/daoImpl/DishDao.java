@@ -1,5 +1,6 @@
 package com.epam.havryliuk.restaurant.model.database.dao.daoImpl;
 
+import com.epam.havryliuk.restaurant.model.constants.queries.OrderQuery;
 import com.epam.havryliuk.restaurant.model.database.dao.AbstractDao;
 import com.epam.havryliuk.restaurant.model.constants.databaseFieds.DishFields;
 import com.epam.havryliuk.restaurant.model.constants.databaseFieds.OrderFields;
@@ -51,13 +52,7 @@ public class DishDao extends AbstractDao<Dish> {
     public List<Dish> findByCategory(Category category) throws DAOException {
         List<Dish> dishes = new ArrayList<>();
         try (PreparedStatement stmt = connection.prepareStatement(DishQuery.FIND_ALL_BY_CATEGORY)) {
-            stmt.setString(1, category.getCategoryName().name());
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    dishes.add(mapDish(rs));
-                }
-            }
-            log.debug("List of dishes (by category) has been received from database. ");
+            getDishesByCategory(category, dishes, stmt);
         } catch (SQLException e) {
             log.error("Error in getting list of dishes from database. ", e);
             throw new DAOException(e);
@@ -65,8 +60,29 @@ public class DishDao extends AbstractDao<Dish> {
         return dishes;
     }
 
+    public List<Dish> findPresentsByCategory(Category category) throws DAOException {
+        List<Dish> dishes = new ArrayList<>();
+        try (PreparedStatement stmt = connection.prepareStatement(DishQuery.FIND_ALL_PRESENTS_BY_CATEGORY)) {
+            getDishesByCategory(category, dishes, stmt);
+        } catch (SQLException e) {
+            log.error("Error in getting list of dishes from database. ");
+            throw new DAOException(e);
+        }
+        return dishes;
+    }
 
-//    @Override
+    private void getDishesByCategory(Category category, List<Dish> dishes, PreparedStatement stmt) throws SQLException {
+        stmt.setString(1, category.getCategoryName().name());
+        try (ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                dishes.add(mapDish(rs));
+            }
+        }
+        log.debug("List of dishes (by category) has been received from database. ");
+    }
+
+
+    //    @Override
     public List<Dish> getSortedByName() throws DAOException {
         return getDishes(DishQuery.FIND_ALL_ORDERED_BY_NAME);
     }
@@ -198,6 +214,19 @@ public class DishDao extends AbstractDao<Dish> {
             throw new DAOException(e);
         }
         return numberOfDishes;
+    }
+
+    public boolean updateDishesAmountByOrderedValues(long orderId) throws DAOException {
+        try (PreparedStatement stmt = connection.prepareStatement(DishQuery.CHANGE_DISHES_AMOUNT_BY_ORDERED_VALUES)) {
+            stmt.setLong(1, orderId);
+            stmt.executeUpdate();
+            log.debug("The amount of dishes has been successfully changed");
+        } catch (SQLException e) {
+            log.error("The amount of dishes has not been changed");
+            throw new DAOException(e);
+        }
+        return true;
+
     }
 
 //    private Category mapCategoryForDish(ResultSet rs) throws SQLException { //todo low coupling

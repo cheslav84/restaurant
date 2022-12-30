@@ -1,9 +1,9 @@
 .order-container {
     padding-bottom: 15px;
-    margin-bottom: 10px;
-    border-bottom: 1.5px;
+    /* margin-bottom: 10px; */
+    /* border-bottom: 1.5px;
     border-bottom-style: dashed;
-    border-color: #e88f2a;
+    border-color: #e88f2a; */
 
 }
 
@@ -59,8 +59,6 @@
 }
 
 
-
-
 .order-content {
     padding-top: 10px;
 }
@@ -68,14 +66,13 @@
 .order-status {
     color: #e88f2a;
     font-size: 18px;
+    text-transform: uppercase;
 }
 
 .order-divider {
     margin: 10px auto;
     margin-top: 54px;
 }
-
-
 
 
 .order-edit-button {
@@ -128,9 +125,34 @@
  }
 
 
+ .white-background{
+    background-color: white;
+}
 
+.section.menu-page-section {
+    padding-bottom: 0px;
+}
 
+/* .last-padding{
+    padding-bottom: 40px;
 
+} */
+
+.page-wrapper {
+    background-color: white;
+    padding-top: 16px;
+    padding-bottom: 40px;
+    text-align: center;
+}
+
+.pages {
+    display: inline-block;
+    margin: 4px;
+    font-family: Merriweather, serif;
+    font-size: 16px;
+    line-height: 22px;
+    font-weight: 700;
+}
 
 @media screen and (max-width:991px) {
 

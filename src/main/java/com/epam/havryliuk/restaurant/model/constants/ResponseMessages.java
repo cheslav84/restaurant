@@ -13,4 +13,10 @@ public interface ResponseMessages {
     String INCORRECT_DELIVERY_ADDRESS = "message.incorrectDeliveryAddress";
     String INCORRECT_DELIVERY_PHONE = "message.incorrectDeliveryPhone";
     String UNAVAILABLE_DISHES_AMOUNT = "message.unavailableDishesAmount";
+    String ORDER_DISH_NOT_FOUND = "message.orderDishNotFound";
+    String USER_ORDERS_UNAVAILABLE = "message.userOrdersUnavailable";
+    String ORDER_CONFIRM_ERROR = "message.orderConfirmError";
+    String DISH_IN_MENU_NOT_FOUND = "message.dishInMenuNotFound";
+    String REMOVE_DISH_FROM_ORDER_ERROR = "message.removeDishFromOrderError";
+    String MENU_UNAVAILABLE = "message.menuUnavailable";
 }

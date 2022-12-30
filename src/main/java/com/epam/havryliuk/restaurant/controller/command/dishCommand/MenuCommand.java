@@ -1,8 +1,11 @@
 package com.epam.havryliuk.restaurant.controller.command.dishCommand;
 
 import com.epam.havryliuk.restaurant.controller.command.ActionCommand;
+import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
+import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
+import com.epam.havryliuk.restaurant.model.resource.MessageManager;
 import com.epam.havryliuk.restaurant.model.service.DishService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,9 +22,7 @@ import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
 public class MenuCommand implements ActionCommand {
     private static final Logger log = LogManager.getLogger(MenuCommand.class);
-
     private static final String DEFAULT_MENU = "COFFEE";
-
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -34,14 +35,14 @@ public class MenuCommand implements ActionCommand {
             dishes = dishService.getMenuByCategory(currentMenu);
             log.debug("List of dishes received by servlet and going to be sending to client side.");
         } catch (ServiceException e) {
-            log.error("List of dishes hasn't been received.");
-//            req.setAttribute(ERROR_MESSAGE, "Message");//todo inform user!!!
+            MessageManager messageManager = MessageManager.valueOf((String) request.getSession().getAttribute(LANGUAGE));
+            request.setAttribute(ERROR_MESSAGE,
+                    messageManager.getProperty(ResponseMessages.MENU_UNAVAILABLE));
+            log.error(e);
         }
         hideOrderInfoOnReloadPage(request);
         request.setAttribute(DISH_LIST, dishes);
-
-        request.getRequestDispatcher("WEB-INF/jsp/index.jsp").forward(request, response);//todo
-//        request.getRequestDispatcher(AppPagesPath.INDEX).forward(request, response);
+        request.getRequestDispatcher(AppPagesPath.FORWARD_MENU_PAGE).forward(request, response);
     }
 
 
@@ -50,6 +51,7 @@ public class MenuCommand implements ActionCommand {
         HttpSession session = req.getSession();
         String lastVisitedMenu = (String) session.getAttribute(MENU_CATEGORY);
         String currentMenu = req.getParameter(MENU_CATEGORY);
+        System.err.println("MENU_CATEGORY: " + currentMenu);
         if (currentMenu != null) {
             session.setAttribute(MENU_CATEGORY, currentMenu);
         } else {
@@ -75,6 +77,5 @@ public class MenuCommand implements ActionCommand {
             session.removeAttribute(SHOW_DISH_INFO);
         }
     }
-
 
 }

@@ -3,7 +3,6 @@ package com.epam.havryliuk.restaurant.controller;
 
 import com.epam.havryliuk.restaurant.controller.command.ActionCommand;
 import com.epam.havryliuk.restaurant.controller.command.CommandFactory;
-import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -17,8 +16,8 @@ import java.io.IOException;
 
 
 @WebServlet(name = "Controller", urlPatterns = {"/page/*", "/auth/*",  "/login", "/register", "/logout",
-        "/showOrderInfo", "/menu/*", "/locale/*", "/client/*", "/admin/*", "/index", "/make_order",
-        "/basket", "/removeFromOrder", "/confirmOrder", "/manage_orders", "/login_page"})
+        "/show_order_info", "/menu/*", "/locale/*", "/client/*", "/admin/*", "/index", "/make_order",
+        "/basket", "/remove_from_order", "/set_next_status/*", "/manage_orders", "/login_page"})
 //@WebServlet("/")
 public class Controller extends HttpServlet {
     private static final Logger log = LogManager.getLogger(Controller.class);

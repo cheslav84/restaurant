@@ -33,23 +33,18 @@
     margin-bottom: 6px;
 }
 
-.orders-container {
 
-}
 
-.order-date {
+/* .order-date {
     padding-top: 18px;
     border-top: 1px;
     border-top-style: dashed;
     border-color: #e88f2a;
-}
+} */
 .order-content {
     padding-top: 10px;
 }
 
-.order-date {
-    /* margin-top: 30px; */
-}
 
 .order-divider {
     margin: 16px auto;
@@ -73,13 +68,31 @@
     line-height: 31px;
 }
 
+
+/* .order-edit-button {
+    right: 10px;
+    padding: 0px 20px;
+    display: inline-block;
+    float: right;
+    position: relative;
+    font-size: 12px;
+    margin-bottom: -22px;
+    line-height: 31px;
+    top: -33px;
+} */
+
+
+
+
+
+
+
 .order-confirm-button {
     margin-top: 5px;
 }
 
 
 .menu-item-label {
-    /* position:relative; */
     display: inline-block;
     float: right;
     margin-right: 10px;
@@ -87,7 +100,6 @@
     margin-top: 6px;
     padding-right: 9px;
     padding-left: 9px;
-    /* width: 70px; */
     border-radius: 3px;
     background-color: #e88f2a;
     font-family: 'Open Sans', sans-serif;
@@ -99,6 +111,7 @@
 
 .menu-item-amount {
     margin-right: 120px;
+        /* margin-right: 10px; */
 }
 
 /* .menu-item-special {
@@ -160,10 +173,58 @@
     margin-right: 10px;
  }
 
+ .total-price {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    display: inline-block;
+    /* float: right; */
+    font-family: Merriweather, serif;
+    color: #333333;
+    font-size: 14px;
+    /* font-style: italic; */
+    font-weight: 700;
+ }
+
+.total-price.waiting-payment {
+    margin-bottom: 0px;
+    /* position: contents; */
+    /* right: 20px;
+    margin-top: -25px; */
+}
+
+.section-intro-title.subtitle.order-status {
+    /* margin-bottom: 30px; */
+}
+
 .order-status {
     margin-bottom: 0px;
 }
 
+.last-order-status {
+    margin-bottom: 40px !important;
+}
+
+.white-background{
+    background-color: white;
+}
+
+.w-input, .w-select .white-background{
+    color: #333333;
+    vertical-align: middle;
+    background-color: #faf3eb;
+    border: 1px solid #cccccc;
+    
+}
+
+
+.section.menu-page-section {
+    padding-bottom: 15px;
+}
+
+.last-padding{
+    padding-bottom: 40px;
+
+}
 
 @media screen and (max-width:991px) {
 
@@ -174,7 +235,9 @@
 
 
 @media screen and (max-width:767px) {
-
+    /* .total-price.waiting-payment {
+        position: relative;
+    } */
 
 }
 

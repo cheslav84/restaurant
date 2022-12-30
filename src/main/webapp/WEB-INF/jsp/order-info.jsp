@@ -69,12 +69,12 @@
                         <div class="order-info-buttons">
                             <div class="button order-button button-amount">
                                 <div class="amount-button-label">amount</div>
-                                <input type="text" name="amount" class="dishes-amout"/>
-                                <%-- <select name="amount" class="dishes-amout"
+                                <%-- <input type="text" name="amount" class="dishes-amout"/> --%>
+                                <select name="amount" class="dishes-amout"
                                     <c:forEach var="i" begin="0" end="${dish.amount}" step="1">
                                         <option value="${i}">${i}</option>
                                     </c:forEach>
-                                </select>  --%>
+                                </select> 
                             </div>
                             <button name="continue" value="continue" class="button order-button">continue ordering</button>
                             <button class="button order-button">order this dish</button>

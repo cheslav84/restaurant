@@ -1,7 +1,11 @@
 package com.epam.havryliuk.restaurant.controller.command.orderCommand;
 
 import com.epam.havryliuk.restaurant.controller.command.ActionCommand;
+import com.epam.havryliuk.restaurant.model.constants.RequestParameters;
+import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
+import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
+import com.epam.havryliuk.restaurant.model.resource.MessageManager;
 import com.epam.havryliuk.restaurant.model.service.DishService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,14 +23,22 @@ public class OrderInfoCommand implements ActionCommand {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        long dishId = Long.parseLong(request.getParameter("dishId"));
+        long dishId = Long.parseLong(request.getParameter(RequestParameters.DISH_ID));
         log.debug("\"/dishId\" " + dishId + " has been received from user.");
         HttpSession session = request.getSession();
         DishService dishService = new DishService();//todo redirect if not logged in
-        Dish dish = dishService.getDish(dishId);
-        session.setAttribute(CURRENT_DISH, dish);
-        session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);// value to show ordering menu of concrete dish
-        session.removeAttribute(ORDER_MESSAGE);
+        Dish dish;
+        try {
+            dish = dishService.getDish(dishId);
+            session.setAttribute(CURRENT_DISH, dish);
+            session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);// value to show ordering menu of concrete dish
+            session.removeAttribute(ORDER_MESSAGE);
+        } catch (ServiceException e) {
+            MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LANGUAGE));
+            session.setAttribute(ERROR_MESSAGE,
+                    messageManager.getProperty(ResponseMessages.DISH_IN_MENU_NOT_FOUND));
+            log.error(e);
+        }
         response.sendRedirect("index");
     }
 }

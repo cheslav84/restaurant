@@ -15,21 +15,31 @@ import java.util.List;
 public class OrderService {
     private static final Logger log = LogManager.getLogger(OrderService.class);
 
-    public void confirmOrder(long orderId) throws ServiceException {
-        OrderDao orderDao;
+    public void changeOrderStatus(long orderId, BookingStatus newStatus) throws ServiceException {
+
         EntityTransaction transaction = new EntityTransaction();
+        OrderDao orderDao = new OrderDao();
+        DishDao dishDao = new DishDao();
         try {
-            orderDao = new OrderDao();
-            transaction.init(orderDao);
-            orderDao.changeOrderStatus(orderId, BookingStatus.NEW);
-            log.debug("\"order status\" has been changed to " + BookingStatus.NEW);
+            transaction.initTransaction(orderDao, dishDao);
+            if(isOrderInConfirmingProcess(newStatus)) {
+                dishDao.updateDishesAmountByOrderedValues(orderId);
+            }
+            orderDao.changeOrderStatus(orderId, newStatus);
+            log.debug("\"order status\" has been changed to " + newStatus);
         } catch (DAOException e) {
             String message = "Something went wrong. Try to confirm your order later please.";
             log.debug(message);
             throw new ServiceException(message);
         } finally {
-            transaction.end();
+            transaction.commit();
+            transaction.endTransaction();
         }
+    }
+
+
+    private boolean isOrderInConfirmingProcess(BookingStatus newStatus) {
+        return newStatus.equals(BookingStatus.NEW);
     }
 
     public List<Order> getAllUserOrders(User user) throws ServiceException {
@@ -50,25 +60,38 @@ public class OrderService {
             log.debug("The order list was successfully created.");
         } catch (DAOException e) {
             String message = "The orders is temporary unavailable, try again later please.";
-            log.error(message);
-            throw new ServiceException(message, e);
+            log.error("The orders is temporary unavailable, try again later please.");
+            throw new ServiceException(e);
         } finally {
             transaction.endTransaction();
         }
         return orders;
     }
 
-    public List<Order> getAllOrders() throws ServiceException {
+
+    public Page<Order> getAllOrders(int page, int recordsPerPage) throws ServiceException {
         OrderDao orderDao = new OrderDao();
         EntityTransaction transaction = new EntityTransaction();
         BasketDao basketDao = new BasketDao();
+        Page<Order> orderPage = new Page<>();
         List<Order> orders;
+
+
         try {
             transaction.initTransaction(orderDao, basketDao);
-            orders = orderDao.getUncompletedOrdersSortedByStatusThenTime();
+
+            int noOfRecords = orderDao.getNoOfOrders();
+            int offset = orderPage.getOffset(page, recordsPerPage);
+            orderPage.setNoOfPages(noOfRecords, recordsPerPage);
+
+
+            orders = orderDao.getOrdersSortedByStatusThenTime(offset, recordsPerPage);
+
+            orderPage.setRecords(orders);
             for (Order order : orders) {
                 order.setBaskets(basketDao.getOrderDishes(order));
             }
+
             transaction.commit();
             log.debug("The order list was successfully created.");
         } catch (DAOException e) {
@@ -77,8 +100,42 @@ public class OrderService {
         } finally {
             transaction.end();
         }
-        return orders;
+        return orderPage;
     }
+
+
+
+//    public List<Order> getAllOrders(int page, int recordsPerPage) throws ServiceException {
+//        OrderDao orderDao = new OrderDao();
+//        EntityTransaction transaction = new EntityTransaction();
+//        BasketDao basketDao = new BasketDao();
+//        List<Order> orders;
+//
+//
+//        try {
+//            transaction.initTransaction(orderDao, basketDao);
+//
+//
+//            int offset = (page - 1) * recordsPerPage;
+//            int noOfRecords = orderDao.getNoOfOrders();
+//            int noOfPages = (int)Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+//
+//            orders = orderDao.getUncompletedOrdersSortedByStatusThenTime(offset, noOfRecords);
+//
+//
+//            for (Order order : orders) {
+//                order.setBaskets(basketDao.getOrderDishes(order));
+//            }
+//            transaction.commit();
+//            log.debug("The order list was successfully created.");
+//        } catch (DAOException e) {
+//            log.error("The orders are temporary unavailable, try again later please.");
+//            throw new ServiceException(e);
+//        } finally {
+//            transaction.end();
+//        }
+//        return orders;
+//    }
 
 
     /**
@@ -174,7 +231,7 @@ public class OrderService {
             }
             log.debug("Dish has been removed from order.");
         } catch (DAOException e) {
-            log.debug(e.getMessage());
+            log.error("Number of dishes in order has not been received from database.");
             throw new ServiceException(e);
         } finally {
             transaction.end();

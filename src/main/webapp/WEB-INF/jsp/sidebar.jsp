@@ -14,7 +14,7 @@
             <fmt:setLocale value="${sessionScope.language}"/>
             <%-- <fmt:setLocale value="${sessionScope.locale}"/> --%>
             <fmt:setBundle basename="menu"/>
-            <a href="?locale=EN" class="nav-social-button w-inline-block language-link">ENG</a>
+            <a href="?locale=EN" class="nav-social-button w-inline-block language-link">EN</a>
             <a href="?locale=UA" class="nav-social-button w-inline-block language-link">UA</a>
             <%-- <a href="set_language?language=EN" class="nav-social-button w-inline-block language-link">ENG</a>
             <a href="set_language?language=UA" class="nav-social-button w-inline-block language-link">UA</a> --%>
@@ -39,7 +39,7 @@
                     <fmt:message key="sidebar.home"/>
                 </a>
 
-                <a href="page?path=menu" aria-current="page" class="nav-link w-nav-link" style="max-width: 940px;">
+                <a href="menu" aria-current="page" class="nav-link w-nav-link" style="max-width: 940px;">
                     <fmt:message key="sidebar.menu"/>
                 </a>
 
@@ -60,7 +60,7 @@
                  <c:if test="${sessionScope.loggedUser ne null}">
                      <c:if test="${sessionScope.loggedUser.role == 'MANAGER'}">
                           <a href="manage_orders" aria-current="page" class="nav-link w-nav-link">
-                            <fmt:message key="sidebar.managerPage"/>
+                            <fmt:message key="sidebar.manageOrders"/>
                           </a>
                      </c:if>
                      <a href="logout" aria-current="page" class="nav-link w-nav-link">

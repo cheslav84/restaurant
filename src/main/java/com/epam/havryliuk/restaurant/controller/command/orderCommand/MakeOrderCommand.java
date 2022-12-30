@@ -34,8 +34,6 @@ public class MakeOrderCommand implements ActionCommand {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession();
-        //todo перед підтвердженням перевірити чи наявна кількість доступних блюд. !!!! ВАЖЛИВО
-        // якщо кількість блюд що замовляє користувач більша за доступну - вивести повідомлення з наявною кількістю
         User user = (User) session.getAttribute(RequestAttributes.LOGGED_USER);
         OrderService orderService = new OrderService();
         Order order = (Order) session.getAttribute(CURRENT_ORDER);
@@ -44,27 +42,34 @@ public class MakeOrderCommand implements ActionCommand {
             session.removeAttribute(ERROR_MESSAGE);
             log.debug("Order in session: " + order);
         } else {
-            makeNewOrder(request, session, user, orderService, order);
+            makeNewOrder(request, session, user, orderService);
         }
         String redirectionPage = getRedirectionPage(request);
         response.sendRedirect(redirectionPage);
     }
 
-    private void makeNewOrder(HttpServletRequest request, HttpSession session, User user, OrderService orderService, Order order) {
+    /**
+     * Methods requests an order from service. It can be the order that already exist in database
+     * or the new one.
+     * @param request
+     * @param session
+     * @param user
+     * @param orderService
+     */
+    private void makeNewOrder(HttpServletRequest request, HttpSession session, User user, OrderService orderService) {
+        Order order = null;
         try {
-            String deliveryAddress = request.getParameter("deliveryAddress");
-            String deliveryPhone = request.getParameter("deliveryPhone");
+            String deliveryAddress = request.getParameter(RequestParameters.DELIVERY_ADDRESS);
+            String deliveryPhone = request.getParameter(RequestParameters.DELIVERY_PHONE);
             checkDeliveryCredentials(deliveryAddress, deliveryPhone, session);
             order = orderService.getOrder(user, deliveryAddress, deliveryPhone);
-            log.debug(order);
             session.setAttribute(CURRENT_ORDER, order);
             session.removeAttribute(ERROR_MESSAGE);
             session.removeAttribute(ORDER_MESSAGE);
             session.removeAttribute(DELIVERY_ADDRESS);
             session.removeAttribute(DELIVERY_PHONE);
+            log.debug(order);
         } catch (ServiceException | BadCredentialsException e) {
-//            String errorMessage = e.getMessage();
-//            session.setAttribute(ERROR_MESSAGE, errorMessage);
             session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
             log.error(e.getMessage(), e);
         }
@@ -103,22 +108,18 @@ public class MakeOrderCommand implements ActionCommand {
             orderService.addDishToOrder(order, dish, dishesAmount);
             session.removeAttribute(CURRENT_DISH);
         } catch (IrrelevantDataException e) {
-            log.error("User have tried to add the same dish to order.");
+            log.error(e);
             session.setAttribute(ORDER_MESSAGE,
                     messageManager.getProperty(ResponseMessages.UNAVAILABLE_DISHES_AMOUNT));
-//            session.setAttribute(ORDER_MESSAGE, errorMessage);
             session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
         } catch (DuplicatedEntityException e) {
-            log.error("User have tried to add the same dish to order.");
+            log.error(e);
             session.setAttribute(ORDER_MESSAGE,
                     messageManager.getProperty(ResponseMessages.DISH_ALREADY_IN_ORDER));
-//            session.setAttribute(ORDER_MESSAGE, errorMessage);
             session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
         } catch (ServiceException | BadCredentialsException e) {
-//            String errorMessage = e.getMessage();
-//            session.setAttribute(ERROR_MESSAGE, errorMessage);
             session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
-            log.error(e.getMessage(), e);
+            log.error(e);
         }
     }
 
@@ -127,26 +128,14 @@ public class MakeOrderCommand implements ActionCommand {
         HttpSession session = req.getSession();
         Dish dish = (Dish) session.getAttribute(CURRENT_DISH);
         if (dish == null) {
-
-            //todo add message from properties
-
-            String errorMessage = "Choose the dish for adding it to basket.";
+            MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LANGUAGE));
+            session.setAttribute(ORDER_MESSAGE,
+                    messageManager.getProperty(ResponseMessages.ORDER_DISH_NOT_FOUND));
             log.error("Choose the dish for adding it to basket.");
-            throw new ServiceException(errorMessage);
+            throw new ServiceException();
         }
         return dish;
     }
-
-    //    private User getCurrentUser(HttpServletRequest req) throws ServiceException {// todo move to User service
-//        HttpSession session = req.getSession();
-//        User user = (User) session.getAttribute(LOGGED_USER);
-//        if (user == null) {
-//            String errorMessage = "The user has been logged out.";
-//            log.error(errorMessage);
-//            throw new ServiceException(errorMessage);
-//        }
-//        return user;
-//    }
 
 
     private int getDishesAmount(HttpServletRequest req) throws BadCredentialsException {
