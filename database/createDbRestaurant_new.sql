@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `restaurant`.`dish` (
 DROP TABLE IF EXISTS `restaurant`.`category` ;
 
 CREATE TABLE IF NOT EXISTS `restaurant`.`category` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `id` INT NOT NULL,
   `category_name` VARCHAR(16) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `idx_category_name` (`category_name` ASC),
@@ -78,7 +78,7 @@ DROP TABLE IF EXISTS `restaurant`.`user` ;
 CREATE TABLE IF NOT EXISTS `restaurant`.`user` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `email` VARCHAR(32) NOT NULL,
-  `password` VARCHAR(32) NOT NULL,
+  `password` VARCHAR(256) NOT NULL,
   `user_name` VARCHAR(24) NOT NULL,
   `surname` VARCHAR(24) NOT NULL,
   `gender` VARCHAR(8) NOT NULL,

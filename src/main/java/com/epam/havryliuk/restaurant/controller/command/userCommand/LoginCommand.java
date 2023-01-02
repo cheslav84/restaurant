@@ -31,7 +31,7 @@ public class LoginCommand implements ActionCommand {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         log.debug("LoginCommand");
         String login = request.getParameter(PARAM_NAME_LOGIN);
-        String pass = request.getParameter(PARAM_NAME_PASSWORD);
+        String password = request.getParameter(PARAM_NAME_PASSWORD);
 
         HttpSession session = request.getSession();
         MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LANGUAGE));
@@ -39,7 +39,7 @@ public class LoginCommand implements ActionCommand {
         String page;
         try {
             User user = new UserService().getUserFromDatabase(login);
-            Validator.checkIfPasswordsCoincide(PassEncryptor.encrypt(pass), user.getPassword());// todo при вводі одного і того ж паролю до енкриптора різні результати. З'ясувати
+            PassEncryptor.verify(user.getPassword(), password);
             session.setAttribute(LOGGED_USER, user);
             session.removeAttribute(ERROR_MESSAGE);
             page = getRedirectionPage(session);//todo

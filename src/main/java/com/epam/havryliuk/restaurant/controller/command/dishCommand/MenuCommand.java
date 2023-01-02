@@ -1,8 +1,10 @@
 package com.epam.havryliuk.restaurant.controller.command.dishCommand;
 
 import com.epam.havryliuk.restaurant.controller.command.ActionCommand;
+import com.epam.havryliuk.restaurant.model.constants.RequestParameters;
 import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
 import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
+import com.epam.havryliuk.restaurant.model.entity.Category;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.resource.MessageManager;
@@ -17,25 +19,40 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
 public class MenuCommand implements ActionCommand {
     private static final Logger log = LogManager.getLogger(MenuCommand.class);
     private static final String DEFAULT_MENU = "COFFEE";
+    private static final String DEFAULT_SORTING = "name";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-        String currentMenu = getCurrentMenu(request);
+        Category currentMenu = getCurrentMenu(request);
+        MessageManager messageManager = MessageManager.valueOf((String) request.getSession().getAttribute(LANGUAGE));
 
         DishService dishService = new DishService();
         List<Dish> dishes = null;
+
         try {
-            dishes = dishService.getMenuByCategory(currentMenu);
+            if (currentMenu.equals(Category.ALL)) {
+                String sortParameter = getSortParameter(request);
+                dishes = dishService.getAllMenuSortedBy(sortParameter);
+                System.err.println("ALL command");
+            } else {
+                dishes = dishService.getMenuByCategory(getCurrentMenu(request));
+            }
+
+            if (dishes.isEmpty()) {
+                request.setAttribute(MENU_MESSAGE,
+                        messageManager.getProperty(ResponseMessages.MENU_EMPTY));
+            }
             log.debug("List of dishes received by servlet and going to be sending to client side.");
+
         } catch (ServiceException e) {
-            MessageManager messageManager = MessageManager.valueOf((String) request.getSession().getAttribute(LANGUAGE));
             request.setAttribute(ERROR_MESSAGE,
                     messageManager.getProperty(ResponseMessages.MENU_UNAVAILABLE));
             log.error(e);
@@ -45,23 +62,26 @@ public class MenuCommand implements ActionCommand {
         request.getRequestDispatcher(AppPagesPath.FORWARD_MENU_PAGE).forward(request, response);
     }
 
+    private String getSortParameter(HttpServletRequest request) {
+        return Optional.ofNullable(request.getParameter(RequestParameters.MENU_SORTING_OPTION)).orElse(DEFAULT_SORTING);
+    }
 
     @NotNull
-    private String getCurrentMenu(HttpServletRequest req) {
+    private Category getCurrentMenu(HttpServletRequest req) {
         HttpSession session = req.getSession();
         String lastVisitedMenu = (String) session.getAttribute(MENU_CATEGORY);
-        String currentMenu = req.getParameter(MENU_CATEGORY);
-        System.err.println("MENU_CATEGORY: " + currentMenu);
+        String currentMenu = req.getParameter(RequestParameters.MENU_CATEGORY);
         if (currentMenu != null) {
             session.setAttribute(MENU_CATEGORY, currentMenu);
         } else {
-            if (lastVisitedMenu != null) {
-                currentMenu = lastVisitedMenu;
-            } else {
-                currentMenu = DEFAULT_MENU;
-            }
+            currentMenu = Optional.ofNullable(lastVisitedMenu).orElse(DEFAULT_MENU);
+//            if (lastVisitedMenu != null) {
+//                currentMenu = lastVisitedMenu;
+//            } else {
+//                currentMenu = DEFAULT_MENU;
+//            }
         }
-        return currentMenu;
+        return Category.valueOf(currentMenu);
     }
 
     private void hideOrderInfoOnReloadPage(HttpServletRequest req)  {

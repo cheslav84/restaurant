@@ -19,6 +19,7 @@ public interface RequestAttributes {
     String LOCALE = "locale";
     String REGISTRATION_ERROR_MESSAGE = "registrationErrorMessage";//todo try to make one
     String REGISTRATION_PROCESS = "registrationProcess";
+    String MENU_MESSAGE = "menuMessage";
 
 
 }

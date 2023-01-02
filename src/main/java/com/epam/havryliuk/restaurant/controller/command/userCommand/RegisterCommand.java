@@ -10,13 +10,16 @@ import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.resource.MessageManager;
 import com.epam.havryliuk.restaurant.model.service.UserService;
 
+import com.epam.havryliuk.restaurant.model.util.PassEncryptor;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
@@ -26,16 +29,13 @@ public class RegisterCommand implements ActionCommand {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
         HttpSession session = request.getSession();
-        User user;
         String redirectionPage;
-
         MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LANGUAGE));
-
         try {
             UserService service = new UserService();
-            user = service.addNewUser(request);
+            final User user = mapUser(request);
+            service.addNewUser(user);
             session.setAttribute(LOGGED_USER, user);
             //        Cookie cookie = new Cookie("sessionId", session.getId());
             //        resp.addCookie(cookie);
@@ -65,7 +65,6 @@ public class RegisterCommand implements ActionCommand {
         return redirectionPage;
     }
 
-
     private String getRedirectionPage(HttpSession session) {
         String pageFromBeingRedirected = (String) session.getAttribute(PAGE_FROM_BEING_REDIRECTED);//todo set from security filter
         String redirectionPage;
@@ -79,10 +78,22 @@ public class RegisterCommand implements ActionCommand {
     }
 
 
-
-//    private void setErrorMessage(HttpServletRequest req, String errorMassage) {
-//        if (errorMassage != null){
-//            req.getSession().setAttribute(REGISTRATION_ERROR_MESSAGE, errorMassage);
-//        }
-//    }
+    @NotNull
+    private User mapUser(HttpServletRequest req) {
+        String password = req.getParameter("password");
+        String encrypted = null;
+        try {
+            encrypted = PassEncryptor.encrypt(password);
+        } catch (GeneralSecurityException e) {
+            log.error("Failed to encrypt password. ", e);
+            //todo redirect to error page...
+        }
+        final String email = req.getParameter("email").trim();
+        final String name = req.getParameter("name").trim();
+        final String surname = req.getParameter("surname").trim();
+        final String gender = req.getParameter("userGender").trim();
+        final boolean isOverEighteen = req.getParameter("userOverEighteenAge") != null;
+        //todo validate data (email, password etc.)
+        return User.getInstance(email, encrypted, name, surname, gender, isOverEighteen);
+    }
 }

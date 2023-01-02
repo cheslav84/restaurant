@@ -1,14 +1,10 @@
 package com.epam.havryliuk.restaurant.model.database.dao.daoImpl;
 
-import com.epam.havryliuk.restaurant.model.constants.queries.OrderQuery;
 import com.epam.havryliuk.restaurant.model.database.dao.AbstractDao;
 import com.epam.havryliuk.restaurant.model.constants.databaseFieds.DishFields;
-import com.epam.havryliuk.restaurant.model.constants.databaseFieds.OrderFields;
 import com.epam.havryliuk.restaurant.model.constants.queries.DishQuery;
-import com.epam.havryliuk.restaurant.model.entity.BookingStatus;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
 import com.epam.havryliuk.restaurant.model.entity.Category;
-import com.epam.havryliuk.restaurant.model.entity.Order;
 import com.epam.havryliuk.restaurant.model.exceptions.DAOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,9 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class DishDao extends AbstractDao<Dish> {
     private static final Logger log = LogManager.getLogger(DishDao.class);
@@ -72,7 +66,7 @@ public class DishDao extends AbstractDao<Dish> {
     }
 
     private void getDishesByCategory(Category category, List<Dish> dishes, PreparedStatement stmt) throws SQLException {
-        stmt.setString(1, category.getCategoryName().name());
+        stmt.setString(1, category.name());
         try (ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 dishes.add(mapDish(rs));
@@ -82,19 +76,19 @@ public class DishDao extends AbstractDao<Dish> {
     }
 
 
-    //    @Override
+
     public List<Dish> getSortedByName() throws DAOException {
-        return getDishes(DishQuery.FIND_ALL_ORDERED_BY_NAME);
+        return getDishes(DishQuery.FIND_ALL_AVAILABLE_ORDERED_BY_NAME);
     }
 
-//    @Override
+
     public List<Dish> getSortedByPrice() throws DAOException {
-        return getDishes(DishQuery.FIND_ALL_ORDERED_BY_PRICE);
+        return getDishes(DishQuery.FIND_ALL_AVAILABLE_ORDERED_BY_PRICE);
     }
 
 //    @Override
     public List<Dish> getSortedByCategory() throws DAOException {
-        return getDishes(DishQuery.FIND_ALL_ORDERED_BY_CATEGORY);
+        return getDishes(DishQuery.FIND_ALL_AVAILABLE_ORDERED_BY_CATEGORY);
     }
 
     @Override

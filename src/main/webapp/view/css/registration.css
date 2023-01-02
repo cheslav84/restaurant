@@ -22,3 +22,26 @@
     line-height: 16px;
     text-shadow: none;
   }
+
+  .password-wrap {
+    position: relative;
+  }
+
+  #show-reg-passwd, #show-log-passwd {
+    background: transparent;
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+    width: 2.0rem;
+    display: flex;
+  }
+
+  #show-reg-passwd img, #show-log-passwd img{
+    width: 100%;
+    height: auto;
+  }
+
+  .hidden {
+    display: none;
+  }

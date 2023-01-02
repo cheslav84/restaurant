@@ -19,4 +19,5 @@ public interface ResponseMessages {
     String DISH_IN_MENU_NOT_FOUND = "message.dishInMenuNotFound";
     String REMOVE_DISH_FROM_ORDER_ERROR = "message.removeDishFromOrderError";
     String MENU_UNAVAILABLE = "message.menuUnavailable";
+    String MENU_EMPTY = "message.menuEmpty";
 }

@@ -41,7 +41,7 @@ public class ConnectionManager {
         try {
             return ds.getConnection();
         } catch (SQLException e) {
-            String errorMessage = "Database connection wasn't established.";
+            String errorMessage = "Database connection hasn't been established.";
             log.error(errorMessage, e);
             throw new SQLException(errorMessage, e);
         }
@@ -50,6 +50,7 @@ public class ConnectionManager {
     private static void initDataSource() {
         try {
             Context initContext = new InitialContext();
+//            Context envContext = (Context) initContext.lookup(DatabaseContext.CONTEXT);
             Context envContext = (Context) initContext.lookup(DatabaseContext.CONTEXT);
             ds = (DataSource) envContext.lookup(DatabaseContext.SOURCE);
         } catch (NamingException e) {

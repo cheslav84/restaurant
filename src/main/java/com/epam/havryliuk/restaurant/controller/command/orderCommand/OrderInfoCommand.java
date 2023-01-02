@@ -7,6 +7,7 @@ import com.epam.havryliuk.restaurant.model.entity.Dish;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.resource.MessageManager;
 import com.epam.havryliuk.restaurant.model.service.DishService;
+import com.epam.havryliuk.restaurant.model.util.URLUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -39,6 +40,8 @@ public class OrderInfoCommand implements ActionCommand {
                     messageManager.getProperty(ResponseMessages.DISH_IN_MENU_NOT_FOUND));
             log.error(e);
         }
-        response.sendRedirect("index");
+        URLUtil.getRefererPage(request);
+        response.sendRedirect(URLUtil.getRefererPage(request));
+//        response.sendRedirect("index");
     }
 }

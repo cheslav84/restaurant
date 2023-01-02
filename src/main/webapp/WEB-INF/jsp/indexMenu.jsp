@@ -2,6 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
+<a name="menu"></a> 
+
 <div class="image-background-section wf-section">
     <div class="image-background-overlay">
         <div class="container w-container">
@@ -77,3 +79,5 @@
         </div>
     </div>
 </div>
+<%-- <a href="#anchor-menu">Where You Click!</a>  --%>
+

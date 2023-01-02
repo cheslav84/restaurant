@@ -58,7 +58,7 @@
 
                             <div class="phone-info">
                                 <label for="phone" class="order-label">Cell phone:</label>
-                                <input type="text" id="phone" name="deliveryPhone" placeholder="Enter your cell phone" minlength="8" maxlength="13" class="field w-input order-field" placeholder="Phone number" value="${sessionScope.deliveryPhone}">
+                                <input type="tel" id="phone" name="deliveryPhone" placeholder="Enter your cell phone" minlength="8" maxlength="13" class="field w-input order-field" placeholder="Phone number" value="${sessionScope.deliveryPhone}">
                             </div>
                         </c:if>
 

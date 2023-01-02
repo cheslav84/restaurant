@@ -24,8 +24,7 @@ public class UserService {
 
 //    DAO<User> userDao;
 
-    public User addNewUser(HttpServletRequest request) throws ServiceException, DuplicatedEntityException {
-        final User user = mapUser(request);
+    public User addNewUser(User user) throws ServiceException, DuplicatedEntityException {
         EntityTransaction transaction = new EntityTransaction();
         UserDao userDao = new UserDao();
 //        RoleDao roleDao = new RoleDao();
@@ -180,25 +179,25 @@ public class UserService {
 //    }
 
 
-    @NotNull
-    private User mapUser(HttpServletRequest req) {
-
-        String password = req.getParameter("password");
-//        try {
-//            password = PassEncryptor.encrypt(password);// todo при вводі одного і того ж паролю різні результати. З'ясувати
-//        } catch (GeneralSecurityException e) {
-//            log.error("Failed to encrypt password. ", e);
-//            //todo redirect to error page...
-//        }
-        final String email = req.getParameter("email").trim();
-        final String name = req.getParameter("name").trim();
-        final String surname = req.getParameter("surname").trim();
-        final String gender = req.getParameter("userGender").trim();
-        final boolean isOverEighteen = req.getParameter("userOverEighteenAge") != null;
-//        final Role userRole = Role.getInstance(UserRole.CLIENT);
-
-        //todo validate data (email, password etc.)
-
-        return User.getInstance(email, password, name, surname, gender, isOverEighteen);
-    }
+//    @NotNull
+//    private User mapUser(HttpServletRequest req) {
+//
+//        String password = req.getParameter("password");
+////        try {
+////            password = PassEncryptor.encrypt(password);// todo при вводі одного і того ж паролю різні результати. З'ясувати
+////        } catch (GeneralSecurityException e) {
+////            log.error("Failed to encrypt password. ", e);
+////            //todo redirect to error page...
+////        }
+//        final String email = req.getParameter("email").trim();
+//        final String name = req.getParameter("name").trim();
+//        final String surname = req.getParameter("surname").trim();
+//        final String gender = req.getParameter("userGender").trim();
+//        final boolean isOverEighteen = req.getParameter("userOverEighteenAge") != null;
+////        final Role userRole = Role.getInstance(UserRole.CLIENT);
+//
+//        //todo validate data (email, password etc.)
+//
+//        return User.getInstance(email, password, name, surname, gender, isOverEighteen);
+//    }
 }

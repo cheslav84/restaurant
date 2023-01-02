@@ -326,6 +326,8 @@
         </div>
     </div>
 </div>
+
+
 <div class="footer wf-section"><a href="http://easy-times.webflow.io/menu#" class="go-to-top-link-block w-inline-block">
     <img src="./Menu_files/55d5bc08b4ce9258656a0ebd_Icon-Top.png" alt="" class="icon-go-to-top"></a>
     <div class="container w-container">

@@ -10,6 +10,7 @@ public interface RequestParameters {
     String ORDER_ID = "orderId";
     String DISH_ID = "dishId";
     String CURRENT_STATUS = "currentStatus";
-
+    String MENU_CATEGORY = "menuCategory";
+    String MENU_SORTING_OPTION = "menuSortingOption";
 
 }

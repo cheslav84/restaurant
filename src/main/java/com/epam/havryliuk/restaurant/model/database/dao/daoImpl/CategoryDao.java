@@ -4,7 +4,6 @@ import com.epam.havryliuk.restaurant.model.database.dao.AbstractDao;
 import com.epam.havryliuk.restaurant.model.constants.databaseFieds.CategoryFields;
 import com.epam.havryliuk.restaurant.model.constants.queries.CategoryQuery;
 import com.epam.havryliuk.restaurant.model.entity.Category;
-import com.epam.havryliuk.restaurant.model.entity.constants.CategoryName;
 import com.epam.havryliuk.restaurant.model.exceptions.DAOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -160,8 +159,8 @@ public class CategoryDao extends AbstractDao<Category> {
 
 
     private Category mapCategory(ResultSet rs) throws SQLException {
-        long id = rs.getLong(CategoryFields.CATEGORY_ID);
+//        long id = rs.getLong(CategoryFields.CATEGORY_ID);
         String name = rs.getString(CategoryFields.CATEGORY_NAME);
-        return Category.getInstance(id, CategoryName.valueOf(name));
+        return Category.valueOf(name);
     }
 }

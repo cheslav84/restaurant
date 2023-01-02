@@ -1,12 +1,15 @@
 package com.epam.havryliuk.restaurant.controller.command.dishCommand;
 
 import com.epam.havryliuk.restaurant.controller.command.ActionCommand;
+import com.epam.havryliuk.restaurant.model.constants.RequestParameters;
 import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
 import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
+import com.epam.havryliuk.restaurant.model.entity.Category;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.resource.MessageManager;
 import com.epam.havryliuk.restaurant.model.service.DishService;
+import com.epam.havryliuk.restaurant.model.util.URLUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -27,30 +30,53 @@ public class IndexCommand implements ActionCommand {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-        String currentMenu = getCurrentMenu(request);
+        Category currentMenu = getCurrentMenu(request);
+        MessageManager messageManager = MessageManager.valueOf((String) request.getSession().getAttribute(LANGUAGE));
 
         DishService dishService = new DishService();
         List<Dish> dishes = null;
         try {
             dishes = dishService.getMenuByCategory(currentMenu);
+            if (dishes.isEmpty()) {
+                request.setAttribute(MENU_MESSAGE,
+                        messageManager.getProperty(ResponseMessages.MENU_EMPTY));
+            }
             log.debug("List of dishes received by servlet and going to be sending to client side.");
         } catch (ServiceException e) {
-            MessageManager messageManager = MessageManager.valueOf((String) request.getSession().getAttribute(LANGUAGE));
             request.setAttribute(ERROR_MESSAGE,
                     messageManager.getProperty(ResponseMessages.MENU_UNAVAILABLE));
             log.error(e);
         }
         hideOrderInfoOnReloadPage(request);
         request.setAttribute(DISH_LIST, dishes);
+
+
+//        String url = URLUtil.getRefererPage(request);
+////        String anchor = getAnchor(request);
+//        String path = null;
+//        System.err.println(url);
+//        if (url.startsWith("menu")) {
+//            path = AppPagesPath.FORWARD_MENU_PAGE;
+//        } else {
+//            path = AppPagesPath.FORWARD_INDEX;
+//        }
+
+//        String sorting = request.getParameter("sort-menu-by");
+//        System.err.println(sorting);
+
         request.getRequestDispatcher(AppPagesPath.FORWARD_INDEX).forward(request, response);
     }
 
+//    private String getAnchor(HttpServletRequest request) {
+//        return  "#" + request.getParameter("anchor");
+//    }
+
 
     @NotNull
-    private String getCurrentMenu(HttpServletRequest req) {
+    private Category getCurrentMenu(HttpServletRequest req) {
         HttpSession session = req.getSession();
         String lastVisitedMenu = (String) session.getAttribute(MENU_CATEGORY);
-        String currentMenu = req.getParameter(MENU_CATEGORY);
+        String currentMenu = req.getParameter(RequestParameters.MENU_CATEGORY);
         if (currentMenu != null) {
             session.setAttribute(MENU_CATEGORY, currentMenu);
         } else {
@@ -60,7 +86,7 @@ public class IndexCommand implements ActionCommand {
                 currentMenu = DEFAULT_MENU;
             }
         }
-        return currentMenu;
+        return Category.valueOf(currentMenu);
     }
 
     private void hideOrderInfoOnReloadPage(HttpServletRequest req)  {

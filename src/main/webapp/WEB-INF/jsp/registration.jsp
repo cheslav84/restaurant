@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%-- <%@ taglib prefix="wl" uri="tagl"%> --%>
+
 
 
 
@@ -48,91 +50,100 @@
             <div class="reservation-row w-row">
                 <div data-ix="fade-in-on-load-3" class="contact-us-column form-left w-col w-col-6">
                     <div class="w-form">
-                        <div class="intro-title">Need to make an order?</div>
-                        <h2 class="section-intro-title subtitle">Log in please</h2>
-                        <div class="section-divider-line"></div>
 
-
-                        
-                        
-                        <%-- <c:out value = ""/> --%>
-
-
-
-                        <!-- LOGING IN -->
-                        <form method="post" action="login" id="wf-form-Reservation-Form" name="logInForm" data-name="Log in form">
-                        <%-- <input type="hidden" name="command" value="login" /> --%>
-                            <input type="email" id="Email-3" name="email" data-name="Email" placeholder="Email address"
-                                maxlength="32" required="true" class="field w-input"                                          value="v_cheslav@ukr.net">
-
-                            <input type="password" id="password" name="password" data-name="Password"
-                                placeholder="Password" minlength="8" maxlength="32" required="true"
-                                class="field w-input"                                                                     value="strongPass!@#123">
-
-                            <div class="error-message"> 
-                                <%-- <c:out value="${sessionScope.logInErrorMessage}"/> --%>
-                                <c:out value="${sessionScope.errorMessage}"/>
-                            </div>
-
-                            <input type="submit" value="Log in" data-wait="Please wait..."
-                                class="button submit-button w-button">
-                        </form>
-                        <div class="sing-in">
+                        <div id="login-form">    
+                            <div class="intro-title">Need to make an order?</div>
+                            <h2 class="section-intro-title subtitle">Log in please</h2>
                             <div class="section-divider-line"></div>
-                            <div class="intro-title">Do not have an account?</div>
-                            <input type="submit" value="Just make it" data-wait="Please wait..."
-                                class="button submit-button w-button">
+
+                            <!-- LOGING IN -->
+                            <form method="post" action="login"  name="logInForm" data-name="Log in form">
+                                <input type="email" id="Email-3" name="email" data-name="Email" placeholder="Email address"
+                                    maxlength="32" required="true" class="field w-input"                                          value="v_cheslav@ukr.net">
+                                <div class="password-wrap">
+                                    <input type="password" id="log-password" name="password" data-name="Password"
+                                    placeholder="Password" minlength="8" maxlength="32" required="true"
+                                    class="field w-input"                                                                      value="strongPass!123">
+                                    <button type="button" id="show-log-passwd">
+                                        <img src="view/pictures/icons/visibility.png" alt="Show password" />
+                                    </button>
+                                </div>
+
+                                <div class="error-message"> 
+                                    <c:out value="${sessionScope.errorMessage}"/>
+                                </div>
+
+                                <input type="submit" value="Log in" data-wait="Please wait..." class="button submit-button w-button">
+                            </form>
+                            <div class="sing-in">
+                                <div class="section-divider-line"></div>
+                                <div class="intro-title">Do not have an account?</div>
+                                <input type="button" id="hide-login-btn" value="Just make it" data-wait="Please wait..."
+                                    class="button submit-button w-button">
+                            </div>
                         </div>
               
 
                         <!-- REGISTRATION -->
-                        <form method="post" action="register" id="wf-form-Reservation-Form" name="registrationForm" data-name="Reservation Form">
-                            <input type="text" id="name" name="name" data-name="Name" placeholder="Enter your name"
-                                maxlength="24" class="field w-input"                                                     value="Name">
-                            <input type="text" id="name" name="surname" data-name="Surname"
-                                placeholder="Enter your surname" maxlength="24" class="field w-input"                    value="Surname">
-                            <div class="w-row">
-                                <div class="w-clearfix w-col w-col-6">
-                                    <select id="user-gender" name="userGender" data-name="User gender"
-                                        class="field first-half w-select">
-                                        <option value="">Gender</option>
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
-                                    </select>
-                                </div>
-                                <div class="w-clearfix w-col w-col-6">
-                                    <div class="w-row field last-half w-select">
-                                        <label for="user-age" class="w-col user-age-label">I'm 18+</label>
-                                        <input type="checkbox" id="user-age" name="userOverEighteenAge" data-name="User age" class="w-col w-select user-age" value="">
+                        
+                        <div  id="registration-form" class="registration-form ${sessionScope.registrationProcess} hidden">
+                            <form method="post" action="register" name="registrationForm" data-name="Reservation Form" >
+                                <input type="text" id="name" name="name" data-name="Name" placeholder="Enter your name"
+                                    maxlength="24" class="field w-input"                                                     value="Name">
+                                <input type="text" id="name" name="surname" data-name="Surname"
+                                    placeholder="Enter your surname" maxlength="24" class="field w-input"                    value="Surname">
+                                <div class="w-row">
+                                    <div class="w-clearfix w-col w-col-6">
+                                        <select id="user-gender" name="userGender" data-name="User gender"
+                                            class="field first-half w-select">
+                                            <option value="">Gender</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                        </select>
+                                    </div>
+                                    <div class="w-clearfix w-col w-col-6">
+                                        <div class="w-row field last-half w-select">
+                                            <label for="user-age" class="w-col user-age-label">I'm 18+</label>
+                                            <input type="checkbox" id="user-age" name="userOverEighteenAge" data-name="User age" class="w-col w-select user-age" value="">
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <input type="email" id="Email-3" name="email" data-name="Email" placeholder="Email address"
-                                maxlength="32" required="true" class="field w-input"                                       value="mail@com">
+                                <input type="email" id="Email-3" name="email" data-name="Email" placeholder="Email address"
+                                    maxlength="32" required="true" class="field w-input"                                       value="mail@com">
 
-                            <input type="password" id="password" name="password" data-name="Password"
-                                placeholder="Password" minlength="8" maxlength="32" required="true"
-                                class="field w-input"                                                                      value="mail@com">
+                                <div class="password-wrap">
+                                    <input type="password" id="reg-password" name="password" data-name="Password"
+                                    placeholder="Password" minlength="8" maxlength="32" required="true"
+                                    class="field w-input"                                                                      value="strongPass!123">
+                                    <button type="button" id="show-reg-passwd">
+                                        <img src="view/pictures/icons/visibility.png" alt="Show password" />
+                                    </button>
+                                </div>
 
-                            <div class="error-message"> 
-                                <c:out value="${sessionScope.registrationErrorMessage}"/>
-                            </div>
-                            <input type="submit" value="Sing in" data-wait="Please wait..."
-                                class="button submit-button w-button">
-                        </form>
-                        
+                                <div class="error-message"> 
+                                    <c:out value="${sessionScope.registrationErrorMessage}"/>
+                                </div>
+                                <input type="submit" value="Sing in" data-wait="Please wait..." class="button submit-button w-button">
 
+
+                            </form>
+                            
+                            <div class="section-divider-line"></div>
+                            <input type="button" id="show-login-btn" value="I have an account" data-wait="Please wait..."
+                                    class="button submit-button w-button">
+
+                        </div>
                         <div class="section-divider-line"></div>
 
                         
-                        <div class="success-bg w-form-done">
+                        <%-- <div class="success-bg w-form-done">
                             <p class="success-text">Thank you!</p>
                             <p class="success-text _2">Your Reservation has been received!</p>
                         </div>
                         <div class="error-bg w-form-fail">
                             <p class="error-text">Oops! Something went wrong while submitting the form</p>
-                        </div>
+                        </div> --%>
                     </div>
                 </div>
 
@@ -152,6 +163,8 @@
 
     <script src="view/js/jquery3.6.1.js" type="text/javascript" crossorigin="anonymous"></script>
     <script src="view/js/webflow.e.js" type="text/javascript"></script>
+    <script src="view/js/registration.js" type="text/javascript"></script>
+
 
 </body>
 

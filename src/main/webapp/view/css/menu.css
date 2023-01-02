@@ -85,7 +85,32 @@
     line-height: 14px;
     font-weight: 400;
     text-transform: uppercase;
+    position: relative;
+    z-index: 100;
+    /* pointer-events: none;  */
   }
+
+
+  .menu-page-tab-button.w--current {
+  
+         /* pointer-events:auto; */
+}
+  .transparent-button {
+    /* pointer-events: fill;    */
+    opacity: 0;
+    /* visibility: hidden; */
+    /* z-index: -1; */
+    cursor: pointer;
+  }
+
+  .error-message {
+    margin-bottom: 40px;
+    font-family: Satisfy, sans-serif;
+    color: #eda03b;
+    font-size: 18px;
+    line-height: 16px;
+    font-weight: bold;
+}
 
   @media (max-width: 1110px){
    .menu-page-tabs-menu {

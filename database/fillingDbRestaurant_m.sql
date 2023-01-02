@@ -1,11 +1,11 @@
 -- -----------------------------------------------------
 -- `CATEGORY`
 -- -----------------------------------------------------
-INSERT INTO category (category_name) VALUE ('COFFEE');
-INSERT INTO category (category_name) VALUE ('LUNCH');
-INSERT INTO category (category_name) VALUE ('DINER');
-INSERT INTO category (category_name) VALUE ('DRINKS');
-INSERT INTO category (category_name) VALUE ('SPECIALS');
+INSERT INTO category (id, category_name) VALUE ('1', 'COFFEE');
+INSERT INTO category (id, category_name) VALUE ('2', 'LUNCH');
+INSERT INTO category (id, category_name) VALUE ('3', 'DINER');
+INSERT INTO category (id, category_name) VALUE ('4', 'DRINKS');
+INSERT INTO category (id, category_name) VALUE ('5', 'SPECIALS');
 
 -- -----------------------------------------------------
 -- `DISH`
@@ -73,6 +73,8 @@ INSERT INTO dish (dish_name, description, weight, price, amount, spirits, image)
 VALUES ('Super Burrito', 'Lorem ipsum dolor sit amet consectetur adipiscing.', '240', '20.00', '15', '0', 'example-bg.png');
 INSERT INTO dish_has_category (dish_id, category_id) VALUES (14, 2);
 
+-- DINER
+
 -- DRINKS
 INSERT INTO dish (dish_name, description, weight, price, amount, spirits, image) 
 VALUES ('Ice Tea', 'Lorem ipsum dolor sit amet consectetur adipiscing.', '3.50', '70', '12', '0', 'example-bg.png');
@@ -93,7 +95,7 @@ INSERT INTO dish_has_category (dish_id, category_id) VALUES (18, 4);
 
 
 
--- DINER
+
 
 
 -- -----------------------------------------------------
@@ -213,8 +215,9 @@ SELECT * FROM custom_order co JOIN booking_status bs ON co.booking_status_id=bs.
 SELECT * FROM custom_order co JOIN order_has_dishes od ON co.id=od.custom_order_id JOIN dish d ON od.dish_id=d.id JOIN booking_status bs ON co.booking_status_id=bs.id WHERE co.user_id='3' ORDER BY creation_date DESC; #basket.GET_ALL_ORDERS_BY_USER
 SELECT * FROM custom_order co JOIN booking_status bs ON co.booking_status_id=bs.id WHERE co.user_id='3' AND co.address='Kyiv, Oleksanrivska str.' AND bs.booking_status_name='BOOKING'; #order.GET_BY_USER_ID_ADDRESS_AND_STATUS
 #DELETE FROM order_has_dishes WHERE custom_order_id=1 AND dish_id=4;
-
-
+SELECT COUNT(*) AS number_of_orders FROM custom_order WHERE booking_status_id!=1;
+SELECT * FROM custom_order co JOIN booking_status bs ON co.booking_status_id=bs.id WHERE bs.id!=1 ORDER BY bs.id ASC, creation_date DESC;
+SELECT * FROM custom_order co JOIN booking_status bs ON co.booking_status_id=bs.id WHERE bs.id!=1 ORDER BY bs.id ASC, creation_date DESC limit 0, 3;
 
 
     

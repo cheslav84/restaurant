@@ -10,6 +10,21 @@ import java.util.regex.Pattern;
 
 public class Validator {
 
+    public static boolean regexChecker (String regex, String toCheck) {
+        Pattern regexPattern = Pattern.compile(regex);
+        Matcher regexMatcher = regexPattern.matcher(toCheck);
+        if (regexMatcher.matches()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+
+
+
+
     public static boolean isAddressCorrect(String deliveryAddress) {
         if (deliveryAddress != null){
             int addressLength = deliveryAddress.length();
@@ -55,10 +70,10 @@ public class Validator {
     }
 
 
-    public static void checkIfPasswordsCoincide(String password, String encryptedPassword) throws GeneralSecurityException {
-        if (!password.equals(encryptedPassword)) {
-            String errorMessage = "Entered password is wrong.";
-            throw new GeneralSecurityException(errorMessage);
-        }
-    }
+//    public static void checkIfPasswordsCoincide(String password, String encryptedPassword) throws GeneralSecurityException {
+//        if (!password.equals(encryptedPassword)) {
+//            String errorMessage = "Entered password is wrong.";
+//            throw new GeneralSecurityException(errorMessage);
+//        }
+//    }
 }

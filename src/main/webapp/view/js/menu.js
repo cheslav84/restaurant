@@ -1,4 +1,35 @@
 
+window.onload = function() {
+    var selItem = sessionStorage.getItem("SelItem");  
+    $('#sort-menu-by-selector').val(selItem);
+    }
+
+
+    $('#sort-menu-by-selector').change(function() { 
+        var selVal = $(this).val();
+        sessionStorage.setItem("SelItem", selVal);
+    });
+
+
+
+    
+
+// $(document).ready(function() {
+//     $("#sort-menu-by-form").click(function(e) {
+    //   var isActive = $(this).hasClass('w--current');
+    //   $('.active').removeClass('w--current');
+    //   if (!isActive) {
+        // $(this).addClass('w--current');
+    //   }
+//     });
+// });
+
+
+// function submit() {
+//     document.getElementById("all-menu").submit();
+//   }
+
+
 // $(document).ready(function() {
 //     const menuButtons = document.getElementsByName("menuCategory");
 //     for (let i = 0; i <= menuButtons.length; i++) {
