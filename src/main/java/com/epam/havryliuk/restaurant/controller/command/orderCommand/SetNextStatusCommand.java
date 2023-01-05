@@ -5,6 +5,7 @@ import com.epam.havryliuk.restaurant.controller.command.ActionCommand;
 import com.epam.havryliuk.restaurant.model.constants.RequestParameters;
 import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
 import com.epam.havryliuk.restaurant.model.entity.BookingStatus;
+import com.epam.havryliuk.restaurant.model.exceptions.EntityAbsentException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.resource.MessageManager;
 import com.epam.havryliuk.restaurant.model.service.OrderService;
@@ -29,25 +30,23 @@ public class SetNextStatusCommand implements ActionCommand {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         long orderId = Long.parseLong(request.getParameter(RequestParameters.ORDER_ID));
-        OrderService orderService = new OrderService();
         HttpSession session = request.getSession();
+        MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
         BookingStatus bookingStatus = getBookingStatus(request);
+        OrderService orderService = new OrderService();
         try {
-            orderService.changeOrderStatus(orderId, bookingStatus);
+            orderService.changeOrderStatus(orderId, bookingStatus);//todo if booking status new check every dish if it is present
             session.removeAttribute(CURRENT_ORDER);
+        } catch (EntityAbsentException e){
+            session.setAttribute(ERROR_MESSAGE,
+                    messageManager.getProperty(ResponseMessages.ABSENT_DISHES) + e.getMessage());
+            log.error("Some of dishes are already absent in menu.");
         } catch (ServiceException e) {
-            MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LANGUAGE));
             session.setAttribute(ERROR_MESSAGE,
                     messageManager.getProperty(ResponseMessages.ORDER_CONFIRM_ERROR));
-            log.error(e);
+            log.error(e.getMessage(), e);
         }
-
-        String page = URLUtil.getRefererPage(request);
-        response.sendRedirect(page);
-
-//        response.sendRedirect("basket");
-
-
+        response.sendRedirect(URLUtil.getRefererPage(request));
     }
 
     @NotNull

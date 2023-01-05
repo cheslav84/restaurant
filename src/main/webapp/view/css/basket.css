@@ -226,6 +226,21 @@
 
 }
 
+.error-message {
+    font-family: Satisfy, sans-serif;
+    text-align: center;
+    color: #eda03b;
+    font-size: 13px;
+    line-height: 16px;
+    text-shadow: none;
+    padding: 20px 40px;
+
+  }
+
+  /* .section.error-message {
+    padding: 20px, 10px !important;
+  } */
+
 @media screen and (max-width:991px) {
 
 

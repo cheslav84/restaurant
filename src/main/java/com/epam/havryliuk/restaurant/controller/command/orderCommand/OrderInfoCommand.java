@@ -35,7 +35,7 @@ public class OrderInfoCommand implements ActionCommand {
             session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);// value to show ordering menu of concrete dish
             session.removeAttribute(ORDER_MESSAGE);
         } catch (ServiceException e) {
-            MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LANGUAGE));
+            MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
             session.setAttribute(ERROR_MESSAGE,
                     messageManager.getProperty(ResponseMessages.DISH_IN_MENU_NOT_FOUND));
             log.error(e);

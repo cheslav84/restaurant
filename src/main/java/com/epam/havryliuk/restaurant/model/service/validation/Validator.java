@@ -1,4 +1,4 @@
-package com.epam.havryliuk.restaurant.model.util.validation;
+package com.epam.havryliuk.restaurant.model.service.validation;
 
 import com.epam.havryliuk.restaurant.model.exceptions.BadCredentialsException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 public class Validator {
 
-    public static boolean regexChecker (String regex, String toCheck) {
+    public static boolean regexChecker (String toCheck, String regex) {
         Pattern regexPattern = Pattern.compile(regex);
         Matcher regexMatcher = regexPattern.matcher(toCheck);
         if (regexMatcher.matches()) {
@@ -35,18 +35,18 @@ public class Validator {
     return false;
     }
 
-    public static boolean isPhoneCorrect(String deliveryPhone) {
-        if (deliveryPhone != null){
-            String skippedSymbols = deliveryPhone.replaceAll("[\\s()-]", "");
-            String patterns = "^(\\+[1-9]{1}[0-9]{11})|([0]{1}[0-9]{9})$";
-            Pattern pattern = Pattern.compile(patterns);
-            Matcher matcher = pattern.matcher(skippedSymbols);
-            if (matcher.matches()) {
-                return true;
-            }
-        }
-        return false;
-    }
+//    public static boolean isPhoneCorrect(String deliveryPhone) {
+//        if (deliveryPhone != null){
+//            String skippedSymbols = deliveryPhone.replaceAll("[\\s()-]", "");
+//            String patterns = "^(\\+[1-9]{1}[0-9]{11})|([0]{1}[0-9]{9})$";
+//            Pattern pattern = Pattern.compile(patterns);
+//            Matcher matcher = pattern.matcher(skippedSymbols);
+//            if (matcher.matches()) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 
 
     public static boolean isDishesAmountCorrect(int dishesAmount) {

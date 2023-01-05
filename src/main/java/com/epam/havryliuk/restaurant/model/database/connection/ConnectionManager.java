@@ -50,7 +50,6 @@ public class ConnectionManager {
     private static void initDataSource() {
         try {
             Context initContext = new InitialContext();
-//            Context envContext = (Context) initContext.lookup(DatabaseContext.CONTEXT);
             Context envContext = (Context) initContext.lookup(DatabaseContext.CONTEXT);
             ds = (DataSource) envContext.lookup(DatabaseContext.SOURCE);
         } catch (NamingException e) {

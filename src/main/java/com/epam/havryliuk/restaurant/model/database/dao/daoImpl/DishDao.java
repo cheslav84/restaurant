@@ -14,7 +14,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DishDao extends AbstractDao<Dish> {
     private static final Logger log = LogManager.getLogger(DishDao.class);
@@ -81,19 +83,17 @@ public class DishDao extends AbstractDao<Dish> {
         return getDishes(DishQuery.FIND_ALL_AVAILABLE_ORDERED_BY_NAME);
     }
 
-
     public List<Dish> getSortedByPrice() throws DAOException {
         return getDishes(DishQuery.FIND_ALL_AVAILABLE_ORDERED_BY_PRICE);
     }
 
-//    @Override
     public List<Dish> getSortedByCategory() throws DAOException {
         return getDishes(DishQuery.FIND_ALL_AVAILABLE_ORDERED_BY_CATEGORY);
     }
 
     @Override
-    public boolean create(Dish entity) {
-        return false;
+    public boolean create(Dish dish) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -193,9 +193,9 @@ public class DishDao extends AbstractDao<Dish> {
         return Dish.getInstance(id, name, description, weight, price, amount, image);
     }
 
-    public int getNumberOfDishes(Dish dish) throws DAOException {
+    public int getNumberOfAllDishesInOrder(Dish dish) throws DAOException {
         int numberOfDishes = 0;
-        try (PreparedStatement stmt = connection.prepareStatement(DishQuery.GET_NUMBER_OF_DISHES)) {
+        try (PreparedStatement stmt = connection.prepareStatement(DishQuery.GET_NUMBER_OF_ALL_DISHES_IN_ORDER)) {
             stmt.setLong(1, dish.getId());
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
@@ -222,6 +222,25 @@ public class DishDao extends AbstractDao<Dish> {
         return true;
 
     }
+
+    public Map<String, Integer> getNumberOfEachDishInOrder(long orderId) throws DAOException {
+        Map<String, Integer> dishes = new HashMap<>();
+        try (PreparedStatement stmt = connection.prepareStatement(DishQuery.GET_NUMBER_OF_EACH_DISH_IN_ORDER)) {
+            stmt.setLong(1, orderId);
+            try(ResultSet rs = stmt.executeQuery()){
+                while (rs.next()){
+                    String dishName = rs.getString(DishFields.DISH_NAME);
+                    int dishesAmount = rs.getInt(DishFields.DISH_AMOUNT);
+                    dishes.put(dishName, dishesAmount);
+                }
+            }
+        } catch (SQLException e) {
+            log.error("Error in getting list of dishes from database. ");
+            throw new DAOException(e);
+        }
+        return dishes;
+    }
+
 
 //    private Category mapCategoryForDish(ResultSet rs) throws SQLException { //todo low coupling
 //        long id = rs.getLong(DishFields.DISH_CATEGORY_ID);

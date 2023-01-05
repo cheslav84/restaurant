@@ -15,7 +15,7 @@ public interface RequestAttributes {
     String SHOW_DISH_INFO = "showDishInfo";
     String ERROR_MESSAGE = "errorMessage";
     String ORDER_MESSAGE = "orderMessage";
-    String LANGUAGE = "language";
+//    String LANGUAGE = "language";
     String LOCALE = "locale";
     String REGISTRATION_ERROR_MESSAGE = "registrationErrorMessage";//todo try to make one
     String REGISTRATION_PROCESS = "registrationProcess";

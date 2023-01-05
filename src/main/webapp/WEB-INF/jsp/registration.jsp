@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%-- <%@ taglib prefix="wl" uri="tagl"%> --%>
-
+<%@ taglib prefix="vld" uri="validations"%>
+<%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
 
 
 
@@ -58,8 +58,18 @@
 
                             <!-- LOGING IN -->
                             <form method="post" action="login"  name="logInForm" data-name="Log in form">
+
+                <%-- <vld:mail name="email" >
+                </vld:mail>   --%>
+
+                                <%-- <input type="email"  name="email"  placeholder="Email address"
+                                    class="field w-input"                                          value="v_cheslav@ukr.net"> --%>
+
                                 <input type="email" id="Email-3" name="email" data-name="Email" placeholder="Email address"
                                     maxlength="32" required="true" class="field w-input"                                          value="v_cheslav@ukr.net">
+
+
+                  
                                 <div class="password-wrap">
                                     <input type="password" id="log-password" name="password" data-name="Password"
                                     placeholder="Password" minlength="8" maxlength="32" required="true"

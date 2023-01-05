@@ -31,7 +31,7 @@ public class IndexCommand implements ActionCommand {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         Category currentMenu = getCurrentMenu(request);
-        MessageManager messageManager = MessageManager.valueOf((String) request.getSession().getAttribute(LANGUAGE));
+        MessageManager messageManager = MessageManager.valueOf((String) request.getSession().getAttribute(LOCALE));
 
         DishService dishService = new DishService();
         List<Dish> dishes = null;
@@ -49,30 +49,10 @@ public class IndexCommand implements ActionCommand {
         }
         hideOrderInfoOnReloadPage(request);
         request.setAttribute(DISH_LIST, dishes);
-
-
-//        String url = URLUtil.getRefererPage(request);
-////        String anchor = getAnchor(request);
-//        String path = null;
-//        System.err.println(url);
-//        if (url.startsWith("menu")) {
-//            path = AppPagesPath.FORWARD_MENU_PAGE;
-//        } else {
-//            path = AppPagesPath.FORWARD_INDEX;
-//        }
-
-//        String sorting = request.getParameter("sort-menu-by");
-//        System.err.println(sorting);
-
         request.getRequestDispatcher(AppPagesPath.FORWARD_INDEX).forward(request, response);
     }
 
-//    private String getAnchor(HttpServletRequest request) {
-//        return  "#" + request.getParameter("anchor");
-//    }
 
-
-    @NotNull
     private Category getCurrentMenu(HttpServletRequest req) {
         HttpSession session = req.getSession();
         String lastVisitedMenu = (String) session.getAttribute(MENU_CATEGORY);

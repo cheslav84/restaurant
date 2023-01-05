@@ -7,19 +7,12 @@ import jakarta.servlet.http.HttpServletRequest;
 public class CommandFactory {
     public ActionCommand defineCommand(HttpServletRequest request) {
         ActionCommand current = new IndexCommand();
-        String referer = request.getRequestURI().toUpperCase();
+        String referer = request.getRequestURI();
         String action = referer.substring(referer.lastIndexOf('/') + 1);
-
-        System.err.println("command = ========= "  + action);
-//        String path = request.getParameter("menuCategory");
-//        System.err.println("menuCategory++++++++++++++++++++++++" + path);
-
-//        if (action == null || action.isEmpty()) {
+        System.err.println("command = ========= "  + action);//todo delete
         if (action.isEmpty()) {
             return current;
         }
-
-
         try {
             CommandEnum currentEnum = CommandEnum.valueOf(action.toUpperCase());
             current = currentEnum.getCurrentCommand();

@@ -37,8 +37,8 @@
 
 
 
-                <div class="error-message">
-                    <c:if test="${sessionScope.errorMessage}"></c:if>
+                <div class="section error-message">
+                    ${sessionScope.errorMessage}
                 </div>
 
                 <c:forEach var="orderAndPrice" items="${sessionScope.ordersAndPrices}">
@@ -137,7 +137,13 @@
                                         <%-- Total price: --%>
                                             <form method="post"
                                                 action="set_next_status?currentStatus=${orderAndPrice.key.bookingStatus}"
-                                                name="PAID">
+                                        >
+
+                                                <%-- action="set_next_status?currentStatus=${orderAndPrice.key.bookingStatus}"
+                                                name="PAID"> --%>
+
+                                              
+
                                                 <button value="${orderAndPrice.key.id}" name="orderId"
                                                     class="button order-confirm-button">Pay for order</button>
                                             </form>

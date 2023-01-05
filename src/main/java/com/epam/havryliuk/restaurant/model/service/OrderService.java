@@ -9,32 +9,61 @@ import com.epam.havryliuk.restaurant.model.exceptions.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class OrderService {
     private static final Logger log = LogManager.getLogger(OrderService.class);
 
-    public void changeOrderStatus(long orderId, BookingStatus newStatus) throws ServiceException {
-
+    public void changeOrderStatus(long orderId, BookingStatus newStatus) throws EntityAbsentException,  ServiceException {
         EntityTransaction transaction = new EntityTransaction();
         OrderDao orderDao = new OrderDao();
         DishDao dishDao = new DishDao();
+        BasketDao basketDao = new BasketDao();
         try {
-            transaction.initTransaction(orderDao, dishDao);
+            transaction.initTransaction(orderDao, dishDao, basketDao);
             if(isOrderInConfirmingProcess(newStatus)) {
+            //todo if booking status new check every dish if it is present
+                checkDishesIfPresent(dishDao, basketDao, orderId);
                 dishDao.updateDishesAmountByOrderedValues(orderId);
             }
             orderDao.changeOrderStatus(orderId, newStatus);
             log.debug("\"order status\" has been changed to " + newStatus);
         } catch (DAOException e) {
             String message = "Something went wrong. Try to confirm your order later please.";
-            log.debug(message);
+            log.debug(message);//todo подумати над тим що давати в лог на цьому рівні, і на рівні DAO (exception чи повідомлення.)
             throw new ServiceException(message);
         } finally {
             transaction.commit();
             transaction.endTransaction();
         }
+    }
+
+    private void checkDishesIfPresent(DishDao dishDao, BasketDao basketDao, long orderId) throws DAOException, EntityAbsentException {
+        Map<String, Integer> requestedDishes = basketDao.getNumberOfRequestedDishesInOrder(orderId);
+        Map<String, Integer> presentDishes = dishDao.getNumberOfEachDishInOrder(orderId);
+        List<String> absentDishesList = new ArrayList<>();
+        for (String reqDishName : requestedDishes.keySet()) {
+            if (!Objects.equals(requestedDishes.get(reqDishName), presentDishes.get(reqDishName))) {
+                absentDishesList.add(reqDishName);
+            }
+        }
+        if (absentDishesList.size() != 0) {
+            String absentDishes = "\"" + String.join("\", \"", absentDishesList) + "\"";
+            throw new EntityAbsentException(absentDishes);//todo наскільки коректно через exception передавати повідомлення на view?
+        }
+
+
+
+
+
+//        requestedDishes.keySet().stream()
+//                .(k -> requestedDishes.get(k) == presentDishes.get(k)
+//                .map(id -> dishesIdThatAbsent.add(id))
+//    );
+
+
     }
 
 
@@ -59,7 +88,6 @@ public class OrderService {
             // dirty reads, наприклад? А якщо dirty reads не можливі (за логікою програми)?
             log.debug("The order list was successfully created.");
         } catch (DAOException e) {
-            String message = "The orders is temporary unavailable, try again later please.";
             log.error("The orders is temporary unavailable, try again later please.");
             throw new ServiceException(e);
         } finally {
@@ -75,23 +103,16 @@ public class OrderService {
         BasketDao basketDao = new BasketDao();
         Page<Order> orderPage = new Page<>();
         List<Order> orders;
-
-
         try {
             transaction.initTransaction(orderDao, basketDao);
-
             int noOfRecords = orderDao.getNoOfOrders();
             int offset = orderPage.getOffset(page, recordsPerPage);
             orderPage.setNoOfPages(noOfRecords, recordsPerPage);
-
-
             orders = orderDao.getOrdersSortedByStatusThenTime(offset, recordsPerPage);
-
             orderPage.setRecords(orders);
             for (Order order : orders) {
                 order.setBaskets(basketDao.getOrderDishes(order));
             }
-
             transaction.commit();
             log.debug("The order list was successfully created.");
         } catch (DAOException e) {
@@ -204,7 +225,7 @@ public class OrderService {
 
     private void checkAvailableDishes(Dish dish, int dishesAmountInOrder, DishDao dishDao)
             throws DAOException, IrrelevantDataException {
-        int numberOfDishesInMenu = dishDao.getNumberOfDishes(dish);
+        int numberOfDishesInMenu = dishDao.getNumberOfAllDishesInOrder(dish);
         if (numberOfDishesInMenu < dishesAmountInOrder) {
             log.error("The request number of dishes exceed available.");
             throw new IrrelevantDataException();

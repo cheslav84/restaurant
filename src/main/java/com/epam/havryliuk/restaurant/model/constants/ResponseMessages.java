@@ -20,4 +20,7 @@ public interface ResponseMessages {
     String REMOVE_DISH_FROM_ORDER_ERROR = "message.removeDishFromOrderError";
     String MENU_UNAVAILABLE = "message.menuUnavailable";
     String MENU_EMPTY = "message.menuEmpty";
+    String ABSENT_DISHES = "message.dishesAbsent";
+
+
 }

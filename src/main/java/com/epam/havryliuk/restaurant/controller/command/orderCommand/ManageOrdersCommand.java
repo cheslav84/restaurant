@@ -28,7 +28,7 @@ public class ManageOrdersCommand implements ActionCommand {
         OrderService orderService = new OrderService();
         HttpSession session = request.getSession();
 
-        MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LANGUAGE));
+        MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
 
         int pageNo = 1;
         int recordsPerPage = 2;

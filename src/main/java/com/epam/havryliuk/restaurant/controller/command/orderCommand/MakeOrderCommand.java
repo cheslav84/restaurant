@@ -1,6 +1,7 @@
 package com.epam.havryliuk.restaurant.controller.command.orderCommand;
 
 import com.epam.havryliuk.restaurant.controller.command.ActionCommand;
+import com.epam.havryliuk.restaurant.model.constants.Regex;
 import com.epam.havryliuk.restaurant.model.constants.RequestAttributes;
 import com.epam.havryliuk.restaurant.model.constants.RequestParameters;
 import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
@@ -15,7 +16,7 @@ import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.resource.MessageManager;
 import com.epam.havryliuk.restaurant.model.service.OrderService;
 import com.epam.havryliuk.restaurant.model.util.URLUtil;
-import com.epam.havryliuk.restaurant.model.util.validation.Validator;
+import com.epam.havryliuk.restaurant.model.service.validation.Validator;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -81,19 +82,19 @@ public class MakeOrderCommand implements ActionCommand {
 
     private void checkDeliveryCredentials(String deliveryAddress, String deliveryPhone, HttpSession session)
             throws BadCredentialsException {
-        MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LANGUAGE));
+        MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
         if(!Validator.isAddressCorrect(deliveryAddress)) {
             session.setAttribute(ORDER_MESSAGE,
                     messageManager.getProperty(ResponseMessages.INCORRECT_DELIVERY_ADDRESS));
-            String error = "The address is incorrect.";
-            throw new BadCredentialsException(error);
+            throw new BadCredentialsException("The address is incorrect.");
         }
         session.setAttribute(DELIVERY_ADDRESS, deliveryAddress);
-        if(!Validator.isPhoneCorrect(deliveryPhone)) {
+
+        deliveryPhone = deliveryPhone.replaceAll("[\\s()-]", "");
+        if(!Validator.regexChecker(deliveryPhone, Regex.PHONE)) {
             session.setAttribute(ORDER_MESSAGE,
                     messageManager.getProperty(ResponseMessages.INCORRECT_DELIVERY_PHONE));
-            String error = "The phone is incorrect.";
-            throw new BadCredentialsException(error);
+            throw new BadCredentialsException("The phone is incorrect.");
         }
         session.setAttribute(DELIVERY_PHONE, deliveryPhone);
     }
@@ -101,7 +102,7 @@ public class MakeOrderCommand implements ActionCommand {
 
     private void saveDishToOrder(HttpServletRequest req, OrderService orderService, Order order) {
         HttpSession session = req.getSession();
-        MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LANGUAGE));
+        MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
         try {
             Dish dish = getCurrentDish(req);
             int dishesAmount = getDishesAmount(req);
@@ -128,7 +129,7 @@ public class MakeOrderCommand implements ActionCommand {
         HttpSession session = req.getSession();
         Dish dish = (Dish) session.getAttribute(CURRENT_DISH);
         if (dish == null) {
-            MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LANGUAGE));
+            MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
             session.setAttribute(ORDER_MESSAGE,
                     messageManager.getProperty(ResponseMessages.ORDER_DISH_NOT_FOUND));
             log.error("Choose the dish for adding it to basket.");
@@ -141,7 +142,7 @@ public class MakeOrderCommand implements ActionCommand {
     private int getDishesAmount(HttpServletRequest req) throws BadCredentialsException {
         int dishesAmount;
         HttpSession session = req.getSession();
-        MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LANGUAGE));
+        MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
         try {
             dishesAmount = Integer.parseInt(req.getParameter(RequestParameters.ORDER_DISHES_AMOUNT).trim());
             if(!Validator.isDishesAmountCorrect(dishesAmount)) {

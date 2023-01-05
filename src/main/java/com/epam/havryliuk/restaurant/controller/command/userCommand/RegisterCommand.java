@@ -31,10 +31,11 @@ public class RegisterCommand implements ActionCommand {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
         String redirectionPage;
-        MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LANGUAGE));
+        MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
         try {
             UserService service = new UserService();
             final User user = mapUser(request);
+
             service.addNewUser(user);
             session.setAttribute(LOGGED_USER, user);
             //        Cookie cookie = new Cookie("sessionId", session.getId());
@@ -76,7 +77,6 @@ public class RegisterCommand implements ActionCommand {
         session.removeAttribute(PAGE_FROM_BEING_REDIRECTED);
         return redirectionPage;
     }
-
 
     @NotNull
     private User mapUser(HttpServletRequest req) {

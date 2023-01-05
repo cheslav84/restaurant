@@ -2,7 +2,7 @@ package com.epam.havryliuk.restaurant.model.constants;
 
 public interface RequestParameters {
 
-    String PARAM_NAME_LOGIN = "email";
+    String EMAIL = "email";
     String PARAM_NAME_PASSWORD = "password";
     String DELIVERY_ADDRESS = "deliveryAddress";
     String DELIVERY_PHONE = "deliveryPhone";

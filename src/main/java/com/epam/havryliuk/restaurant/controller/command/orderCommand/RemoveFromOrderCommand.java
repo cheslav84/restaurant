@@ -32,7 +32,7 @@ public class RemoveFromOrderCommand implements ActionCommand {
             log.debug("Dish has been removed from order.");
             session.removeAttribute(ERROR_MESSAGE);
         } catch (ServiceException e) {
-            MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LANGUAGE));
+            MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
             session.setAttribute(ERROR_MESSAGE,
                     messageManager.getProperty(ResponseMessages.REMOVE_DISH_FROM_ORDER_ERROR));
             log.error(e);

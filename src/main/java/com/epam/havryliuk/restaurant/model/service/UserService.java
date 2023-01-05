@@ -10,7 +10,7 @@ import com.epam.havryliuk.restaurant.model.exceptions.DAOException;
 import com.epam.havryliuk.restaurant.model.exceptions.DuplicatedEntityException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.util.PassEncryptor;
-import com.epam.havryliuk.restaurant.model.util.validation.Validator;
+import com.epam.havryliuk.restaurant.model.service.validation.Validator;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;

@@ -13,6 +13,7 @@ public class BasketQuery {
 
     public static String ADD_DISH_TO_BASKET;
     public static String GET_DISH_FR0M_BASKET;
+    public static String GET_NUMBER_OF_REQUESTED_DISHES_IN_ORDER;
 
 
     static {
@@ -24,6 +25,7 @@ public class BasketQuery {
     private static void initialiseVariable() {
         ADD_DISH_TO_BASKET = (String) properties.get("basket.ADD_DISH_TO_BASKET");
         GET_DISH_FR0M_BASKET = (String) properties.get("basket.GET_DISH_FR0M_BASKET");
+        GET_NUMBER_OF_REQUESTED_DISHES_IN_ORDER = (String) properties.get("basket.GET_NUMBER_OF_REQUESTED_DISHES_IN_ORDER");
 
     }
 }

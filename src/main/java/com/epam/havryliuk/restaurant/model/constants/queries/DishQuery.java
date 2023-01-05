@@ -22,7 +22,8 @@ import java.util.Properties;
      public static String FIND_ALL_BY_ORDER;
      public static String UPDATE_DISH;
      public static String DELETE_DISH;
-     public static String GET_NUMBER_OF_DISHES;
+     public static String GET_NUMBER_OF_ALL_DISHES_IN_ORDER;
+     public static String GET_NUMBER_OF_EACH_DISH_IN_ORDER;
      public static String CHANGE_DISHES_AMOUNT_BY_ORDERED_VALUES;
 
 
@@ -44,7 +45,11 @@ import java.util.Properties;
             FIND_ALL_BY_ORDER = (String) properties.get("dish.FIND_ALL_BY_ORDER");
             UPDATE_DISH = (String) properties.get("dish.UPDATE_DISH");
             DELETE_DISH = (String) properties.get("dish.DELETE_DISH");
-            GET_NUMBER_OF_DISHES = (String) properties.get("dish.GET_NUMBER_OF_DISHES");
+            GET_NUMBER_OF_ALL_DISHES_IN_ORDER = (String) properties.get("dish.GET_NUMBER_OF_ALL_DISHES_IN_ORDER");
+            GET_NUMBER_OF_EACH_DISH_IN_ORDER = (String) properties.get("dish.GET_NUMBER_OF_EACH_DISH_IN_ORDER");
+
+
+
             CHANGE_DISHES_AMOUNT_BY_ORDERED_VALUES = (String) properties.get("dish.CHANGE_DISHES_AMOUNT_BY_ORDERED_VALUES");
 
         }

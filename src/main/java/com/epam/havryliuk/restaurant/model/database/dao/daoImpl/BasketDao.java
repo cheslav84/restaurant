@@ -1,6 +1,7 @@
 package com.epam.havryliuk.restaurant.model.database.dao.daoImpl;
 
 import com.epam.havryliuk.restaurant.model.constants.databaseFieds.BasketFields;
+import com.epam.havryliuk.restaurant.model.constants.databaseFieds.DishFields;
 import com.epam.havryliuk.restaurant.model.constants.queries.BasketQuery;
 import com.epam.havryliuk.restaurant.model.constants.queries.DishQuery;
 import com.epam.havryliuk.restaurant.model.database.dao.AbstractDao;
@@ -66,26 +67,7 @@ public class BasketDao extends AbstractDao<Basket> {
         throw new UnsupportedOperationException();
     }
 
-//    public Basket getBasket(Basket basket) throws DAOException {
-//        Basket dublicate = null;
-//        try (PreparedStatement stmt = connection.prepareStatement(BasketQuery.GET_DISH_FR0M_BASKET)) {
-//            //todo неекономно витягувати цілий ентіті лише для того щоб подивитись
-//            int k=0;
-//            stmt.setLong(++k, basket.getOrderId());
-//            stmt.setLong(++k, basket.getDishId());
-//            try (ResultSet rs = stmt.executeQuery()) {
-//                if (rs.next()) {
-//                    dublicate = mapBasket(rs);
-//                }
-//            }
-//            log.debug("Order has been received from database.");
-//        } catch (SQLException e) {
-//            String errorMassage = "Searched order is absent in database";
-//            log.error(errorMassage, e);
-//            throw new DAOException(errorMassage, e);
-//        }
-//        return dublicate;
-//    }
+
 
 
 
@@ -100,7 +82,7 @@ public class BasketDao extends AbstractDao<Basket> {
      */
     public List<Basket> getOrderDishes(Order order) throws DAOException {
         List<Basket>  baskets = new ArrayList<>();
-        try (PreparedStatement stmt = connection.prepareStatement(DishQuery.FIND_ALL_BY_ORDER)) {
+        try (PreparedStatement stmt = connection.prepareStatement(DishQuery.FIND_ALL_BY_ORDER)) {//todo think
             stmt.setLong(1, order.getId());
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
@@ -123,7 +105,7 @@ public class BasketDao extends AbstractDao<Basket> {
 
 
     private Basket mapBasket(ResultSet rs, Order order) throws SQLException {
-        DishDao dishDao = new DishDao();
+        DishDao dishDao = new DishDao();//todo подумати...
         Dish dish =  dishDao.mapDish(rs);
         int amount = rs.getInt(BasketFields.DISH_AMOUNT);
         BigDecimal price = rs.getBigDecimal(BasketFields.DISH_PRICE);
@@ -134,6 +116,26 @@ public class BasketDao extends AbstractDao<Basket> {
 //        int amountInOrder = rs.getInt(OrderFields.ORDER_DISH_AMOUNT_IN_ORDER);
         return Basket.getInstance(order, dish, price, amount);
     }
+
+
+    public Map<String, Integer> getNumberOfRequestedDishesInOrder(long orderId) throws DAOException {
+        Map<String, Integer> dishes = new HashMap<>();
+        try (PreparedStatement stmt = connection.prepareStatement(BasketQuery.GET_NUMBER_OF_REQUESTED_DISHES_IN_ORDER)) {
+            stmt.setLong(1, orderId);
+            try(ResultSet rs = stmt.executeQuery()){
+                while (rs.next()){
+                    String dishName = rs.getString(DishFields.DISH_NAME);
+                    int dishesAmount = rs.getInt(BasketFields.DISH_AMOUNT);
+                    dishes.put(dishName, dishesAmount);
+                }
+            }
+        } catch (SQLException e) {
+            log.error("Error in getting list of dishes from database. ");
+            throw new DAOException(e);
+        }
+        return dishes;
+    }
+
 
 
 }

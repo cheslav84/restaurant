@@ -11,11 +11,16 @@
     <div class="menu-overlay">
 
         <div class="languages">
-            <fmt:setLocale value="${sessionScope.language}"/>
+            <fmt:setLocale value="${sessionScope.locale}"/>
+            <%-- <fmt:setLocale value="uk"/> --%>
+
             <%-- <fmt:setLocale value="${sessionScope.locale}"/> --%>
             <fmt:setBundle basename="menu"/>
             <a href="?locale=EN" class="nav-social-button w-inline-block language-link">EN</a>
             <a href="?locale=UA" class="nav-social-button w-inline-block language-link">UA</a>
+
+            <%-- <a href="?language=en" class="nav-social-button w-inline-block language-link">EN</a>
+            <a href="?locale=uk" class="nav-social-button w-inline-block language-link">UA</a> --%>
             <%-- <a href="set_language?language=EN" class="nav-social-button w-inline-block language-link">ENG</a>
             <a href="set_language?language=UA" class="nav-social-button w-inline-block language-link">UA</a> --%>
         </div>

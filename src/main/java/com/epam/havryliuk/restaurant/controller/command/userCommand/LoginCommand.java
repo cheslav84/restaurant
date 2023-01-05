@@ -8,7 +8,6 @@ import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.resource.MessageManager;
 import com.epam.havryliuk.restaurant.model.service.UserService;
 import com.epam.havryliuk.restaurant.model.util.PassEncryptor;
-import com.epam.havryliuk.restaurant.model.util.validation.Validator;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -21,7 +20,7 @@ import java.security.GeneralSecurityException;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.PAGE_FROM_BEING_REDIRECTED;
-import static com.epam.havryliuk.restaurant.model.constants.RequestParameters.PARAM_NAME_LOGIN;
+import static com.epam.havryliuk.restaurant.model.constants.RequestParameters.EMAIL;
 import static com.epam.havryliuk.restaurant.model.constants.RequestParameters.PARAM_NAME_PASSWORD;
 
 public class LoginCommand implements ActionCommand {
@@ -29,15 +28,15 @@ public class LoginCommand implements ActionCommand {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        log.debug("LoginCommand");
-        String login = request.getParameter(PARAM_NAME_LOGIN);
+        String login = request.getParameter(EMAIL);
         String password = request.getParameter(PARAM_NAME_PASSWORD);
 
         HttpSession session = request.getSession();
-        MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LANGUAGE));
+        MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
 
         String page;
         try {
+            //todo подумати про верифікацію даних
             User user = new UserService().getUserFromDatabase(login);
             PassEncryptor.verify(user.getPassword(), password);
             session.setAttribute(LOGGED_USER, user);

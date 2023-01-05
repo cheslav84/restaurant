@@ -42,6 +42,15 @@
       <version>2.0.0</version>
     </dependency>
 
+    <!-- https://mvnrepository.com/artifact/jakarta.servlet.jsp/jakarta.servlet.jsp-api -->
+    <dependency>
+      <groupId>jakarta.servlet.jsp</groupId>
+      <artifactId>jakarta.servlet.jsp-api</artifactId>
+      <version>3.1.0</version>
+      <scope>provided</scope>
+    </dependency>
+
+
     <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
     <dependency>
       <groupId>mysql</groupId>

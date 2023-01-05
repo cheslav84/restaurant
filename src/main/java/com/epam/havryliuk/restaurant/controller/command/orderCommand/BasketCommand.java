@@ -39,9 +39,9 @@ public class BasketCommand implements ActionCommand {
             List<Order> orders = orderService.getAllUserOrders(user);
             Map<Order, BigDecimal> ordersAndTotalPriced = getTotalPrices(orders);
             session.setAttribute(ORDER_PRICE_MAP, ordersAndTotalPriced);
-            session.removeAttribute(ERROR_MESSAGE);
+//            session.removeAttribute(ERROR_MESSAGE);
         } catch (ServiceException e) {
-            MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LANGUAGE));
+            MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
             session.setAttribute(ERROR_MESSAGE,
                     messageManager.getProperty(ResponseMessages.USER_ORDERS_UNAVAILABLE));
             log.error(e);
@@ -55,7 +55,8 @@ public class BasketCommand implements ActionCommand {
                         order -> order,
                         o -> o.getBaskets()
                                 .stream()
-                                .map(basket -> basket.getFixedPrice().multiply(BigDecimal.valueOf(basket.getAmount())))
+                                .map(basket -> basket.getFixedPrice()
+                                        .multiply(BigDecimal.valueOf(basket.getAmount())))
                                 .reduce(BigDecimal.ZERO, BigDecimal::add)
                 ));
 

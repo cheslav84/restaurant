@@ -18,6 +18,7 @@
             
     <body>
                 <fmt:setLocale value="${sessionScope.language}" />
+                                <%-- <fmt:setLocale value="uk" /> --%>
                 <fmt:setBundle basename="menu" />
                 <jsp:include page="../../sidebar.jsp" />
             
@@ -36,7 +37,6 @@
                 </div>
             
             
-            
                 <div class="error-message">
                     <c:if test="${requestScope.errorMessage}"></c:if>
                 </div>
@@ -46,13 +46,8 @@
                     <div class="section menu-page-section wf-section">
                         <%-- <c:if test="${order ne null}"> --%>
                             <div class="container w-container order-container">
-            
                                 <div class="menu-page-tabs-content w-tab-content">
-            
-            
                                     <div class="menu-page-tab-pane w-tab-pane w--tab-active order-content">
-            
-            
                                         <div class="order-details">
                                             <div class="order-title">
                                                 <div class="order-date">
@@ -77,9 +72,7 @@
                                         </div>
                                         <div class="section-divider-line order-divider"></div>
             
-            
                                         <c:forEach var="basket" items="${order.baskets}">
-            
                                             <div role="listitem" class="menu-list-item w-dyn-item w-col w-col-6 order-list">
                                                 <div class="one-dish-info"></div>
             
@@ -117,14 +110,10 @@
             
                             </div>
                             <div id="delimiter"></div>
-            
-            
-                    </div>
-                       
+
+                    </div>     
             
                 </c:forEach>
-            
-            
              <%-- <div > --%>
                 <div class="page-wrapper">
                     
@@ -134,13 +123,13 @@
                     <c:if test="${currentPage != 1}">
                         <td><a href="manage_orders?page=${currentPage - 1}">Previous</a></td>
                         </c:if>
-            
+        
                 </div>
                 
                         <%-- <table border="1" cellpadding="5" cellspacing="5">
                             <tr> --%>
                                 <c:forEach begin="1" end="${noOfPages}" var="i">
-                <div class="pages page-numbers">
+                                 <div class="pages page-numbers">
                                     <c:choose>
                                         <c:when test="${currentPage eq i}">
                                             <div>${i}</div>
@@ -149,7 +138,7 @@
                                             <div><a href="manage_orders?page=${i}">${i}</a></div>
                                         </c:otherwise>
                                     </c:choose>
-                </div>
+                                    </div>
                                 </c:forEach>
                             <%-- </tr>
                         </table> --%>
