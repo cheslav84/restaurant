@@ -230,12 +230,20 @@
     font-family: Satisfy, sans-serif;
     text-align: center;
     color: #eda03b;
-    font-size: 13px;
-    line-height: 16px;
+    font-size: 22px;
+    line-height: 22px;
     text-shadow: none;
-    padding: 20px 40px;
-
+    padding: 35px 40px 20px 40px;
   }
+
+  /* .error-message .no-orders {
+    margin-bottom: 14px;
+    font-size: 26px;
+    line-height: 20px;
+    text-shadow: none;
+
+  } */
+
 
   /* .section.error-message {
     padding: 20px, 10px !important;

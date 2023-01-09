@@ -38,7 +38,7 @@ public class MenuCommand implements ActionCommand {
         List<Dish> dishes = null;
 
         try {
-            if (currentMenu.equals(Category.ALL)) {
+            if (currentMenu.equals(Category.ALL)) {//todo не відповідає таблицям. Запитати.
                 String sortParameter = getSortParameter(request);
                 dishes = dishService.getAllMenuSortedBy(sortParameter);
                 System.err.println("ALL command");

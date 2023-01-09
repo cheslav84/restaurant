@@ -6,9 +6,12 @@ public interface RequestAttributes {
     String ORDER_LIST = "orders";
     String ORDER_PRICE_MAP = "ordersAndPrices";
     String DISH_LIST = "dishes";
+
+    String EMAIL = "email";
     String CURRENT_DISH = "currentDish";
     String MENU_CATEGORY = "menuCategory";
     String LOGGED_USER = "loggedUser";
+    String USER_IN_LOGGING = "loggingUser";
     String DELIVERY_ADDRESS = "deliveryAddress";
     String DELIVERY_PHONE = "deliveryPhone";
     String PAGE_FROM_BEING_REDIRECTED = "pageFromBeingRedirected";//todo change from URLUtil class

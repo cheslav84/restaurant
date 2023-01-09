@@ -21,6 +21,14 @@ public interface ResponseMessages {
     String MENU_UNAVAILABLE = "message.menuUnavailable";
     String MENU_EMPTY = "message.menuEmpty";
     String ABSENT_DISHES = "message.dishesAbsent";
+    String WRONG_EMAIL_FIELD = "message.wrongEmailField";
+    String WRONG_NAME_FIELD = "message.wrongNameField";
+    String WRONG_SURNAME_FIELD = "message.wrongSurnameField";
+    String WRONG_PASSWORD_FIELD = "message.wrongPasswordField";
+    String PASSWORDS_NOT_COINCIDE = "message.passwordsNotCoincide";
+    String WRONG_GENDER_FIELD = "message.wrongGenderField";
+    String EMPTY_BASKET = "message.emptyBasket";
+
 
 
 }

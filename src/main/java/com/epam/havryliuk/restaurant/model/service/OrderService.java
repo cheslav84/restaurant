@@ -24,7 +24,6 @@ public class OrderService {
         try {
             transaction.initTransaction(orderDao, dishDao, basketDao);
             if(isOrderInConfirmingProcess(newStatus)) {
-            //todo if booking status new check every dish if it is present
                 checkDishesIfPresent(dishDao, basketDao, orderId);
                 dishDao.updateDishesAmountByOrderedValues(orderId);
             }
@@ -45,7 +44,7 @@ public class OrderService {
         Map<String, Integer> presentDishes = dishDao.getNumberOfEachDishInOrder(orderId);
         List<String> absentDishesList = new ArrayList<>();
         for (String reqDishName : requestedDishes.keySet()) {
-            if (!Objects.equals(requestedDishes.get(reqDishName), presentDishes.get(reqDishName))) {
+            if (requestedDishes.get(reqDishName) > presentDishes.get(reqDishName)) {
                 absentDishesList.add(reqDishName);
             }
         }
@@ -53,10 +52,6 @@ public class OrderService {
             String absentDishes = "\"" + String.join("\", \"", absentDishesList) + "\"";
             throw new EntityAbsentException(absentDishes);//todo наскільки коректно через exception передавати повідомлення на view?
         }
-
-
-
-
 
 //        requestedDishes.keySet().stream()
 //                .(k -> requestedDishes.get(k) == presentDishes.get(k)

@@ -27,7 +27,7 @@
     position: relative;
   }
 
-  #show-reg-passwd, #show-log-passwd {
+  #show-reg-passwd, #show-log-passwd, #show-conf-passwd {
     background: transparent;
     position: absolute;
     top: 50%;
@@ -37,7 +37,7 @@
     display: flex;
   }
 
-  #show-reg-passwd img, #show-log-passwd img{
+  #show-reg-passwd img, #show-log-passwd img, #show-conf-passwd img{
     width: 100%;
     height: auto;
   }

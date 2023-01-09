@@ -3,7 +3,14 @@ package com.epam.havryliuk.restaurant.model.constants;
 public interface RequestParameters {
 
     String EMAIL = "email";
-    String PARAM_NAME_PASSWORD = "password";
+    String NAME = "name";
+    String SURNAME = "surname";
+    String GENDER = "userGender";
+    String OVER_EIGHTEEN_AGE = "userOverEighteenAge";
+    String MALE = "Male";
+    String FEMALE = "Female";
+    String PASSWORD = "password";
+    String PASSWORD_CONFIRMATION = "passwordConfirmation";
     String DELIVERY_ADDRESS = "deliveryAddress";
     String DELIVERY_PHONE = "deliveryPhone";
     String ORDER_DISHES_AMOUNT = "amount";
@@ -12,5 +19,6 @@ public interface RequestParameters {
     String CURRENT_STATUS = "currentStatus";
     String MENU_CATEGORY = "menuCategory";
     String MENU_SORTING_OPTION = "menuSortingOption";
+
 
 }

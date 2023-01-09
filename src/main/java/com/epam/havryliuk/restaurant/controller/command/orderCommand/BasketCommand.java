@@ -3,13 +3,11 @@ package com.epam.havryliuk.restaurant.controller.command.orderCommand;
 import com.epam.havryliuk.restaurant.controller.command.ActionCommand;
 import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
 import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
-import com.epam.havryliuk.restaurant.model.entity.Basket;
-import com.epam.havryliuk.restaurant.model.entity.Dish;
 import com.epam.havryliuk.restaurant.model.entity.Order;
 import com.epam.havryliuk.restaurant.model.entity.User;
+import com.epam.havryliuk.restaurant.model.exceptions.EntityAbsentException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.resource.MessageManager;
-import com.epam.havryliuk.restaurant.model.service.DishService;
 import com.epam.havryliuk.restaurant.model.service.OrderService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,19 +32,30 @@ public class BasketCommand implements ActionCommand {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         OrderService orderService = new OrderService();
         HttpSession session = request.getSession();
+        MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
         User user = (User) session.getAttribute(LOGGED_USER);
         try {
             List<Order> orders = orderService.getAllUserOrders(user);
+            checkIfOrdersPresent(orders);
             Map<Order, BigDecimal> ordersAndTotalPriced = getTotalPrices(orders);
             session.setAttribute(ORDER_PRICE_MAP, ordersAndTotalPriced);
 //            session.removeAttribute(ERROR_MESSAGE);
+        } catch (EntityAbsentException e) {
+            session.setAttribute(ERROR_MESSAGE,
+                    messageManager.getProperty(ResponseMessages.EMPTY_BASKET));
+            log.error(e);
         } catch (ServiceException e) {
-            MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
             session.setAttribute(ERROR_MESSAGE,
                     messageManager.getProperty(ResponseMessages.USER_ORDERS_UNAVAILABLE));
             log.error(e);
         }
         request.getRequestDispatcher(AppPagesPath.FORWARD_BASKET).forward(request, response);
+    }
+
+    private void checkIfOrdersPresent(List<Order> orders) throws EntityAbsentException {
+        if (orders.size() == 0) {
+            throw new EntityAbsentException();
+        }
     }
 
     private Map<Order, BigDecimal> getTotalPrices(List<Order> orders) {

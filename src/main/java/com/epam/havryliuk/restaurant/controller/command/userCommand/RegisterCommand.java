@@ -1,16 +1,21 @@
 package com.epam.havryliuk.restaurant.controller.command.userCommand;
 
 import com.epam.havryliuk.restaurant.controller.command.ActionCommand;
+import com.epam.havryliuk.restaurant.model.constants.Regex;
+import com.epam.havryliuk.restaurant.model.constants.RequestParameters;
 import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
 import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
 import com.epam.havryliuk.restaurant.model.entity.User;
+import com.epam.havryliuk.restaurant.model.exceptions.BadCredentialsException;
 import com.epam.havryliuk.restaurant.model.exceptions.DuplicatedEntityException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 
 import com.epam.havryliuk.restaurant.model.resource.MessageManager;
 import com.epam.havryliuk.restaurant.model.service.UserService;
 
+import com.epam.havryliuk.restaurant.model.service.validation.Validator;
 import com.epam.havryliuk.restaurant.model.util.PassEncryptor;
+import com.mysql.cj.Session;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -20,6 +25,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
@@ -32,20 +39,24 @@ public class RegisterCommand implements ActionCommand {
         HttpSession session = request.getSession();
         String redirectionPage;
         MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
+        User user = null;
         try {
             UserService service = new UserService();
-            final User user = mapUser(request);
-
+            user = mapUser(request);
             service.addNewUser(user);
             session.setAttribute(LOGGED_USER, user);
             //        Cookie cookie = new Cookie("sessionId", session.getId());
             //        resp.addCookie(cookie);
             //        req.getRequestDispatcher("view/jsp/registration.jsp").forward(req, resp);
             session.removeAttribute(REGISTRATION_ERROR_MESSAGE);
-            session.removeAttribute(REGISTRATION_PROCESS);//todo if that attribute is set - hide login menu in jsp
+            session.removeAttribute(USER_IN_LOGGING);
+            session.removeAttribute(REGISTRATION_PROCESS);
             redirectionPage = getRedirectionPage(session);
             log.info("The user \"" + user.getName() + "\" has been successfully registered.");
-        }catch (DuplicatedEntityException e) {
+        } catch (BadCredentialsException e) {
+            log.error("Some credentials are not correct." + e);
+            redirectionPage = getErrorPage(session);
+        } catch (DuplicatedEntityException e) {
             log.error("The user with such login is already exists. Try to use another one." + e);
             session.setAttribute(REGISTRATION_ERROR_MESSAGE,
                     messageManager.getProperty(ResponseMessages.REGISTRATION_USER_EXISTS));
@@ -79,21 +90,32 @@ public class RegisterCommand implements ActionCommand {
     }
 
     @NotNull
-    private User mapUser(HttpServletRequest req) {
-        String password = req.getParameter("password");
-        String encrypted = null;
+    private User mapUser(HttpServletRequest req) throws BadCredentialsException {
+        final String password = req.getParameter(RequestParameters.PASSWORD);
+        final String email = req.getParameter(RequestParameters.EMAIL).trim();
+        final String name = req.getParameter(RequestParameters.NAME).trim();
+        final String surname = req.getParameter(RequestParameters.SURNAME).trim();
+        final String gender = req.getParameter(RequestParameters.GENDER).trim();
+        final boolean isOverEighteen = req.getParameter(RequestParameters.OVER_EIGHTEEN_AGE) != null;
+        User user =  User.getInstance(email, password, name, surname, gender, isOverEighteen);
         try {
-            encrypted = PassEncryptor.encrypt(password);
+            new Validator().validateUserData(user, req);
+            encryptUserPassword(user);
+        } catch (BadCredentialsException e){
+            user.setPassword(null);
+            req.getSession().setAttribute(USER_IN_LOGGING, user);
+            throw new BadCredentialsException();
+        }
+        return user;
+    }
+
+    private void encryptUserPassword(User user) {
+        try {
+            String password = user.getPassword();
+            user.setPassword(PassEncryptor.encrypt(password));
         } catch (GeneralSecurityException e) {
             log.error("Failed to encrypt password. ", e);
             //todo redirect to error page...
         }
-        final String email = req.getParameter("email").trim();
-        final String name = req.getParameter("name").trim();
-        final String surname = req.getParameter("surname").trim();
-        final String gender = req.getParameter("userGender").trim();
-        final boolean isOverEighteen = req.getParameter("userOverEighteenAge") != null;
-        //todo validate data (email, password etc.)
-        return User.getInstance(email, encrypted, name, surname, gender, isOverEighteen);
     }
 }

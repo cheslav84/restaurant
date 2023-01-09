@@ -1,9 +1,9 @@
-//package com.havryliuk.restaurant.db.dao.implemetnation;
+//package com.epam.havryliuk.restaurant.db.dao.implemetnation;
 //
-//import com.havryliuk.restaurant.db.dao.DishDao;
-//import com.havryliuk.restaurant.db.entity.Dish;
-//import com.havryliuk.restaurant.exceptions.DBException;
-//import org.junit.jupiter.api.Assertions;
+//import com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao;
+//import com.epam.havryliuk.restaurant.model.entity.Dish;
+//import com.epam.havryliuk.restaurant.model.exceptions.DAOException;
+//
 //import org.junit.jupiter.api.BeforeEach;
 //import org.junit.jupiter.api.Test;
 //import org.mockito.Mockito;
@@ -27,7 +27,7 @@
 //
 //
 //    @Test
-//    void findDishByNamePositive() throws DBException {
+//    void findDishByNamePositive() throws DAOException {
 //        String name = "Beer";
 //        Mockito.when(dishDao.findByName(name)).thenReturn(beer);
 //        Dish dish = dishDao.findByName("Beer");
@@ -35,7 +35,7 @@
 //    }
 //
 //    @Test
-//    void findDishByNameNegative() throws DBException {
+//    void findDishByNameNegative() throws DAOException {
 //        String name = "Beer";
 //        Mockito.when(dishDao.findByName(name)).thenReturn(beer);
 //        Dish fish = dishDao.findByName("Fish");

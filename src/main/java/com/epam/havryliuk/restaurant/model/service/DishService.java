@@ -11,6 +11,8 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class DishService {
     private static final Logger log = LogManager.getLogger(DishService.class);
@@ -70,4 +72,20 @@ public class DishService {
         }
         return dishes;
     }
+
+//    private List<Dish> createAndInsertDishes(int from, int to) {
+////        DBManager dbm = DBManager.getInstance();
+//
+//
+//        List<Dish> dishes = IntStream.range(from, to)
+//                .mapToObj(x -> "dish" + x)
+//                .map(Dish::getInstance)
+//                .map(Dish::getInstance)
+//                .collect(Collectors.toList());
+
+//        for (Dish dish : dishes) {
+//            dbm.insertUser(user);
+//        }
+//        return dishes;
+//    }
 }

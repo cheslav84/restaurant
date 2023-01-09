@@ -123,4 +123,5 @@ public class Dish implements Entity {
                 ", image='" + image + '\'' +
                 '}' + "\n" ;
     }
+
 }

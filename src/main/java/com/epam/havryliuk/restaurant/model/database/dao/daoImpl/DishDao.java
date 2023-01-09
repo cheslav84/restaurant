@@ -20,41 +20,34 @@ import java.util.Map;
 
 public class DishDao extends AbstractDao<Dish> {
     private static final Logger log = LogManager.getLogger(DishDao.class);
-//    private final ConnectionManager connectionManager;
-//
-//    public DishDao() throws DAOException {
-//        connectionManager = ConnectionManager.getInstance();
+
+//    public Dish findByName(String name) throws DAOException {
+//        Dish dish = null;
+//        try (PreparedStatement stmt = connection.prepareStatement(DishQuery.FIND_DISH_BY_NAME)) {
+//            stmt.setString(1, name);
+//            try (ResultSet rs = stmt.executeQuery()) {
+//                if (rs.next()) {
+//                    dish = mapDish(rs);
+//                }
+//            }
+//            log.debug("The \"" + name + "\" dish has been received from database.");
+//        } catch (SQLException e) {
+//            log.error("Error in getting dish from database. ", e);
+//            throw new DAOException(e);
+//        }
+//        return dish;
 //    }
 
-//    @Override
-    public Dish findByName(String name) throws DAOException {
-        Dish dish = null;
-        try (PreparedStatement stmt = connection.prepareStatement(DishQuery.FIND_DISH_BY_NAME)) {
-            stmt.setString(1, name);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    dish = mapDish(rs);
-                }
-            }
-            log.debug("The \"" + name + "\" dish has been received from database.");
-        } catch (SQLException e) {
-            log.error("Error in getting dish from database. ", e);
-            throw new DAOException(e);
-        }
-        return dish;
-    }
-
-//    @Override
-    public List<Dish> findByCategory(Category category) throws DAOException {
-        List<Dish> dishes = new ArrayList<>();
-        try (PreparedStatement stmt = connection.prepareStatement(DishQuery.FIND_ALL_BY_CATEGORY)) {
-            getDishesByCategory(category, dishes, stmt);
-        } catch (SQLException e) {
-            log.error("Error in getting list of dishes from database. ", e);
-            throw new DAOException(e);
-        }
-        return dishes;
-    }
+//    public List<Dish> findByCategory(Category category) throws DAOException {
+//        List<Dish> dishes = new ArrayList<>();
+//        try (PreparedStatement stmt = connection.prepareStatement(DishQuery.FIND_ALL_BY_CATEGORY)) {
+//            getDishesByCategory(category, dishes, stmt);
+//        } catch (SQLException e) {
+//            log.error("Error in getting list of dishes from database. ", e);
+//            throw new DAOException(e);
+//        }
+//        return dishes;
+//    }
 
     public List<Dish> findPresentsByCategory(Category category) throws DAOException {
         List<Dish> dishes = new ArrayList<>();
@@ -76,7 +69,6 @@ public class DishDao extends AbstractDao<Dish> {
         }
         log.debug("List of dishes (by category) has been received from database. ");
     }
-
 
 
     public List<Dish> getSortedByName() throws DAOException {

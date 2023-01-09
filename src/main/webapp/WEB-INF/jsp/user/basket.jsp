@@ -36,10 +36,12 @@
                 </div>
 
 
-
                 <div class="section error-message">
                     ${sessionScope.errorMessage}
                 </div>
+                <c:if test="${sessionScope.ordersAndPrices eq null}">
+                     <jsp:include page="about-us.jsp"/>
+                </c:if>
 
                 <c:forEach var="orderAndPrice" items="${sessionScope.ordersAndPrices}">
                     <div id="order-item" class="section menu-page-section wf-section">

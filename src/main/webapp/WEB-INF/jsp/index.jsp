@@ -39,8 +39,6 @@
                 data-nav-spacing="3" data-duration="500" data-infinite="true" id="top">
                 <div class="w-slider-mask">
 
-
-
                     <div class="hero-slide w-slide"
                         style="transform: translateX(-1201.82px); opacity: 1; z-index: 15; visibility: hidden;">
                         <div class="hero-slide-overlay">
@@ -53,7 +51,7 @@
                                 </div>
                                 <a href="#about-us" data-ix="slider-button-1" class="button slider-button">More about
                                     us</a>
-                                <a href="reservation.html" data-ix="slider-button-2" class="button">Reserve a table!</a>
+                                <a href="#reserv-dish" data-ix="slider-button-2" class="button">Reserve a table!</a>
                             </div>
                         </div>
                     </div>
@@ -70,7 +68,7 @@
                                 </div>
                                 <a href="#about-us" data-ix="slider-button-1" class="button slider-button">More about
                                     us</a>
-                                <a href="reservation.html" data-ix="slider-button-2" class="button">Reserve a table!</a>
+                                <a href="#reserv-dish" data-ix="slider-button-2" class="button">Reserve a table!</a>
                             </div>
                         </div>
                     </div>
@@ -86,7 +84,7 @@
                                 </div>
                                 <a href="#about-us" data-ix="slider-button-1" class="button slider-button">More about
                                     us</a>
-                                <a href="reservation.html" data-ix="slider-button-2" class="button">Reserve a table!</a>
+                                <a href="#reserv-dish" data-ix="slider-button-2" class="button">Reserve a dish!</a>
                             </div>
                         </div>
                     </div>

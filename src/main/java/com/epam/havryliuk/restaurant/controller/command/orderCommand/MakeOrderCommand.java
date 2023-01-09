@@ -1,7 +1,6 @@
 package com.epam.havryliuk.restaurant.controller.command.orderCommand;
 
 import com.epam.havryliuk.restaurant.controller.command.ActionCommand;
-import com.epam.havryliuk.restaurant.model.constants.Regex;
 import com.epam.havryliuk.restaurant.model.constants.RequestAttributes;
 import com.epam.havryliuk.restaurant.model.constants.RequestParameters;
 import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
@@ -43,7 +42,7 @@ public class MakeOrderCommand implements ActionCommand {
             session.removeAttribute(ERROR_MESSAGE);
             log.debug("Order in session: " + order);
         } else {
-            makeNewOrder(request, session, user, orderService);
+            makeNewOrder(request, user, orderService);
         }
         String redirectionPage = getRedirectionPage(request);
         response.sendRedirect(redirectionPage);
@@ -53,16 +52,17 @@ public class MakeOrderCommand implements ActionCommand {
      * Methods requests an order from service. It can be the order that already exist in database
      * or the new one.
      * @param request
-     * @param session
+
      * @param user
      * @param orderService
      */
-    private void makeNewOrder(HttpServletRequest request, HttpSession session, User user, OrderService orderService) {
+    private void makeNewOrder(HttpServletRequest request, User user, OrderService orderService) {
+        HttpSession session = request.getSession();
         Order order = null;
         try {
             String deliveryAddress = request.getParameter(RequestParameters.DELIVERY_ADDRESS);
             String deliveryPhone = request.getParameter(RequestParameters.DELIVERY_PHONE);
-            checkDeliveryCredentials(deliveryAddress, deliveryPhone, session);
+            new Validator().validateDeliveryData(deliveryAddress, deliveryPhone, request);
             order = orderService.getOrder(user, deliveryAddress, deliveryPhone);
             session.setAttribute(CURRENT_ORDER, order);
             session.removeAttribute(ERROR_MESSAGE);
@@ -80,24 +80,25 @@ public class MakeOrderCommand implements ActionCommand {
     }
 
 
-    private void checkDeliveryCredentials(String deliveryAddress, String deliveryPhone, HttpSession session)
-            throws BadCredentialsException {
-        MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
-        if(!Validator.isAddressCorrect(deliveryAddress)) {
-            session.setAttribute(ORDER_MESSAGE,
-                    messageManager.getProperty(ResponseMessages.INCORRECT_DELIVERY_ADDRESS));
-            throw new BadCredentialsException("The address is incorrect.");
-        }
-        session.setAttribute(DELIVERY_ADDRESS, deliveryAddress);
-
-        deliveryPhone = deliveryPhone.replaceAll("[\\s()-]", "");
-        if(!Validator.regexChecker(deliveryPhone, Regex.PHONE)) {
-            session.setAttribute(ORDER_MESSAGE,
-                    messageManager.getProperty(ResponseMessages.INCORRECT_DELIVERY_PHONE));
-            throw new BadCredentialsException("The phone is incorrect.");
-        }
-        session.setAttribute(DELIVERY_PHONE, deliveryPhone);
-    }
+//    private void checkDeliveryCredentials(String deliveryAddress, String deliveryPhone, HttpSession session)
+//            throws BadCredentialsException {
+//        MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
+//        if(!Validator.isAddressCorrect(deliveryAddress)) {
+//            session.setAttribute(ORDER_MESSAGE,
+//                    messageManager.getProperty(ResponseMessages.INCORRECT_DELIVERY_ADDRESS));
+//            throw new BadCredentialsException("The address is incorrect.");
+//        }
+//        session.setAttribute(DELIVERY_ADDRESS, deliveryAddress);
+//
+//        deliveryPhone = deliveryPhone.replaceAll("[\\s()-]", "");
+//        Validator validator = new Validator();
+//        if(!validator.regexChecker(deliveryPhone, Regex.PHONE)) {
+//            session.setAttribute(ORDER_MESSAGE,
+//                    messageManager.getProperty(ResponseMessages.INCORRECT_DELIVERY_PHONE));
+//            throw new BadCredentialsException("The phone is incorrect.");
+//        }
+//        session.setAttribute(DELIVERY_PHONE, deliveryPhone);
+//    }
 
 
     private void saveDishToOrder(HttpServletRequest req, OrderService orderService, Order order) {
@@ -145,11 +146,7 @@ public class MakeOrderCommand implements ActionCommand {
         MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
         try {
             dishesAmount = Integer.parseInt(req.getParameter(RequestParameters.ORDER_DISHES_AMOUNT).trim());
-            if(!Validator.isDishesAmountCorrect(dishesAmount)) {
-                session.setAttribute(ERROR_MESSAGE,
-                        messageManager.getProperty(ResponseMessages.INCORRECT_NUMBER_OF_DISHES_ERROR));
-                throw new BadCredentialsException("The number of dishes is incorrect.");
-            }
+            new Validator().validateDishesAmount(dishesAmount, req);
             log.debug("Request for \"" + dishesAmount + "\" has been received.");
         } catch (NumberFormatException e) {
             session.setAttribute(ERROR_MESSAGE,

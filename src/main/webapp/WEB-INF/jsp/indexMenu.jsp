@@ -4,7 +4,7 @@
 
 <a name="menu"></a> 
 
-<div class="image-background-section wf-section">
+<div id="reserv-dish" class="image-background-section wf-section">
     <div class="image-background-overlay">
         <div class="container w-container">
             <h2 data-ix="fade-in-on-scroll" class="section-intro-title">Our menu</h2>

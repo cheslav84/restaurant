@@ -12,6 +12,7 @@
 
 <fmt:setLocale value="${sessionScope.language}"/>
 <fmt:setBundle basename="menu"/>
+<fmt:setBundle basename="messages"/>
 <head>
     <meta content="text/html; charset=UTF-8">
     <title>Registration</title>
@@ -66,14 +67,15 @@
                                     class="field w-input"                                          value="v_cheslav@ukr.net"> --%>
 
                                 <input type="email" id="Email-3" name="email" data-name="Email" placeholder="Email address"
-                                    maxlength="32" required="true" class="field w-input"                                          value="v_cheslav@ukr.net">
+                                    maxlength="32" required="true" class="field w-input" value="${sessionScope.email}">
 
 
                   
                                 <div class="password-wrap">
                                     <input type="password" id="log-password" name="password" data-name="Password"
                                     placeholder="Password" minlength="8" maxlength="32" required="true"
-                                    class="field w-input"                                                                      value="strongPass!123">
+                                    class="field w-input"          value="strongPass!123">
+                                    <%-- adf4df@d --%>
                                     <button type="button" id="show-log-passwd">
                                         <img src="view/pictures/icons/visibility.png" alt="Show password" />
                                     </button>
@@ -99,13 +101,13 @@
                         <div  id="registration-form" class="registration-form ${sessionScope.registrationProcess} hidden">
                             <form method="post" action="register" name="registrationForm" data-name="Reservation Form" >
                                 <input type="text" id="name" name="name" data-name="Name" placeholder="Enter your name"
-                                    maxlength="24" class="field w-input"                                                     value="Name">
+                                    maxlength="24" class="field w-input" value="${sessionScope.loggingUser.name}">
                                 <input type="text" id="name" name="surname" data-name="Surname"
-                                    placeholder="Enter your surname" maxlength="24" class="field w-input"                    value="Surname">
+                                    placeholder="Enter your surname" maxlength="24" class="field w-input" value="${sessionScope.loggingUser.surname}">
                                 <div class="w-row">
                                     <div class="w-clearfix w-col w-col-6">
                                         <select id="user-gender" name="userGender" data-name="User gender"
-                                            class="field first-half w-select">
+                                            class="field first-half w-select" >
                                             <option value="">Gender</option>
                                             <option value="Male">Male</option>
                                             <option value="Female">Female</option>
@@ -114,22 +116,35 @@
                                     <div class="w-clearfix w-col w-col-6">
                                         <div class="w-row field last-half w-select">
                                             <label for="user-age" class="w-col user-age-label">I'm 18+</label>
-                                            <input type="checkbox" id="user-age" name="userOverEighteenAge" data-name="User age" class="w-col w-select user-age" value="">
+                                            <input type="checkbox" id="user-age" name="userOverEighteenAge" data-name="User age" class="w-col w-select user-age" 
+                                            value="">
                                         </div>
                                     </div>
                                 </div>
 
                                 <input type="email" id="Email-3" name="email" data-name="Email" placeholder="Email address"
-                                    maxlength="32" required="true" class="field w-input"                                       value="mail@com">
+                                    maxlength="32" required="true" class="field w-input" value="${sessionScope.loggingUser.email}">
 
                                 <div class="password-wrap">
                                     <input type="password" id="reg-password" name="password" data-name="Password"
                                     placeholder="Password" minlength="8" maxlength="32" required="true"
-                                    class="field w-input"                                                                      value="strongPass!123">
+                                    class="field w-input">
                                     <button type="button" id="show-reg-passwd">
                                         <img src="view/pictures/icons/visibility.png" alt="Show password" />
                                     </button>
                                 </div>
+
+
+                                <div class="password-wrap">
+                                 <input type="password" id="conf-password" name="passwordConfirmation" data-name="Password"
+                                    placeholder="Confirm password" minlength="8" maxlength="32" required="true"
+                                    class="field w-input">
+                                    <button type="button" id="show-conf-passwd">
+                                        <img src="view/pictures/icons/visibility.png" alt="Show password" />
+                                    </button>
+                                </div>
+
+
 
                                 <div class="error-message"> 
                                     <c:out value="${sessionScope.registrationErrorMessage}"/>

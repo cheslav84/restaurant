@@ -54,55 +54,6 @@ public class UserService {
         return user;
     }
 
-    /**
-     * Checking for User email uniqueness. Trying to get from database user with the same
-     * email (login), if it presents there method throws DBException with correspondent message
-     * @param user
-     * @param userDao
-     * @throws DAOException
-     */
-    private void checkIfLoginDoesNotExist(User user, UserDao userDao) throws DAOException {
-        if (userDao.findByEmail(user.getEmail()) != null){
-            log.error("The user with such login is already exists. Try to use another one.");
-            throw new DuplicatedEntityException() ;
-        }
-    }
-
-
-    public User getLoggedInUser(HttpServletRequest req) throws ServiceException, GeneralSecurityException {
-        User user = getUserFromSession(req);
-        return (user == null) ? getUserFromDatabase(req) : user;
-    }
-
-
-    @NotNull
-    private User getUserFromDatabase(HttpServletRequest req) throws ServiceException, GeneralSecurityException {
-        final String email = req.getParameter("email").trim();
-        final String password = req.getParameter("password").trim();
-        validateEmailAndPassword(email, password);//todo refactor
-
-        User user;
-        EntityTransaction transaction = new EntityTransaction();
-        try {
-            UserDao userDao = new UserDao();
-            transaction.init(userDao);
-            user = userDao.findByEmail(email);
-            if (user == null) {
-                throw new ServiceException("User with such login doesn't exist.");
-            }
-            checkIfPasswordsCoincide(PassEncryptor.encrypt(password), user.getPassword());// todo при вводі одного і того ж паролю до енкриптора різні результати. З'ясувати
-            log.debug("User got from database. Login and password are correct.");
-        } catch (DAOException e) {
-            log.error("Bad credentials: " + e.getMessage(), e);
-            throw new ServiceException(e.getMessage(), e);
-        } finally {
-            transaction.end();
-        }
-        return user;
-    }
-
-
-
     public User getUserFromDatabase(String email) throws ServiceException {
         User user;
         EntityTransaction transaction = new EntityTransaction();
@@ -123,32 +74,85 @@ public class UserService {
         return user;
     }
 
-
-
-
-    private void validateEmailAndPassword(String email, String password) throws ServiceException {
-        try {
-            Validator.validateEmail(email);
-            Validator.validatePassword(password);
-        } catch (BadCredentialsException e) {
-            log.error("Bad credentials: " + e.getMessage(), e);
-            throw new ServiceException(e.getMessage(), e);
+    /**
+     * Checking for User email uniqueness. Trying to get from database user with the same
+     * email (login), if it presents there method throws DBException with correspondent message
+     * @param user
+     * @param userDao
+     * @throws DAOException
+     */
+    private void checkIfLoginDoesNotExist(User user, UserDao userDao) throws DAOException {
+        if (userDao.findByEmail(user.getEmail()) != null){
+            log.error("The user with such login is already exists. Try to use another one.");
+            throw new DuplicatedEntityException() ;
         }
     }
 
-    public User getUserFromSession(HttpServletRequest req) {
-        HttpSession session = req.getSession();
-        return (User) session.getAttribute(RequestAttributes.LOGGED_USER);
-    }
 
 
-    private void checkIfPasswordsCoincide(String password, String encryptedPassword) throws ServiceException {
-        if (!password.equals(encryptedPassword)) {
-            String errorMessage = "Entered password is wrong.";
-            log.error(errorMessage);
-            throw new ServiceException(errorMessage);
-        }
-    }
+
+//    public User getLoggedInUser(HttpServletRequest req) throws ServiceException, GeneralSecurityException {
+//        User user = getUserFromSession(req);
+//        return (user == null) ? getUserFromDatabase(req) : user;
+//    }
+
+
+//    @NotNull
+//    private User getUserFromDatabase(HttpServletRequest req) throws ServiceException, GeneralSecurityException {
+//        final String email = req.getParameter("email").trim();
+//        final String password = req.getParameter("password").trim();
+//        validateEmailAndPassword(email, password);//todo refactor
+//
+//        User user;
+//        EntityTransaction transaction = new EntityTransaction();
+//        try {
+//            UserDao userDao = new UserDao();
+//            transaction.init(userDao);
+//            user = userDao.findByEmail(email);
+//            if (user == null) {
+//                throw new ServiceException("User with such login doesn't exist.");
+//            }
+//            checkIfPasswordsCoincide(PassEncryptor.encrypt(password), user.getPassword());// todo при вводі одного і того ж паролю до енкриптора різні результати. З'ясувати
+//            log.debug("User got from database. Login and password are correct.");
+//        } catch (DAOException e) {
+//            log.error("Bad credentials: " + e.getMessage(), e);
+//            throw new ServiceException(e.getMessage(), e);
+//        } finally {
+//            transaction.end();
+//        }
+//        return user;
+//    }
+
+
+
+
+
+
+
+
+//    private void validateEmailAndPassword(String email, String password) throws ServiceException {
+//        try {
+//            Validator.validateEmail(email);
+//            Validator.validatePassword(password);
+//        } catch (BadCredentialsException e) {
+//            log.error("Bad credentials: " + e.getMessage(), e);
+//            throw new ServiceException(e.getMessage(), e);
+//        }
+//    }
+//
+//    public User getUserFromSession(HttpServletRequest req) {
+//        HttpSession session = req.getSession();
+//        return (User) session.getAttribute(RequestAttributes.LOGGED_USER);
+//    }
+//
+//
+//    private void checkIfPasswordsCoincide(String password, String encryptedPassword) throws ServiceException {
+//        if (!password.equals(encryptedPassword)) {
+//            String errorMessage = "Entered password is wrong.";
+//            log.error(errorMessage);
+//            throw new ServiceException(errorMessage);
+//        }
+//    }
 
 
 //    private void validateEmail(String email) throws BadCredentialsException {
