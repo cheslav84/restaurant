@@ -17,6 +17,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 
 public class UserDao extends AbstractDao<User> {
@@ -37,7 +38,7 @@ public class UserDao extends AbstractDao<User> {
     }
 
     @Override
-    public User findById(long id) throws DAOException {
+    public Optional<User> findById(long id) throws DAOException {
         User user;
           try (PreparedStatement stmt = connection.prepareStatement(UserQuery.FIND_USER_BY_ID)) {
             stmt.setLong(1, id);
@@ -47,7 +48,7 @@ public class UserDao extends AbstractDao<User> {
             log.error("Error in getting user with id from database.", e);
             throw new DAOException(e);
         }
-        return user;
+        return Optional.ofNullable(user);
     }
 
     private User extractUser(PreparedStatement stmt) throws SQLException, DAOException {

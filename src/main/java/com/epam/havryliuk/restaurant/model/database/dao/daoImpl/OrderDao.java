@@ -12,6 +12,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public class OrderDao extends AbstractDao<Order> {
     private static final Logger log = LogManager.getLogger(OrderDao.class);
@@ -188,7 +189,7 @@ public class OrderDao extends AbstractDao<Order> {
 
 
     @Override
-    public Order findById(long id) throws DAOException {
+    public Optional<Order> findById(long id) throws DAOException {
         throw new UnsupportedOperationException();
 
 //        Order order = null;

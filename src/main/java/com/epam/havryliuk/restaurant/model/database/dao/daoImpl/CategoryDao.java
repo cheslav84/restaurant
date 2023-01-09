@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class CategoryDao extends AbstractDao<Category> {
     private static final Logger log = LogManager.getLogger(CategoryDao.class);
@@ -35,7 +36,7 @@ public class CategoryDao extends AbstractDao<Category> {
     }
 
     @Override
-    public Category findById(long id) throws DAOException {
+    public Optional<Category> findById(long id) throws DAOException {
         Category category;
         try (PreparedStatement stmt = connection.prepareStatement(CategoryQuery.FIND_CATEGORY_BY_ID)) {
             stmt.setLong(1, id);
@@ -45,7 +46,7 @@ public class CategoryDao extends AbstractDao<Category> {
             log.error("Error in getting category with id \"" + id + "\" from database.", e);
             throw new DAOException(e);
         }
-        return category;
+        return Optional.ofNullable(category);
     }
 
     private Category extractCategory(PreparedStatement stmt) throws SQLException {

@@ -42,7 +42,7 @@ public class BasketDao extends AbstractDao<Basket> {
     }
 
     @Override
-    public Basket findById(long id) throws DAOException {
+    public Optional<Basket> findById(long id) throws DAOException {
         throw new UnsupportedOperationException();
     }
 

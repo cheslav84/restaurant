@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -94,9 +95,9 @@ class DishDaoTest {
 
     @Test
     void findById() throws DAOException {
-        Mockito.when(dishDAO.findById(6)).thenReturn(getDishInstance(6));
-        Dish dish = dishDAO.findById(6);
-        assertEquals(dish, getDishInstance(6));
+        Mockito.when(dishDAO.findById(6)).thenReturn(Optional.of(getDishInstance(6)));
+        Optional<Dish> dish = dishDAO.findById(6);
+        assertEquals(dish.orElseThrow(DAOException::new), getDishInstance(6));
     }
 
     @Test

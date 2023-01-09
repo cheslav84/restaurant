@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -39,7 +40,7 @@ public class DishService {
         try {
             DishDao dishDao = new DishDao();
             transaction.init(dishDao);
-            return dishDao.findById(dishId);
+            return dishDao.findById(dishId).orElseThrow(DAOException::new);
         } catch (DAOException e) {
             log.error("Such dish hasn't been found.");
             throw new ServiceException(e);

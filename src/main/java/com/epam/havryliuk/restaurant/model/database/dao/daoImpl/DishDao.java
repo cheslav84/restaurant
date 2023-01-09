@@ -13,10 +13,7 @@ import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class DishDao extends AbstractDao<Dish> {
     private static final Logger log = LogManager.getLogger(DishDao.class);
@@ -89,7 +86,7 @@ public class DishDao extends AbstractDao<Dish> {
     }
 
     @Override
-    public Dish findById(long id) throws DAOException {
+    public Optional<Dish> findById(long id) throws DAOException {
         Dish dish = null;
         try (PreparedStatement stmt = connection.prepareStatement(DishQuery.FIND_DISH_BY_ID)) {
             stmt.setLong(1, id);
@@ -103,7 +100,7 @@ public class DishDao extends AbstractDao<Dish> {
             log.error( "Error in getting dish from database. ", e);
             throw new DAOException(e);
         }
-        return dish;
+        return Optional.ofNullable(dish);
     }
 
     @Override
