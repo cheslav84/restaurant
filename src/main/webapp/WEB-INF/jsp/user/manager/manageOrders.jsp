@@ -5,11 +5,13 @@
 
 
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/html">
+<html lang="${sessionScope.language}">
             
     <head>
-                <title>Menu</title>
-            
+                <meta content="text/html; charset=UTF-8">
+                <title>Manage orders</title>
+                <meta content="width=device-width, initial-scale=1" name="viewport">
+
                 <link href="view/css/common.css" rel="stylesheet" type="text/css">
                 <link href="view/css/sidebar.css" rel="stylesheet" type="text/css">
                 <link href="view/css/manage-orders.css" rel="stylesheet" type="text/css">
@@ -55,9 +57,7 @@
                                                         value="${order.creationDate}" />
                                                 </div>
                                                 <div class="order-status">
-                                                    <%-- Status: --%>
-                                                        <fmt:message key="status.message.${order.bookingStatus}" />
-                                                        <%-- <c:out value="${order.bookingStatus}" /> --%>
+                                                    <fmt:message key="status.message.${order.bookingStatus}" />
                                                 </div>
                                             </div>
             
@@ -99,7 +99,6 @@
                                 </div>
             
                                 <c:if test="${(order.bookingStatus ne 'COMPLETED') && (order.bookingStatus ne 'WAITING_PAYMENT')}">
-            
                                     <%-- <c:if test="${order.bookingStatus != 'WAITING_PAYMENT'}"> --%>
                                         <form method="post" action="set_next_status?currentStatus=${order.bookingStatus}">
                                             <button value="${order.id}" name="orderId" class="button order-confirm-button">
@@ -110,52 +109,52 @@
             
                             </div>
                             <div id="delimiter"></div>
-
                     </div>     
-            
                 </c:forEach>
-             <%-- <div > --%>
                 <div class="page-wrapper">
-                    
-            
-            
-                <div class="pages previous-page">
-                    <c:if test="${currentPage != 1}">
-                        <td><a href="manage_orders?page=${currentPage - 1}">Previous</a></td>
+                    <div class="pages orders-per-page">Orders per page
+                            <select name="amount" class="orders-per-page-amout" id="recordsPerPage">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option selected value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                            </select> 
+                       <a class="setPerPage button apply-order-per-page-button" href="manage_orders?page=${currentPage}">apply</a>
+                    </div>
+                    <div class="pages previous-page">
+                        <c:if test="${currentPage != 1}">
+                            <a class="setPerPage" href="manage_orders?page=${currentPage - 1}">Previous</a>
                         </c:if>
-        
-                </div>
-                
-                        <%-- <table border="1" cellpadding="5" cellspacing="5">
-                            <tr> --%>
-                                <c:forEach begin="1" end="${noOfPages}" var="i">
-                                 <div class="pages page-numbers">
-                                    <c:choose>
-                                        <c:when test="${currentPage eq i}">
-                                            <div>${i}</div>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <div><a href="manage_orders?page=${i}">${i}</a></div>
-                                        </c:otherwise>
-                                    </c:choose>
-                                    </div>
-                                </c:forEach>
-                            <%-- </tr>
-                        </table> --%>
-              
-                <div class="pages next-page">
+                    </div>
+                    <c:forEach begin="1" end="${noOfPages}" var="i">
+                        <div class="pages page-numbers">
+                            <c:choose>
+                                <c:when test="${currentPage eq i}">
+                                    <div>${i}</div>
+                                </c:when>
+                                <c:otherwise>
+                                <div>
+                                    <a class="setPerPage" href="manage_orders?page=${i}">${i}</a>
+                                </div>
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
+                    </c:forEach>
+                    <div class="pages next-page">
                         <c:if test="${currentPage lt noOfPages}">
-                            <td><a href="manage_orders?page=${currentPage + 1}">Next</a></td>
+                            <a class="setPerPage"  href="manage_orders?page=${currentPage + 1}">Next</a>
                         </c:if>
+                    </div>
             
                 </div>
+               
+                <jsp:include page="../../footer.jsp" />
             
-    </div>
-               <%-- </div> --%>
-                        <jsp:include page="../../footer.jsp" />
-            
-                        <script src="view/js/jquery3.6.1.js" type="text/javascript" crossorigin="anonymous"></script>
-                        <script src="view/js/webflow.e.js" type="text/javascript"></script>
-                        <script src="view/js/basket.js" type="text/javascript"></script>
+                <script src="view/js/jquery3.6.1.js" type="text/javascript" crossorigin="anonymous"></script>
+                <script src="view/js/webflow.e.js" type="text/javascript"></script>
+                <script src="view/js/basket.js" type="text/javascript"></script>
+                
     </body>
 </html>

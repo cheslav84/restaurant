@@ -1,6 +1,7 @@
 package com.epam.havryliuk.restaurant.controller.command.orderCommand;
 
 import com.epam.havryliuk.restaurant.controller.command.ActionCommand;
+import com.epam.havryliuk.restaurant.model.constants.RequestParameters;
 import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
 import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
 import com.epam.havryliuk.restaurant.model.entity.Order;
@@ -22,6 +23,8 @@ import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
 public class ManageOrdersCommand implements ActionCommand {
     private static final Logger log = LogManager.getLogger(ManageOrdersCommand.class);
+    private int defaultPageNumber = 1;
+    private int recordsPerPage = 4;
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -30,19 +33,20 @@ public class ManageOrdersCommand implements ActionCommand {
 
         MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
 
-        int pageNo = 1;
-        int recordsPerPage = 2;
+        if (request.getParameter(RequestParameters.PAGE_NUMBER) != null) {
+            defaultPageNumber = Integer.parseInt(request.getParameter(RequestParameters.PAGE_NUMBER));
+        }
 
-        if (request.getParameter("page") != null) {
-            pageNo = Integer.parseInt(request.getParameter("page"));
+        if (request.getParameter(RequestParameters.RECORDS_PER_PAGE) != null) {
+            recordsPerPage = Integer.parseInt(request.getParameter(RequestParameters.RECORDS_PER_PAGE));
         }
 
         try {
-            Page<Order> ordersPage = orderService.getAllOrders(pageNo, recordsPerPage);
+            Page<Order> ordersPage = orderService.getAllOrders(defaultPageNumber, recordsPerPage);
             List<Order> orders = ordersPage.getRecords();
             int noOfPages = ordersPage.getNoOfPages();
-            request.setAttribute("noOfPages", noOfPages);
-            request.setAttribute("currentPage", pageNo);
+            request.setAttribute(NUMBER_OF_PAGES, noOfPages);
+            request.setAttribute(CURRENT_PAGE, defaultPageNumber);
             request.setAttribute(ORDER_LIST, orders);
             request.removeAttribute(ERROR_MESSAGE);
         } catch (ServiceException e) {
@@ -50,18 +54,6 @@ public class ManageOrdersCommand implements ActionCommand {
             request.setAttribute(ERROR_MESSAGE,
                     messageManager.getProperty(ResponseMessages.ORDERS_ERROR));
         }
-
-//        int noOfPages = (int)Math.ceil(noOfRecords * 1.0 / recordsPerPage);
-
-
-
-
-
-//        RequestDispatcher view = request.getRequestDispatcher("display.jsp");
-//
-//        view.forward(request, response);
-
-
 
         request.getRequestDispatcher(AppPagesPath.FORWARD_MANAGE_ORDERS).forward(request, response);
     }

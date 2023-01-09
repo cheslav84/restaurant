@@ -23,6 +23,9 @@ public interface RequestAttributes {
     String REGISTRATION_ERROR_MESSAGE = "registrationErrorMessage";//todo try to make one
     String REGISTRATION_PROCESS = "registrationProcess";
     String MENU_MESSAGE = "menuMessage";
+    String NUMBER_OF_PAGES = "noOfPages";
+    String CURRENT_PAGE = "currentPage";
+
 
 
 }

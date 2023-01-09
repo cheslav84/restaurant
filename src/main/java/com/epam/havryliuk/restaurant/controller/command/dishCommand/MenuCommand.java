@@ -66,8 +66,9 @@ public class MenuCommand implements ActionCommand {
         return Optional.ofNullable(request.getParameter(RequestParameters.MENU_SORTING_OPTION)).orElse(DEFAULT_SORTING);
     }
 
+
     @NotNull
-    private Category getCurrentMenu(HttpServletRequest req) {
+    private Category getCurrentMenu(HttpServletRequest req) {//todo повторюється
         HttpSession session = req.getSession();
         String lastVisitedMenu = (String) session.getAttribute(MENU_CATEGORY);
         String currentMenu = req.getParameter(RequestParameters.MENU_CATEGORY);
@@ -84,7 +85,7 @@ public class MenuCommand implements ActionCommand {
         return Category.valueOf(currentMenu);
     }
 
-    private void hideOrderInfoOnReloadPage(HttpServletRequest req)  {
+    private void hideOrderInfoOnReloadPage(HttpServletRequest req)  {//todo повторюється
         HttpSession session = req.getSession();
         if (session.getAttribute(SHOW_DISH_INFO) != null){
             if (req.getAttribute(SHOW_DISH_INFO) == null) {

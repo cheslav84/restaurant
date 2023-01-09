@@ -5,15 +5,16 @@
 
 
             <!DOCTYPE html>
-            <html xmlns="http://www.w3.org/1999/html">
+            <html lang="${sessionScope.language}">
 
             <head>
+                <meta content="text/html; charset=UTF-8">
                 <title>Basket</title>
+                <meta content="width=device-width, initial-scale=1" name="viewport">
 
                 <link href="view/css/common.css" rel="stylesheet" type="text/css">
                 <link href="view/css/sidebar.css" rel="stylesheet" type="text/css">
                 <link href="view/css/basket.css" rel="stylesheet" type="text/css">
-
             </head>
 
             <body>

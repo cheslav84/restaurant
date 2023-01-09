@@ -154,6 +154,26 @@
     font-weight: 700;
 }
 
+
+.orders-per-page-form {
+    display: inline-block;
+}
+
+.apply-order-per-page-button {
+    position: relative;
+    margin: 0px 10px 10px 5px;
+    top: -1px;
+    width: 56px;
+    height: 24px;
+    padding: 4px 5px;
+    border-radius: 3px;
+    line-height: 40px;
+    line-height: 16px;
+    font-weight: 700;
+    font-size: 12px;
+    cursor: pointer;
+}
+
 @media screen and (max-width:991px) {
 
 
@@ -164,6 +184,13 @@
 
 @media screen and (max-width:767px) {
 
+    .orders-per-page {
+        display: block;
+    }
+
+    .apply-order-per-page-button {
+        margin: 0px 0px 0px 5px;
+    }
 
 }
 

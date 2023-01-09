@@ -10,7 +10,7 @@
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
             <title>Menu</title>
             <meta content="width=device-width, initial-scale=1" name="viewport">
-            <meta content="Webflow" name="generator">
+            <%-- <meta content="Webflow" name="generator"> --%>
 
             <link href="view/css/common.css" rel="stylesheet" type="text/css">
             <link href="view/css/sidebar.css" rel="stylesheet" type="text/css">
@@ -24,7 +24,8 @@
         </head>
 
         <body>
-
+            <fmt:setLocale value="${sessionScope.language}" />
+            <fmt:setBundle basename="menu" />
 
             <jsp:include page="sidebar.jsp" />
 
@@ -57,7 +58,7 @@
                                 <div class="menu-page-tab-title">All</div>
                                 <div class="menu-page-tab-title subtitle">Sort by</div>
                                 <select id="sort-menu-by-selector" name="menuSortingOption" class="menu-page-tab-title subtitle sort-menu-by">Sort by
-                                    <option value="Name" selected>Name</option>
+                                    <option selected value="Name" selected>Name</option>
                                     <option value="Price">Price</option>
                                     <option value="Category">Category</option>
                                 </select>

@@ -19,6 +19,10 @@ public interface RequestParameters {
     String CURRENT_STATUS = "currentStatus";
     String MENU_CATEGORY = "menuCategory";
     String MENU_SORTING_OPTION = "menuSortingOption";
+    String PAGE_NUMBER = "page";
+    String RECORDS_PER_PAGE = "recordsPerPage";
+
+
 
 
 }

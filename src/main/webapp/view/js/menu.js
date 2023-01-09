@@ -1,14 +1,29 @@
 
-window.onload = function() {
-    var selItem = sessionStorage.getItem("SelItem");  
-    $('#sort-menu-by-selector').val(selItem);
+// window.onload = function() {
+//     var selItem = sessionStorage.getItem("SelItem");  
+//     $('#sort-menu-by-selector').val(selItem);
+// }
+
+
+//     $('#sort-menu-by-selector').change(function() { 
+//         var selVal = $(this).val();
+//         sessionStorage.setItem("SelItem", selVal);
+//     });
+
+
+
+
+
+$(document).ready(function() {
+    if (localStorage.selectVal) {
+        $('select').val( localStorage.selectVal );
     }
+});
 
-
-    $('#sort-menu-by-selector').change(function() { 
-        var selVal = $(this).val();
-        sessionStorage.setItem("SelItem", selVal);
-    });
+$('select').on('change', function(){
+    var currentVal = $(this).val();
+    localStorage.setItem('selectVal', currentVal );
+});
 
 
 

@@ -6,7 +6,6 @@
 
 <%=Properties.url%> --%>
 
-
 <!-- <my:user id="123" /> -->
  
         <!DOCTYPE html>
@@ -15,7 +14,7 @@
             <meta content="text/html; charset=UTF-8">
             <title>V&amp;H VICTORY</title>
             <meta
-                content="Easy Times is a Restaurant website Restaurant, Cafe including the presentation of menus, events, blogging functionality, multiple contact forms and more."
+                content="V&H Victory is a Restaurant website Restaurant, Cafe including the presentation of menus"
                 name="description">
             <meta content="width=device-width, initial-scale=1" name="viewport">
             <%-- <meta content="Webflow" name="generator"> --%>
@@ -31,8 +30,6 @@
 
         <body>
             <jsp:include page="sidebar.jsp"/>
-
-
 
             <div data-delay="4000" data-animation="fade" class="hero-slider w-slider" data-autoplay="true"
                 data-easing="ease" data-hide-arrows="false" data-disable-swipe="false" data-autoplay-limit="0"
@@ -51,7 +48,7 @@
                                 </div>
                                 <a href="#about-us" data-ix="slider-button-1" class="button slider-button">More about
                                     us</a>
-                                <a href="#reserv-dish" data-ix="slider-button-2" class="button">Reserve a table!</a>
+                                <a href="#reserv-dish" data-ix="slider-button-2" class="button">Reserve a dish!</a>
                             </div>
                         </div>
                     </div>
@@ -150,12 +147,8 @@
                 </div>
             </div>
 
-
-
             <jsp:include page="indexMenu.jsp"/>
 
-
-                       
             <div class="section wf-section">
                 <div class="container w-container">
                     <div class="w-row">
