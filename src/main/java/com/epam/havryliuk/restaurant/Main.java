@@ -1,14 +1,19 @@
 package com.epam.havryliuk.restaurant;
 
-import java.util.Optional;
-
 public class Main {
-
-
 
     public static void main(String[] args) {
 
 
+    }
+
+    public void init() {
+        throw new RuntimeException();
+    }
+
+    public void deleteX() {
+        // some things
+        init();
     }
 
 

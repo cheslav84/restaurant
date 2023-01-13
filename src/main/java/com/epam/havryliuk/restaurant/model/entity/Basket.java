@@ -9,8 +9,7 @@ import java.util.Map;
  * Basket it's an entity that represents only one row in database
  * table "order_has_dishes".
  */
-public class Basket implements Entity{
-
+public class Basket implements Entity {// todo think of renaming, for example DishInOrder
     private Order order;
     private Dish dish;
     private BigDecimal fixedPrice;
@@ -22,7 +21,6 @@ public class Basket implements Entity{
         basket.setDish(dish);
         basket.setFixedPrice(fixedPrice);
         basket.setAmount(amount);
-
         return basket;
     }
 

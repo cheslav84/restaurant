@@ -1,12 +1,11 @@
 package com.epam.havryliuk.restaurant.controller.command.userCommand;
 
 import com.epam.havryliuk.restaurant.controller.command.ActionCommand;
-import com.epam.havryliuk.restaurant.model.constants.Regex;
 import com.epam.havryliuk.restaurant.model.constants.RequestParameters;
 import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
 import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
 import com.epam.havryliuk.restaurant.model.entity.User;
-import com.epam.havryliuk.restaurant.model.exceptions.BadCredentialsException;
+import com.epam.havryliuk.restaurant.model.exceptions.ValidationException;
 import com.epam.havryliuk.restaurant.model.exceptions.DuplicatedEntityException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 
@@ -15,7 +14,6 @@ import com.epam.havryliuk.restaurant.model.service.UserService;
 
 import com.epam.havryliuk.restaurant.model.service.validation.Validator;
 import com.epam.havryliuk.restaurant.model.util.PassEncryptor;
-import com.mysql.cj.Session;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -25,9 +23,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
@@ -39,11 +34,14 @@ public class RegisterCommand implements ActionCommand {
         HttpSession session = request.getSession();
         String redirectionPage;
         MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
-        User user = null;
+        User user;
         try {
             UserService service = new UserService();
             user = mapUser(request);
+
+            //todo check user if exists
             service.addNewUser(user);
+            encryptUserPassword(user);
             session.setAttribute(LOGGED_USER, user);
             //        Cookie cookie = new Cookie("sessionId", session.getId());
             //        resp.addCookie(cookie);
@@ -53,8 +51,8 @@ public class RegisterCommand implements ActionCommand {
             session.removeAttribute(REGISTRATION_PROCESS);
             redirectionPage = getRedirectionPage(session);
             log.info("The user \"" + user.getName() + "\" has been successfully registered.");
-        } catch (BadCredentialsException e) {
-            log.error("Some credentials are not correct." + e);
+        } catch (ValidationException e) {
+            log.error("Some credentials are not correct." + e);//todo rename
             redirectionPage = getErrorPage(session);
         } catch (DuplicatedEntityException e) {
             log.error("The user with such login is already exists. Try to use another one." + e);
@@ -90,7 +88,7 @@ public class RegisterCommand implements ActionCommand {
     }
 
     @NotNull
-    private User mapUser(HttpServletRequest req) throws BadCredentialsException {
+    private User mapUser(HttpServletRequest req) throws ValidationException {//todo можливо винести метод, подумати...
         final String password = req.getParameter(RequestParameters.PASSWORD);
         final String email = req.getParameter(RequestParameters.EMAIL).trim();
         final String name = req.getParameter(RequestParameters.NAME).trim();
@@ -100,11 +98,11 @@ public class RegisterCommand implements ActionCommand {
         User user =  User.getInstance(email, password, name, surname, gender, isOverEighteen);
         try {
             new Validator().validateUserData(user, req);
-            encryptUserPassword(user);
-        } catch (BadCredentialsException e){
+
+        } catch (ValidationException e){//todo rename validation
             user.setPassword(null);
             req.getSession().setAttribute(USER_IN_LOGGING, user);
-            throw new BadCredentialsException();
+            throw new ValidationException();
         }
         return user;
     }

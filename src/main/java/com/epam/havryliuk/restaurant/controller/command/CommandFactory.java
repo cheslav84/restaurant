@@ -9,7 +9,7 @@ public class CommandFactory {
         ActionCommand current = new IndexCommand();
         String referer = request.getRequestURI();
         String action = referer.substring(referer.lastIndexOf('/') + 1);
-        System.err.println("command = ========= "  + action);//todo delete
+
         if (action.isEmpty()) {
             return current;
         }

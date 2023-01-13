@@ -10,7 +10,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class EntityTransaction {
-    private static final Logger log = LogManager.getLogger(EntityTransaction.class);
+    private static final Logger LOG = LogManager.getLogger(EntityTransaction.class);
 
     private Connection connection;
     private final ConnectionManager connectionManager;
@@ -24,25 +24,26 @@ public class EntityTransaction {
             try {
                 connection = connectionManager.getConnection();
             } catch (SQLException e) {
-                log.error("Error setting autocommit to value false.", e);
+                LOG.error("Error setting autocommit to value false.", e);
                 throw new DAOException(e);
             }
         }
         dao.setConnection(connection);
     }
 
-    public void initTransaction(AbstractDao<? extends Entity> dao, AbstractDao<? extends Entity> ... daos) throws DAOException {
+    // todo read about heap pollution
+    @SafeVarargs
+    public final void initTransaction(AbstractDao<? extends Entity> dao, AbstractDao<? extends Entity>... daos) throws DAOException {
         try {
             if (connection == null) {
                 connection = connectionManager.getConnection();
             }
             connection.setAutoCommit(false);
         } catch (SQLException e) {
-            log.error("Error setting autocommit to value false.", e);
+            LOG.error("Error setting autocommit to value false.", e);
             throw new DAOException(e);
         }
         dao.setConnection(connection);
-
         for (AbstractDao<? extends Entity> daoElement : daos) {
             daoElement.setConnection(connection);
         }
@@ -58,14 +59,9 @@ public class EntityTransaction {
     public void endTransaction() {
         if (connection != null) {
             try {
-
-
-                // connection check code for commit
-
-
                 connection.setAutoCommit(true);
             } catch (SQLException e) {
-                log.error("Error setting autocommit to value true.", e);
+                LOG.error("Error setting autocommit to value true.", e);
             }
             connectionManager.close(connection);
             connection = null;
@@ -76,21 +72,17 @@ public class EntityTransaction {
         try {
             connection.commit();
         } catch (SQLException e) {
-            log.error("Error committing connection.", e);
+            LOG.error("Error committing connection.", e);
         }
     }
 
-    public void rollback() {
+    public void rollback() {//todo
         try {
             connection.rollback();
         } catch (SQLException e) {
-            log.error("Error in rolling back changes." , e);
+            LOG.error("Error in rolling back changes." , e);
         }
     }
-
-
-
-
 
 
 }

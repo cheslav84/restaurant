@@ -1,6 +1,6 @@
 package com.epam.havryliuk.restaurant.model.exceptions;
 
-public class DuplicatedEntityException extends DAOException {
+public class DuplicatedEntityException extends ServiceException {
 
     public DuplicatedEntityException() {
         super();

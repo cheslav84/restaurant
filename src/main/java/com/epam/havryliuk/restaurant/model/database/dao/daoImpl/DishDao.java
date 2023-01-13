@@ -170,7 +170,7 @@ public class DishDao extends AbstractDao<Dish> {
 //        return dishes;
 //    }
 
-    Dish mapDish(ResultSet rs) throws SQLException {
+    Dish mapDish(ResultSet rs) throws SQLException {// todo mapper
         long id = rs.getLong(DishFields.DISH_ID);
         String name = rs.getString(DishFields.DISH_NAME);
         String description = rs.getString(DishFields.DISH_DESCRIPTION);
@@ -209,7 +209,6 @@ public class DishDao extends AbstractDao<Dish> {
             throw new DAOException(e);
         }
         return true;
-
     }
 
     public Map<String, Integer> getNumberOfEachDishInOrder(long orderId) throws DAOException {

@@ -3,7 +3,7 @@ package com.epam.havryliuk.restaurant.controller;
 
 import com.epam.havryliuk.restaurant.controller.command.ActionCommand;
 import com.epam.havryliuk.restaurant.controller.command.CommandFactory;
-import jakarta.servlet.ServletException;
+import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,39 +20,26 @@ import java.io.IOException;
         "/basket", "/remove_from_order", "/set_next_status/*", "/manage_orders", "/login_page"})
 //@WebServlet("/")
 public class Controller extends HttpServlet {
-    private static final Logger log = LogManager.getLogger(Controller.class);
+    private static final Logger LOG = LogManager.getLogger(Controller.class);
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws IOException {
         processRequest(request, response);
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws IOException {
         processRequest(request, response);
     }
     private void processRequest(HttpServletRequest request,
-                                HttpServletResponse response)
-            throws IOException {
+                                HttpServletResponse response) throws IOException {
         CommandFactory client = new CommandFactory();
         ActionCommand command = client.defineCommand(request);
         try {
             command.execute(request, response);
         } catch (Exception e) {
             e.printStackTrace();
-            System.err.println("error");
-//            response.sendRedirect(request.getContextPath() + AppPagesPath.ERROR);//todo
+            LOG.error("Unable to execute request.");
+            response.sendRedirect(request.getContextPath() + AppPagesPath.REDIRECT_ERROR);
         }
-
-//        String page = null;
-//
-//        if (page != null) {
-//            response.sendRedirect(page);
-//        } else {
-//            page = ConfigurationManager.getProperty("path.page.index");
-//            request.getSession().setAttribute("nullPage",
-//                    MessageManager.EN.getProperty("message.nullPage"));//todo
-//            response.sendRedirect(request.getContextPath() + page);//todo
-//        }
-
     }
 }

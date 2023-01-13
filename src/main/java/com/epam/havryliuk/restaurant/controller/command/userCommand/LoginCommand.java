@@ -27,7 +27,7 @@ public class LoginCommand implements ActionCommand {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String email = request.getParameter(RequestParameters.EMAIL);//todo подумати щоб перейменувати скрізь на email
+        String email = request.getParameter(RequestParameters.EMAIL);//todo перейменувати скрізь на email
         String password = request.getParameter(RequestParameters.PASSWORD);
             //todo подумати про верифікацію даних
 

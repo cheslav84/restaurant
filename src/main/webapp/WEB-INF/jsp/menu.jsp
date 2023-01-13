@@ -1,36 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-
-
-        <!DOCTYPE html>
-        <html>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+    <html>
         <head>
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
             <title>Menu</title>
             <meta content="width=device-width, initial-scale=1" name="viewport">
-            <%-- <meta content="Webflow" name="generator"> --%>
-
             <link href="view/css/common.css" rel="stylesheet" type="text/css">
             <link href="view/css/sidebar.css" rel="stylesheet" type="text/css">
             <link href="view/css/menu.css" rel="stylesheet" type="text/css">
             <link href="view/css/order-info.css" rel="stylesheet" type="text/css">
-
-            <%-- <link href="view/css/easy-times.css" rel="stylesheet" type="text/css"> --%>
-
-
-
         </head>
-
         <body>
             <fmt:setLocale value="${sessionScope.language}" />
             <fmt:setBundle basename="menu" />
-
             <jsp:include page="sidebar.jsp" />
-
-
-
             <div id="top" class="page-header wf-section">
                 <div class="page-header-overlay menu">
                     <div class="container w-container">
@@ -41,18 +25,13 @@
                     </div>
                 </div>
             </div>
-
-
             <div class="section menu-page-section wf-section">
                 <div class="container w-container">
                     <div data-duration-in="300" data-duration-out="100" data-current="Coffee" data-easing="ease"
                         class="menu-page-tabs w-tabs">
-
-
                         <div class="menu-page-tabs-menu w-tab-menu">
 
-                            <form id="sort-menu-by-form" href="menu?menuCategory=ALL" data-w-tab="ALL" data-w-tab="All"
-                                data-ix="fade-in-on-load-7"
+                            <form id="sort-menu-by-form" href="menu?menuCategory=ALL" data-w-tab="ALL" data-ix="fade-in-on-load-7"
                                 class="menu-page-tab-button w-inline-block w-clearfix w-tab-link ">
                                 <img src="view/pictures/icons/Icon-plate-white.png" alt="" class="menu-tab-icon">
                                 <div class="menu-page-tab-title">All</div>
@@ -62,28 +41,8 @@
                                     <option value="Price">Price</option>
                                     <option value="Category">Category</option>
                                 </select>
-                                <%-- <input value="ALL" name="menuCategory" data-w-tab="ALL" class="menu-page-tab-button w-inline-block w-clearfix w-tab-link" type="submit"/> --%>
-
-                                <input type="submit" value="ALL" name="menuCategory" data-w-tab="ALL" data-w-tab="All" class="menu-hidden-input menu-tab-button transparent-button"/>
+                                <input type="submit" value="ALL" name="menuCategory" data-w-tab="ALL" class="menu-hidden-input menu-tab-button transparent-button"/>
                             </form>
-
-
-                            <%-- <form data-w-tab="ALL" data-w-tab="All"
-                                data-ix="fade-in-on-load-7"
-                                class="menu-page-tab-button w-inline-block w-clearfix w-tab-link">
-                                <img src="view/pictures/icons/Icon-plate-white.png" alt="" class="menu-tab-icon">
-                                <div class="menu-page-tab-title">All</div>
-                                <div class="menu-page-tab-title subtitle">Sort by</div>
-                                <select id="sort-menu-by" name="sort-menu-by" onchange="window.location.href=this.value;" class="menu-page-tab-title subtitle sort-menu-by">Sort by
-                                    <option value="menu?menuCategory=ALL&sort-menu-by=Name">Name</option>
-                                    <option value="menu?menuCategory=ALL&sort-menu-by=Price">Price</option>
-                                    <option value="menu?menuCategory=ALL&sort-menu-by=Category">Category</option>
-                                </select>
-                                 <input class="menu-hidden-input menu-tab-button transparent-button" type="submit"/>
-                            </form> --%>
-
-
-
 
                             <a href="menu?menuCategory=COFFEE" data-w-tab="COFFEE" data-ix="fade-in-on-load-3"
                                 class="menu-page-tab-button w-inline-block w-clearfix w-tab-link w--current">
@@ -97,7 +56,7 @@
                                 <div class="menu-page-tab-title">Lunch</div>
                                 <div class="menu-page-tab-title subtitle">Will make your day</div>
                             </a>
-                            <a href="menu?menuCategory=DINER" data-w-tab="DINER"
+                            <a href="menu?menuCategory=DINER" data-w-tab="DINER" data-ix="fade-in-on-load-5"
                                 class="menu-page-tab-button w-inline-block w-clearfix w-tab-link">
                                 <img src="view/pictures/icons/Icon-diner.png" alt="" class="menu-tab-icon">
                                 <div class="menu-page-tab-title">Diner</div>
@@ -113,7 +72,6 @@
                         </div>
 
                         <div class="w-tab-content">
-
                             <div data-w-tab="${sessionScope.menuCategory}"
                                 class="menu-tab-pane w-tab-pane w--tab-active">
                                 <c:forEach var="dish" items="${requestScope.dishes}">
@@ -152,81 +110,53 @@
                                 <c:out value="${requestScope.menuMessage}" />
                                 <c:out value="${requestScope.errorMessage}" />
                             </div>
-
                         </div>
 
-
-
-                        <div class="image-background-section wf-section">
-                            <div class="image-background-overlay">
-                                <div class="container w-container">
-                                    <h2 data-ix="fade-in-on-scroll" class="section-intro-title">EVER TRIED THESE?</h2>
-                                    <h2 data-ix="fade-in-on-scroll" class="section-intro-title subtitle">THESE ARE OUR
-                                        SPECIALS:</h2>
-                                    <div class="section-divider-line"></div>
-                                    <div class="menu-white-wrapper w-dyn-list">
+                        <c:if test="${requestScope.dishesSpecials ne null}">     
+                            <div class="image-background-section wf-section">
+                                <div class="image-background-overlay">
+                                    <div class="container w-container">
+                                        <h2 data-ix="fade-in-on-scroll" class="section-intro-title">EVER TRIED THESE?</h2>
+                                        <h2 data-ix="fade-in-on-scroll" class="section-intro-title subtitle">THESE ARE OUR
+                                            SPECIALS:</h2>
+                                        <div class="section-divider-line"></div>
+                                        <div class="menu-white-wrapper w-dyn-list"></div>
                                         <div role="list" class="w-clearfix w-dyn-items w-row">
-                                            <div role="listitem" class="menu-list-item w-dyn-item w-col w-col-6">
-                                                <div class="menu-item-price">5.99</div>
-                                                <div class="menu-item-title">Single Cup Brew</div>
-                                                <div class="menu-item-title description">Lorem ipsum dolor sit amet
-                                                    consectetur
-                                                    adipiscing.
+                                            <c:forEach var="dishSpecial" items="${requestScope.dishesSpecials}">
+                                                <div role="listitem" class="menu-list-item w-dyn-item w-col w-col-6">
+                                                    <div class="menu-image-container">
+                                                        <div style="background-image: url('view/pictures/dish_pictures/${dishSpecial.image}');"
+                                                            class="menu-item-image-box">
+                                                        </div>
+                                                    </div>
+                                                    <div class="menu-item-text">
+                                                        <div class="menu-item-title">
+                                                            <c:out value="${dishSpecial.name}" />
+                                                        </div>
+                                                        <div class="menu-item-title description">
+                                                            <c:out value="${dishSpecial.description}" />
+                                                        </div>
+                                                        <div class="menu-item-title weight">
+                                                            <c:out value="${dishSpecial.weight}" />
+                                                            <span class="weight-marker"> g</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="menu-item-price">
+                                                        <c:out value="${dishSpecial.price}" />
+                                                        <span class="price-marker">₴</span>
+                                                    </div>
+                                                    <form method="get" action="show_order_info" name="dishOrder">
+                                                        <button value="${dishSpecial.id}" name="dishId"
+                                                            class="button order-menu-button">Order</button>
+                                                    </form>
                                                 </div>
-                                            </div>
-                                            <div role="listitem" class="menu-list-item w-dyn-item w-col w-col-6">
-                                                <div class="menu-item-price">5.99</div>
-                                                <div class="menu-item-title">Black Eyed Andy</div>
-                                                <div class="menu-item-title description">Lorem ipsum dolor sit amet
-                                                    consectetur
-                                                    adipiscing.
-                                                </div>
-                                            </div>
-                                            <div role="listitem" class="menu-list-item w-dyn-item w-col w-col-6">
-                                                <div class="menu-item-price">5.99</div>
-                                                <div class="menu-item-title">Cafe au Lait</div>
-                                                <div class="menu-item-title description">Lorem ipsum dolor sit amet
-                                                    consectetur
-                                                    adipiscing.
-                                                </div>
-                                            </div>
-                                            <div role="listitem" class="menu-list-item w-dyn-item w-col w-col-6">
-                                                <div class="menu-item-price">5.99</div>
-                                                <div class="menu-item-title">Cappuccino</div>
-                                                <div class="menu-item-title description">Lorem ipsum dolor sit amet
-                                                    consectetur
-                                                    adipiscing.
-                                                </div>
-                                            </div>
-                                            <div role="listitem" class="menu-list-item w-dyn-item w-col w-col-6">
-                                                <div class="menu-item-price">5.99</div>
-                                                <div class="menu-item-title">Caramel Macchiato</div>
-                                                <div class="menu-item-title description">Lorem ipsum dolor sit amet
-                                                    consectetur
-                                                    adipiscing.
-                                                </div>
-                                            </div>
-                                            <div role="listitem" class="menu-list-item w-dyn-item w-col w-col-6">
-                                                <div class="menu-item-price">5.99</div>
-                                                <div class="menu-item-title">Café Latte</div>
-                                                <div class="menu-item-title description">Lorem sit amet consectetur
-                                                    adipiscing.</div>
-                                            </div>
-                                        </div>  
+                                            </c:forEach>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>  
-              
-
-
-
-
-
-
-
+                            </div>  
+                        </c:if>
                     </div>
-                
                 </div>
             </div>
 

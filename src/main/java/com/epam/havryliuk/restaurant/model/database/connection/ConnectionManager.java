@@ -13,28 +13,32 @@ import java.sql.SQLException;
 
 public class ConnectionManager {
 
-    private static final Logger log = LogManager.getLogger(ConnectionManager.class);
+    private static final Logger LOG = LogManager.getLogger(ConnectionManager.class);
 
-    private static volatile ConnectionManager instance;
+    private static final ConnectionManager INSTANCE = new ConnectionManager();
 
     private static DataSource ds = null;
+
+    static {
+        initDataSource();
+    }
 
     private ConnectionManager() {
     }
 
     public static ConnectionManager getInstance() {
-        initDataSource();
-        ConnectionManager localInstance = instance;
-        if (localInstance == null) {
-            synchronized (ConnectionManager.class) {
-                localInstance = instance;
-                if (localInstance == null) {
-                    instance = localInstance = new ConnectionManager();
-                    log.debug("Connection manager has been initialised.");
-                }
-            }
-        }
-        return localInstance;
+//        ConnectionManager localInstance = instance;
+//        if (localInstance == null) {
+//            synchronized (ConnectionManager.class) {
+//                localInstance = instance;
+//                if (localInstance == null) {
+//                    instance = localInstance = new ConnectionManager();
+//                    log.debug("Connection manager has been initialised.");
+//                }
+//            }
+//        }
+//        return localInstance;
+        return INSTANCE;
     }
 
     public Connection getConnection() throws SQLException {
@@ -42,7 +46,7 @@ public class ConnectionManager {
             return ds.getConnection();
         } catch (SQLException e) {
             String errorMessage = "Database connection hasn't been established.";
-            log.error(errorMessage, e);
+            LOG.error(errorMessage, e);
             throw new SQLException(errorMessage, e);
         }
     }
@@ -53,7 +57,7 @@ public class ConnectionManager {
             Context envContext = (Context) initContext.lookup(DatabaseContext.CONTEXT);
             ds = (DataSource) envContext.lookup(DatabaseContext.SOURCE);
         } catch (NamingException e) {
-            log.error("Can't get Initial context for DataSource.", e);
+            LOG.error("Can't get Initial context for DataSource.", e);
         }
     }
 
@@ -63,7 +67,7 @@ public class ConnectionManager {
                 try {
                     closeable.close();
                 } catch (Exception e) {
-                    log.error("Error closing " + closeable, e);
+                    LOG.error("Error closing " + closeable, e);
                 }
 //            }
         }

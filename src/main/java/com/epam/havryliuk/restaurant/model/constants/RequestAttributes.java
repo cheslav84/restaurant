@@ -6,6 +6,7 @@ public interface RequestAttributes {
     String ORDER_LIST = "orders";
     String ORDER_PRICE_MAP = "ordersAndPrices";
     String DISH_LIST = "dishes";
+    String SPECIALS_DISH_LIST = "dishesSpecials";
 
     String EMAIL = "email";
     String CURRENT_DISH = "currentDish";

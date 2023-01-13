@@ -4,8 +4,6 @@ import java.util.List;
 
 public class Page <T extends Entity> {
 
-//    private int noOfRecords;
-//    int offset;
     int noOfPages;
     private List<T> records;
 

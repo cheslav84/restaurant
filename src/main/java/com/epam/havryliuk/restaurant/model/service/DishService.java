@@ -56,10 +56,19 @@ public class DishService {
             sortParameter = sortParameter.toLowerCase();
 //TODO  EXCLUDE FROM CATEGORY SPECIAL, AS IT IS ALREADY IN ANOTHER ONE
             switch (sortParameter) {
-                case  "name" -> dishes = dishDao.getSortedByName();
-                case "price" -> dishes = dishDao.getSortedByPrice();
-                case "category" -> dishes = dishDao.getSortedByCategory();
-                default -> throw new ServiceException();
+                case ("name") : dishes  = dishDao.getSortedByName();
+                    break;
+                case ("price") : dishes  = dishDao.getSortedByPrice();
+                    break;
+                case ("category") : dishes  = dishDao.getSortedByCategory();
+                    break;
+                default : throw new ServiceException();
+
+
+//                case  "name" -> dishes = dishDao.getSortedByName();
+//                case "price" -> dishes = dishDao.getSortedByPrice();
+//                case "category" -> dishes = dishDao.getSortedByCategory();
+//                default -> throw new ServiceException();
             }
         } catch (DAOException e) {
             log.error("Such list of Dishes hasn't been found.");

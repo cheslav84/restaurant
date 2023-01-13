@@ -20,7 +20,7 @@ public class BasketDao extends AbstractDao<Basket> {
 
 
     @Override
-    public boolean create(Basket basket) throws DAOException {
+    public boolean create(Basket basket) throws DAOException, SQLIntegrityConstraintViolationException {// todo void
         try (PreparedStatement stmt = connection.prepareStatement(BasketQuery.ADD_DISH_TO_BASKET)) {
             int k = 0;
             stmt.setLong(++k, basket.getOrder().getId());
@@ -28,15 +28,11 @@ public class BasketDao extends AbstractDao<Basket> {
             stmt.setInt(++k, basket.getAmount());
             stmt.setBigDecimal(++k, basket.getFixedPrice());
             stmt.executeUpdate();
-            log.debug("Dish has been added to database");
-        }  catch (SQLIntegrityConstraintViolationException e) {
-            String errorMassage = "Something went wrong. Dish haven't been added to basket. Try please again later.";
-            log.error(errorMassage, e);
-            throw new DuplicatedEntityException(errorMassage, e);
-        }catch (SQLException e) {
-            String errorMassage = "Something went wrong. Dish haven't been added to basket. Try please again later.";
-            log.error(errorMassage, e);
-            throw new DAOException(errorMassage, e);
+            log.debug("Basket has been created.");
+        } catch (SQLIntegrityConstraintViolationException e) {
+            throw e;
+        } catch (SQLException e) {
+            throw new DAOException("Unable to create basket.", e);
         }
         return true;
     }
@@ -45,7 +41,6 @@ public class BasketDao extends AbstractDao<Basket> {
     public Optional<Basket> findById(long id) throws DAOException {
         throw new UnsupportedOperationException();
     }
-
 
     @Override
     public List<Basket> findAll() throws DAOException {
@@ -68,11 +63,8 @@ public class BasketDao extends AbstractDao<Basket> {
     }
 
 
-
-
-
     /**
-     * Method gets returns dishes, and dishes amount for corespondent dish in order consequently.
+     * Method returns dishes, and dishes amount for corespondent dish in order consequently.
      * If order is not confirmed yet (user just put it to his basket), will be displayed
      * the actual price of a dish. Otherwise, user will get the fixed price of a dish for the
      * moment of the confirmation an order.
@@ -87,36 +79,25 @@ public class BasketDao extends AbstractDao<Basket> {
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     baskets.add(mapBasket(rs, order));
-//                    Dish dish = mapDish(rs);
-//                    if (order.getBookingStatus() != BookingStatus.BOOKING) {
-//                        dish.setPrice(rs.getBigDecimal(OrderFields.ORDER_DISH_FIXED_PRICE));
-//                    }
-//                    Integer amountInOrder = rs.getInt(OrderFields.ORDER_DISH_AMOUNT_IN_ORDER);
-//                    dishes.put(dish, amountInOrder);
                 }
             }
-            log.debug("List of dishes (by category) has been received from database. ");
+            log.debug("List of baskets has been received from database. ");
         } catch (SQLException e) {
-            log.error("Error in getting list of dishes from database. ", e);
             throw new DAOException(e);
         }
         return baskets;
     }
 
-
     private Basket mapBasket(ResultSet rs, Order order) throws SQLException {
-        DishDao dishDao = new DishDao();//todo подумати...
+        DishDao dishDao = new DishDao();//todo подумати... з BasketDao викликається DishDao
         Dish dish =  dishDao.mapDish(rs);
         int amount = rs.getInt(BasketFields.DISH_AMOUNT);
         BigDecimal price = rs.getBigDecimal(BasketFields.DISH_PRICE);
         if (order.getBookingStatus() != BookingStatus.BOOKING) {
             dish.setPrice(price);
         }
-//
-//        int amountInOrder = rs.getInt(OrderFields.ORDER_DISH_AMOUNT_IN_ORDER);
         return Basket.getInstance(order, dish, price, amount);
     }
-
 
     public Map<String, Integer> getNumberOfRequestedDishesInOrder(long orderId) throws DAOException {
         Map<String, Integer> dishes = new HashMap<>();
@@ -129,13 +110,11 @@ public class BasketDao extends AbstractDao<Basket> {
                     dishes.put(dishName, dishesAmount);
                 }
             }
+            log.debug("Number of requested dishes has been receive from database.");
         } catch (SQLException e) {
-            log.error("Error in getting list of dishes from database. ");
             throw new DAOException(e);
         }
         return dishes;
     }
-
-
 
 }

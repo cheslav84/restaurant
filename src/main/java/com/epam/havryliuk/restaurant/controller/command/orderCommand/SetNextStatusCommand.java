@@ -5,6 +5,8 @@ import com.epam.havryliuk.restaurant.controller.command.ActionCommand;
 import com.epam.havryliuk.restaurant.model.constants.RequestParameters;
 import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
 import com.epam.havryliuk.restaurant.model.entity.BookingStatus;
+import com.epam.havryliuk.restaurant.model.entity.Role;
+import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.exceptions.EntityAbsentException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.resource.MessageManager;
@@ -18,39 +20,83 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
+import javax.security.sasl.AuthenticationException;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
 public class SetNextStatusCommand implements ActionCommand {
     private static final Logger log = LogManager.getLogger(SetNextStatusCommand.class);
 
+    private static Map<BookingStatus, Role> bookingAccessRoles;
+
+    static {
+        bookingAccessRoles = getBookingAccessRoles();
+    }
+
+    /**
+     * The command method gets the next booking status that has to be set in order, then checks
+     * if the user has rights to do it, and if user has its, asks service to change the status by id.
+     * If some unforeseen situation occurs, method catches the appropriate exception and sends corresponding
+     * message to user.
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws ServletException
+     */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         long orderId = Long.parseLong(request.getParameter(RequestParameters.ORDER_ID));
         HttpSession session = request.getSession();
         MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
-        BookingStatus bookingStatus = getBookingStatus(request);
         OrderService orderService = new OrderService();
         try {
-            orderService.changeOrderStatus(orderId, bookingStatus);//todo if booking status new check every dish if it is present
+            BookingStatus nextBookingStatus = getNextBookingStatus(request);
+            checkAccessRights(session, nextBookingStatus);//todo подумати, може зробити через фільтр
+            orderService.changeOrderStatus(orderId, nextBookingStatus);
             session.removeAttribute(CURRENT_ORDER);
-        } catch (EntityAbsentException e){
+        } catch (EntityAbsentException e) {
             session.setAttribute(ERROR_MESSAGE,
                     messageManager.getProperty(ResponseMessages.ABSENT_DISHES) + e.getMessage());
-            log.error("Some of dishes are already absent in menu.");
+            log.error("Some of dishes are already absent in menu.", e);
         } catch (ServiceException e) {
             session.setAttribute(ERROR_MESSAGE,
                     messageManager.getProperty(ResponseMessages.ORDER_CONFIRM_ERROR));
+            log.error(e.getMessage(), e);
+        } catch (AuthenticationException e) {
+            session.setAttribute(ERROR_MESSAGE,
+                    messageManager.getProperty(ResponseMessages.UNAPPROPRIATED_RIGHTS_TO_CHANGE_STATUS));
             log.error(e.getMessage(), e);
         }
         response.sendRedirect(URLUtil.getRefererPage(request));
     }
 
+
+    /**
+     * Checks if user has the rights to change the order status.
+     * @param session
+     * @param nextBookingStatus
+     * @throws AuthenticationException
+     */
+    private void checkAccessRights(HttpSession session, BookingStatus nextBookingStatus) throws AuthenticationException {
+        User user = (User) session.getAttribute(LOGGED_USER);
+        if (!user.getRole().equals(bookingAccessRoles.get(nextBookingStatus))) {
+            throw new AuthenticationException("Unappropriated rights to change the order status.");
+        }
+    }
+
+    /**
+     * Method retrieves current BookingStatus from the request,
+     * and returns the status that has to be set next.
+     * @param request
+     * @return
+     */
     @NotNull
-    private BookingStatus getBookingStatus(HttpServletRequest request) {
+    private BookingStatus getNextBookingStatus(HttpServletRequest request) {
         String current = request.getParameter(RequestParameters.CURRENT_STATUS);
         BookingStatus currentStatus = BookingStatus.valueOf(current);
         long currentStatusId = currentStatus.getId();
@@ -63,5 +109,20 @@ public class SetNextStatusCommand implements ActionCommand {
         return nextStatus;
     }
 
+    /**
+     * Map contains the booking statuses and correspondent user roles
+     * that has rights to set that statuses.
+     * @return
+     */
+    private static Map<BookingStatus, Role> getBookingAccessRoles() {
+        Map<BookingStatus, Role> bookingAccessRoles = new HashMap<>();
+        bookingAccessRoles.put(BookingStatus.NEW, Role.CLIENT);
+        bookingAccessRoles.put(BookingStatus.COOKING, Role.MANAGER);
+        bookingAccessRoles.put(BookingStatus.IN_DELIVERY, Role.MANAGER);
+        bookingAccessRoles.put(BookingStatus.WAITING_PAYMENT, Role.MANAGER);
+        bookingAccessRoles.put(BookingStatus.PAID, Role.CLIENT);
+        bookingAccessRoles.put(BookingStatus.COMPLETED, Role.MANAGER);
+        return bookingAccessRoles;
+    }
 
 }

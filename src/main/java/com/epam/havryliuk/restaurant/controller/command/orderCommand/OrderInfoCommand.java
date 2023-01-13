@@ -3,6 +3,7 @@ package com.epam.havryliuk.restaurant.controller.command.orderCommand;
 import com.epam.havryliuk.restaurant.controller.command.ActionCommand;
 import com.epam.havryliuk.restaurant.model.constants.RequestParameters;
 import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
+import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.resource.MessageManager;
@@ -27,7 +28,7 @@ public class OrderInfoCommand implements ActionCommand {
         long dishId = Long.parseLong(request.getParameter(RequestParameters.DISH_ID));
         log.debug("\"/dishId\" " + dishId + " has been received from user.");
         HttpSession session = request.getSession();
-        DishService dishService = new DishService();//todo redirect if not logged in
+        DishService dishService = new DishService();
         Dish dish;
         try {
             dish = dishService.getDish(dishId);
@@ -40,8 +41,12 @@ public class OrderInfoCommand implements ActionCommand {
                     messageManager.getProperty(ResponseMessages.DISH_IN_MENU_NOT_FOUND));
             log.error(e);
         }
-        URLUtil.getRefererPage(request);
-        response.sendRedirect(URLUtil.getRefererPage(request));
-//        response.sendRedirect("index");
+        String redirectingPage;
+        if (session.getAttribute(LOGGED_USER) != null) {
+            redirectingPage = URLUtil.getRefererPage(request);
+        } else {
+            redirectingPage = AppPagesPath.FORWARD_REGISTRATION;
+        }
+        response.sendRedirect(redirectingPage);
     }
 }

@@ -28,6 +28,7 @@ public interface ResponseMessages {
     String PASSWORDS_NOT_COINCIDE = "message.passwordsNotCoincide";
     String WRONG_GENDER_FIELD = "message.wrongGenderField";
     String EMPTY_BASKET = "message.emptyBasket";
+    String UNAPPROPRIATED_RIGHTS_TO_CHANGE_STATUS = "message.unappropriatedRightsToChangeStatus";
 
 
 

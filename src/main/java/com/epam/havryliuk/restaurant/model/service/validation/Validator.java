@@ -4,7 +4,7 @@ import com.epam.havryliuk.restaurant.model.constants.Regex;
 import com.epam.havryliuk.restaurant.model.constants.RequestParameters;
 import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
 import com.epam.havryliuk.restaurant.model.entity.User;
-import com.epam.havryliuk.restaurant.model.exceptions.BadCredentialsException;
+import com.epam.havryliuk.restaurant.model.exceptions.ValidationException;
 import com.epam.havryliuk.restaurant.model.resource.MessageManager;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -17,7 +17,7 @@ import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.DE
 
 public class Validator {
 
-    public void validateUserData(User user, HttpServletRequest req) throws BadCredentialsException {//todo може зробити static?
+    public void validateUserData(User user, HttpServletRequest req) throws ValidationException {//todo може зробити static?
         HttpSession session = req.getSession();
         MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
         boolean correctFields = true;
@@ -59,7 +59,7 @@ public class Validator {
             correctFields = false;
         }
         if (!correctFields) {
-            throw new BadCredentialsException();
+            throw new ValidationException();
         }
     }
 
@@ -74,7 +74,7 @@ public class Validator {
     }
 
     public void validateDeliveryData(String deliveryAddress, String deliveryPhone, HttpServletRequest req)
-            throws BadCredentialsException {
+            throws ValidationException {
         HttpSession session = req.getSession();
         MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
         boolean correctFields = true;
@@ -92,17 +92,17 @@ public class Validator {
         }
         session.setAttribute(DELIVERY_PHONE, deliveryPhone);
         if (!correctFields){
-            throw new BadCredentialsException("The delivery data is incorrect.");
+            throw new ValidationException("The delivery data is incorrect.");
         }
     }
 
-    public void validateDishesAmount(int dishesAmount, HttpServletRequest req) throws BadCredentialsException {
+    public void validateDishesAmount(int dishesAmount, HttpServletRequest req) throws ValidationException {
         if ((dishesAmount <= 0)){
             HttpSession session = req.getSession();
             MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
             session.setAttribute(ERROR_MESSAGE,
                     messageManager.getProperty(ResponseMessages.INCORRECT_NUMBER_OF_DISHES_ERROR));
-            throw new BadCredentialsException("The number of dishes is incorrect.");        }
+            throw new ValidationException("The number of dishes is incorrect.");        }
     }
 
 

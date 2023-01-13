@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
 import java.util.List;
 import java.util.Optional;
@@ -19,7 +20,7 @@ public abstract class AbstractDao<T extends Entity> {
     public AbstractDao() {
     }
 
-    public abstract boolean create(T entity) throws DAOException;
+    public abstract boolean create(T entity) throws DAOException, SQLIntegrityConstraintViolationException;
     public abstract Optional<T> findById(long id) throws DAOException;
     public abstract List<T> findAll() throws DAOException;
     public abstract T update(T entity) throws DAOException;//todo повертати boolean???

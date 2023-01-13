@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
-  <display-name>Restaurant</display-name>
+  <display-name>restaurant</display-name>
 
     <welcome-file-list>
         <welcome-file>/WEB-INF/jsp/index.jsp</welcome-file>
@@ -14,6 +14,7 @@
         <error-code>404</error-code>
         <location>/WEB-INF/jsp/errorPage.jsp</location>
     </error-page>
+
     <error-page>
         <exception-type>java.lang.RuntimeException</exception-type>
         <location>/WEB-INF/jsp/errorPage.jsp</location>

@@ -25,6 +25,8 @@ public class LogInFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
+
+
         if (!isUserLoggedIn(httpRequest)) {
             httpResponse.sendRedirect(AppPagesPath.REDIRECT_REGISTRATION);
         } else {

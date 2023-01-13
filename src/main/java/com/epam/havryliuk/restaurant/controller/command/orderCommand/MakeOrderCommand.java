@@ -8,7 +8,7 @@ import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
 import com.epam.havryliuk.restaurant.model.entity.Order;
 import com.epam.havryliuk.restaurant.model.entity.User;
-import com.epam.havryliuk.restaurant.model.exceptions.BadCredentialsException;
+import com.epam.havryliuk.restaurant.model.exceptions.ValidationException;
 import com.epam.havryliuk.restaurant.model.exceptions.DuplicatedEntityException;
 import com.epam.havryliuk.restaurant.model.exceptions.IrrelevantDataException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
@@ -70,7 +70,7 @@ public class MakeOrderCommand implements ActionCommand {
             session.removeAttribute(DELIVERY_ADDRESS);
             session.removeAttribute(DELIVERY_PHONE);
             log.debug(order);
-        } catch (ServiceException | BadCredentialsException e) {
+        } catch (ServiceException | ValidationException e) {
             session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
             log.error(e.getMessage(), e);
         }
@@ -119,7 +119,7 @@ public class MakeOrderCommand implements ActionCommand {
             session.setAttribute(ORDER_MESSAGE,
                     messageManager.getProperty(ResponseMessages.DISH_ALREADY_IN_ORDER));
             session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
-        } catch (ServiceException | BadCredentialsException e) {
+        } catch (ServiceException | ValidationException e) {
             session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
             log.error(e);
         }
@@ -140,7 +140,7 @@ public class MakeOrderCommand implements ActionCommand {
     }
 
 
-    private int getDishesAmount(HttpServletRequest req) throws BadCredentialsException {
+    private int getDishesAmount(HttpServletRequest req) throws ValidationException {
         int dishesAmount;
         HttpSession session = req.getSession();
         MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
@@ -151,7 +151,7 @@ public class MakeOrderCommand implements ActionCommand {
         } catch (NumberFormatException e) {
             session.setAttribute(ERROR_MESSAGE,
                     messageManager.getProperty(ResponseMessages.NUMBER_OF_DISHES_IS_EMPTY_ERROR));
-            throw new BadCredentialsException("Enter amount of dishes you want to order please.");
+            throw new ValidationException("Enter amount of dishes you want to order please.");
         }
         return dishesAmount;
     }
