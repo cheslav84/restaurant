@@ -89,8 +89,6 @@
                                                     </div>
                                                 </div>
                                                 <c:if test="${orderAndPrice.key.bookingStatus == 'BOOKING'}">
-                                                    <%-- <form method="post" action="remove_from_order"
-                                                        name="confirmOrder"> --%>
                                                         <form method="post" action="remove_from_order">
                                                             <input type="hidden" name="orderId"
                                                                 value="${orderAndPrice.key.id}">
@@ -124,7 +122,7 @@
                                     <form method="post"
                                         action="set_next_status?currentStatus=${orderAndPrice.key.bookingStatus}"
                                         name="NEW">
-                                        <a href="index" class="button order-confirm-button">Contirue ordering</a>
+                                        <a href="menu" class="button order-confirm-button">Contirue ordering</a>
                                         <button value="${orderAndPrice.key.id}" name="orderId"
                                             class="button order-confirm-button">Confirm my orders</button>
                                     </form>

@@ -22,7 +22,7 @@
                 <fmt:setLocale value="${sessionScope.language}" />
                                 <%-- <fmt:setLocale value="uk" /> --%>
                 <fmt:setBundle basename="menu" />
-                <jsp:include page="../../sidebar.jsp" />
+                <jsp:include page="../sidebar.jsp" />
             
                 <div id="top" class="page-header">
                     <div class="page-header-overlay orders-header">
@@ -150,7 +150,7 @@
             
                 </div>
                
-                <jsp:include page="../../footer.jsp" />
+                <jsp:include page="../footer.jsp" />
             
                 <script src="view/js/jquery3.6.1.js" type="text/javascript" crossorigin="anonymous"></script>
                 <script src="view/js/webflow.e.js" type="text/javascript"></script>

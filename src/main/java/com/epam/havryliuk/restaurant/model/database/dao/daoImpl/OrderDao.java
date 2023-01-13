@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class OrderDao extends AbstractDao<Order> {
-    private static final Logger log = LogManager.getLogger(OrderDao.class);
+    private static final Logger LOG = LogManager.getLogger(OrderDao.class);
 
     @Override
     public boolean create(Order order) throws DAOException {
@@ -29,10 +29,10 @@ public class OrderDao extends AbstractDao<Order> {
                         }
                     }
                 }
-            log.debug("The order has been added to database.");
+            LOG.debug("The order has been added to database.");
         } catch (SQLException e) {
             String message = "Something went wrong. Try to make an order later please.";
-            log.error("Error in inserting order to database.", e);
+            LOG.error("Error in inserting order to database.", e);
             throw new DAOException(message, e);
         }
         return true;
@@ -51,10 +51,10 @@ public class OrderDao extends AbstractDao<Order> {
                     order.setUser(user);
                 }
             }
-            log.debug("Order has been received from database.");
+            LOG.debug("Order has been received from database.");
         } catch (SQLException e) {
             String errorMassage = "Searched order is absent in database";
-            log.error(errorMassage, e);
+            LOG.error(errorMassage, e);
             throw new DAOException(errorMassage, e);
         }
         return order;
@@ -96,9 +96,9 @@ public class OrderDao extends AbstractDao<Order> {
                     orders.add(order);
                 }
             }
-            log.debug("List of dishes (by category) has been received from database. ");
+            LOG.debug("List of dishes (by category) has been received from database. ");
         } catch (SQLException e) {
-            log.error("Error in getting list of dishes from database. ", e);
+            LOG.error("Error in getting list of dishes from database. ", e);
             throw new DAOException(e);
         }
         return orders;
@@ -115,9 +115,9 @@ public class OrderDao extends AbstractDao<Order> {
                     orders.add(mapOrder(rs));
                 }
             }
-            log.debug("List of dishes (by category) has been received from database. ");
+            LOG.debug("List of dishes (by category) has been received from database. ");
         } catch (SQLException e) {
-            log.error("Error in getting list of dishes from database. ", e);
+            LOG.error("Error in getting list of dishes from database. ", e);
             throw new DAOException(e);
         }
         return orders;
@@ -132,9 +132,9 @@ public class OrderDao extends AbstractDao<Order> {
                     numberOfOrders = rs.getInt(OrderFields.NUMBER_OF_ORDERS);
                 }
             }
-            log.debug("Number of orders has been received from database: " + numberOfOrders);
+            LOG.debug("Number of orders has been received from database: " + numberOfOrders);
         } catch (SQLException e) {
-            log.error("Number of orders has not been received from database.");
+            LOG.error("Number of orders has not been received from database.");
             throw new DAOException(e);
         }
         return numberOfOrders;
@@ -168,10 +168,10 @@ public class OrderDao extends AbstractDao<Order> {
                     date = rs.getTimestamp(OrderFields.ORDER_CREATION_DATE);
                 }
             }
-            log.debug("Searched order creation date has not been found in database");
+            LOG.debug("Searched order creation date has not been found in database");
         } catch (SQLException e) {
             String errorMassage = "Searched order is absent in database";
-            log.error(errorMassage, e);
+            LOG.error(errorMassage, e);
             throw new DAOException(errorMassage, e);
         }
         return date;
@@ -215,10 +215,10 @@ public class OrderDao extends AbstractDao<Order> {
             stmt.setLong(k++, orderId);
             stmt.setString(k++, bookingStatus.name());
             stmt.executeUpdate();
-            log.debug("The status in order with id \"" + orderId +
+            LOG.debug("The status in order with id \"" + orderId +
                     "\", has been successfully changed");
         } catch (SQLException e) {
-            log.error("The status in order has not been changed", e);
+            LOG.error("The status in order has not been changed", e);
             throw new DAOException(e);
         }
         return true;
@@ -244,9 +244,9 @@ public class OrderDao extends AbstractDao<Order> {
         try (PreparedStatement stmt = connection.prepareStatement(OrderQuery.DELETE_ORDER_BY_ID)) {
             stmt.setLong(1, id);
             stmt.executeUpdate();
-            log.debug("Order has been removed from order in database");
+            LOG.debug("Order has been removed from order in database");
         } catch (SQLException e) {
-            log.error("Something went wrong. Order haven't been removed.");
+            LOG.error("Something went wrong. Order haven't been removed.");
             throw new DAOException(e);
         }
         return true;
@@ -258,9 +258,9 @@ public class OrderDao extends AbstractDao<Order> {
             stmt.setLong(++k, orderId);
             stmt.setLong(++k, dishId);
             stmt.executeUpdate();
-            log.debug("Dish has been removed from order in database");
+            LOG.debug("Dish has been removed from order in database");
         } catch (SQLException e) {
-            log.error("Something went wrong. Dish haven't been removed. Try please again later.");
+            LOG.error("Something went wrong. Dish haven't been removed. Try please again later.");
             throw new DAOException(e);
         }
         return true;
@@ -275,9 +275,9 @@ public class OrderDao extends AbstractDao<Order> {
                     numberOfDishes = rs.getInt(OrderFields.NUMBER_OF_DISHES_IN_ORDER);
                 }
             }
-            log.debug("Number of dishes in order has been received from database.");
+            LOG.debug("Number of dishes in order has been received from database.");
         } catch (SQLException e) {
-            log.error("Number of dishes in order has not been received from database.");
+            LOG.error("Number of dishes in order has not been received from database.");
             throw new DAOException(e);
         }
         return numberOfDishes;

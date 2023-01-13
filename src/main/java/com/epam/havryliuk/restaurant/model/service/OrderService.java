@@ -108,7 +108,6 @@ public class OrderService {
             for (Order order : orders) {
                 order.setBaskets(basketDao.getOrderDishes(order));
             }
-//            transaction.commit();
             LOG.debug("The page was successfully created.");
         } catch (DAOException e) {
             LOG.error("Unable to get orders.");
@@ -134,7 +133,7 @@ public class OrderService {
      * @throws ServiceException when impossible to get data from storage or to write data to it.
      * @throws ValidationException when delivery address or delivery phone is not valid.
      */
-    public Order getOrder(User user, String deliveryAddress, String deliveryPhone) throws ServiceException, ValidationException {
+    public Order getOrCreateOrder(User user, String deliveryAddress, String deliveryPhone) throws ServiceException, ValidationException {
         EntityTransaction transaction = new EntityTransaction();
         OrderDao orderDao = new OrderDao();
         Order order;
@@ -154,7 +153,7 @@ public class OrderService {
             }
             transaction.commit();
         } catch (DAOException e) {
-            LOG.error("Unable to get an order.");
+            LOG.error("Unable to get or create an order.");
             transaction.rollback();
             throw new ServiceException(e.getMessage(), e);
         } finally {
@@ -216,12 +215,10 @@ public class OrderService {
             if (dishesInOrder == 1) {
                 orderDao.delete(orderId);
             } else {
-                orderDao.deleteDishFromOrderById(orderId,dishId);
+                orderDao.deleteDishFromOrderById(orderId, dishId);
             }
-            transaction.commit();
             LOG.debug("A dish has been removed from the order.");
         } catch (DAOException e) {
-            transaction.rollback();
             LOG.error("Unable to remove a dish from the order.");
             throw new ServiceException(e);
         } finally {

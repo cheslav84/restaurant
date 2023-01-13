@@ -39,7 +39,8 @@
             </div>
 
             <nav role="navigation" class="nav-menu w-nav-menu">
-                <a href="index" id="index-nav" aria-current="page" class="nav-link w-nav-link w--current"
+
+                <%-- <a href="index" id="index-nav" aria-current="page" class="nav-link w-nav-link w--current"
                     style="max-width: 940px;">
                     <fmt:message key="sidebar.home"/>
                 </a>
@@ -48,21 +49,41 @@
                     <fmt:message key="sidebar.menu"/>
                 </a>
 
+                <a href="login_page" aria-current="page"  class="nav-link w-nav-link" style="max-width: 940px;">
+                    <fmt:message key="sidebar.login"/>
+                </a> --%>
+
+                <%-- <a href="index" id="index-nav" aria-current="page" class="nav-link w-nav-link w--current"
+                    style="max-width: 940px;">
+                    <fmt:message key="sidebar.home"/>
+                </a>
+
+                <a href="menu" aria-current="page" class="nav-link w-nav-link" style="max-width: 940px;">
+                    <fmt:message key="sidebar.menu"/>
+                </a> --%>
+
                 <c:if test="${sessionScope.loggedUser eq null}">
-                    <a href="login_page" aria-current="page"  class="nav-link w-nav-link" style="max-width: 940px;">
-                    <%-- <a href="page?path=registration"  class="nav-link w-nav-link" style="max-width: 940px;"> --%>
-                        <fmt:message key="sidebar.login"/>
-                    </a>
+                    <jsp:include page="navigation_visitor.jsp"/>
                 </c:if>
 
-                <c:if test="${sessionScope.loggedUser ne null}">
+
+                <c:if test="${sessionScope.loggedUser.role == 'CLIENT'}">
+                    <jsp:include page="navigation_client.jsp"/>
+                 </c:if>
+
+
+                <c:if test="${sessionScope.loggedUser.role == 'MANAGER'}">
+                    <jsp:include page="navigation_manager.jsp"/>
+                </c:if>
+
+                <%-- <c:if test="${sessionScope.loggedUser ne null}">
                     <a href="basket" class="nav-link w-nav-link" style="max-width: 940px;">
                         <fmt:message key="sidebar.basket"/>
                     </a>
-                </c:if>
+                </c:if> --%>
 
 
-                 <c:if test="${sessionScope.loggedUser ne null}">
+                 <%-- <c:if test="${sessionScope.loggedUser ne null}">
                      <c:if test="${sessionScope.loggedUser.role == 'MANAGER'}">
                           <a href="manage_orders" aria-current="page" class="nav-link w-nav-link">
                             <fmt:message key="sidebar.manageOrders"/>
@@ -71,18 +92,7 @@
                      <a href="logout" aria-current="page" class="nav-link w-nav-link">
                         <fmt:message key="sidebar.logout"/>
                      </a>
-                 </c:if>
-
-
-
-           <%--     <a href="reservation.html" class="nav-link w-nav-link" style="max-width: 940px;">Reservation</a>
-                <a href="gallery.html" class="nav-link w-nav-link" style="max-width: 940px;">Gallery</a>
-                <a href="parties.html" class="nav-link w-nav-link" style="max-width: 940px;">Parties &amp;
-                    Events</a>
-                <a href="about-us.html" class="nav-link w-nav-link" style="max-width: 940px;">About us</a>
-                <a href="blog.html" class="nav-link w-nav-link" style="max-width: 940px;">Blog</a>
-                <a href="contact.html" class="nav-link w-nav-link" style="max-width: 940px;">Contact us</a>--%>
-
+                 </c:if> --%>
 
             </nav>
 

@@ -23,7 +23,6 @@
             <link href="view/css/menu.css" rel="stylesheet" type="text/css">
             <link href="view/css/sidebar.css" rel="stylesheet" type="text/css">
             <link href="view/css/order-info.css" rel="stylesheet" type="text/css">
-
             <!-- <script src="view/js/menu.js" type="text/javascript"></script> -->
 
         </head>
@@ -65,7 +64,7 @@
                                 </div>
                                 <a href="#about-us" data-ix="slider-button-1" class="button slider-button">More about
                                     us</a>
-                                <a href="#reserv-dish" data-ix="slider-button-2" class="button">Reserve a table!</a>
+                                <a href="#reserv-dish" data-ix="slider-button-2" class="button">Reserve a dish!</a>
                             </div>
                         </div>
                     </div>
@@ -94,8 +93,6 @@
                     <div class="w-icon-slider-right"></div>
                 </div>
             </div>
-
-
 
            <div id="about-us" class="section wf-section">
                 <div class="container w-container">

@@ -31,6 +31,13 @@ import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.ER
 public class MakeOrderCommand implements ActionCommand {
     private static final Logger log = LogManager.getLogger(MakeOrderCommand.class);
 
+    /**
+     * Method first tries to get an Order from HttpSession.
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws ServletException
+     */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession();
@@ -42,7 +49,10 @@ public class MakeOrderCommand implements ActionCommand {
             session.removeAttribute(ERROR_MESSAGE);
             log.debug("Order in session: " + order);
         } else {
-            makeNewOrder(request, user, orderService);
+            order = getFromStorageOrCreateOrder(request, orderService, user);
+            if (order != null) {// todo (order does not exist in database if null) think of refactoring
+                saveDishToOrder(request, orderService, order);
+            }
         }
         String redirectionPage = getRedirectionPage(request);
         response.sendRedirect(redirectionPage);
@@ -56,14 +66,14 @@ public class MakeOrderCommand implements ActionCommand {
      * @param user
      * @param orderService
      */
-    private void makeNewOrder(HttpServletRequest request, User user, OrderService orderService) {
+    private Order getFromStorageOrCreateOrder(HttpServletRequest request, OrderService orderService, User user) {
         HttpSession session = request.getSession();
         Order order = null;
         try {
             String deliveryAddress = request.getParameter(RequestParameters.DELIVERY_ADDRESS);
             String deliveryPhone = request.getParameter(RequestParameters.DELIVERY_PHONE);
             new Validator().validateDeliveryData(deliveryAddress, deliveryPhone, request);
-            order = orderService.getOrder(user, deliveryAddress, deliveryPhone);
+            order = orderService.getOrCreateOrder(user, deliveryAddress, deliveryPhone);
             session.setAttribute(CURRENT_ORDER, order);
             session.removeAttribute(ERROR_MESSAGE);
             session.removeAttribute(ORDER_MESSAGE);
@@ -74,9 +84,10 @@ public class MakeOrderCommand implements ActionCommand {
             session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
             log.error(e.getMessage(), e);
         }
-        if (order != null) {// todo think of refactoring
-            saveDishToOrder(request, orderService, order);
-        }
+//        if (order != null) {// todo (order does not exist in database if null) think of refactoring
+//            saveDishToOrder(request, orderService, order);
+//        }
+        return order;
     }
 
 
