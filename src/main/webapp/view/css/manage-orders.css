@@ -1,3 +1,15 @@
+
+.order-sort-button-wrapper {
+    width: 100%;
+    display: flex;
+}
+.button.order-sort-button {
+    margin: 0;
+    width: 50%;
+    border-left: 1px solid #faf3eb;
+    border-right: 1px solid #faf3eb;
+}
+
 .order-container {
     padding-bottom: 15px;
     /* margin-bottom: 10px; */
@@ -218,6 +230,16 @@
      
     .order-list {
         padding-right: 0px;
+    }
+
+    .order-sort-button-wrapper {
+        display: block;
+    }
+
+    .button.order-sort-button {
+        width: 100%;
+        border-bottom: 1px solid #faf3eb;
+
     }
     
 }

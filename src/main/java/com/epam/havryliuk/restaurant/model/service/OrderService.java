@@ -89,10 +89,11 @@ public class OrderService {
      * to the Page.
      * @param page - number of current Page that displays Order list for User.
      * @param recordsPerPage - orders amount that has to be displayed per page.
+     * @param sorting - sorting parameter. Orders can be sorted by date or status.
      * @return page of Orders that has to be displayed in one user page.
      * @throws ServiceException when impossible to get data.
      */
-    public Page<Order> getAllOrders(int page, int recordsPerPage) throws ServiceException {
+    public Page<Order> getAllOrders(int page, int recordsPerPage, OrderSorting sorting) throws ServiceException {
         EntityTransaction transaction = new EntityTransaction();
         OrderDao orderDao = new OrderDao();
         BasketDao basketDao = new BasketDao();
@@ -102,7 +103,7 @@ public class OrderService {
             transaction.initTransaction(orderDao, basketDao);
             int noOfRecords = orderDao.getNoOfOrders();
             int offset = orderPage.getOffset(page, recordsPerPage);
-            orders = orderDao.getOrdersSortedByStatusThenTime(offset, recordsPerPage);
+            orders = orderDao.getPartOfOrders(offset, recordsPerPage, sorting);
             orderPage.setNoOfPages(noOfRecords, recordsPerPage);
             orderPage.setRecords(orders);
             for (Order order : orders) {

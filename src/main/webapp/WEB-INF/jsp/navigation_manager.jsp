@@ -19,7 +19,7 @@
                     <fmt:message key="sidebar.menu"/>
                 </a>
 
-                          <a href="manage_orders" aria-current="page" class="nav-link w-nav-link">
+                          <a href="manage_orders?sorted=date" aria-current="page" class="nav-link w-nav-link">
                             <fmt:message key="sidebar.manageOrders"/>
                           </a>
 

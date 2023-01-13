@@ -104,9 +104,15 @@ public class OrderDao extends AbstractDao<Order> {
         return orders;
     }
 
-    public List<Order> getOrdersSortedByStatusThenTime(int offset, int noOfRecords) throws DAOException {
+    public List<Order> getPartOfOrders(int offset, int noOfRecords, OrderSorting sorting) throws DAOException {
         List<Order> orders = new ArrayList<>();
-        try (PreparedStatement stmt = connection.prepareStatement(OrderQuery.GET_CONFIRMED_ORDERS_SORTED_BY_STATUS_THEN_TIME)) {
+        String query;
+        if (sorting.equals(OrderSorting.STATUS)){
+            query = OrderQuery.GET_CONFIRMED_ORDERS_SORTED_BY_STATUS_THEN_TIME;
+        } else {
+            query = OrderQuery.GET_CONFIRMED_ORDERS_SORTED_BY_TIME_THEN_STATUS;
+        }
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
            int k = 0;
             stmt.setInt(++k, offset);
             stmt.setInt(++k, noOfRecords);

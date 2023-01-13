@@ -37,7 +37,19 @@
                         </div>
                     </div>
                 </div>
+                
             
+
+<div class="order-sort-button-wrapper">
+                    <a href="manage_orders?sorted=DATE" data-w-tab="DATE" class="button order-sort-button">
+                        <div>sort by order date</div>
+                    </a>
+                    <a href="manage_orders?sorted=STATUS" data-w-tab="STATUS" class="button order-sort-button">
+                        <div>sort by order status</div>
+                    </a>
+        </div>
+
+ 
             
                 <div class="error-message">
                     <c:if test="${requestScope.errorMessage}"></c:if>
@@ -99,7 +111,6 @@
                                 </div>
             
                                 <c:if test="${(order.bookingStatus ne 'COMPLETED') && (order.bookingStatus ne 'WAITING_PAYMENT')}">
-                                    <%-- <c:if test="${order.bookingStatus != 'WAITING_PAYMENT'}"> --%>
                                         <form method="post" action="set_next_status?currentStatus=${order.bookingStatus}">
                                             <button value="${order.id}" name="orderId" class="button order-confirm-button">
                                                 <fmt:message key="status.next.button.${order.bookingStatus}" />
@@ -111,6 +122,7 @@
                             <div id="delimiter"></div>
                     </div>     
                 </c:forEach>
+
                 <div class="page-wrapper">
                     <div class="pages orders-per-page">Orders per page
                             <select name="amount" class="orders-per-page-amout" id="recordsPerPage">
@@ -150,6 +162,22 @@
             
                 </div>
                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 <jsp:include page="../footer.jsp" />
             
                 <script src="view/js/jquery3.6.1.js" type="text/javascript" crossorigin="anonymous"></script>

@@ -11,6 +11,8 @@
 }
 
 .menu-page-tabs-menu{
+  width: 100%;
+  display: flex;
   margin-top: -80px;
 }
 
@@ -145,8 +147,6 @@
 }
 
 
-
-
 @media screen and (max-width:767px) {
   
   .button.order-menu-button {
@@ -162,6 +162,7 @@
   }
 
   .menu-page-tabs-menu {
+    display: block;
     margin-top: -55px;
   }
   .menu-page-tab-button {

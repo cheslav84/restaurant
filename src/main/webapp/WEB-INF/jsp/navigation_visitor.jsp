@@ -27,7 +27,6 @@
 
 
                     <a href="login_page" aria-current="page"  class="nav-link w-nav-link" style="max-width: 940px;">
-                    <%-- <a href="page?path=registration"  class="nav-link w-nav-link" style="max-width: 940px;"> --%>
                         <fmt:message key="sidebar.login"/>
                     </a>
 

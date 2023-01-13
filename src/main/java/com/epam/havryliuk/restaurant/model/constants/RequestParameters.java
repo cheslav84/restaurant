@@ -20,6 +20,9 @@ public interface RequestParameters {
     String MENU_CATEGORY = "menuCategory";
     String MENU_SORTING_OPTION = "menuSortingOption";
     String PAGE_NUMBER = "page";
+    String ORDER_SORTING_PARAMETER = "sorted";
+    String ORDER_SORTING_DATE = "date";
+    String ORDER_SORTING_STATUS = "status";
     String RECORDS_PER_PAGE = "recordsPerPage";
 
 
