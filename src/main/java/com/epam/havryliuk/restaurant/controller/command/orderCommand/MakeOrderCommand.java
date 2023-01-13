@@ -50,6 +50,8 @@ public class MakeOrderCommand implements ActionCommand {
             log.debug("Order in session: " + order);
         } else {
             order = getFromStorageOrCreateOrder(request, orderService, user);
+            session.setAttribute(CURRENT_ORDER, order);
+
             if (order != null) {// todo (order does not exist in database if null) think of refactoring
                 saveDishToOrder(request, orderService, order);
             }
@@ -72,9 +74,8 @@ public class MakeOrderCommand implements ActionCommand {
         try {
             String deliveryAddress = request.getParameter(RequestParameters.DELIVERY_ADDRESS);
             String deliveryPhone = request.getParameter(RequestParameters.DELIVERY_PHONE);
-            new Validator().validateDeliveryData(deliveryAddress, deliveryPhone, request);
+//            Validator.validateDeliveryData(deliveryAddress, deliveryPhone, request);// todo uncomment
             order = orderService.getOrCreateOrder(user, deliveryAddress, deliveryPhone);
-            session.setAttribute(CURRENT_ORDER, order);
             session.removeAttribute(ERROR_MESSAGE);
             session.removeAttribute(ORDER_MESSAGE);
             session.removeAttribute(DELIVERY_ADDRESS);
@@ -157,7 +158,7 @@ public class MakeOrderCommand implements ActionCommand {
         MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
         try {
             dishesAmount = Integer.parseInt(req.getParameter(RequestParameters.ORDER_DISHES_AMOUNT).trim());
-            new Validator().validateDishesAmount(dishesAmount, req);
+            Validator.validateDishesAmount(dishesAmount, req);
             log.debug("Request for \"" + dishesAmount + "\" has been received.");
         } catch (NumberFormatException e) {
             session.setAttribute(ERROR_MESSAGE,

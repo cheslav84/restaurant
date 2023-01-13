@@ -4,6 +4,9 @@ import com.epam.havryliuk.restaurant.controller.command.ActionCommand;
 import com.epam.havryliuk.restaurant.model.constants.RequestParameters;
 import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
 import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
+import com.epam.havryliuk.restaurant.model.entity.Basket;
+import com.epam.havryliuk.restaurant.model.entity.Dish;
+import com.epam.havryliuk.restaurant.model.entity.Order;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.resource.MessageManager;
 import com.epam.havryliuk.restaurant.model.service.OrderService;
@@ -15,6 +18,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
+import java.util.List;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
@@ -29,6 +33,7 @@ public class RemoveFromOrderCommand implements ActionCommand {
         try {
             OrderService orderService = new OrderService();
             orderService.removeDishFromOrder(orderId, dishId);
+            removeDishFromSession(orderId, dishId, session);
             log.debug("Dish has been removed from order.");
             session.removeAttribute(ERROR_MESSAGE);
         } catch (ServiceException e) {
@@ -38,6 +43,17 @@ public class RemoveFromOrderCommand implements ActionCommand {
             log.error(e);
         }
         response.sendRedirect(AppPagesPath.REDIRECT_BASKET);
+    }
+
+    private void removeDishFromSession(long orderId, long dishId, HttpSession session) {
+        Order order = (Order) session.getAttribute(CURRENT_ORDER);
+        if (order != null) {
+            List<Basket> basketList = order.getBaskets();
+            basketList.removeIf(basket -> basket.getDish().getId() == dishId && basket.getOrder().getId() == orderId);
+            if (basketList.size() == 0){
+                session.removeAttribute(CURRENT_ORDER);
+            }
+        }
     }
 
 

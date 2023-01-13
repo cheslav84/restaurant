@@ -215,6 +215,7 @@ public class OrderService {
             int dishesInOrder = orderDao.findDishesNumberInOrder(orderId);
             if (dishesInOrder == 1) {
                 orderDao.delete(orderId);
+
             } else {
                 orderDao.deleteDishFromOrderById(orderId, dishId);
             }

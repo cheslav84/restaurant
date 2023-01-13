@@ -97,7 +97,7 @@ public class RegisterCommand implements ActionCommand {
         final boolean isOverEighteen = req.getParameter(RequestParameters.OVER_EIGHTEEN_AGE) != null;
         User user =  User.getInstance(email, password, name, surname, gender, isOverEighteen);
         try {
-            new Validator().validateUserData(user, req);
+            Validator.validateUserData(user, req);
 
         } catch (ValidationException e){//todo rename validation
             user.setPassword(null);

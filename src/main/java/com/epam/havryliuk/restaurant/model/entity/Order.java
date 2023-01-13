@@ -120,4 +120,19 @@ public class Order implements Entity{
     public void setBaskets(List<Basket> baskets) {
         this.baskets = baskets;
     }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", address='" + address + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", isPayed=" + isPayed +
+                ", creationDate=" + creationDate +
+                ", closeDate=" + closeDate +
+                ", user=" + user +
+                ", bookingStatus=" + bookingStatus +
+                ", baskets=" + baskets +
+                '}';
+    }
 }
