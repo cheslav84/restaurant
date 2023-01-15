@@ -1,0 +1,46 @@
+.field-border {
+    border: 2px solid #f3f3f3;
+
+}
+
+
+.user-age-label {
+    display: inline-flex;
+    font-weight: inherit;
+    margin-top: 5px;
+}
+
+.w-select.user-age {
+    display: inline-flex;
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    margin-top: -8px;
+  }
+
+  .reservation-image-block {
+    height: 368px;
+    background-image: url("../pictures/dish_pictures/example-bg.png");
+  }
+
+  .upload-picture{
+      margin-top: 15px;
+  }
+
+  .error-message {
+    margin-top: 15px;
+    font-family: Satisfy, sans-serif;
+    color: #eda03b;
+    font-size: 13px;
+    line-height: 16px;
+    text-shadow: none;
+  }
+
+  @media (max-width: 991px) {
+
+    .reservation-image-block {
+        height: 338px;
+    }
+  }

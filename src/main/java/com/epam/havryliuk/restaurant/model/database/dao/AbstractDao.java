@@ -23,7 +23,7 @@ public abstract class AbstractDao<T extends Entity> {
     public abstract boolean create(T entity) throws DAOException, SQLIntegrityConstraintViolationException;
     public abstract Optional<T> findById(long id) throws DAOException;
     public abstract List<T> findAll() throws DAOException;
-    public abstract T update(T entity) throws DAOException;//todo повертати boolean???
+    public abstract T update(T entity) throws DAOException;
     public abstract boolean delete(T entity) throws DAOException;
     public abstract boolean delete(long id) throws DAOException;
 

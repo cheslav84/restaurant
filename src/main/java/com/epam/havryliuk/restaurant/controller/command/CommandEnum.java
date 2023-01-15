@@ -1,5 +1,6 @@
 package com.epam.havryliuk.restaurant.controller.command;
 
+import com.epam.havryliuk.restaurant.controller.command.dishCommand.AddDishPageCommand;
 import com.epam.havryliuk.restaurant.controller.command.dishCommand.IndexCommand;
 import com.epam.havryliuk.restaurant.controller.command.dishCommand.MenuCommand;
 import com.epam.havryliuk.restaurant.controller.command.orderCommand.*;
@@ -29,6 +30,10 @@ public enum CommandEnum {
     }, LOGOUT {
         { this.command = new LogoutCommand(); }
     }, REGISTER {
+        { this.command = new RegisterCommand(); }
+    }, ADD_DISH_PAGE {
+        { this.command = new AddDishPageCommand(); }
+    }, UPLOAD_IMAGE {
         { this.command = new RegisterCommand(); }
     }
     ;

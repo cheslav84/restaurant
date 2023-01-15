@@ -14,6 +14,10 @@ import java.util.*;
 
 public class OrderService {
     private static final Logger LOG = LogManager.getLogger(OrderService.class);
+        EntityTransaction transaction = new EntityTransaction();
+        OrderDao orderDao = new OrderDao();
+        DishDao dishDao = new DishDao();
+        BasketDao basketDao = new BasketDao();
 
     /**
      * Method receives an Order id and a new value of BookingStatus that has to be changed in that Order.
@@ -32,10 +36,6 @@ public class OrderService {
      * dishes are more that presented dishes in menu.
      */
     public void changeOrderStatus(long orderId, BookingStatus newStatus) throws ServiceException {
-        EntityTransaction transaction = new EntityTransaction();
-        OrderDao orderDao = new OrderDao();
-        DishDao dishDao = new DishDao();
-        BasketDao basketDao = new BasketDao();
         try {
             transaction.initTransaction(orderDao, dishDao, basketDao);
             if(isOrderInConfirmingProcess(newStatus)) {
@@ -62,9 +62,9 @@ public class OrderService {
      * @throws ServiceException when impossible to get data from storage.
      */
     public List<Order> getAllUserOrders(User user) throws ServiceException {
-        EntityTransaction transaction = new EntityTransaction();
-        OrderDao orderDao = new OrderDao();
-        BasketDao basketDao = new BasketDao();
+//        EntityTransaction transaction = new EntityTransaction();
+//        OrderDao orderDao = new OrderDao();
+//        BasketDao basketDao = new BasketDao();
         List<Order> orders;
         try {
             transaction.initTransaction(orderDao, basketDao);
@@ -94,9 +94,9 @@ public class OrderService {
      * @throws ServiceException when impossible to get data.
      */
     public Page<Order> getAllOrders(int page, int recordsPerPage, OrderSorting sorting) throws ServiceException {
-        EntityTransaction transaction = new EntityTransaction();
-        OrderDao orderDao = new OrderDao();
-        BasketDao basketDao = new BasketDao();
+//        EntityTransaction transaction = new EntityTransaction();
+//        OrderDao orderDao = new OrderDao();
+//        BasketDao basketDao = new BasketDao();
         Page<Order> orderPage = new Page<>();
         List<Order> orders;
         try {
@@ -135,8 +135,8 @@ public class OrderService {
      * @throws ValidationException when delivery address or delivery phone is not valid.
      */
     public Order getOrCreateOrder(User user, String deliveryAddress, String deliveryPhone) throws ServiceException, ValidationException {
-        EntityTransaction transaction = new EntityTransaction();
-        OrderDao orderDao = new OrderDao();
+//        EntityTransaction transaction = new EntityTransaction();
+//        OrderDao orderDao = new OrderDao();
         Order order;
         try {
             transaction.initTransaction(orderDao);
@@ -175,9 +175,9 @@ public class OrderService {
      */
     public void addDishToOrder(Order order, Dish dish, int dishesAmountInOrder)
             throws ServiceException, DuplicatedEntityException {
-        EntityTransaction transaction = new EntityTransaction();
-        DishDao dishDao = new DishDao();
-        BasketDao basketDao = new BasketDao();
+//        EntityTransaction transaction = new EntityTransaction();
+//        DishDao dishDao = new DishDao();
+//        BasketDao basketDao = new BasketDao();
         try {
             transaction.initTransaction(basketDao, dishDao);
             checkAvailableDishes(dish, dishesAmountInOrder, dishDao);
@@ -208,9 +208,9 @@ public class OrderService {
      * @throws ServiceException when impossible to get or to delete data from storage.
      */
     public void removeDishFromOrder(long orderId, long dishId) throws ServiceException {
-        EntityTransaction transaction = new EntityTransaction();
+//        EntityTransaction transaction = new EntityTransaction();
+//        OrderDao orderDao = new OrderDao();
         try {
-            OrderDao orderDao = new OrderDao();
             transaction.init(orderDao);
             int dishesInOrder = orderDao.findDishesNumberInOrder(orderId);
             if (dishesInOrder == 1) {

@@ -13,7 +13,7 @@ import java.io.IOException;
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
 public class LogoutCommand implements ActionCommand {
-    private static final Logger log = LogManager.getLogger(LogoutCommand.class);
+    private static final Logger LOG = LogManager.getLogger(LogoutCommand.class);
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {

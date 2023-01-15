@@ -26,10 +26,9 @@ import java.util.List;
 //import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-//@ExtendWith(MockitoExtension.class)
+@ExtendWith(MockitoExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class OrderServiceTest {
-
 
     @Mock
     DishDao dishDao;
@@ -41,23 +40,22 @@ class OrderServiceTest {
     @Mock
     OrderDao orderDao;
 
-//    @Spy
-//    EntityTransaction transaction;
+    @Spy
+    EntityTransaction transaction;
 
     @InjectMocks
     OrderService orderService;
 
     @BeforeAll
     public void setup() {
-
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
     void getAllUserOrders() throws DAOException, ServiceException {
-//        doNothing().when(transaction).initTransaction(isA(OrderDao.class), isA(BasketDao.class));
         User user = new User();
         List<Order> ordersMock = new ArrayList<>();
+        doNothing().when(transaction).initTransaction(any(OrderDao.class), any(BasketDao.class));
         Mockito.when(orderDao.getByUserSortedByTime(user)).thenReturn(ordersMock);
         Assertions.assertNotNull(orderService.getAllUserOrders(new User()));
     }
@@ -72,7 +70,6 @@ class OrderServiceTest {
         OrderDao orderDao = mock(OrderDao.class);
         BasketDao basketDao = mock(BasketDao.class);
 //        OrderService orderServiceMock = mock(OrderService.class);
-
         Mockito.when(dishDao.updateDishesAmountByOrderedValues(orderId)).thenReturn(true);
 
 

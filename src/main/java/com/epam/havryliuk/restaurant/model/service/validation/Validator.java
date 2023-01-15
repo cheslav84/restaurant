@@ -17,7 +17,7 @@ import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.DE
 
 public class Validator {
 
-    public static void validateUserData(User user, HttpServletRequest req) throws ValidationException {//todo може зробити static?
+    public void validateUserData(User user, HttpServletRequest req) throws ValidationException {//todo може зробити static?
         HttpSession session = req.getSession();
         MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
         boolean correctFields = true;
@@ -63,17 +63,13 @@ public class Validator {
         }
     }
 
-    private static boolean regexChecker (String toCheck, String regex) {
+    private boolean regexChecker (String toCheck, String regex) {
         Pattern regexPattern = Pattern.compile(regex);
         Matcher regexMatcher = regexPattern.matcher(toCheck);
-        if (regexMatcher.matches()) {
-            return true;
-        } else {
-            return false;
-        }
+        return regexMatcher.matches();
     }
 
-    public static void validateDeliveryData(String deliveryAddress, String deliveryPhone, HttpServletRequest req)
+    public void validateDeliveryData(String deliveryAddress, String deliveryPhone, HttpServletRequest req)
             throws ValidationException {
         HttpSession session = req.getSession();
         MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
@@ -96,7 +92,7 @@ public class Validator {
         }
     }
 
-    public static void validateDishesAmount(int dishesAmount, HttpServletRequest req) throws ValidationException {
+    public void validateDishesAmount(int dishesAmount, HttpServletRequest req) throws ValidationException {
         if ((dishesAmount <= 0)){
             HttpSession session = req.getSession();
             MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));

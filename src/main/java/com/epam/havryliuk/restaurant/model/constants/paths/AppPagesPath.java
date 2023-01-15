@@ -18,6 +18,8 @@ public class AppPagesPath {
     public static String REDIRECT_REGISTRATION;
     public static String REDIRECT_BASKET;
     public static String FORWARD_BASKET;
+    public static String FORWARD_ADD_DISH_PAGE;
+//    public static String REDIRECT_ADD_DISH_PAGE;
     public static String FORWARD_MANAGE_ORDERS;
     public static String REDIRECT_ERROR;
 
@@ -45,5 +47,7 @@ public class AppPagesPath {
            FORWARD_MENU_PAGE = (String) properties.get("path.page.forward.menu");
            REDIRECT_MENU = (String) properties.get("path.page.redirect.menu");
 
+           FORWARD_ADD_DISH_PAGE = (String) properties.get("path.page.forward.addDishPage");
+//           REDIRECT_ADD_DISH_PAGE = (String) properties.get("path.page.redirect.addDishPage");
        }
 }

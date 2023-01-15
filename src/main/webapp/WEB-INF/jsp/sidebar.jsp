@@ -68,12 +68,12 @@
 
 
                 <c:if test="${sessionScope.loggedUser.role == 'CLIENT'}">
-                    <jsp:include page="navigation_client.jsp"/>
+                    <jsp:include page="user/navigation_user.jsp"/>
                  </c:if>
 
 
                 <c:if test="${sessionScope.loggedUser.role == 'MANAGER'}">
-                    <jsp:include page="navigation_manager.jsp"/>
+                    <jsp:include page="manager/navigation_manager.jsp"/>
                 </c:if>
 
                 <%-- <c:if test="${sessionScope.loggedUser ne null}">

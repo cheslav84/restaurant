@@ -30,6 +30,9 @@ import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.ER
 
 public class MakeOrderCommand implements ActionCommand {
     private static final Logger log = LogManager.getLogger(MakeOrderCommand.class);
+    OrderService orderService = new OrderService();//todo
+    Validator validator = new Validator();
+
 
     /**
      * Method first tries to get an Order from HttpSession.
@@ -42,7 +45,6 @@ public class MakeOrderCommand implements ActionCommand {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(RequestAttributes.LOGGED_USER);
-        OrderService orderService = new OrderService();
         Order order = (Order) session.getAttribute(CURRENT_ORDER);
         if (order != null) {
             saveDishToOrder(request, orderService, order);
@@ -74,7 +76,8 @@ public class MakeOrderCommand implements ActionCommand {
         try {
             String deliveryAddress = request.getParameter(RequestParameters.DELIVERY_ADDRESS);
             String deliveryPhone = request.getParameter(RequestParameters.DELIVERY_PHONE);
-//            Validator.validateDeliveryData(deliveryAddress, deliveryPhone, request);// todo uncomment
+
+            validator.validateDeliveryData(deliveryAddress, deliveryPhone, request);
             order = orderService.getOrCreateOrder(user, deliveryAddress, deliveryPhone);
             session.removeAttribute(ERROR_MESSAGE);
             session.removeAttribute(ORDER_MESSAGE);
@@ -91,26 +94,6 @@ public class MakeOrderCommand implements ActionCommand {
         return order;
     }
 
-
-//    private void checkDeliveryCredentials(String deliveryAddress, String deliveryPhone, HttpSession session)
-//            throws BadCredentialsException {
-//        MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
-//        if(!Validator.isAddressCorrect(deliveryAddress)) {
-//            session.setAttribute(ORDER_MESSAGE,
-//                    messageManager.getProperty(ResponseMessages.INCORRECT_DELIVERY_ADDRESS));
-//            throw new BadCredentialsException("The address is incorrect.");
-//        }
-//        session.setAttribute(DELIVERY_ADDRESS, deliveryAddress);
-//
-//        deliveryPhone = deliveryPhone.replaceAll("[\\s()-]", "");
-//        Validator validator = new Validator();
-//        if(!validator.regexChecker(deliveryPhone, Regex.PHONE)) {
-//            session.setAttribute(ORDER_MESSAGE,
-//                    messageManager.getProperty(ResponseMessages.INCORRECT_DELIVERY_PHONE));
-//            throw new BadCredentialsException("The phone is incorrect.");
-//        }
-//        session.setAttribute(DELIVERY_PHONE, deliveryPhone);
-//    }
 
 
     private void saveDishToOrder(HttpServletRequest req, OrderService orderService, Order order) {
@@ -158,7 +141,7 @@ public class MakeOrderCommand implements ActionCommand {
         MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
         try {
             dishesAmount = Integer.parseInt(req.getParameter(RequestParameters.ORDER_DISHES_AMOUNT).trim());
-            Validator.validateDishesAmount(dishesAmount, req);
+            new Validator().validateDishesAmount(dishesAmount, req);
             log.debug("Request for \"" + dishesAmount + "\" has been received.");
         } catch (NumberFormatException e) {
             session.setAttribute(ERROR_MESSAGE,

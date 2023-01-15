@@ -8,8 +8,6 @@
             <fmt:setLocale value="${sessionScope.locale}"/>
             <fmt:setBundle basename="menu"/>
 
-
-
                 <a href="index" id="index-nav" aria-current="page" class="nav-link w-nav-link w--current"
                     style="max-width: 940px;">
                     <fmt:message key="sidebar.home"/>
@@ -22,6 +20,10 @@
                           <a href="manage_orders?sorted=date" aria-current="page" class="nav-link w-nav-link">
                             <fmt:message key="sidebar.manageOrders"/>
                           </a>
+
+                <a href="add_dish_page" aria-current="page" class="nav-link w-nav-link">
+                     <fmt:message key="sidebar.addDishPage"/>
+                </a>
 
                      <a href="logout" aria-current="page" class="nav-link w-nav-link">
                         <fmt:message key="sidebar.logout"/>
