@@ -10,6 +10,7 @@ import com.epam.havryliuk.restaurant.model.entity.Order;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.resource.MessageManager;
 import com.epam.havryliuk.restaurant.model.service.OrderService;
+import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -24,6 +25,12 @@ import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
 public class RemoveFromOrderCommand implements ActionCommand {
     private static final Logger log = LogManager.getLogger(RemoveFromOrderCommand.class);
+    private OrderService orderService;
+    public RemoveFromOrderCommand () {
+        ApplicationServiceContext appContext = new ApplicationServiceContext();
+        orderService = appContext.getInstance(OrderService.class);
+        System.out.println(orderService);
+    }
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -31,7 +38,7 @@ public class RemoveFromOrderCommand implements ActionCommand {
         long dishId = Long.parseLong(request.getParameter(RequestParameters.DISH_ID));
         HttpSession session = request.getSession();
         try {
-            OrderService orderService = new OrderService();
+//            OrderService orderService = new OrderService();
             orderService.removeDishFromOrder(orderId, dishId);
             removeDishFromSession(orderId, dishId, session);
             log.debug("Dish has been removed from order.");

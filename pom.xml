@@ -191,6 +191,20 @@
 <!--    </dependency>-->
 
 
+    <!-- https://mvnrepository.com/artifact/org.reflections/reflections -->
+    <dependency>
+      <groupId>org.reflections</groupId>
+      <artifactId>reflections</artifactId>
+      <version>0.10.2</version>
+    </dependency>
+      <dependency>
+          <groupId>org.testng</groupId>
+          <artifactId>testng</artifactId>
+          <version>7.0.0-beta1</version>
+          <scope>compile</scope>
+      </dependency>
+
+
   </dependencies>
 
   <build>

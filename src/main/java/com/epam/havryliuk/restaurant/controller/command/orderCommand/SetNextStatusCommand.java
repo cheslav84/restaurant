@@ -12,6 +12,7 @@ import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.resource.MessageManager;
 import com.epam.havryliuk.restaurant.model.service.OrderService;
 import com.epam.havryliuk.restaurant.model.util.URLUtil;
+import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -33,10 +34,19 @@ public class SetNextStatusCommand implements ActionCommand {
     private static final Logger log = LogManager.getLogger(SetNextStatusCommand.class);
 
     private static Map<BookingStatus, Role> bookingAccessRoles;
+    private OrderService orderService;
 
     static {
         bookingAccessRoles = getBookingAccessRoles();
     }
+
+    public SetNextStatusCommand () {
+        ApplicationServiceContext appContext = new ApplicationServiceContext();
+        orderService = appContext.getInstance(OrderService.class);
+        System.out.println(orderService);
+    }
+
+
 
     /**
      * The command method gets the next booking status that has to be set in order, then checks
@@ -53,7 +63,7 @@ public class SetNextStatusCommand implements ActionCommand {
         long orderId = Long.parseLong(request.getParameter(RequestParameters.ORDER_ID));
         HttpSession session = request.getSession();
         MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
-        OrderService orderService = new OrderService();
+//        OrderService orderService = new OrderService();
         try {
             BookingStatus nextBookingStatus = getNextBookingStatus(request);
             checkAccessRights(session, nextBookingStatus);//todo подумати, може зробити через фільтр

@@ -10,6 +10,7 @@ import com.epam.havryliuk.restaurant.model.entity.Page;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.resource.MessageManager;
 import com.epam.havryliuk.restaurant.model.service.OrderService;
+import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -27,10 +28,17 @@ public class ManageOrdersCommand implements ActionCommand {
     private int pageNumber = 1;
     private int recordsPerPage = 4;
     private OrderSorting sortingParameter = OrderSorting.STATUS;
+    private OrderService orderService;
+    public ManageOrdersCommand () {
+        ApplicationServiceContext appContext = new ApplicationServiceContext();
+        orderService = appContext.getInstance(OrderService.class);
+        System.out.println(orderService);
+    }
+
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        OrderService orderService = new OrderService();
+//        OrderService orderService = new OrderService();
         HttpSession session = request.getSession();
         MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
 

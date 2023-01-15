@@ -6,18 +6,31 @@ import com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao;
 import com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao;
 import com.epam.havryliuk.restaurant.model.entity.*;
 import com.epam.havryliuk.restaurant.model.exceptions.*;
+import com.epam.havryliuk.restaurant.model.util.annotations.Autowired;
+import com.epam.havryliuk.restaurant.model.util.annotations.Component;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.*;
 
+@Component
 public class OrderService {
     private static final Logger LOG = LogManager.getLogger(OrderService.class);
-        EntityTransaction transaction = new EntityTransaction();
-        OrderDao orderDao = new OrderDao();
-        DishDao dishDao = new DishDao();
-        BasketDao basketDao = new BasketDao();
+
+    @Autowired
+    OrderDao orderDao;
+    @Autowired
+    DishDao dishDao;
+    @Autowired
+    BasketDao basketDao;
+    @Autowired
+    EntityTransaction transaction;
+//    EntityTransaction transaction = new EntityTransaction();
+//    OrderDao orderDao = new OrderDao();
+//    DishDao dishDao = new DishDao();
+//    BasketDao basketDao = new BasketDao();
+
 
     /**
      * Method receives an Order id and a new value of BookingStatus that has to be changed in that Order.
@@ -280,4 +293,13 @@ public class OrderService {
         }
     }
 
+    @Override
+    public String toString() {
+        return "OrderService{" +
+                "transaction=" + transaction +
+                ", orderDao=" + orderDao +
+                ", dishDao=" + dishDao +
+                ", basketDao=" + basketDao +
+                '}';
+    }
 }

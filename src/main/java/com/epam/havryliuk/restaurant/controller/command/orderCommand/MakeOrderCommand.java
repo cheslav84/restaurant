@@ -16,6 +16,7 @@ import com.epam.havryliuk.restaurant.model.resource.MessageManager;
 import com.epam.havryliuk.restaurant.model.service.OrderService;
 import com.epam.havryliuk.restaurant.model.util.URLUtil;
 import com.epam.havryliuk.restaurant.model.service.validation.Validator;
+import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -30,8 +31,14 @@ import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.ER
 
 public class MakeOrderCommand implements ActionCommand {
     private static final Logger log = LogManager.getLogger(MakeOrderCommand.class);
-    OrderService orderService = new OrderService();//todo
-    Validator validator = new Validator();
+    private OrderService orderService;
+    private Validator validator = new Validator();
+
+    public MakeOrderCommand () {
+        ApplicationServiceContext appContext = new ApplicationServiceContext();
+        orderService = appContext.getInstance(OrderService.class);
+        System.out.println(orderService);
+    }
 
 
     /**
