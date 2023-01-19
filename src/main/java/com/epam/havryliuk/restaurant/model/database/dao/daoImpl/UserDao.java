@@ -62,7 +62,7 @@ public class UserDao extends AbstractDao<User> {
     }
 
     @Override
-    public boolean create(User user) throws DAOException {
+    public User create(User user) throws DAOException {
         try(PreparedStatement stmt = connection.prepareStatement(UserQuery.ADD_USER,
                 Statement.RETURN_GENERATED_KEYS)) {
             setUserParameters(user, stmt);
@@ -80,7 +80,7 @@ public class UserDao extends AbstractDao<User> {
             log.error("Error in inserting user to database.", e);
             throw new DAOException(message, e);
         }
-        return true;
+        return user;
     }
 
 

@@ -45,26 +45,7 @@
         <servlet-name>default</servlet-name>
         <url-pattern>*.webp</url-pattern>
     </servlet-mapping>
-    
-    <filter-mapping>
-        <filter-name>EncodingFilter</filter-name>
-        <url-pattern />
-    </filter-mapping>
-
-    <filter-mapping>
-        <filter-name>SessionLocaleFilter</filter-name>
-        <url-pattern />
-    </filter-mapping>
-
-    <filter-mapping>
-        <filter-name>LogInFilter</filter-name>
-        <url-pattern />
-    </filter-mapping>
-
-    <filter-mapping>
-        <filter-name>AuthenticationFilter</filter-name>
-        <url-pattern />
-    </filter-mapping>
+  zz
 
 
     <jsp-config>

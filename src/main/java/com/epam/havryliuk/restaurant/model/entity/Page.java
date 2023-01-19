@@ -26,4 +26,22 @@ public class Page <T extends Entity> {
     public void setRecords(List<T> entities) {
         this.records = entities;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Page<?> page = (Page<?>) o;
+
+        if (noOfPages != page.noOfPages) return false;
+        return records != null ? records.equals(page.records) : page.records == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = noOfPages;
+        result = 31 * result + (records != null ? records.hashCode() : 0);
+        return result;
+    }
 }

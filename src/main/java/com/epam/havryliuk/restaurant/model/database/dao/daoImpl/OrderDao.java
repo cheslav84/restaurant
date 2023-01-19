@@ -18,7 +18,7 @@ public class OrderDao extends AbstractDao<Order> {
     private static final Logger LOG = LogManager.getLogger(OrderDao.class);
 
     @Override
-    public boolean create(Order order) throws DAOException {
+    public Order create(Order order) throws DAOException {
         try (PreparedStatement stmt = connection.prepareStatement(OrderQuery.ADD_ORDER, Statement.RETURN_GENERATED_KEYS)) {
                 setOrderParameters(order, stmt);
                 int insertionAmount = stmt.executeUpdate();
@@ -31,11 +31,11 @@ public class OrderDao extends AbstractDao<Order> {
                 }
             LOG.debug("The order has been added to database.");
         } catch (SQLException e) {
-            String message = "Something went wrong. Try to make an order later please.";
-            LOG.error("Error in inserting order to database.", e);
+            String message = "Error in inserting order to database.";
+            LOG.error(message, e);
             throw new DAOException(message, e);
         }
-        return true;
+        return order;
     }
 
     public Order geByUserAddressStatus(User user, String address, BookingStatus bookingStatus) throws DAOException {//todo think if it could be a list
@@ -53,7 +53,7 @@ public class OrderDao extends AbstractDao<Order> {
             }
             LOG.debug("Order has been received from database.");
         } catch (SQLException e) {
-            String errorMassage = "Searched order is absent in database";
+            String errorMassage = "Searched order is absent in database.";
             LOG.error(errorMassage, e);
             throw new DAOException(errorMassage, e);
         }
@@ -176,7 +176,7 @@ public class OrderDao extends AbstractDao<Order> {
             }
             LOG.debug("Searched order creation date has not been found in database");
         } catch (SQLException e) {
-            String errorMassage = "Searched order is absent in database";
+            String errorMassage = "Error getting date from database.";
             LOG.error(errorMassage, e);
             throw new DAOException(errorMassage, e);
         }
@@ -224,8 +224,9 @@ public class OrderDao extends AbstractDao<Order> {
             LOG.debug("The status in order with id \"" + orderId +
                     "\", has been successfully changed");
         } catch (SQLException e) {
-            LOG.error("The status in order has not been changed", e);
-            throw new DAOException(e);
+            String errorMessage = "The status in order has not been changed";
+            LOG.error(errorMessage, e);
+            throw new DAOException(errorMessage, e);
         }
         return true;
     }

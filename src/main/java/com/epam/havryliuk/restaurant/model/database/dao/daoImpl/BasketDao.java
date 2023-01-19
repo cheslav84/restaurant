@@ -20,7 +20,7 @@ public class BasketDao extends AbstractDao<Basket> {
 
 
     @Override
-    public boolean create(Basket basket) throws DAOException, SQLIntegrityConstraintViolationException {// todo void
+    public Basket create(Basket basket) throws DAOException, SQLIntegrityConstraintViolationException {// todo void
         try (PreparedStatement stmt = connection.prepareStatement(BasketQuery.ADD_DISH_TO_BASKET)) {
             int k = 0;
             stmt.setLong(++k, basket.getOrder().getId());
@@ -34,7 +34,7 @@ public class BasketDao extends AbstractDao<Basket> {
         } catch (SQLException e) {
             throw new DAOException("Unable to create basket.", e);
         }
-        return true;
+        return basket;
     }
 
     @Override

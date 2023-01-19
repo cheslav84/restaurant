@@ -121,6 +121,39 @@ public class Order implements Entity{
         this.baskets = baskets;
     }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Order order = (Order) o;
+
+        if (isPayed != order.isPayed) return false;
+        if (id != null ? !id.equals(order.id) : order.id != null) return false;
+        if (address != null ? !address.equals(order.address) : order.address != null) return false;
+        if (phoneNumber != null ? !phoneNumber.equals(order.phoneNumber) : order.phoneNumber != null) return false;
+        if (creationDate != null ? !creationDate.equals(order.creationDate) : order.creationDate != null) return false;
+        if (closeDate != null ? !closeDate.equals(order.closeDate) : order.closeDate != null) return false;
+        if (user != null ? !user.equals(order.user) : order.user != null) return false;
+        if (bookingStatus != order.bookingStatus) return false;
+        return baskets != null ? baskets.equals(order.baskets) : order.baskets == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (address != null ? address.hashCode() : 0);
+        result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
+        result = 31 * result + (isPayed ? 1 : 0);
+        result = 31 * result + (creationDate != null ? creationDate.hashCode() : 0);
+        result = 31 * result + (closeDate != null ? closeDate.hashCode() : 0);
+        result = 31 * result + (user != null ? user.hashCode() : 0);
+        result = 31 * result + (bookingStatus != null ? bookingStatus.hashCode() : 0);
+        result = 31 * result + (baskets != null ? baskets.hashCode() : 0);
+        return result;
+    }
+
     @Override
     public String toString() {
         return "Order{" +

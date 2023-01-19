@@ -1,7 +1,6 @@
 package com.epam.havryliuk.restaurant.model.util.annotations;
 
 
-import com.epam.havryliuk.restaurant.model.service.Service;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.reflections.Reflections;
@@ -10,7 +9,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
-import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -20,11 +18,6 @@ public class ApplicationServiceContext {
     private static final Predicate<Field> HAS_ANNOTATION = field -> field.getDeclaredAnnotation(Autowired.class) != null;
 
     private static final Logger LOG = LogManager.getLogger(ApplicationServiceContext.class);
-
-//    public ApplicationServiceContext(Class<?> clazz) {
-//        initContext(clazz);
-//    }
-
 
     public <T> T getInstance(Class<T> clazz) {
         T object = null;

@@ -20,7 +20,7 @@ public abstract class AbstractDao<T extends Entity> {
     public AbstractDao() {
     }
 
-    public abstract boolean create(T entity) throws DAOException, SQLIntegrityConstraintViolationException;
+    public abstract  T create(T entity) throws DAOException, SQLIntegrityConstraintViolationException;
     public abstract Optional<T> findById(long id) throws DAOException;
     public abstract List<T> findAll() throws DAOException;
     public abstract T update(T entity) throws DAOException;

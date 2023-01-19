@@ -81,7 +81,7 @@ public class DishDao extends AbstractDao<Dish> {
     }
 
     @Override
-    public boolean create(Dish dish) {
+    public Dish create(Dish dish) {
         throw new UnsupportedOperationException();
     }
 

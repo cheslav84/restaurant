@@ -7,29 +7,22 @@ import com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao;
 import com.epam.havryliuk.restaurant.model.entity.*;
 import com.epam.havryliuk.restaurant.model.exceptions.*;
 import com.epam.havryliuk.restaurant.model.util.annotations.Autowired;
-import com.epam.havryliuk.restaurant.model.util.annotations.Component;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.*;
 
-@Component
 public class OrderService {
     private static final Logger LOG = LogManager.getLogger(OrderService.class);
-
     @Autowired
-    OrderDao orderDao;
+    private OrderDao orderDao;
     @Autowired
-    DishDao dishDao;
+    private DishDao dishDao;
     @Autowired
-    BasketDao basketDao;
+    private BasketDao basketDao;
     @Autowired
-    EntityTransaction transaction;
-//    EntityTransaction transaction = new EntityTransaction();
-//    OrderDao orderDao = new OrderDao();
-//    DishDao dishDao = new DishDao();
-//    BasketDao basketDao = new BasketDao();
+    private EntityTransaction transaction;
 
 
     /**
@@ -75,9 +68,6 @@ public class OrderService {
      * @throws ServiceException when impossible to get data from storage.
      */
     public List<Order> getAllUserOrders(User user) throws ServiceException {
-//        EntityTransaction transaction = new EntityTransaction();
-//        OrderDao orderDao = new OrderDao();
-//        BasketDao basketDao = new BasketDao();
         List<Order> orders;
         try {
             transaction.initTransaction(orderDao, basketDao);
@@ -85,6 +75,7 @@ public class OrderService {
             for (Order order : orders) {
                 order.setBaskets(basketDao.getOrderDishes(order));
             }
+            transaction.commit();
             LOG.debug("The order list was successfully created.");
         } catch (DAOException e) {
             LOG.error("Unable to get orders.");
@@ -107,9 +98,6 @@ public class OrderService {
      * @throws ServiceException when impossible to get data.
      */
     public Page<Order> getAllOrders(int page, int recordsPerPage, OrderSorting sorting) throws ServiceException {
-//        EntityTransaction transaction = new EntityTransaction();
-//        OrderDao orderDao = new OrderDao();
-//        BasketDao basketDao = new BasketDao();
         Page<Order> orderPage = new Page<>();
         List<Order> orders;
         try {
@@ -148,8 +136,6 @@ public class OrderService {
      * @throws ValidationException when delivery address or delivery phone is not valid.
      */
     public Order getOrCreateOrder(User user, String deliveryAddress, String deliveryPhone) throws ServiceException, ValidationException {
-//        EntityTransaction transaction = new EntityTransaction();
-//        OrderDao orderDao = new OrderDao();
         Order order;
         try {
             transaction.initTransaction(orderDao);
@@ -160,7 +146,7 @@ public class OrderService {
             } else {
                 order = Order.getInstance(deliveryAddress, deliveryPhone, false, BookingStatus.BOOKING);
                 order.setUser(user);
-                orderDao.create(order);
+                order = orderDao.create(order);
                 Date creationDate = orderDao.getCreationDate(order.getId());
                 order.setCreationDate(creationDate);
                 LOG.debug("Has been created new order: " + order);
@@ -188,14 +174,11 @@ public class OrderService {
      */
     public void addDishToOrder(Order order, Dish dish, int dishesAmountInOrder)
             throws ServiceException, DuplicatedEntityException {
-//        EntityTransaction transaction = new EntityTransaction();
-//        DishDao dishDao = new DishDao();
-//        BasketDao basketDao = new BasketDao();
         try {
             transaction.initTransaction(basketDao, dishDao);
             checkAvailableDishes(dish, dishesAmountInOrder, dishDao);
             Basket basket = Basket.getInstance(order, dish, dish.getPrice(), dishesAmountInOrder);
-            basketDao.create(basket);
+            basket = basketDao.create(basket);
             List<Basket> baskets = order.getBaskets();
             baskets.add(basket);
             transaction.commit();//todo виконується без комміту.. з'ясувати
@@ -221,16 +204,17 @@ public class OrderService {
      * @throws ServiceException when impossible to get or to delete data from storage.
      */
     public void removeDishFromOrder(long orderId, long dishId) throws ServiceException {
-//        EntityTransaction transaction = new EntityTransaction();
-//        OrderDao orderDao = new OrderDao();
         try {
             transaction.init(orderDao);
             int dishesInOrder = orderDao.findDishesNumberInOrder(orderId);
-            if (dishesInOrder == 1) {
+            if (dishesInOrder == 1) {//todo check such data in all methods
                 orderDao.delete(orderId);
-
-            } else {
+            } else if (dishesInOrder > 1) {
                 orderDao.deleteDishFromOrderById(orderId, dishId);
+            } else {
+                String errorMessage = "Obtained incorrect amount of dishes in order " + dishesInOrder;
+                LOG.error(errorMessage);
+                throw new ServiceException(errorMessage);
             }
             LOG.debug("A dish has been removed from the order.");
         } catch (DAOException e) {
@@ -288,8 +272,9 @@ public class OrderService {
             throws DAOException, IrrelevantDataException {
         int numberOfDishesInMenu = dishDao.getNumberOfAllDishesInOrder(dish);
         if (numberOfDishesInMenu < dishesAmountInOrder) {
-            LOG.error("The request number of dishes exceed available.");
-            throw new IrrelevantDataException();
+            String errorMessage = "The request number of dishes exceed available.";
+            LOG.error(errorMessage);
+            throw new IrrelevantDataException(errorMessage);
         }
     }
 

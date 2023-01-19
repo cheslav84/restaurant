@@ -33,7 +33,6 @@ public class BasketCommand implements ActionCommand {
     public BasketCommand () {
         ApplicationServiceContext appContext = new ApplicationServiceContext();
         orderService = appContext.getInstance(OrderService.class);
-        System.out.println(orderService);
     }
 
     @Override

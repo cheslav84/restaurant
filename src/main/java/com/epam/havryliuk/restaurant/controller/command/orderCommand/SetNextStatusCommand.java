@@ -33,8 +33,8 @@ import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 public class SetNextStatusCommand implements ActionCommand {
     private static final Logger log = LogManager.getLogger(SetNextStatusCommand.class);
 
-    private static Map<BookingStatus, Role> bookingAccessRoles;
-    private OrderService orderService;
+    private static final Map<BookingStatus, Role> bookingAccessRoles;
+    private final OrderService orderService;
 
     static {
         bookingAccessRoles = getBookingAccessRoles();

@@ -60,7 +60,7 @@ public class CategoryDao extends AbstractDao<Category> {
     }
 
     @Override
-    public boolean create(Category category) throws DAOException {
+    public Category create(Category category) throws DAOException {
         throw new UnsupportedOperationException("The \"Category\" list is unmodifiable.");
 
 //        Connection con = connectionPool.getConnection();

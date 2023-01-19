@@ -55,4 +55,28 @@ public class Basket implements Entity {// todo think of renaming, for example Di
     public void setAmount(Integer amount) {
         this.amount = amount;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Basket basket = (Basket) o;
+
+        if (order != null ? !order.equals(basket.order) : basket.order != null) return false;
+        if (dish != null ? !dish.equals(basket.dish) : basket.dish != null) return false;
+        if (fixedPrice != null ? !fixedPrice.equals(basket.fixedPrice) : basket.fixedPrice != null) return false;
+        return amount != null ? amount.equals(basket.amount) : basket.amount == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int
+                result = 1;
+//                result = order != null ? order.hashCode() : 0;
+        result = 31 * result + (dish != null ? dish.hashCode() : 0);
+        result = 31 * result + (fixedPrice != null ? fixedPrice.hashCode() : 0);
+        result = 31 * result + (amount != null ? amount.hashCode() : 0);
+        return result;
+    }
 }
