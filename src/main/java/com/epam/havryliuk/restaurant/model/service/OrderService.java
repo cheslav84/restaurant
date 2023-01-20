@@ -9,9 +9,12 @@ import com.epam.havryliuk.restaurant.model.exceptions.*;
 import com.epam.havryliuk.restaurant.model.util.annotations.Autowired;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 
+import java.math.BigDecimal;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class OrderService {
     private static final Logger LOG = LogManager.getLogger(OrderService.class);
@@ -23,7 +26,6 @@ public class OrderService {
     private BasketDao basketDao;
     @Autowired
     private EntityTransaction transaction;
-
 
     /**
      * Method receives an Order id and a new value of BookingStatus that has to be changed in that Order.
@@ -75,7 +77,6 @@ public class OrderService {
             for (Order order : orders) {
                 order.setBaskets(basketDao.getOrderDishes(order));
             }
-            transaction.commit();
             LOG.debug("The order list was successfully created.");
         } catch (DAOException e) {
             LOG.error("Unable to get orders.");
@@ -181,7 +182,7 @@ public class OrderService {
             basket = basketDao.create(basket);
             List<Basket> baskets = order.getBaskets();
             baskets.add(basket);
-            transaction.commit();//todo виконується без комміту.. з'ясувати
+            transaction.commit(); // todo виконується без комміту.. з'ясувати
             LOG.debug("A dish has been added to the order.");
         } catch (SQLIntegrityConstraintViolationException e) {
             transaction.rollback();
@@ -278,13 +279,39 @@ public class OrderService {
         }
     }
 
-    @Override
-    public String toString() {
-        return "OrderService{" +
-                "transaction=" + transaction +
-                ", orderDao=" + orderDao +
-                ", dishDao=" + dishDao +
-                ", basketDao=" + basketDao +
-                '}';
+    /**
+     * Method calculates the total price of each order.
+     * @param orders list of orders which prices need to be calculated.
+     * @return map of orders, the keys are the orders, and values are the
+     * total prices of that order.
+     */
+    public Map<Order, BigDecimal> getTotalPrices(List<Order> orders) {
+        Map<Order, BigDecimal> ordersAndPrices = orders.stream()
+                .collect(Collectors.toMap(
+                        order -> order,
+                        o -> o.getBaskets()
+                                .stream()
+                                .map(basket -> basket.getFixedPrice()
+                                        .multiply(BigDecimal.valueOf(basket.getAmount())))
+                                .reduce(BigDecimal.ZERO, BigDecimal::add)
+                ));
+        return sortOrdersByPrice(ordersAndPrices);
+    }
+
+    /**
+     * Sort map by creation date of the orders.
+     * @param ordersAndPrices unsorted map.
+     * @return map sorted by creation date.
+     */
+    private LinkedHashMap<Order, BigDecimal> sortOrdersByPrice(Map<Order, BigDecimal> ordersAndPrices) {
+        return ordersAndPrices.entrySet().stream()
+                .sorted(Map.Entry.comparingByKey(
+                        (o1, o2) -> o2.getCreationDate()
+                                .compareTo(o1.getCreationDate())
+                )).collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (e1, e2) -> e1,
+                        LinkedHashMap::new));
     }
 }

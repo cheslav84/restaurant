@@ -9,6 +9,7 @@ import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.resource.MessageManager;
 import com.epam.havryliuk.restaurant.model.service.DishService;
 import com.epam.havryliuk.restaurant.model.util.URLUtil;
+import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -22,13 +23,17 @@ import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
 public class OrderInfoCommand implements ActionCommand {
     private static final Logger log = LogManager.getLogger(OrderInfoCommand.class);
+    private final DishService dishService;
 
+    public OrderInfoCommand () {
+        ApplicationServiceContext appContext = new ApplicationServiceContext();
+        dishService = appContext.getInstance(DishService.class);
+    }
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         long dishId = Long.parseLong(request.getParameter(RequestParameters.DISH_ID));
         log.debug("\"/dishId\" " + dishId + " has been received from user.");
         HttpSession session = request.getSession();
-        DishService dishService = new DishService();
         Dish dish;
         try {
             dish = dishService.getDish(dishId);

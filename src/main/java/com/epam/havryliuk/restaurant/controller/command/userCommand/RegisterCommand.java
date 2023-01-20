@@ -14,6 +14,7 @@ import com.epam.havryliuk.restaurant.model.service.UserService;
 
 import com.epam.havryliuk.restaurant.model.service.validation.Validator;
 import com.epam.havryliuk.restaurant.model.util.PassEncryptor;
+import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -28,7 +29,12 @@ import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
 public class RegisterCommand implements ActionCommand {
     private static final Logger log = LogManager.getLogger(RegisterCommand.class);
+    private final UserService userService;
 
+    public RegisterCommand () {
+        ApplicationServiceContext appContext = new ApplicationServiceContext();
+        userService = appContext.getInstance(UserService.class);
+    }
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
@@ -36,11 +42,10 @@ public class RegisterCommand implements ActionCommand {
         MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
         User user;
         try {
-            UserService service = new UserService();
             user = mapUser(request);
 
             //todo check user if exists
-            service.addNewUser(user);
+            userService.addNewUser(user);
             encryptUserPassword(user);
             session.setAttribute(LOGGED_USER, user);
             //        Cookie cookie = new Cookie("sessionId", session.getId());

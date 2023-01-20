@@ -12,10 +12,11 @@ import java.io.IOException;
 
 
 public class LoginPageCommand implements ActionCommand {
-    private static final Logger log = LogManager.getLogger(LoginPageCommand.class);
+    private static final Logger LOG = LogManager.getLogger(LoginPageCommand.class);
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        LOG.debug("Login page request.");
         request.getRequestDispatcher(AppPagesPath.FORWARD_REGISTRATION).forward(request, response);
     }
 }

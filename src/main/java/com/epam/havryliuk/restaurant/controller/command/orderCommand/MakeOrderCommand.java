@@ -33,13 +33,12 @@ public class MakeOrderCommand implements ActionCommand {
     private static final Logger log = LogManager.getLogger(MakeOrderCommand.class);
     private OrderService orderService;
     private Validator validator = new Validator();
+    private MessageManager messageManager;
 
     public MakeOrderCommand () {
         ApplicationServiceContext appContext = new ApplicationServiceContext();
         orderService = appContext.getInstance(OrderService.class);
-        System.out.println(orderService);
     }
-
 
     /**
      * Method first tries to get an Order from HttpSession.
@@ -54,16 +53,15 @@ public class MakeOrderCommand implements ActionCommand {
         User user = (User) session.getAttribute(RequestAttributes.LOGGED_USER);
         Order order = (Order) session.getAttribute(CURRENT_ORDER);
         if (order != null) {
-            saveDishToOrder(request, orderService, order);
+            saveDishToOrder(request, order);
             session.removeAttribute(ERROR_MESSAGE);
             log.debug("Order in session: " + order);
         } else {
-            order = getFromStorageOrCreateOrder(request, orderService, user);
+            order = getFromStorageOrCreateOrder(request, user);
             session.setAttribute(CURRENT_ORDER, order);
-
-            if (order != null) {// todo (order does not exist in database if null) think of refactoring
-                saveDishToOrder(request, orderService, order);
-            }
+//            if (order != null) {// todo (order does not exist in database if null) think of refactoring
+                saveDishToOrder(request, order);
+//            }
         }
         String redirectionPage = getRedirectionPage(request);
         response.sendRedirect(redirectionPage);
@@ -73,17 +71,14 @@ public class MakeOrderCommand implements ActionCommand {
      * Methods requests an order from service. It can be the order that already exist in database
      * or the new one.
      * @param request
-
      * @param user
-     * @param orderService
      */
-    private Order getFromStorageOrCreateOrder(HttpServletRequest request, OrderService orderService, User user) {
+    private Order getFromStorageOrCreateOrder(HttpServletRequest request, User user) {
         HttpSession session = request.getSession();
         Order order = null;
         try {
             String deliveryAddress = request.getParameter(RequestParameters.DELIVERY_ADDRESS);
             String deliveryPhone = request.getParameter(RequestParameters.DELIVERY_PHONE);
-
             validator.validateDeliveryData(deliveryAddress, deliveryPhone, request);
             order = orderService.getOrCreateOrder(user, deliveryAddress, deliveryPhone);
             session.removeAttribute(ERROR_MESSAGE);
@@ -103,12 +98,14 @@ public class MakeOrderCommand implements ActionCommand {
 
 
 
-    private void saveDishToOrder(HttpServletRequest req, OrderService orderService, Order order) {
-        HttpSession session = req.getSession();
-        MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
+    private void saveDishToOrder(HttpServletRequest request, Order order) {
+        if (order != null) {// todo (order does not exist in database if null) think of refactoring
+
+            HttpSession session = request.getSession();
+        messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
         try {
-            Dish dish = getCurrentDish(req);
-            int dishesAmount = getDishesAmount(req);
+            Dish dish = getCurrentDish(request);
+            int dishesAmount = getDishesAmount(request);
             orderService.addDishToOrder(order, dish, dishesAmount);
             session.removeAttribute(CURRENT_DISH);
         } catch (IrrelevantDataException e) {
@@ -125,6 +122,7 @@ public class MakeOrderCommand implements ActionCommand {
             session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
             log.error(e);
         }
+        }
     }
 
 
@@ -135,32 +133,28 @@ public class MakeOrderCommand implements ActionCommand {
             MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
             session.setAttribute(ORDER_MESSAGE,
                     messageManager.getProperty(ResponseMessages.ORDER_DISH_NOT_FOUND));
-            log.error("Choose the dish for adding it to basket.");
-            throw new ServiceException();
+            log.error(ResponseMessages.ORDER_DISH_NOT_FOUND);
+            throw new ServiceException(ResponseMessages.ORDER_DISH_NOT_FOUND);
         }
         return dish;
     }
 
 
-    private int getDishesAmount(HttpServletRequest req) throws ValidationException {
+    private int getDishesAmount(HttpServletRequest request) throws ValidationException {
         int dishesAmount;
-        HttpSession session = req.getSession();
+        HttpSession session = request.getSession();
         MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
         try {
-            dishesAmount = Integer.parseInt(req.getParameter(RequestParameters.ORDER_DISHES_AMOUNT).trim());
-            new Validator().validateDishesAmount(dishesAmount, req);
+            dishesAmount = Integer.parseInt(request.getParameter(RequestParameters.ORDER_DISHES_AMOUNT).trim());
+            new Validator().validateDishesAmount(dishesAmount, request);
             log.debug("Request for \"" + dishesAmount + "\" has been received.");
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | NullPointerException e) {
             session.setAttribute(ERROR_MESSAGE,
                     messageManager.getProperty(ResponseMessages.NUMBER_OF_DISHES_IS_EMPTY_ERROR));
             throw new ValidationException("Enter amount of dishes you want to order please.");
         }
         return dishesAmount;
     }
-
-
-
-
 
     /**
      * Returns String page that is going to be redirected to.
@@ -170,19 +164,19 @@ public class MakeOrderCommand implements ActionCommand {
      * redirected to his basket page. If any error situation occurs,
      * (any messages should be displayed to user) then user will get
      * the same page with the proper messages.
-     * @param req
+     * @param request
      * @return
      */
-    private String getRedirectionPage(HttpServletRequest req) {
+    private String getRedirectionPage(HttpServletRequest request) {
         String redirectionPage;
-        String continueOrder = req.getParameter("continue");
+        String continueOrder = request.getParameter(RequestParameters.CONTINUE_ORDERING);
         log.debug("continueOrder: " + continueOrder);
-        String errorMessage = (String) req.getSession().getAttribute(ERROR_MESSAGE);
-        String orderMessage = (String) req.getSession().getAttribute(ORDER_MESSAGE);
+        String errorMessage = (String) request.getSession().getAttribute(ERROR_MESSAGE);
+        String orderMessage = (String) request.getSession().getAttribute(ORDER_MESSAGE);
         if (continueOrder == null && errorMessage == null && orderMessage == null) {
             redirectionPage = AppPagesPath.REDIRECT_BASKET;
         } else {
-            redirectionPage = URLUtil.getRefererPage(req);
+            redirectionPage = URLUtil.getRefererPage(request);
         }
         log.debug("redirectionPage " + redirectionPage);
         return redirectionPage;

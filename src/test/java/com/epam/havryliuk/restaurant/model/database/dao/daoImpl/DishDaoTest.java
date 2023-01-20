@@ -19,34 +19,16 @@
 //
 //class DishDaoTest {
 //
-//
 //    @Mock
 //    DishDao dishDAO;
+//
+////    @Mock
+////    DishDao dishDAO;
 //
 //    @BeforeEach
 //    public void setup() {
 //        MockitoAnnotations.openMocks(this);
 //    }
-//
-////    @Test
-////    void findByNameTrue() throws DAOException {
-////        Mockito.when(dishDAO.findByName("name1")).thenReturn(getDishInstance(1));
-////        Dish dish = dishDAO.findByName("name1");
-////        Assertions.assertEquals(dish, getDishInstance(1));
-////    }
-////
-////    @Test
-////    void findByNameFalse() throws DAOException {
-////        Mockito.when(dishDAO.findByName("name1")).thenReturn(getDishInstance(1));
-////        Dish dish = dishDAO.findByName("name1");
-////        Assertions.assertNotEquals(dish, getDishInstance(2));
-////    }
-////
-////    @Test
-////    void findByNameException() throws DAOException {
-////        Mockito.when(dishDAO.findByName("someName")).thenThrow(new DAOException());
-////        Assertions.assertThrows(DAOException.class, () -> dishDAO.findByName("someName"));
-////    }
 //
 //
 //

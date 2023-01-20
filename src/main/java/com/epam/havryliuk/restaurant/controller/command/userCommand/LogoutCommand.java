@@ -22,6 +22,7 @@ public class LogoutCommand implements ActionCommand {
             String locale = (String) session.getAttribute(LOCALE);
             session.invalidate();
             request.getSession(true).setAttribute(LOCALE, locale);
+            LOG.debug("User logged out.");
         }
         response.sendRedirect(AppPagesPath.REDIRECT_INDEX);
     }

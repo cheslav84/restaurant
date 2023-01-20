@@ -9,6 +9,8 @@ import com.epam.havryliuk.restaurant.model.entity.Dish;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.resource.MessageManager;
 import com.epam.havryliuk.restaurant.model.service.DishService;
+import com.epam.havryliuk.restaurant.model.service.OrderService;
+import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -25,11 +27,18 @@ import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 public class IndexCommand implements ActionCommand {
     private static final Logger LOG = LogManager.getLogger(IndexCommand.class);
     private static final String DEFAULT_MENU = "COFFEE";
+    private DishService dishService;
+
+    public IndexCommand () {
+        ApplicationServiceContext appContext = new ApplicationServiceContext();
+        dishService = appContext.getInstance(DishService.class);
+    }
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         Category currentMenu = getCurrentMenu(request);
         MessageManager messageManager = MessageManager.valueOf((String) request.getSession().getAttribute(LOCALE));
-        DishService dishService = new DishService();
+//        DishService dishService = new DishService();
         List<Dish> dishes = null;
         try {
             dishes = dishService.getMenuByCategory(currentMenu);

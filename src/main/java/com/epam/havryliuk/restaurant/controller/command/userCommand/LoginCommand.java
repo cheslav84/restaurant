@@ -9,6 +9,7 @@ import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.resource.MessageManager;
 import com.epam.havryliuk.restaurant.model.service.UserService;
 import com.epam.havryliuk.restaurant.model.util.PassEncryptor;
+import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -23,38 +24,38 @@ import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
 
 public class LoginCommand implements ActionCommand {
-    private static final Logger log = LogManager.getLogger(LoginCommand.class);
+    private static final Logger LOG = LogManager.getLogger(LoginCommand.class);
+    private final UserService userService;
 
+    public LoginCommand () {
+        ApplicationServiceContext appContext = new ApplicationServiceContext();
+        userService = appContext.getInstance(UserService.class);
+    }
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String email = request.getParameter(RequestParameters.EMAIL);//todo перейменувати скрізь на email
         String password = request.getParameter(RequestParameters.PASSWORD);
-            //todo подумати про верифікацію даних
-
         HttpSession session = request.getSession();
         MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
-
         String page;
-
         try {
-            User user = new UserService().getUserFromDatabase(email);
+            User user = userService.getUserFromDatabase(email);
             PassEncryptor.verify(user.getPassword(), password);
             session.setAttribute(LOGGED_USER, user);
-
             session.removeAttribute(ERROR_MESSAGE);
             page = getRedirectionPage(session);//todo
-            log.debug("User logged in.");
+            LOG.debug("User logged in.");
         } catch (ServiceException e) {
             page = AppPagesPath.REDIRECT_REGISTRATION;
             session.setAttribute(EMAIL, email);
             session.setAttribute(ERROR_MESSAGE,
                     messageManager.getProperty(ResponseMessages.LOGIN_ERROR));
-            log.error(e.getMessage());
+            LOG.error(e.getMessage());
         } catch (GeneralSecurityException e) {
             page = AppPagesPath.REDIRECT_REGISTRATION;
             session.setAttribute(ERROR_MESSAGE,
                     messageManager.getProperty(ResponseMessages.PASSWORD_ERROR));
-            log.error(e.getMessage());
+            LOG.error(e.getMessage());
         }
         response.sendRedirect(page);
     }

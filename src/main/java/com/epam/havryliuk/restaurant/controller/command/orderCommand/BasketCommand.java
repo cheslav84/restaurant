@@ -20,15 +20,13 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.ERROR_MESSAGE;
 
 public class BasketCommand implements ActionCommand {
     private static final Logger log = LogManager.getLogger(BasketCommand.class);
-
-    private OrderService orderService;
+    private final OrderService orderService;
 
     public BasketCommand () {
         ApplicationServiceContext appContext = new ApplicationServiceContext();
@@ -37,14 +35,13 @@ public class BasketCommand implements ActionCommand {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-//        OrderService orderService = new OrderService();
         HttpSession session = request.getSession();
         MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
         User user = (User) session.getAttribute(LOGGED_USER);
         try {
             List<Order> orders = orderService.getAllUserOrders(user);
             checkIfOrdersPresent(orders);
-            Map<Order, BigDecimal> ordersAndTotalPriced = getTotalPrices(orders);
+            Map<Order, BigDecimal> ordersAndTotalPriced = orderService.getTotalPrices(orders);
             session.setAttribute(ORDER_PRICE_MAP, ordersAndTotalPriced);
 //            session.removeAttribute(ERROR_MESSAGE);
         } catch (EntityAbsentException e) {
@@ -64,28 +61,4 @@ public class BasketCommand implements ActionCommand {
             throw new EntityAbsentException();
         }
     }
-
-    private Map<Order, BigDecimal> getTotalPrices(List<Order> orders) {
-        Map<Order, BigDecimal> ordersAndPrices = orders.stream()
-                .collect(Collectors.toMap(
-                        order -> order,
-                        o -> o.getBaskets()
-                                .stream()
-                                .map(basket -> basket.getFixedPrice()
-                                        .multiply(BigDecimal.valueOf(basket.getAmount())))
-                                .reduce(BigDecimal.ZERO, BigDecimal::add)
-                ));
-
-        return ordersAndPrices.entrySet().stream()
-                .sorted(Map.Entry.comparingByKey(
-                        (o1, o2) -> o2.getCreationDate()
-                                .compareTo(o1.getCreationDate())
-                )).collect(Collectors.toMap(
-                        Map.Entry::getKey,
-                        Map.Entry::getValue,
-                        (e1, e2) -> e1,
-                        LinkedHashMap::new));
-
-    }
-
 }

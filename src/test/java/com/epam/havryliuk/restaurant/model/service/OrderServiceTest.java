@@ -30,20 +30,19 @@ import static org.mockito.Mockito.*;
 class OrderServiceTest {
 
     @Mock
-    DishDao dishDao;
+    private DishDao dishDao;
 
     @Mock
-    BasketDao basketDao;
+    private BasketDao basketDao;
 
     @Mock
-    OrderDao orderDao;
+    private OrderDao orderDao;
 
     @Mock
-    EntityTransaction transaction;
+    private EntityTransaction transaction;
 
     @InjectMocks
-    OrderService orderService;
-
+    private OrderService orderService;
 
     @BeforeEach
     public void setup() {
@@ -284,6 +283,21 @@ class OrderServiceTest {
         assertEquals(errorMessage, exception.getMessage());
     }
 
+//    @Test
+//    void getTotalPrices() {
+//
+//
+//    }
+//
+//    public Map<Order, BigDecimal> getMapForTest(List<Order> orders) {
+//        Map<Order, BigDecimal> map = new HashMap<>();
+//
+//    }
+//
+
+
+
+
 
     @NotNull
     private List<Order> initTestOrderList(User user, int numOfOrders) {
@@ -301,7 +315,9 @@ class OrderServiceTest {
         for (int i = 0; i < numOfOrders; i++) {
             String address = "address" + i;
             String phoneNo = "096115008" + i;
-            orders.add(Order.getInstance(address, phoneNo, true, BookingStatus.NEW));
+//            orders.add(Order.getInstance(i, address, phoneNo, true, new Date(), new Date(), BookingStatus.NEW));
+             orders.add(Order.getInstance(address, phoneNo, true, BookingStatus.NEW));
+
         }
         return orders;
     }

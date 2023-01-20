@@ -25,7 +25,7 @@ public interface RequestParameters {
     String ORDER_SORTING_STATUS = "status";
     String RECORDS_PER_PAGE = "recordsPerPage";
 
-
+    String CONTINUE_ORDERING = "continue";
 
 
 }

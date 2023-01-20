@@ -13,7 +13,7 @@ public class Dish implements Entity {
     private boolean spirits;// todo add field
 
     private String image;
-//    private Category category;// todo need to add list of Category?
+//    private Category category;
 
     public Dish() {
     }
