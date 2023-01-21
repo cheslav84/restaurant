@@ -1,4 +1,4 @@
-package com.epam.havryliuk.restaurant.model.resource;
+package com.epam.havryliuk.restaurant.model.util;
 
 import java.util.Locale;
 import java.util.ResourceBundle;

@@ -46,15 +46,48 @@ class UserServiceTest {
     }
 
     @Test
-    void addNewUserWhenExist() throws DAOException, ServiceException {
+    void addNewUserWhenExist() throws DAOException {
         User user = User.getInstance("email", "password", "name", "surname", "Male", true);
         when(userDao.findByEmail(user.getEmail())).thenReturn(user);
         Exception exception = assertThrows(ServiceException.class, () -> userService.addNewUser(user));
         assertEquals("The user with such login is already exists. Try to use another one.", exception.getMessage());
-
     }
 
     @Test
-    void getUserFromDatabase() {
+    void addNewUserDaoException() throws DAOException {
+        User user = User.getInstance("email", "password", "name", "surname", "Male", true);
+        when(userDao.findByEmail(user.getEmail())).thenThrow(new DAOException());
+        Exception exception = assertThrows(ServiceException.class, () -> userService.addNewUser(user));
+        assertEquals("Error in creating the user.", exception.getMessage());
     }
+
+    @Test
+    void getUserFromDatabase() throws ServiceException, DAOException {
+        User expected = User.getInstance("email", "password", "name", "surname", "Male", true);
+        when(userDao.findByEmail(expected.getEmail())).thenReturn(expected);
+        User actual = userService.getUserFromDatabase(expected.getEmail());
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void getUserFromDatabaseNotFound() throws DAOException {
+        User user = User.getInstance("email", "password", "name", "surname", "Male", true);
+        String email = "email";
+        when(userDao.findByEmail(user.getEmail())).thenReturn(null);
+        Exception exception = assertThrows(ServiceException.class, () -> userService.getUserFromDatabase(email));
+        assertEquals("User hasn't been found.", exception.getMessage());
+    }
+
+    @Test
+    void getUserFromDatabaseDaoException() throws DAOException {
+        User user = User.getInstance("email", "password", "name", "surname", "Male", true);
+        String email = "email";
+        when(userDao.findByEmail(user.getEmail())).thenThrow(new DAOException());
+        Exception exception = assertThrows(ServiceException.class, () -> userService.getUserFromDatabase(email));
+        assertEquals("An error occurs during receiving the user.", exception.getMessage());
+    }
+
+
+
+
 }

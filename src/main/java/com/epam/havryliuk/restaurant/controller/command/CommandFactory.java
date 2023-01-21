@@ -1,7 +1,7 @@
 package com.epam.havryliuk.restaurant.controller.command;
 
 import com.epam.havryliuk.restaurant.controller.command.dishCommand.IndexCommand;
-import com.epam.havryliuk.restaurant.model.resource.MessageManager;
+import com.epam.havryliuk.restaurant.model.util.MessageManager;
 import jakarta.servlet.http.HttpServletRequest;
 
 public class CommandFactory {

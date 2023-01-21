@@ -1,22 +1,21 @@
 package com.epam.havryliuk.restaurant.controller.command.dishCommand;
 
 import com.epam.havryliuk.restaurant.controller.command.ActionCommand;
+import com.epam.havryliuk.restaurant.controller.responseManager.MenuResponseManager;
 import com.epam.havryliuk.restaurant.model.constants.RequestParameters;
 import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
 import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
 import com.epam.havryliuk.restaurant.model.entity.Category;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
-import com.epam.havryliuk.restaurant.model.resource.MessageManager;
+import com.epam.havryliuk.restaurant.model.util.MessageManager;
 import com.epam.havryliuk.restaurant.model.service.DishService;
 import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.List;
@@ -26,9 +25,9 @@ import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
 public class MenuCommand implements ActionCommand {
     private static final Logger LOG = LogManager.getLogger(MenuCommand.class);
-    private static final String DEFAULT_MENU = "COFFEE";
     private static final String DEFAULT_SORTING = "name";
-    private final DishService dishService;
+    private MenuResponseManager menuResponseManager;
+    private DishService dishService;
 
     public MenuCommand () {
         ApplicationServiceContext appContext = new ApplicationServiceContext();
@@ -36,7 +35,8 @@ public class MenuCommand implements ActionCommand {
     }
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        Category currentMenu = getCurrentMenu(request);
+        menuResponseManager = new MenuResponseManager();
+        Category currentMenu = menuResponseManager.getCurrentMenu(request);
         MessageManager messageManager = MessageManager.valueOf((String) request.getSession().getAttribute(LOCALE));
         List<Dish> dishes = null;
         List<Dish> specials = null;
@@ -45,7 +45,7 @@ public class MenuCommand implements ActionCommand {
                 String sortParameter = getSortParameter(request);
                 dishes = dishService.getAllMenuSortedBy(sortParameter);
             } else {
-                dishes = dishService.getMenuByCategory(getCurrentMenu(request));
+                dishes = dishService.getMenuByCategory(menuResponseManager.getCurrentMenu(request));
             }
             if (dishes.isEmpty()) {
                 request.setAttribute(MENU_MESSAGE,
@@ -58,7 +58,7 @@ public class MenuCommand implements ActionCommand {
                     messageManager.getProperty(ResponseMessages.MENU_UNAVAILABLE));
             LOG.error(e);
         }
-        hideOrderInfoOnReloadPage(request);
+        menuResponseManager.hideOrderInfoOnReloadPage(request);
         request.setAttribute(DISH_LIST, dishes);
         request.setAttribute(SPECIALS_DISH_LIST, specials);
         request.getRequestDispatcher(AppPagesPath.FORWARD_MENU_PAGE).forward(request, response);
@@ -66,32 +66,6 @@ public class MenuCommand implements ActionCommand {
 
     private String getSortParameter(HttpServletRequest request) {
         return Optional.ofNullable(request.getParameter(RequestParameters.MENU_SORTING_OPTION)).orElse(DEFAULT_SORTING);
-    }
-
-
-    @NotNull
-    private Category getCurrentMenu(HttpServletRequest req) {//todo код повторюється
-        HttpSession session = req.getSession();
-        String lastVisitedMenu = (String) session.getAttribute(MENU_CATEGORY);
-        String currentMenu = req.getParameter(RequestParameters.MENU_CATEGORY);
-        if (currentMenu != null) {
-            session.setAttribute(MENU_CATEGORY, currentMenu);
-        } else {
-            currentMenu = Optional.ofNullable(lastVisitedMenu).orElse(DEFAULT_MENU);
-        }
-        return Category.valueOf(currentMenu);
-    }
-
-    private void hideOrderInfoOnReloadPage(HttpServletRequest req)  {//todo код повторюється
-        HttpSession session = req.getSession();
-        if (session.getAttribute(SHOW_DISH_INFO) != null) {
-            if (req.getAttribute(SHOW_DISH_INFO) == null) {
-                req.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
-            } else  {
-                req.removeAttribute(SHOW_DISH_INFO);
-            }
-            session.removeAttribute(SHOW_DISH_INFO);
-        }
     }
 
 }

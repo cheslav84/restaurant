@@ -9,7 +9,7 @@ import com.epam.havryliuk.restaurant.model.exceptions.ValidationException;
 import com.epam.havryliuk.restaurant.model.exceptions.DuplicatedEntityException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 
-import com.epam.havryliuk.restaurant.model.resource.MessageManager;
+import com.epam.havryliuk.restaurant.model.util.MessageManager;
 import com.epam.havryliuk.restaurant.model.service.UserService;
 
 import com.epam.havryliuk.restaurant.model.service.validation.Validator;
@@ -29,7 +29,7 @@ import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
 public class RegisterCommand implements ActionCommand {
     private static final Logger log = LogManager.getLogger(RegisterCommand.class);
-    private final UserService userService;
+    private UserService userService;
 
     public RegisterCommand () {
         ApplicationServiceContext appContext = new ApplicationServiceContext();

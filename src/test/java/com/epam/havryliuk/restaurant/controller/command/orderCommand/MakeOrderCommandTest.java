@@ -70,7 +70,7 @@ class MakeOrderCommandTest {
         when(session.getAttribute(RequestAttributes.CURRENT_ORDER)).thenReturn(order);
         when(session.getAttribute(RequestAttributes.CURRENT_DISH)).thenReturn(dish);
         when(request.getParameter(RequestParameters.ORDER_DISHES_AMOUNT)).thenReturn(dishesAmount);
-        when(session.getAttribute(LOCALE)).thenReturn("EN");
+        when(session.getAttribute(RequestAttributes.LOCALE)).thenReturn("EN");
         when(request.getParameter(RequestParameters.CONTINUE_ORDERING)).thenReturn(null);
         makeOrder.execute(request, response);
         verify(session).removeAttribute(CURRENT_DISH);
@@ -93,9 +93,9 @@ class MakeOrderCommandTest {
         when(session.getAttribute(RequestAttributes.CURRENT_ORDER)).thenReturn(null);
         when(session.getAttribute(RequestAttributes.CURRENT_DISH)).thenReturn(dish);
         when(request.getParameter(RequestParameters.ORDER_DISHES_AMOUNT)).thenReturn(dishesAmount);
-        when(orderService.getOrCreateOrder(user, deliveryAddress, deliveryPhone)).thenReturn(order);
         when(session.getAttribute(LOCALE)).thenReturn("EN");
         when(request.getParameter(RequestParameters.CONTINUE_ORDERING)).thenReturn(null);
+        when(orderService.getOrCreateOrder(user, deliveryAddress, deliveryPhone)).thenReturn(order);
         makeOrder.execute(request, response);
         verify(session).setAttribute(CURRENT_ORDER, order);
         verify(session).removeAttribute(CURRENT_DISH);

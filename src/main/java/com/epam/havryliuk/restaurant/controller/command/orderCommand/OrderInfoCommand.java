@@ -6,7 +6,7 @@ import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
 import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
-import com.epam.havryliuk.restaurant.model.resource.MessageManager;
+import com.epam.havryliuk.restaurant.model.util.MessageManager;
 import com.epam.havryliuk.restaurant.model.service.DishService;
 import com.epam.havryliuk.restaurant.model.util.URLUtil;
 import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
@@ -23,7 +23,7 @@ import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
 public class OrderInfoCommand implements ActionCommand {
     private static final Logger log = LogManager.getLogger(OrderInfoCommand.class);
-    private final DishService dishService;
+    private DishService dishService;
 
     public OrderInfoCommand () {
         ApplicationServiceContext appContext = new ApplicationServiceContext();

@@ -8,7 +8,7 @@ import com.epam.havryliuk.restaurant.model.entity.Order;
 import com.epam.havryliuk.restaurant.model.entity.OrderSorting;
 import com.epam.havryliuk.restaurant.model.entity.Page;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
-import com.epam.havryliuk.restaurant.model.resource.MessageManager;
+import com.epam.havryliuk.restaurant.model.util.MessageManager;
 import com.epam.havryliuk.restaurant.model.service.OrderService;
 import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
 import jakarta.servlet.ServletException;
@@ -29,23 +29,19 @@ public class ManageOrdersCommand implements ActionCommand {
     private int recordsPerPage = 4;
     private OrderSorting sortingParameter = OrderSorting.STATUS;
     private OrderService orderService;
+
     public ManageOrdersCommand () {
         ApplicationServiceContext appContext = new ApplicationServiceContext();
         orderService = appContext.getInstance(OrderService.class);
-        System.out.println(orderService);
     }
-
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-//        OrderService orderService = new OrderService();
         HttpSession session = request.getSession();
         MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
-
         setSortingParameter(request);
         setPageNumber(request);
         setRecordsPerPage(request);
-
         try {
             Page<Order> ordersPage = orderService.getAllOrders(pageNumber, recordsPerPage, sortingParameter);
             List<Order> orders = ordersPage.getRecords();
@@ -64,7 +60,6 @@ public class ManageOrdersCommand implements ActionCommand {
 
     private void setSortingParameter(HttpServletRequest request) {
         try {
-            System.err.println(request.getParameter(RequestParameters.ORDER_SORTING_PARAMETER));
             sortingParameter = OrderSorting.valueOf(request.getParameter(RequestParameters.ORDER_SORTING_PARAMETER).toUpperCase());
             LOG.debug("Sorting parameter: " + sortingParameter);
         } catch (Exception e) {

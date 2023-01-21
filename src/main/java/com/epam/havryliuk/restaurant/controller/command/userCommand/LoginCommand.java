@@ -6,7 +6,7 @@ import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
 import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
 import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
-import com.epam.havryliuk.restaurant.model.resource.MessageManager;
+import com.epam.havryliuk.restaurant.model.util.MessageManager;
 import com.epam.havryliuk.restaurant.model.service.UserService;
 import com.epam.havryliuk.restaurant.model.util.PassEncryptor;
 import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
@@ -25,7 +25,7 @@ import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
 public class LoginCommand implements ActionCommand {
     private static final Logger LOG = LogManager.getLogger(LoginCommand.class);
-    private final UserService userService;
+    private UserService userService;
 
     public LoginCommand () {
         ApplicationServiceContext appContext = new ApplicationServiceContext();

@@ -1,4 +1,4 @@
-package com.epam.havryliuk.restaurant.model.util;
+package com.epam.havryliuk.restaurant.model.constants;
 
 
 public class Properties {

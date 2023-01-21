@@ -1,44 +1,41 @@
 package com.epam.havryliuk.restaurant.controller.command.dishCommand;
 
 import com.epam.havryliuk.restaurant.controller.command.ActionCommand;
-import com.epam.havryliuk.restaurant.model.constants.RequestParameters;
+import com.epam.havryliuk.restaurant.controller.responseManager.MenuResponseManager;
 import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
 import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
 import com.epam.havryliuk.restaurant.model.entity.Category;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
-import com.epam.havryliuk.restaurant.model.resource.MessageManager;
+import com.epam.havryliuk.restaurant.model.util.MessageManager;
 import com.epam.havryliuk.restaurant.model.service.DishService;
-import com.epam.havryliuk.restaurant.model.service.OrderService;
 import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
 public class IndexCommand implements ActionCommand {
     private static final Logger LOG = LogManager.getLogger(IndexCommand.class);
-    private static final String DEFAULT_MENU = "COFFEE";
+    private MenuResponseManager menuResponseManager;
     private DishService dishService;
-
     public IndexCommand () {
         ApplicationServiceContext appContext = new ApplicationServiceContext();
         dishService = appContext.getInstance(DishService.class);
+        menuResponseManager = new MenuResponseManager();
     }
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        Category currentMenu = getCurrentMenu(request);
+
+        Category currentMenu = menuResponseManager.getCurrentMenu(request);
         MessageManager messageManager = MessageManager.valueOf((String) request.getSession().getAttribute(LOCALE));
-//        DishService dishService = new DishService();
         List<Dish> dishes = null;
         try {
             dishes = dishService.getMenuByCategory(currentMenu);
@@ -52,33 +49,10 @@ public class IndexCommand implements ActionCommand {
                     messageManager.getProperty(ResponseMessages.MENU_UNAVAILABLE));
             LOG.error(e);
         }
-        hideOrderInfoOnReloadPage(request);
+        menuResponseManager.hideOrderInfoOnReloadPage(request);
         request.setAttribute(DISH_LIST, dishes);
         request.getRequestDispatcher(AppPagesPath.FORWARD_INDEX).forward(request, response);
     }
 
-    private Category getCurrentMenu(HttpServletRequest req) {
-        HttpSession session = req.getSession();
-        String lastVisitedMenu = (String) session.getAttribute(MENU_CATEGORY);
-        String currentMenu = req.getParameter(RequestParameters.MENU_CATEGORY);
-        if (currentMenu != null) {
-            session.setAttribute(MENU_CATEGORY, currentMenu);
-        } else {
-            currentMenu = Optional.ofNullable(lastVisitedMenu).orElse(DEFAULT_MENU);
-        }
-        return Category.valueOf(currentMenu);
-    }
-
-    private void hideOrderInfoOnReloadPage(HttpServletRequest req)  {
-        HttpSession session = req.getSession();
-        if (session.getAttribute(SHOW_DISH_INFO) != null){
-            if (req.getAttribute(SHOW_DISH_INFO) == null) {
-                req.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
-            } else  {
-                req.removeAttribute(SHOW_DISH_INFO);
-            }
-            session.removeAttribute(SHOW_DISH_INFO);
-        }
-    }
 
 }

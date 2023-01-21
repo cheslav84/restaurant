@@ -9,18 +9,18 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class PropertiesLoader {
-    private static final Logger log = LogManager.getLogger(PropertiesLoader.class);
+    private static final Logger LOG = LogManager.getLogger(PropertiesLoader.class);
 
        public static Properties getProperties (String path) throws PropertyInitializationException {
            Properties properties = new Properties();
            try (InputStream is = PropertiesLoader.class.getClassLoader().getResourceAsStream(path)) {
                if (is == null) {
-                   log.error("The properties file path haven't been found: " + path);
+                   LOG.error("The properties file path haven't been found: " + path);
                    throw new IOException("The properties file path haven't been found: " + path);
                }
                properties.load(is);
            } catch (IOException e) {
-               log.error("Error loading query properties from file " + path, e);
+               LOG.error("Error loading query properties from file " + path, e);
                throw new PropertyInitializationException("Error loading query properties from file " + path);
            }
            return properties;

@@ -9,7 +9,7 @@ import com.epam.havryliuk.restaurant.model.entity.Role;
 import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.exceptions.EntityAbsentException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
-import com.epam.havryliuk.restaurant.model.resource.MessageManager;
+import com.epam.havryliuk.restaurant.model.util.MessageManager;
 import com.epam.havryliuk.restaurant.model.service.OrderService;
 import com.epam.havryliuk.restaurant.model.util.URLUtil;
 import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
@@ -34,7 +34,7 @@ public class SetNextStatusCommand implements ActionCommand {
     private static final Logger log = LogManager.getLogger(SetNextStatusCommand.class);
 
     private static final Map<BookingStatus, Role> bookingAccessRoles;
-    private final OrderService orderService;
+    private OrderService orderService;
 
     static {
         bookingAccessRoles = getBookingAccessRoles();

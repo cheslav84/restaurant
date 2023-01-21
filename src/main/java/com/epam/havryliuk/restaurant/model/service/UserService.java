@@ -33,8 +33,9 @@ public class UserService {
             log.error(errorMessage);
             throw new DuplicatedEntityException(errorMessage, e);
         } catch (DAOException e) {
-            log.error("Error in creating the user.");
-            throw new ServiceException(e);
+            String errorMessage = "Error in creating the user.";
+            log.error(errorMessage);
+            throw new ServiceException(errorMessage, e);
         } finally {
             transaction.end();
         }
@@ -47,12 +48,15 @@ public class UserService {
             transaction.init(userDao);
             user = userDao.findByEmail(email);
             if (user == null) {
-                throw new ServiceException();
+                String errorMessage = "User hasn't been found.";
+                log.error(errorMessage);
+                throw new ServiceException(errorMessage);
             }
             log.debug("User got from database. Login and password are correct.");
         } catch (DAOException e) {
-            log.error("Bad credentials: " + e.getMessage(), e);
-            throw new ServiceException(e);
+            String errorMessage = "An error occurs during receiving the user.";
+            log.error(errorMessage);
+            throw new ServiceException(errorMessage, e);
         } finally {
             transaction.end();
         }

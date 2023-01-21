@@ -7,8 +7,9 @@ import com.epam.havryliuk.restaurant.model.entity.Order;
 import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.exceptions.EntityAbsentException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
-import com.epam.havryliuk.restaurant.model.resource.MessageManager;
+import com.epam.havryliuk.restaurant.model.util.MessageManager;
 import com.epam.havryliuk.restaurant.model.service.OrderService;
+import com.epam.havryliuk.restaurant.model.service.validation.Validator;
 import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,8 +26,11 @@ import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.ERROR_MESSAGE;
 
 public class BasketCommand implements ActionCommand {
-    private static final Logger log = LogManager.getLogger(BasketCommand.class);
-    private final OrderService orderService;
+    private static final Logger LOG = LogManager.getLogger(BasketCommand.class);
+    private OrderService orderService;
+    private MessageManager messageManager;
+    private Validator validator = new Validator();
+
 
     public BasketCommand () {
         ApplicationServiceContext appContext = new ApplicationServiceContext();
@@ -36,7 +40,7 @@ public class BasketCommand implements ActionCommand {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession();
-        MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
+        messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
         User user = (User) session.getAttribute(LOGGED_USER);
         try {
             List<Order> orders = orderService.getAllUserOrders(user);
@@ -47,11 +51,11 @@ public class BasketCommand implements ActionCommand {
         } catch (EntityAbsentException e) {
             session.setAttribute(ERROR_MESSAGE,
                     messageManager.getProperty(ResponseMessages.EMPTY_BASKET));
-            log.error(e);
+            LOG.error(e);
         } catch (ServiceException e) {
             session.setAttribute(ERROR_MESSAGE,
                     messageManager.getProperty(ResponseMessages.USER_ORDERS_UNAVAILABLE));
-            log.error(e);
+            LOG.error(e);
         }
         request.getRequestDispatcher(AppPagesPath.FORWARD_BASKET).forward(request, response);
     }

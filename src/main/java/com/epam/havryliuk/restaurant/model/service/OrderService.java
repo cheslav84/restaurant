@@ -9,7 +9,6 @@ import com.epam.havryliuk.restaurant.model.exceptions.*;
 import com.epam.havryliuk.restaurant.model.util.annotations.Autowired;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
 import java.sql.SQLIntegrityConstraintViolationException;

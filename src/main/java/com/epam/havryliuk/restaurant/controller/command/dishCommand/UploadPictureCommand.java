@@ -7,7 +7,7 @@ import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
 import com.epam.havryliuk.restaurant.model.entity.Category;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
-import com.epam.havryliuk.restaurant.model.resource.MessageManager;
+import com.epam.havryliuk.restaurant.model.util.MessageManager;
 import com.epam.havryliuk.restaurant.model.service.DishService;
 import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
 import jakarta.servlet.ServletException;
@@ -26,7 +26,7 @@ import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 public class UploadPictureCommand implements ActionCommand {
     private static final Logger LOG = LogManager.getLogger(UploadPictureCommand.class);
     private static final String DEFAULT_MENU = "COFFEE";
-    private final DishService dishService;
+    private DishService dishService;
 
     public UploadPictureCommand () {
         ApplicationServiceContext appContext = new ApplicationServiceContext();
