@@ -1,6 +1,6 @@
 package com.epam.havryliuk.restaurant.controller.command.userCommand;
 
-import com.epam.havryliuk.restaurant.controller.command.ActionCommand;
+import com.epam.havryliuk.restaurant.controller.command.Command;
 import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -12,7 +12,7 @@ import java.io.IOException;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
-public class LogoutCommand implements ActionCommand {
+public class LogoutCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(LogoutCommand.class);
 
     @Override

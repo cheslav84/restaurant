@@ -1,6 +1,6 @@
 package com.epam.havryliuk.restaurant.controller.command.orderCommand;
 
-import com.epam.havryliuk.restaurant.controller.command.ActionCommand;
+import com.epam.havryliuk.restaurant.controller.command.Command;
 import com.epam.havryliuk.restaurant.model.constants.RequestAttributes;
 import com.epam.havryliuk.restaurant.model.constants.RequestParameters;
 import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
@@ -29,8 +29,8 @@ import java.io.IOException;
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.ERROR_MESSAGE;
 
-public class MakeOrderCommand implements ActionCommand {
-    private static final Logger log = LogManager.getLogger(MakeOrderCommand.class);
+public class MakeOrderCommand implements Command {
+    private static final Logger LOG = LogManager.getLogger(MakeOrderCommand.class);
     private OrderService orderService;
     private Validator validator = new Validator();
     private MessageManager messageManager;
@@ -55,7 +55,7 @@ public class MakeOrderCommand implements ActionCommand {
         if (order != null) {
             saveDishToOrder(request, order);
             session.removeAttribute(ERROR_MESSAGE);
-            log.debug("Order in session: " + order);
+            LOG.debug("Order in session: " + order);
         } else {
             order = getFromStorageOrCreateOrder(request, user);
             session.setAttribute(CURRENT_ORDER, order);
@@ -85,10 +85,10 @@ public class MakeOrderCommand implements ActionCommand {
             session.removeAttribute(ORDER_MESSAGE);
             session.removeAttribute(DELIVERY_ADDRESS);
             session.removeAttribute(DELIVERY_PHONE);
-            log.debug(order);
+            LOG.debug(order);
         } catch (ServiceException | ValidationException e) {
             session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
-            log.error(e.getMessage(), e);
+            LOG.error(e.getMessage(), e);
         }
 //        if (order != null) {// todo (order does not exist in database if null) think of refactoring
 //            saveDishToOrder(request, orderService, order);
@@ -109,18 +109,18 @@ public class MakeOrderCommand implements ActionCommand {
             orderService.addDishToOrder(order, dish, dishesAmount);
             session.removeAttribute(CURRENT_DISH);
         } catch (IrrelevantDataException e) {
-            log.error(e);
+            LOG.error(e);
             session.setAttribute(ORDER_MESSAGE,
                     messageManager.getProperty(ResponseMessages.UNAVAILABLE_DISHES_AMOUNT));
             session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
         } catch (DuplicatedEntityException e) {
-            log.error(e);
+            LOG.error(e);
             session.setAttribute(ORDER_MESSAGE,
                     messageManager.getProperty(ResponseMessages.DISH_ALREADY_IN_ORDER));
             session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
         } catch (ServiceException | ValidationException e) {
             session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
-            log.error(e);
+            LOG.error(e);
         }
         }
     }
@@ -133,7 +133,7 @@ public class MakeOrderCommand implements ActionCommand {
             MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
             session.setAttribute(ORDER_MESSAGE,
                     messageManager.getProperty(ResponseMessages.ORDER_DISH_NOT_FOUND));
-            log.error(ResponseMessages.ORDER_DISH_NOT_FOUND);
+            LOG.error(ResponseMessages.ORDER_DISH_NOT_FOUND);
             throw new ServiceException(ResponseMessages.ORDER_DISH_NOT_FOUND);
         }
         return dish;
@@ -147,7 +147,7 @@ public class MakeOrderCommand implements ActionCommand {
         try {
             dishesAmount = Integer.parseInt(request.getParameter(RequestParameters.ORDER_DISHES_AMOUNT).trim());
             new Validator().validateDishesAmount(dishesAmount, request);
-            log.debug("Request for \"" + dishesAmount + "\" has been received.");
+            LOG.debug("Request for \"" + dishesAmount + "\" has been received.");
         } catch (NumberFormatException | NullPointerException e) {
             session.setAttribute(ERROR_MESSAGE,
                     messageManager.getProperty(ResponseMessages.NUMBER_OF_DISHES_IS_EMPTY_ERROR));
@@ -170,7 +170,7 @@ public class MakeOrderCommand implements ActionCommand {
     private String getRedirectionPage(HttpServletRequest request) {
         String redirectionPage;
         String continueOrder = request.getParameter(RequestParameters.CONTINUE_ORDERING);
-        log.debug("continueOrder: " + continueOrder);
+        LOG.debug("continueOrder: " + continueOrder);
         String errorMessage = (String) request.getSession().getAttribute(ERROR_MESSAGE);
         String orderMessage = (String) request.getSession().getAttribute(ORDER_MESSAGE);
         if (continueOrder == null && errorMessage == null && orderMessage == null) {
@@ -178,7 +178,7 @@ public class MakeOrderCommand implements ActionCommand {
         } else {
             redirectionPage = URLUtil.getRefererPage(request);
         }
-        log.debug("redirectionPage " + redirectionPage);
+        LOG.debug("redirectionPage " + redirectionPage);
         return redirectionPage;
     }
 

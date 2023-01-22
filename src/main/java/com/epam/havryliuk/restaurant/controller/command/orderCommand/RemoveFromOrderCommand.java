@@ -1,6 +1,6 @@
 package com.epam.havryliuk.restaurant.controller.command.orderCommand;
 
-import com.epam.havryliuk.restaurant.controller.command.ActionCommand;
+import com.epam.havryliuk.restaurant.controller.command.Command;
 import com.epam.havryliuk.restaurant.model.constants.RequestParameters;
 import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
 import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
@@ -22,8 +22,8 @@ import java.util.List;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
-public class RemoveFromOrderCommand implements ActionCommand {
-    private static final Logger log = LogManager.getLogger(RemoveFromOrderCommand.class);
+public class RemoveFromOrderCommand implements Command {
+    private static final Logger LOG = LogManager.getLogger(RemoveFromOrderCommand.class);
     private OrderService orderService;
     public RemoveFromOrderCommand () {
         ApplicationServiceContext appContext = new ApplicationServiceContext();
@@ -40,13 +40,13 @@ public class RemoveFromOrderCommand implements ActionCommand {
 //            OrderService orderService = new OrderService();
             orderService.removeDishFromOrder(orderId, dishId);
             removeDishFromSession(orderId, dishId, session);
-            log.debug("Dish has been removed from order.");
+            LOG.debug("Dish has been removed from order.");
             session.removeAttribute(ERROR_MESSAGE);
         } catch (ServiceException e) {
             MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
             session.setAttribute(ERROR_MESSAGE,
                     messageManager.getProperty(ResponseMessages.REMOVE_DISH_FROM_ORDER_ERROR));
-            log.error(e);
+            LOG.error(e);
         }
         response.sendRedirect(AppPagesPath.REDIRECT_BASKET);
     }

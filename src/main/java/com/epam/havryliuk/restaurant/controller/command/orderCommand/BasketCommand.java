@@ -1,11 +1,11 @@
 package com.epam.havryliuk.restaurant.controller.command.orderCommand;
 
-import com.epam.havryliuk.restaurant.controller.command.ActionCommand;
+import com.epam.havryliuk.restaurant.controller.command.Command;
 import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
 import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
 import com.epam.havryliuk.restaurant.model.entity.Order;
 import com.epam.havryliuk.restaurant.model.entity.User;
-import com.epam.havryliuk.restaurant.model.exceptions.EntityAbsentException;
+import com.epam.havryliuk.restaurant.model.exceptions.EntityNotFoundException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.util.MessageManager;
 import com.epam.havryliuk.restaurant.model.service.OrderService;
@@ -25,7 +25,7 @@ import java.util.*;
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.ERROR_MESSAGE;
 
-public class BasketCommand implements ActionCommand {
+public class BasketCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(BasketCommand.class);
     private OrderService orderService;
     private MessageManager messageManager;
@@ -48,7 +48,7 @@ public class BasketCommand implements ActionCommand {
             Map<Order, BigDecimal> ordersAndTotalPriced = orderService.getTotalPrices(orders);
             session.setAttribute(ORDER_PRICE_MAP, ordersAndTotalPriced);
 //            session.removeAttribute(ERROR_MESSAGE);
-        } catch (EntityAbsentException e) {
+        } catch (EntityNotFoundException e) {
             session.setAttribute(ERROR_MESSAGE,
                     messageManager.getProperty(ResponseMessages.EMPTY_BASKET));
             LOG.error(e);
@@ -60,9 +60,9 @@ public class BasketCommand implements ActionCommand {
         request.getRequestDispatcher(AppPagesPath.FORWARD_BASKET).forward(request, response);
     }
 
-    private void checkIfOrdersPresent(List<Order> orders) throws EntityAbsentException {
+    private void checkIfOrdersPresent(List<Order> orders) throws EntityNotFoundException {
         if (orders.size() == 0) {
-            throw new EntityAbsentException();
+            throw new EntityNotFoundException();
         }
     }
 }

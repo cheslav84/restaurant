@@ -5,6 +5,7 @@ import com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao;
 import com.epam.havryliuk.restaurant.model.database.dao.daoImpl.UserDao;
 import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.exceptions.DAOException;
+import com.epam.havryliuk.restaurant.model.exceptions.EntityNotFoundException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -74,7 +75,7 @@ class UserServiceTest {
         User user = User.getInstance("email", "password", "name", "surname", "Male", true);
         String email = "email";
         when(userDao.findByEmail(user.getEmail())).thenReturn(null);
-        Exception exception = assertThrows(ServiceException.class, () -> userService.getUserFromDatabase(email));
+        Exception exception = assertThrows(EntityNotFoundException.class, () -> userService.getUserFromDatabase(email));
         assertEquals("User hasn't been found.", exception.getMessage());
     }
 

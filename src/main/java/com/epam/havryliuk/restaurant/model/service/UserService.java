@@ -7,6 +7,7 @@ import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.database.dao.daoImpl.UserDao;
 import com.epam.havryliuk.restaurant.model.exceptions.DAOException;
 import com.epam.havryliuk.restaurant.model.exceptions.DuplicatedEntityException;
+import com.epam.havryliuk.restaurant.model.exceptions.EntityNotFoundException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 
 import com.epam.havryliuk.restaurant.model.util.annotations.Autowired;
@@ -50,7 +51,7 @@ public class UserService {
             if (user == null) {
                 String errorMessage = "User hasn't been found.";
                 log.error(errorMessage);
-                throw new ServiceException(errorMessage);
+                throw new EntityNotFoundException(errorMessage);
             }
             log.debug("User got from database. Login and password are correct.");
         } catch (DAOException e) {

@@ -1,6 +1,6 @@
 package com.epam.havryliuk.restaurant.controller.command.userCommand;
 
-import com.epam.havryliuk.restaurant.controller.command.ActionCommand;
+import com.epam.havryliuk.restaurant.controller.command.Command;
 import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 
 
-public class LoginPageCommand implements ActionCommand {
+public class LoginPageCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(LoginPageCommand.class);
 
     @Override

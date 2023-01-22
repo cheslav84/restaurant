@@ -1,10 +1,11 @@
 package com.epam.havryliuk.restaurant.controller.command.userCommand;
 
-import com.epam.havryliuk.restaurant.controller.command.ActionCommand;
+import com.epam.havryliuk.restaurant.controller.command.Command;
 import com.epam.havryliuk.restaurant.model.constants.RequestParameters;
 import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
 import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
 import com.epam.havryliuk.restaurant.model.entity.User;
+import com.epam.havryliuk.restaurant.model.exceptions.EntityNotFoundException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.util.MessageManager;
 import com.epam.havryliuk.restaurant.model.service.UserService;
@@ -23,7 +24,7 @@ import java.security.GeneralSecurityException;
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
 
-public class LoginCommand implements ActionCommand {
+public class LoginCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(LoginCommand.class);
     private UserService userService;
 
@@ -43,11 +44,10 @@ public class LoginCommand implements ActionCommand {
             PassEncryptor.verify(user.getPassword(), password);
             session.setAttribute(LOGGED_USER, user);
             session.removeAttribute(ERROR_MESSAGE);
-            page = getRedirectionPage(session);//todo
+            page = AppPagesPath.REDIRECT_INDEX;
             LOG.debug("User logged in.");
-        } catch (ServiceException e) {
+        } catch (EntityNotFoundException e) {
             page = AppPagesPath.REDIRECT_REGISTRATION;
-            session.setAttribute(EMAIL, email);
             session.setAttribute(ERROR_MESSAGE,
                     messageManager.getProperty(ResponseMessages.LOGIN_ERROR));
             LOG.error(e.getMessage());
@@ -56,21 +56,12 @@ public class LoginCommand implements ActionCommand {
             session.setAttribute(ERROR_MESSAGE,
                     messageManager.getProperty(ResponseMessages.PASSWORD_ERROR));
             LOG.error(e.getMessage());
+        } catch (ServiceException e) {
+            page = AppPagesPath.REDIRECT_ERROR;
+            session.setAttribute(ERROR_MESSAGE,
+                    messageManager.getProperty(ResponseMessages.GLOBAL_ERROR));
+            LOG.error(e.getMessage());
         }
         response.sendRedirect(page);
     }
-
-
-    private String getRedirectionPage(HttpSession session) {//todo, think maybe delete this
-        String pageFromBeingRedirected = (String) session.getAttribute(PAGE_FROM_BEING_REDIRECTED);//todo set from security filter
-        String redirectionPage;
-        if (pageFromBeingRedirected != null) {
-            redirectionPage = pageFromBeingRedirected;
-        } else {
-            redirectionPage = AppPagesPath.REDIRECT_INDEX;
-        }
-        session.removeAttribute(PAGE_FROM_BEING_REDIRECTED);
-        return redirectionPage;
-    }
-
 }

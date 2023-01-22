@@ -247,7 +247,6 @@ class OrderServiceTest {
         Basket mockedBasked = initTestBasket(bookingStatus, dishesAmountInOrder);
         when(basketDao.create(mockedBasked)).thenThrow(new DAOException("Unable to create basket."));
         when(dishDao.getNumberOfAllDishesInOrder(dish)).thenReturn(dishesAmountInOrder + 1);
-//        OrderService orderServiceSpy = spy(orderService);
         Exception exception = assertThrows(ServiceException.class, () -> orderService.addDishToOrder(order, dish, dishesAmountInOrder));
         assertEquals("Unable to create basket.", exception.getMessage());
     }
@@ -283,22 +282,6 @@ class OrderServiceTest {
         assertEquals(errorMessage, exception.getMessage());
     }
 
-//    @Test
-//    void getTotalPrices() {
-//
-//
-//    }
-//
-//    public Map<Order, BigDecimal> getMapForTest(List<Order> orders) {
-//        Map<Order, BigDecimal> map = new HashMap<>();
-//
-//    }
-//
-
-
-
-
-
     @NotNull
     private List<Order> initTestOrderList(User user, int numOfOrders) {
         List<Order> orders = initTestOrderList(numOfOrders);
@@ -315,9 +298,7 @@ class OrderServiceTest {
         for (int i = 0; i < numOfOrders; i++) {
             String address = "address" + i;
             String phoneNo = "096115008" + i;
-//            orders.add(Order.getInstance(i, address, phoneNo, true, new Date(), new Date(), BookingStatus.NEW));
              orders.add(Order.getInstance(address, phoneNo, true, BookingStatus.NEW));
-
         }
         return orders;
     }
@@ -351,6 +332,5 @@ class OrderServiceTest {
         BigDecimal price = new BigDecimal(25);
         int amount = 5;
         return Dish.getInstance(name, price, amount);
-
     }
 }

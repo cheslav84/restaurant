@@ -1,7 +1,7 @@
 package com.epam.havryliuk.restaurant.controller;
 
 
-import com.epam.havryliuk.restaurant.controller.command.ActionCommand;
+import com.epam.havryliuk.restaurant.controller.command.Command;
 import com.epam.havryliuk.restaurant.controller.command.CommandFactory;
 import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
 import jakarta.servlet.annotation.WebServlet;
@@ -33,7 +33,7 @@ public class Controller extends HttpServlet {
     private void processRequest(HttpServletRequest request,
                                 HttpServletResponse response) throws IOException {
         CommandFactory client = new CommandFactory();
-        ActionCommand command = client.defineCommand(request);
+        Command command = client.defineCommand(request);
         try {
             command.execute(request, response);
         } catch (Exception e) {

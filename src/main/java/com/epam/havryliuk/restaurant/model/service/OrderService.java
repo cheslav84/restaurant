@@ -39,7 +39,7 @@ public class OrderService {
      * @param orderId - id of the Order that status has to be changed.
      * @param newStatus - new BookingStatus that has to be set in the Order.
      * @throws ServiceException when impossible to make changes in storage.
-     * @throws EntityAbsentException the child of ServiceException, throws if the requested amount any of
+     * @throws EntityNotFoundException the child of ServiceException, throws if the requested amount any of
      * dishes are more that presented dishes in menu.
      */
     public void changeOrderStatus(long orderId, BookingStatus newStatus) throws ServiceException {
@@ -231,10 +231,10 @@ public class OrderService {
      * PresentDishes - gets the actual amounts and names of the dishes within an order that are presents in menu.
      * If the requested amount any of dishes are more that presented dishes in menu, method th
      * @param orderId id of user Order.
-     * @throws EntityAbsentException If the requested amount any of dishes are more that presented dishes in menu,
+     * @throws EntityNotFoundException If the requested amount any of dishes are more that presented dishes in menu,
      * method throws the EntityAbsentException with the list of absent dishes in its message.
      */
-    private void checkDishesIfPresent(DishDao dishDao, BasketDao basketDao, long orderId) throws EntityAbsentException, DAOException {
+    private void checkDishesIfPresent(DishDao dishDao, BasketDao basketDao, long orderId) throws EntityNotFoundException, DAOException {
         Map<String, Integer> requestedDishes = basketDao.getNumberOfRequestedDishesInOrder(orderId);
         Map<String, Integer> presentDishes = dishDao.getNumberOfEachDishInOrder(orderId);
         List<String> absentDishesList = new ArrayList<>();
@@ -246,7 +246,7 @@ public class OrderService {
         if (absentDishesList.size() != 0) {
             String absentDishes = "\"" + String.join("\", \"", absentDishesList) + "\"";
             LOG.debug("Some of dishes are not present.");
-            throw new EntityAbsentException(absentDishes); //todo наскільки коректно через exception передавати повідомлення на view?
+            throw new EntityNotFoundException(absentDishes); //todo наскільки коректно через exception передавати повідомлення на view?
         }
     }
 

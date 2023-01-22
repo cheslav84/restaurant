@@ -24,15 +24,18 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
+import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.DISH_LIST;
+import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.LOCALE;
 import static com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath.FORWARD_INDEX;
+import static com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath.FORWARD_MENU_PAGE;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class IndexCommandTest {
+class MenuCommandTest {
     @Mock
     private HttpServletRequest request;
     @Mock
@@ -46,14 +49,14 @@ class IndexCommandTest {
     @Mock
     private MenuResponseManager menuResponseManager;
     @InjectMocks
-    private IndexCommand index;
+    private MenuCommand menu;
     @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    void executeDishesPresent() throws ServletException, IOException, ServiceException {
+    void executeCoffeeDishesPresent() throws ServletException, IOException, ServiceException {
         int dishesAmount = 5;
         Category currentMenu = Category.COFFEE;
         List<Dish> dishes = getTestDishes(dishesAmount);
@@ -62,46 +65,32 @@ class IndexCommandTest {
         when(session.getAttribute(LOCALE)).thenReturn("EN");
         when(dishService.getMenuByCategory(currentMenu)).thenReturn(dishes);
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
-        index.execute(request, response);
+        menu.execute(request, response);
+        verify(dishService).getMenuByCategory(menuResponseManager.getCurrentMenu(request));
         verify(menuResponseManager).setOrderInfoAttribute(request);
         verify(request).setAttribute(DISH_LIST, dishes);
-        verify(request).getRequestDispatcher(FORWARD_INDEX);
-    }
-
-    @Test
-    void executeDishesAbsent() throws ServletException, IOException, ServiceException {
-        String messageMenuEmpty = "There are no dishes it such category available now. Go to another category please.";
-        Category currentMenu = Category.COFFEE;
-        List<Dish> dishes = new ArrayList<>();
-        when(menuResponseManager.getCurrentMenu(request)).thenReturn(currentMenu);
-        when(request.getSession()).thenReturn(session);
-        when(session.getAttribute(LOCALE)).thenReturn("EN");
-        when(dishService.getMenuByCategory(currentMenu)).thenReturn(dishes);
-        when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
-        index.execute(request, response);
-        verify(request).setAttribute(MENU_MESSAGE, messageMenuEmpty);
-        verify(menuResponseManager).setOrderInfoAttribute(request);
-        verify(request).setAttribute(DISH_LIST, dishes);
-        verify(request).getRequestDispatcher(FORWARD_INDEX);
+        verify(request).getRequestDispatcher(FORWARD_MENU_PAGE);
     }
 
 
     @Test
-    void executeExceptionFromService() throws ServletException, IOException, ServiceException {
-        String messageMenuEmpty = "Menu is temporary unavailable. Try again later please.";
-        Category currentMenu = Category.COFFEE;
-        List<Dish> dishes = null;
+    void executeAllDishesPresent() throws ServletException, IOException, ServiceException {
+        int dishesAmount = 5;
+        String sortParameter = "name";
+        Category currentMenu = Category.ALL;
+        List<Dish> dishes = getTestDishes(dishesAmount);
         when(menuResponseManager.getCurrentMenu(request)).thenReturn(currentMenu);
         when(request.getSession()).thenReturn(session);
         when(session.getAttribute(LOCALE)).thenReturn("EN");
+        when(dishService.getAllMenuSortedBy(sortParameter)).thenReturn(dishes);
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
-        when(dishService.getMenuByCategory(currentMenu)).thenThrow(new ServiceException("Such list of Dishes hasn't been found."));
-        index.execute(request, response);
-        verify(request).setAttribute(ERROR_MESSAGE, messageMenuEmpty);
+        menu.execute(request, response);
+        verify(dishService).getAllMenuSortedBy(sortParameter);
         verify(menuResponseManager).setOrderInfoAttribute(request);
         verify(request).setAttribute(DISH_LIST, dishes);
-        verify(request).getRequestDispatcher(FORWARD_INDEX);
+        verify(request).getRequestDispatcher(FORWARD_MENU_PAGE);;
     }
+
 
     private List<Dish> getTestDishes(int size){
         List<Dish> dishes = new ArrayList<>();
@@ -111,5 +100,4 @@ class IndexCommandTest {
         }
         return dishes;
     }
-
 }

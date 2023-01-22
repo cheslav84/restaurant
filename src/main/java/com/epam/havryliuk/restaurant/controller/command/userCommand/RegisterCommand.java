@@ -1,6 +1,6 @@
 package com.epam.havryliuk.restaurant.controller.command.userCommand;
 
-import com.epam.havryliuk.restaurant.controller.command.ActionCommand;
+import com.epam.havryliuk.restaurant.controller.command.Command;
 import com.epam.havryliuk.restaurant.model.constants.RequestParameters;
 import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
 import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
@@ -27,8 +27,8 @@ import java.security.GeneralSecurityException;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
-public class RegisterCommand implements ActionCommand {
-    private static final Logger log = LogManager.getLogger(RegisterCommand.class);
+public class RegisterCommand implements Command {
+    private static final Logger LOG = LogManager.getLogger(RegisterCommand.class);
     private UserService userService;
 
     public RegisterCommand () {
@@ -55,17 +55,17 @@ public class RegisterCommand implements ActionCommand {
             session.removeAttribute(USER_IN_LOGGING);
             session.removeAttribute(REGISTRATION_PROCESS);
             redirectionPage = getRedirectionPage(session);
-            log.info("The user \"" + user.getName() + "\" has been successfully registered.");
+            LOG.info("The user \"" + user.getName() + "\" has been successfully registered.");
         } catch (ValidationException e) {
-            log.error("Some credentials are not correct." + e);//todo rename
+            LOG.error("Some credentials are not correct." + e);//todo rename
             redirectionPage = getErrorPage(session);
         } catch (DuplicatedEntityException e) {
-            log.error("The user with such login is already exists. Try to use another one." + e);
+            LOG.error("The user with such login is already exists. Try to use another one." + e);
             session.setAttribute(REGISTRATION_ERROR_MESSAGE,
                     messageManager.getProperty(ResponseMessages.REGISTRATION_USER_EXISTS));
             redirectionPage = getErrorPage(session);
         } catch (ServiceException e) {
-            log.error("User hasn't been registered. " + e);
+            LOG.error("User hasn't been registered. " + e);
             session.setAttribute(REGISTRATION_ERROR_MESSAGE,
                     messageManager.getProperty(ResponseMessages.REGISTRATION_ERROR));
             redirectionPage = getErrorPage(session);
@@ -116,7 +116,7 @@ public class RegisterCommand implements ActionCommand {
             String password = user.getPassword();
             user.setPassword(PassEncryptor.encrypt(password));
         } catch (GeneralSecurityException e) {
-            log.error("Failed to encrypt password. ", e);
+            LOG.error("Failed to encrypt password. ", e);
             //todo redirect to error page...
         }
     }

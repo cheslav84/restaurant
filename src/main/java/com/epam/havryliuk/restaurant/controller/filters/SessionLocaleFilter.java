@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.LOCALE;
@@ -19,6 +20,8 @@ import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.LO
 public class SessionLocaleFilter implements Filter {
     private static final Logger log = LogManager.getLogger(SessionLocaleFilter.class);
     private String defaultLocale;
+
+    private final String[] allowedLocals = {"UA", "EN"};
 
     @Override
     public void init(FilterConfig config) throws ServletException {
@@ -40,11 +43,20 @@ public class SessionLocaleFilter implements Filter {
 //        System.out.println(httpRequest.getParameter(LOCALE));
 
         if (httpRequest.getParameter(LOCALE) != null) {
+            String locale = httpRequest.getParameter(LOCALE);
+            checkLocale(locale);
             session.setAttribute(LOCALE, httpRequest.getParameter(LOCALE));
         } else if (session.getAttribute(LOCALE) == null) {
             session.setAttribute(LOCALE, getDefaultLocale(httpRequest));
         }
         chain.doFilter(request, response);
+    }
+
+    private void checkLocale(String locale) {
+        Arrays.stream(allowedLocals)
+                .filter(l -> l.equals(locale))
+                .findAny()
+                .orElseThrow(IllegalArgumentException::new);
     }
 
     private String getDefaultLocale(HttpServletRequest httpRequest) {
@@ -54,4 +66,6 @@ public class SessionLocaleFilter implements Filter {
         }
         return initialLocale;
     }
+
+
 }

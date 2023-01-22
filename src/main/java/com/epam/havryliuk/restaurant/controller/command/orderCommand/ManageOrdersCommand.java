@@ -1,6 +1,6 @@
 package com.epam.havryliuk.restaurant.controller.command.orderCommand;
 
-import com.epam.havryliuk.restaurant.controller.command.ActionCommand;
+import com.epam.havryliuk.restaurant.controller.command.Command;
 import com.epam.havryliuk.restaurant.model.constants.RequestParameters;
 import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
 import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
@@ -23,7 +23,7 @@ import java.util.List;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
-public class ManageOrdersCommand implements ActionCommand {
+public class ManageOrdersCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(ManageOrdersCommand.class);
     private int pageNumber = 1;
     private int recordsPerPage = 4;

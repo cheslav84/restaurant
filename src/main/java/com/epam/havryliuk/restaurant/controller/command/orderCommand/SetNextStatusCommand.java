@@ -1,13 +1,13 @@
 package com.epam.havryliuk.restaurant.controller.command.orderCommand;
 
-import com.epam.havryliuk.restaurant.controller.command.ActionCommand;
+import com.epam.havryliuk.restaurant.controller.command.Command;
 
 import com.epam.havryliuk.restaurant.model.constants.RequestParameters;
 import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
 import com.epam.havryliuk.restaurant.model.entity.BookingStatus;
 import com.epam.havryliuk.restaurant.model.entity.Role;
 import com.epam.havryliuk.restaurant.model.entity.User;
-import com.epam.havryliuk.restaurant.model.exceptions.EntityAbsentException;
+import com.epam.havryliuk.restaurant.model.exceptions.EntityNotFoundException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.util.MessageManager;
 import com.epam.havryliuk.restaurant.model.service.OrderService;
@@ -30,8 +30,8 @@ import java.util.Map;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
-public class SetNextStatusCommand implements ActionCommand {
-    private static final Logger log = LogManager.getLogger(SetNextStatusCommand.class);
+public class SetNextStatusCommand implements Command {
+    private static final Logger LOG = LogManager.getLogger(SetNextStatusCommand.class);
 
     private static final Map<BookingStatus, Role> bookingAccessRoles;
     private OrderService orderService;
@@ -63,24 +63,23 @@ public class SetNextStatusCommand implements ActionCommand {
         long orderId = Long.parseLong(request.getParameter(RequestParameters.ORDER_ID));
         HttpSession session = request.getSession();
         MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
-//        OrderService orderService = new OrderService();
         try {
             BookingStatus nextBookingStatus = getNextBookingStatus(request);
             checkAccessRights(session, nextBookingStatus);//todo подумати, може зробити через фільтр
             orderService.changeOrderStatus(orderId, nextBookingStatus);
             session.removeAttribute(CURRENT_ORDER);
-        } catch (EntityAbsentException e) {
+        } catch (EntityNotFoundException e) {
             session.setAttribute(ERROR_MESSAGE,
                     messageManager.getProperty(ResponseMessages.ABSENT_DISHES) + e.getMessage());
-            log.error("Some of dishes are already absent in menu.", e);
+            LOG.error("Some of dishes are already absent in menu.", e);
         } catch (ServiceException e) {
             session.setAttribute(ERROR_MESSAGE,
                     messageManager.getProperty(ResponseMessages.ORDER_CONFIRM_ERROR));
-            log.error(e.getMessage(), e);
+            LOG.error(e.getMessage(), e);
         } catch (AuthenticationException e) {
             session.setAttribute(ERROR_MESSAGE,
                     messageManager.getProperty(ResponseMessages.UNAPPROPRIATED_RIGHTS_TO_CHANGE_STATUS));
-            log.error(e.getMessage(), e);
+            LOG.error(e.getMessage(), e);
         }
         response.sendRedirect(URLUtil.getRefererPage(request));
     }
@@ -115,7 +114,7 @@ public class SetNextStatusCommand implements ActionCommand {
         if (currentStatusId < statusList.size()) {
             nextStatus = BookingStatus.getStatus(currentStatusId + 1);
         }
-        log.debug("Have request to change order status to " + nextStatus);
+        LOG.debug("Have request to change order status to " + nextStatus);
         return nextStatus;
     }
 

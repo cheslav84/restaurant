@@ -1,6 +1,6 @@
 package com.epam.havryliuk.restaurant.controller.command.dishCommand;
 
-import com.epam.havryliuk.restaurant.controller.command.ActionCommand;
+import com.epam.havryliuk.restaurant.controller.command.Command;
 import com.epam.havryliuk.restaurant.controller.responseManager.MenuResponseManager;
 import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
 import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
@@ -21,7 +21,7 @@ import java.util.List;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
-public class IndexCommand implements ActionCommand {
+public class IndexCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(IndexCommand.class);
     private MenuResponseManager menuResponseManager;
     private DishService dishService;
@@ -49,10 +49,9 @@ public class IndexCommand implements ActionCommand {
                     messageManager.getProperty(ResponseMessages.MENU_UNAVAILABLE));
             LOG.error(e);
         }
-        menuResponseManager.hideOrderInfoOnReloadPage(request);
+        menuResponseManager.setOrderInfoAttribute(request);
         request.setAttribute(DISH_LIST, dishes);
         request.getRequestDispatcher(AppPagesPath.FORWARD_INDEX).forward(request, response);
     }
-
 
 }

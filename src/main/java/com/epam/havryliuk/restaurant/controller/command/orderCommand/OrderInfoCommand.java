@@ -1,6 +1,6 @@
 package com.epam.havryliuk.restaurant.controller.command.orderCommand;
 
-import com.epam.havryliuk.restaurant.controller.command.ActionCommand;
+import com.epam.havryliuk.restaurant.controller.command.Command;
 import com.epam.havryliuk.restaurant.model.constants.RequestParameters;
 import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
 import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
@@ -21,8 +21,8 @@ import java.io.IOException;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
-public class OrderInfoCommand implements ActionCommand {
-    private static final Logger log = LogManager.getLogger(OrderInfoCommand.class);
+public class OrderInfoCommand implements Command {
+    private static final Logger LOG = LogManager.getLogger(OrderInfoCommand.class);
     private DishService dishService;
 
     public OrderInfoCommand () {
@@ -32,7 +32,7 @@ public class OrderInfoCommand implements ActionCommand {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         long dishId = Long.parseLong(request.getParameter(RequestParameters.DISH_ID));
-        log.debug("\"/dishId\" " + dishId + " has been received from user.");
+        LOG.debug("\"/dishId\" " + dishId + " has been received from user.");
         HttpSession session = request.getSession();
         Dish dish;
         try {
@@ -44,7 +44,7 @@ public class OrderInfoCommand implements ActionCommand {
             MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
             session.setAttribute(ERROR_MESSAGE,
                     messageManager.getProperty(ResponseMessages.DISH_IN_MENU_NOT_FOUND));
-            log.error(e);
+            LOG.error(e);
         }
         String redirectingPage;
         if (session.getAttribute(LOGGED_USER) != null) {

@@ -1,6 +1,6 @@
 package com.epam.havryliuk.restaurant.controller.command.dishCommand;
 
-import com.epam.havryliuk.restaurant.controller.command.ActionCommand;
+import com.epam.havryliuk.restaurant.controller.command.Command;
 import com.epam.havryliuk.restaurant.controller.responseManager.MenuResponseManager;
 import com.epam.havryliuk.restaurant.model.constants.RequestParameters;
 import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
@@ -23,7 +23,7 @@ import java.util.Optional;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
-public class MenuCommand implements ActionCommand {
+public class MenuCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(MenuCommand.class);
     private static final String DEFAULT_SORTING = "name";
     private MenuResponseManager menuResponseManager;
@@ -32,10 +32,10 @@ public class MenuCommand implements ActionCommand {
     public MenuCommand () {
         ApplicationServiceContext appContext = new ApplicationServiceContext();
         dishService = appContext.getInstance(DishService.class);
+        menuResponseManager = new MenuResponseManager();
     }
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        menuResponseManager = new MenuResponseManager();
         Category currentMenu = menuResponseManager.getCurrentMenu(request);
         MessageManager messageManager = MessageManager.valueOf((String) request.getSession().getAttribute(LOCALE));
         List<Dish> dishes = null;
@@ -58,7 +58,7 @@ public class MenuCommand implements ActionCommand {
                     messageManager.getProperty(ResponseMessages.MENU_UNAVAILABLE));
             LOG.error(e);
         }
-        menuResponseManager.hideOrderInfoOnReloadPage(request);
+        menuResponseManager.setOrderInfoAttribute(request);
         request.setAttribute(DISH_LIST, dishes);
         request.setAttribute(SPECIALS_DISH_LIST, specials);
         request.getRequestDispatcher(AppPagesPath.FORWARD_MENU_PAGE).forward(request, response);
