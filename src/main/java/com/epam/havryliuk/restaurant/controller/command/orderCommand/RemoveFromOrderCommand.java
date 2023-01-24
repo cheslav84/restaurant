@@ -37,7 +37,6 @@ public class RemoveFromOrderCommand implements Command {
         long dishId = Long.parseLong(request.getParameter(RequestParameters.DISH_ID));
         HttpSession session = request.getSession();
         try {
-//            OrderService orderService = new OrderService();
             orderService.removeDishFromOrder(orderId, dishId);
             removeDishFromSession(orderId, dishId, session);
             LOG.debug("Dish has been removed from order.");

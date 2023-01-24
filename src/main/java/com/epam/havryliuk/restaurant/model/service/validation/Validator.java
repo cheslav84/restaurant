@@ -17,7 +17,7 @@ import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.DE
 
 public class Validator {
 
-    public void validateUserData(User user, HttpServletRequest req) throws ValidationException {//todo може зробити static?
+    public void validateUserData(User user, HttpServletRequest req) throws ValidationException {
         HttpSession session = req.getSession();
         MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
         boolean correctFields = true;
@@ -25,9 +25,6 @@ public class Validator {
                 !user.getGender().equalsIgnoreCase(RequestParameters.FEMALE)){
             String message = messageManager.getProperty(ResponseMessages.WRONG_GENDER_FIELD);
             session.setAttribute(REGISTRATION_ERROR_MESSAGE, message);
-            //todo чи може валідатор встановлюваи повідомлення
-            // в сесію. Порушується Single Responsibility Principle.
-            // як в такому випадку краще зробити?
             correctFields = false;
         }
         if(!regexChecker(user.getName(), Regex.NAME)){
@@ -40,7 +37,6 @@ public class Validator {
             user.setSurname(message);
             correctFields = false;
         }
-
         if(!regexChecker(user.getEmail(), Regex.EMAIL)){
             String message = messageManager.getProperty(ResponseMessages.WRONG_EMAIL_FIELD);
             user.setEmail(message);
@@ -51,7 +47,6 @@ public class Validator {
             session.setAttribute(REGISTRATION_ERROR_MESSAGE, message);
             correctFields = false;
         }
-
         String passwordConfirmation = req.getParameter(RequestParameters.PASSWORD_CONFIRMATION);
         if (!user.getPassword().equals(passwordConfirmation)) {
             String message = messageManager.getProperty(ResponseMessages.PASSWORDS_NOT_COINCIDE);
@@ -101,58 +96,4 @@ public class Validator {
             throw new ValidationException("The number of dishes is incorrect.");        }
     }
 
-
-
-
-
-
-
-//    public static boolean isAddressCorrect(String deliveryAddress) {
-//        if (deliveryAddress != null){
-//            int addressLength = deliveryAddress.length();
-//            if (addressLength > 13 && addressLength < 100) {
-//                return true;
-//            }
-//        }
-//    return false;
-//    }
-
-//    public static boolean isPhoneCorrect(String deliveryPhone) {
-//        if (deliveryPhone != null){
-//            String skippedSymbols = deliveryPhone.replaceAll("[\\s()-]", "");
-//            String patterns = "^(\\+[1-9]{1}[0-9]{11})|([0]{1}[0-9]{9})$";
-//            Pattern pattern = Pattern.compile(patterns);
-//            Matcher matcher = pattern.matcher(skippedSymbols);
-//            if (matcher.matches()) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
-
-
-
-//    public static void validateEmail(String email) throws BadCredentialsException {
-//        //todo
-//        if (email == null) {
-//            String loginError = "Email null"; //todo add concrete cause
-//            throw new BadCredentialsException(loginError);
-//        }
-//    }
-
-//    public static void validatePassword(String password) throws BadCredentialsException {
-//        //todo
-//        if (password == null) {
-//            String passwordError = "Password null"; //todo add concrete cause
-//            throw new BadCredentialsException(passwordError);
-//        }
-//    }
-
-
-//    public static void checkIfPasswordsCoincide(String password, String encryptedPassword) throws GeneralSecurityException {
-//        if (!password.equals(encryptedPassword)) {
-//            String errorMessage = "Entered password is wrong.";
-//            throw new GeneralSecurityException(errorMessage);
-//        }
-//    }
 }

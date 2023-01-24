@@ -2,7 +2,7 @@
   position: relative;
   width: 19%;
   height: 80px;
-  padding-top: 19px;
+  padding-top: 10px;
   padding-left: 58px;
   background-color: rgba(0, 0, 0, 0.4);
   -webkit-transition: background-color 200ms ease;
@@ -64,7 +64,7 @@
     line-height: 40px;
     line-height: 16px;
     font-weight: 700;
-    font-size: 12px;
+    font-size: 9px;
     cursor: pointer;
   }
 
@@ -157,7 +157,7 @@
     position: relative;
     transform: none;
     top: -19px;
-    left: 50px;
+    left: 77px;
 
   }
 

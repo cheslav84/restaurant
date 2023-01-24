@@ -1,8 +1,8 @@
 package com.epam.havryliuk.restaurant.controller.command;
 
 import com.epam.havryliuk.restaurant.controller.command.dishCommand.IndexCommand;
-import com.epam.havryliuk.restaurant.controller.command.orderCommand.MakeOrderCommand;
 import com.epam.havryliuk.restaurant.model.constants.RequestAttributes;
+import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
 import com.epam.havryliuk.restaurant.model.util.MessageManager;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
@@ -24,7 +24,7 @@ public class CommandFactory {
         } catch (IllegalArgumentException e) {
             LOG.error("Wrong action.", e);
             request.setAttribute(RequestAttributes.WRONG_ACTION, action
-                    + MessageManager.EN.getProperty("message.wrongAction"));//todo
+                    + MessageManager.EN.getProperty(ResponseMessages.GLOBAL_ERROR));
         }
         return defaultCommand;
     }

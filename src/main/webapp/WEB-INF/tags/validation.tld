@@ -8,16 +8,20 @@
     <uri>validations</uri>
     <tag>
         <name>mail</name>
-        <tag-class>com.epam.havryliuk.restaurant.model.service.validation.tags.MailTag</tag-class>
+        <tag-class>com.epam.havryliuk.restaurant.model.service.tags.MailTag</tag-class>
         <body-content>scriptless</body-content>
+        <attribute>
+            <name>id</name>
+            <required>true</required>
+        </attribute>
         <attribute>
             <name>name</name>
             <required>true</required>
         </attribute>
-<!--        <dynamic-attributes>true</dynamic-attributes>-->
-<!--        <attribute>-->
-<!--            <name>class</name>-->
+        <attribute>
+            <name>value</name>
 <!--            <required>true</required>-->
-<!--        </attribute>-->
+        </attribute>
+<!--        <dynamic-attributes>true</dynamic-attributes>-->
     </tag>
 </taglib>

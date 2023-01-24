@@ -1,7 +1,6 @@
 package com.epam.havryliuk.restaurant.model.constants;
 
 public interface RequestAttributes {
-
    String CURRENT_ORDER = "currentOrder";
     String ORDER_LIST = "orders";
     String ORDER_PRICE_MAP = "ordersAndPrices";
@@ -19,14 +18,11 @@ public interface RequestAttributes {
     String SHOW_DISH_INFO = "showDishInfo";
     String ERROR_MESSAGE = "errorMessage";
     String ORDER_MESSAGE = "orderMessage";
-//    String LANGUAGE = "language";
     String LOCALE = "locale";
-    String REGISTRATION_ERROR_MESSAGE = "registrationErrorMessage";//todo try to make one
+    String REGISTRATION_ERROR_MESSAGE = "registrationErrorMessage";
     String REGISTRATION_PROCESS = "registrationProcess";
     String MENU_MESSAGE = "menuMessage";
     String NUMBER_OF_PAGES = "noOfPages";
     String CURRENT_PAGE = "currentPage";
-
     String WRONG_ACTION = "wrongAction";
-
 }

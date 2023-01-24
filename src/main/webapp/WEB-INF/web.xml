@@ -45,13 +45,17 @@
         <servlet-name>default</servlet-name>
         <url-pattern>*.webp</url-pattern>
     </servlet-mapping>
-  zz
+
 
 
     <jsp-config>
         <taglib>
             <taglib-uri>validations</taglib-uri>
             <taglib-location>/WEB-INF/tags/validation.tld</taglib-location>
+        </taglib>
+        <taglib>
+            <taglib-uri>dishes</taglib-uri>
+            <taglib-location>/WEB-INF/tags/dish.tld</taglib-location>
         </taglib>
     </jsp-config>
 

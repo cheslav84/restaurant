@@ -175,7 +175,7 @@
     position: relative;
     margin: 0px 10px 10px 5px;
     top: -1px;
-    width: 56px;
+    /* width: 56px; */
     height: 24px;
     padding: 4px 5px;
     border-radius: 3px;
