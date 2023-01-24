@@ -26,6 +26,7 @@ import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 public class UploadPictureCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(UploadPictureCommand.class);
     private static final String DEFAULT_MENU = "COFFEE";
+    @SuppressWarnings("FieldMayBeFinal")
     private DishService dishService;
 
     public UploadPictureCommand () {

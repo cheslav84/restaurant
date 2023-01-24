@@ -23,7 +23,9 @@ import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
 public class IndexCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(IndexCommand.class);
+    @SuppressWarnings("FieldMayBeFinal")
     private MenuResponseManager menuResponseManager;
+    @SuppressWarnings("FieldMayBeFinal")
     private DishService dishService;
     public IndexCommand () {
         ApplicationServiceContext appContext = new ApplicationServiceContext();

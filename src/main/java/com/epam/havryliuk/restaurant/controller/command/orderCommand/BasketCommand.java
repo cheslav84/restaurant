@@ -27,9 +27,11 @@ import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.ER
 
 public class BasketCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(BasketCommand.class);
+    @SuppressWarnings("FieldMayBeFinal")
     private OrderService orderService;
+    @SuppressWarnings("FieldMayBeFinal")
     private MessageManager messageManager;
-    private Validator validator = new Validator();
+//    private Validator validator = new Validator();
 
 
     public BasketCommand () {

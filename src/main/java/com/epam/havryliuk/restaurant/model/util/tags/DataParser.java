@@ -1,4 +1,4 @@
-package com.epam.havryliuk.restaurant.model.service.tags;
+package com.epam.havryliuk.restaurant.model.util.tags;
 
 public class DataParser {
 

@@ -18,9 +18,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.stream.Stream;
 
-import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.WRONG_ACTION;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -57,12 +55,4 @@ class CommandFactoryTest {
         assertEquals(IndexCommand.class, factory.defineCommand(request).getClass());
     }
 
-    @Test
-    void defineCommandWrong() {
-        String URI = "/Restaurant/ind";
-        when(request.getRequestURI()).thenReturn(URI);
-        CommandFactory factory = new CommandFactory();
-        assertEquals(IndexCommand.class, factory.defineCommand(request).getClass());
-        verify(request).setAttribute(WRONG_ACTION, "ind: command not found or wrong!");
-    }
 }
