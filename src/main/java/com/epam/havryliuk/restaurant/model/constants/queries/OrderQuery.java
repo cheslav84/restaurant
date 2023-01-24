@@ -8,8 +8,8 @@ import org.apache.logging.log4j.Logger;
 import java.util.Properties;
 
 public class OrderQuery {
-    private static final Logger log = LogManager.getLogger(OrderQuery.class);
-    private static final Properties properties;
+    private static final Logger LOG = LogManager.getLogger(OrderQuery.class);
+    private static final Properties PROPERTIES;
     public static String GET_BY_USER_ID_ADDRESS_AND_STATUS;
     public static String ADD_ORDER;
     public static String GET_CREATION_DATE_BY_ID;
@@ -23,25 +23,20 @@ public class OrderQuery {
     public static String GET_NUMBER_DISHES_IN_ORDER;
     public static String GET_NUMBER_OF_CONFIRMED_ORDERS;
 
-
     static {
-        properties = PropertiesLoader.getProperties(ResourcePath.DB_QUERIES_FILE);
-        initialiseVariable();
-        log.debug("Database queries for \"Custom order\" table have been initialised successfully.");
-    }
-
-    private static void initialiseVariable() {
-        GET_BY_USER_ID_ADDRESS_AND_STATUS = (String) properties.get("order.GET_BY_USER_ID_ADDRESS_AND_STATUS");
-        ADD_ORDER = (String) properties.get("order.ADD_ORDER");
-        GET_CREATION_DATE_BY_ID = (String) properties.get("order.GET_CREATION_DATE_BY_ID");
-        GET_ALL_ORDERS_BY_USER = (String) properties.get("order.GET_ALL_ORDERS_BY_USER");
-        GET_CONFIRMED_ORDERS_SORTED_BY_STATUS_THEN_TIME = (String) properties.get("order.GET_CONFIRMED_ORDERS_SORTED_BY_STATUS_THEN_TIME");
-        GET_CONFIRMED_ORDERS_SORTED_BY_TIME_THEN_STATUS = (String) properties.get("order.GET_CONFIRMED_ORDERS_SORTED_BY_TIME_THEN_STATUS");
-        FIND_ORDER_BY_ID = (String) properties.get("order.FIND_ORDER_BY_ID");
-        CHANGE_ORDER_STATUS_BY_ID = (String) properties.get("order.CHANGE_ORDER_STATUS_BY_ID");
-        REMOVE_DISH_FROM_ORDER = (String) properties.get("order.REMOVE_DISH_FROM_ORDER");
-        GET_NUMBER_DISHES_IN_ORDER = (String) properties.get("order.GET_NUMBER_DISHES_IN_ORDER");
-        DELETE_ORDER_BY_ID = (String) properties.get("order.DELETE_ORDER_BY_ID");
-        GET_NUMBER_OF_CONFIRMED_ORDERS = (String) properties.get("order.GET_NUMBER_OF_CONFIRMED_ORDERS");
+        PROPERTIES = PropertiesLoader.getProperties(ResourcePath.DB_QUERIES_FILE);
+        GET_BY_USER_ID_ADDRESS_AND_STATUS = (String) PROPERTIES.get("order.GET_BY_USER_ID_ADDRESS_AND_STATUS");
+        ADD_ORDER = (String) PROPERTIES.get("order.ADD_ORDER");
+        GET_CREATION_DATE_BY_ID = (String) PROPERTIES.get("order.GET_CREATION_DATE_BY_ID");
+        GET_ALL_ORDERS_BY_USER = (String) PROPERTIES.get("order.GET_ALL_ORDERS_BY_USER");
+        GET_CONFIRMED_ORDERS_SORTED_BY_STATUS_THEN_TIME = (String) PROPERTIES.get("order.GET_CONFIRMED_ORDERS_SORTED_BY_STATUS_THEN_TIME");
+        GET_CONFIRMED_ORDERS_SORTED_BY_TIME_THEN_STATUS = (String) PROPERTIES.get("order.GET_CONFIRMED_ORDERS_SORTED_BY_TIME_THEN_STATUS");
+        FIND_ORDER_BY_ID = (String) PROPERTIES.get("order.FIND_ORDER_BY_ID");
+        CHANGE_ORDER_STATUS_BY_ID = (String) PROPERTIES.get("order.CHANGE_ORDER_STATUS_BY_ID");
+        REMOVE_DISH_FROM_ORDER = (String) PROPERTIES.get("order.REMOVE_DISH_FROM_ORDER");
+        GET_NUMBER_DISHES_IN_ORDER = (String) PROPERTIES.get("order.GET_NUMBER_DISHES_IN_ORDER");
+        DELETE_ORDER_BY_ID = (String) PROPERTIES.get("order.DELETE_ORDER_BY_ID");
+        GET_NUMBER_OF_CONFIRMED_ORDERS = (String) PROPERTIES.get("order.GET_NUMBER_OF_CONFIRMED_ORDERS");
+        LOG.debug("Database queries for \"Custom order\" table have been initialised successfully.");
     }
 }

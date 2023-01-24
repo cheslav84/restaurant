@@ -54,5 +54,4 @@ class CommandFactoryTest {
         CommandFactory factory = new CommandFactory();
         assertEquals(IndexCommand.class, factory.defineCommand(request).getClass());
     }
-
 }

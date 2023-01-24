@@ -12,7 +12,7 @@ import java.io.IOException;
         initParams = {
                 @WebInitParam(name = "encoding", value = "UTF-8", description = "Encoding Param") })
 public class EncodingFilter implements Filter {
-    private static final Logger log = LogManager.getLogger(EncodingFilter.class);
+    private static final Logger LOG = LogManager.getLogger(EncodingFilter.class);
 
     private String encoding;
 
@@ -23,14 +23,7 @@ public class EncodingFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
-        log.debug("\"/EncodingFilter\" doFilter starts.");
-
-//        log.debug("This is a debug message");
-//        log.info("This is an info message");
-//        log.warn("This is a warn message");
-//        log.error("This is an error message");
-//        log.fatal("This is a fatal message");
-
+        LOG.debug("\"/EncodingFilter\" doFilter starts.");
         req.setCharacterEncoding(encoding);
         resp.setCharacterEncoding(encoding);
         chain.doFilter(req, resp);

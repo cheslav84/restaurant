@@ -10,10 +10,8 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
-
 public class LoginPageCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(LoginPageCommand.class);
-
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         LOG.debug("Login page request.");

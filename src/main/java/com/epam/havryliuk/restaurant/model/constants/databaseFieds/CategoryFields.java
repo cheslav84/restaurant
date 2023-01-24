@@ -9,21 +9,15 @@ import org.apache.logging.log4j.Logger;
 import java.util.Properties;
 
 public class CategoryFields {
-    private static final Logger log = LogManager.getLogger(CategoryFields.class);
-    private static final Properties properties;
-    public static String CATEGORY_ID;
-    public static String CATEGORY_NAME;
+    private static final Logger LOG = LogManager.getLogger(CategoryFields.class);
+    private static final Properties PROPERTIES;
+    public static final String CATEGORY_ID;
+    public static final String CATEGORY_NAME;
 
     static {
-        properties = PropertiesLoader.getProperties(ResourcePath.DB_FIELDS_SETTING_FILE);
-        initialiseVariable();
-        log.debug("Database fields for \"Category\" table have been initialised successfully.");
+        PROPERTIES = PropertiesLoader.getProperties(ResourcePath.DB_FIELDS_SETTING_FILE);
+        CATEGORY_ID = (String) PROPERTIES.get("category.id");
+        CATEGORY_NAME = (String) PROPERTIES.get("category.name");
+        LOG.debug("Database fields for \"Category\" table have been initialised successfully.");
     }
-
-    private static void initialiseVariable() {
-        CATEGORY_ID = (String) properties.get("category.id");
-        CATEGORY_NAME = (String) properties.get("category.name");
-    }
-
-
 }

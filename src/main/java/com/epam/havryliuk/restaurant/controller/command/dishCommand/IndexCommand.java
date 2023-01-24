@@ -35,7 +35,6 @@ public class IndexCommand implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-
         Category currentMenu = menuResponseManager.getCurrentMenu(request);
         MessageManager messageManager = MessageManager.valueOf((String) request.getSession().getAttribute(LOCALE));
         List<Dish> dishes = null;

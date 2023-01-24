@@ -26,7 +26,6 @@ import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 public class MenuCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(MenuCommand.class);
     private static final String DEFAULT_SORTING = "name";
-
     @SuppressWarnings("FieldMayBeFinal")
     private MenuResponseManager menuResponseManager;
     @SuppressWarnings("FieldMayBeFinal")

@@ -1,7 +1,5 @@
-package com.epam.havryliuk.restaurant.model.constants;
-
-
-public class Properties {
-    public static String url = "http://localhost:8080/Restaurant/";
-
-}
+//package com.epam.havryliuk.restaurant.model.constants;
+//
+//public class Properties {
+//    public final static String URL = "http://localhost:8081/Restaurant/";
+//}

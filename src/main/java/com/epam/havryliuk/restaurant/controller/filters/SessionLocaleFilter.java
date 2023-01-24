@@ -18,9 +18,8 @@ import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.LO
         initParams = {
                 @WebInitParam(name = "locale", value = "UA", description = "Default locale") })
 public class SessionLocaleFilter implements Filter {
-    private static final Logger log = LogManager.getLogger(SessionLocaleFilter.class);
+    private static final Logger LOG = LogManager.getLogger(SessionLocaleFilter.class);
     private String defaultLocale;
-
     private final String[] allowedLocals = {"UA", "EN"};
 
     @Override
@@ -30,18 +29,9 @@ public class SessionLocaleFilter implements Filter {
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
-        log.debug("\"/SessionLocaleFilter\" doFilter starts.");
-
+        LOG.debug("\"/SessionLocaleFilter\" doFilter starts.");
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpSession session = httpRequest.getSession();
-
-//        Locale currentLocale = httpRequest.getLocale();
-//        System.out.println(currentLocale.getDisplayLanguage()); //English
-//        System.out.println(currentLocale.getDisplayCountry());	//United States
-//        System.out.println(currentLocale.getLanguage());		//en
-//        System.out.println(currentLocale.getCountry());
-//        System.out.println(httpRequest.getParameter(LOCALE));
-
         if (httpRequest.getParameter(LOCALE) != null) {
             String locale = httpRequest.getParameter(LOCALE);
             checkLocale(locale);
@@ -66,6 +56,4 @@ public class SessionLocaleFilter implements Filter {
         }
         return initialLocale;
     }
-
-
 }

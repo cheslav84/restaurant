@@ -14,15 +14,14 @@ import java.io.IOException;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.LOGGED_USER;
 
-
 @WebFilter(filterName = "AuthenticationFilter",  urlPatterns = { "/manage_orders", "/add_dish_page"})
 public class AuthenticationFilter implements Filter {
-    private static final Logger log = LogManager.getLogger(AuthenticationFilter.class);
+    private static final Logger LOG = LogManager.getLogger(AuthenticationFilter.class);
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
                          FilterChain chain) throws IOException, ServletException {
-        log.debug("\"/AuthenticationFilter\" doFilter starts.");
+        LOG.debug("\"/AuthenticationFilter\" doFilter starts.");
 
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;

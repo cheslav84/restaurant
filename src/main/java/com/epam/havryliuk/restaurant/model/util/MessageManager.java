@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 public enum MessageManager {
     EN(ResourceBundle.getBundle("language_en", new Locale("en", "EN"))),
     UA(ResourceBundle.getBundle("language_ua", new Locale("uk", "UA")));
-    private ResourceBundle bundle;
+    private final ResourceBundle bundle;
     MessageManager(ResourceBundle bundle) {
         this.bundle = bundle;
     }

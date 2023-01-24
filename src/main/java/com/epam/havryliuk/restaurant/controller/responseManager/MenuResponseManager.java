@@ -4,6 +4,8 @@ import com.epam.havryliuk.restaurant.model.constants.RequestParameters;
 import com.epam.havryliuk.restaurant.model.entity.Category;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Optional;
 
@@ -17,6 +19,8 @@ import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.SH
  * information on uses page.
  */
 public class MenuResponseManager {
+    private static final Logger LOG = LogManager.getLogger(MenuResponseManager.class);
+
     private static final String DEFAULT_MENU = "COFFEE";
 
     /**
@@ -41,6 +45,7 @@ public class MenuResponseManager {
         } else {
             currentMenu = Optional.ofNullable(lastVisitedMenu).orElse(DEFAULT_MENU);
         }
+        LOG.debug("Current menu: " + currentMenu);
         return Category.valueOf(currentMenu.toUpperCase());
     }
 
@@ -56,8 +61,10 @@ public class MenuResponseManager {
         if (session.getAttribute(SHOW_DISH_INFO) != null){
             if (req.getAttribute(SHOW_DISH_INFO) == null) {
                 req.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
+                LOG.debug("Order information going to be displayed.");
             } else  {
                 req.removeAttribute(SHOW_DISH_INFO);
+                LOG.debug("Order information going to be hide.");
             }
             session.removeAttribute(SHOW_DISH_INFO);
         }

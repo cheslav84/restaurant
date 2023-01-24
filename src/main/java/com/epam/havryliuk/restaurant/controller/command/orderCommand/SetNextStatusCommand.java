@@ -32,8 +32,8 @@ import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
 public class SetNextStatusCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(SetNextStatusCommand.class);
-
     private static final Map<BookingStatus, Role> bookingAccessRoles;
+    @SuppressWarnings("FieldMayBeFinal")
     private OrderService orderService;
 
     static {
@@ -46,17 +46,11 @@ public class SetNextStatusCommand implements Command {
         System.out.println(orderService);
     }
 
-
-
     /**
      * The command method gets the next booking status that has to be set in order, then checks
      * if the user has rights to do it, and if user has its, asks service to change the status by id.
      * If some unforeseen situation occurs, method catches the appropriate exception and sends corresponding
      * message to user.
-     * @param request
-     * @param response
-     * @throws IOException
-     * @throws ServletException
      */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -84,12 +78,12 @@ public class SetNextStatusCommand implements Command {
         response.sendRedirect(URLUtil.getRefererPage(request));
     }
 
-
     /**
      * Checks if user has the rights to change the order status.
-     * @param session
-     * @param nextBookingStatus
-     * @throws AuthenticationException
+     * @param nextBookingStatus Booking status that needs to be set as next Status
+     * @throws AuthenticationException when user doesn't have right to change it, for example
+     * if User Role is Manager than he can't change Booking status from "Booking" to "New", or
+     * if User Role is User, Status also can't be changed from "New" to "Cooking", and so on.
      */
     private void checkAccessRights(HttpSession session, BookingStatus nextBookingStatus) throws AuthenticationException {
         User user = (User) session.getAttribute(LOGGED_USER);
@@ -101,8 +95,6 @@ public class SetNextStatusCommand implements Command {
     /**
      * Method retrieves current BookingStatus from the request,
      * and returns the status that has to be set next.
-     * @param request
-     * @return
      */
     @NotNull
     private BookingStatus getNextBookingStatus(HttpServletRequest request) {
@@ -121,7 +113,6 @@ public class SetNextStatusCommand implements Command {
     /**
      * Map contains the booking statuses and correspondent user roles
      * that has rights to set that statuses.
-     * @return
      */
     private static Map<BookingStatus, Role> getBookingAccessRoles() {
         Map<BookingStatus, Role> bookingAccessRoles = new HashMap<>();

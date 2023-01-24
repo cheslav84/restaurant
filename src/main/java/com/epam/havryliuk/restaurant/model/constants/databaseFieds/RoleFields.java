@@ -8,24 +8,16 @@ import org.apache.logging.log4j.Logger;
 import java.util.Properties;
 
 public class RoleFields {
-    private static final Logger log = LogManager.getLogger(RoleFields.class);
-
-    private static final Properties properties;
-
-    public static String ROLE_ID;
-    public static String ROLE_NAME;
+    private static final Logger LOG = LogManager.getLogger(RoleFields.class);
+    private static final Properties PROPERTIES;
+    public static final String ROLE_ID;
+    public static final String ROLE_NAME;
 
     static {
-        properties = PropertiesLoader.getProperties(ResourcePath.DB_FIELDS_SETTING_FILE);
-        initialiseVariable();
-        log.debug("Database fields for \"Role\" table have been initialised successfully.");
-
+        PROPERTIES = PropertiesLoader.getProperties(ResourcePath.DB_FIELDS_SETTING_FILE);
+        ROLE_ID = (String) PROPERTIES.get("role.id");
+        ROLE_NAME = (String) PROPERTIES.get("role.name");
+        LOG.debug("Database fields for \"Role\" table have been initialised successfully.");
     }
-
-    private static void initialiseVariable() {
-        ROLE_ID = (String) properties.get("role.id");
-        ROLE_NAME = (String) properties.get("role.name");
-    }
-
 
 }

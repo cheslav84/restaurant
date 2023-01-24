@@ -25,5 +25,4 @@ public class PropertiesLoader {
            }
            return properties;
        }
-
 }

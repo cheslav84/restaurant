@@ -20,18 +20,18 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
-
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
-
 
 public class LoginCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(LoginCommand.class);
+    @SuppressWarnings("FieldMayBeFinal")
     private UserService userService;
 
     public LoginCommand () {
         ApplicationServiceContext appContext = new ApplicationServiceContext();
         userService = appContext.getInstance(UserService.class);
     }
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String email = request.getParameter(RequestParameters.EMAIL);//todo перейменувати скрізь на email

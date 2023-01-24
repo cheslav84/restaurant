@@ -15,18 +15,14 @@ import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.LO
 
 @WebFilter(filterName = "LogInFilter",  urlPatterns = { "/basket", "/order",  "/set_next_status/*", "/remove_from_order", "/make_order", "/show_order_info"})
 public class LogInFilter implements Filter {
-    private static final Logger log = LogManager.getLogger(LogInFilter.class);
+    private static final Logger LOG = LogManager.getLogger(LogInFilter.class);
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
                          FilterChain chain) throws IOException, ServletException {
-        log.debug("\"/LogInFilter\" doFilter starts.");
-
+        LOG.debug("\"/LogInFilter\" doFilter starts.");
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
-
-
-
         if (!isUserLoggedIn(httpRequest)) {
             httpResponse.sendRedirect(AppPagesPath.REDIRECT_REGISTRATION);
         } else {
@@ -37,5 +33,4 @@ public class LogInFilter implements Filter {
     private boolean isUserLoggedIn(HttpServletRequest httpRequest) {
         return  httpRequest.getSession().getAttribute(LOGGED_USER) != null;
     }
-
 }

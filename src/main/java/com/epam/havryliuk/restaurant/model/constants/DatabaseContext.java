@@ -7,21 +7,15 @@ import org.apache.logging.log4j.Logger;
 import java.util.Properties;
 
 public class DatabaseContext {
-    private static final Logger log = LogManager.getLogger(DatabaseContext.class);
-
-    private static final Properties properties;
-    public static String CONTEXT;
-    public static String SOURCE;
-
+    private static final Logger LOG = LogManager.getLogger(DatabaseContext.class);
+    private static final Properties PROPERTIES;
+    public static final String CONTEXT;
+    public static final String SOURCE;
 
     static {
-        properties = PropertiesLoader.getProperties(ResourcePath.DB_CONTEXT);
-        initialiseVariable();
+        PROPERTIES = PropertiesLoader.getProperties(ResourcePath.DB_CONTEXT);
+        CONTEXT = (String) PROPERTIES.get("database.context");
+        SOURCE = (String) PROPERTIES.get("database.source");
+        LOG.debug("DatabaseContext initialised.");
     }
-
-    private static void initialiseVariable() {
-        CONTEXT = (String) properties.get("database.context");
-        SOURCE = (String) properties.get("database.source");
-    }
-
 }

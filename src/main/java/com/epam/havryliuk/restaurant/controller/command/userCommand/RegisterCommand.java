@@ -12,7 +12,7 @@ import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.util.MessageManager;
 import com.epam.havryliuk.restaurant.model.service.UserService;
 
-import com.epam.havryliuk.restaurant.model.service.validation.Validator;
+import com.epam.havryliuk.restaurant.model.util.validation.Validator;
 import com.epam.havryliuk.restaurant.model.util.PassEncryptor;
 import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,6 +29,7 @@ import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
 public class RegisterCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(RegisterCommand.class);
+    @SuppressWarnings("FieldMayBeFinal")
     private UserService userService;
 
     public RegisterCommand () {
@@ -43,8 +44,6 @@ public class RegisterCommand implements Command {
         User user;
         try {
             user = mapUser(request);
-
-            //todo check user if exists
             userService.addNewUser(user);
             encryptUserPassword(user);
             session.setAttribute(LOGGED_USER, user);
@@ -57,7 +56,7 @@ public class RegisterCommand implements Command {
             redirectionPage = getRedirectionPage(session);
             LOG.info("The user \"" + user.getName() + "\" has been successfully registered.");
         } catch (ValidationException e) {
-            LOG.error("Some credentials are not correct." + e);//todo rename
+            LOG.error("Some credentials are not correct." + e);
             redirectionPage = getErrorPage(session);
         } catch (DuplicatedEntityException e) {
             LOG.error("The user with such login is already exists. Try to use another one." + e);
@@ -76,7 +75,7 @@ public class RegisterCommand implements Command {
     private String getErrorPage(HttpSession session) {
         String redirectionPage;
         redirectionPage = AppPagesPath.REDIRECT_REGISTRATION;
-        session.setAttribute(REGISTRATION_PROCESS, REGISTRATION_PROCESS);//TODO
+        session.setAttribute(REGISTRATION_PROCESS, REGISTRATION_PROCESS);
         return redirectionPage;
     }
 
@@ -103,7 +102,7 @@ public class RegisterCommand implements Command {
         User user =  User.getInstance(email, password, name, surname, gender, isOverEighteen);
         try {
             new Validator().validateUserData(user, req);
-        } catch (ValidationException e){//todo rename validation
+        } catch (ValidationException e){
             user.setPassword(null);
             req.getSession().setAttribute(USER_IN_LOGGING, user);
             throw new ValidationException();

@@ -1,4 +1,4 @@
-package com.epam.havryliuk.restaurant.model.service.validation;
+package com.epam.havryliuk.restaurant.model.util.validation;
 
 import com.epam.havryliuk.restaurant.model.constants.Regex;
 import com.epam.havryliuk.restaurant.model.constants.RequestParameters;

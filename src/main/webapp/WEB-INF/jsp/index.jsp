@@ -117,10 +117,7 @@
                 <p data-ix="fade-in-on-scroll">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
                     varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor
-                    interdum nulla, ut
-                    commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem
-                    imperdiet.
-                    Nuncut sem vitae risus tristique posuere.
+                    interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nuncut sem vitae risus tristique posuere.
                 </p>
             </div>
         </div>
@@ -190,9 +187,7 @@
                     </h2>
                     <div class="section-divider-line"></div>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in
-                        eros
-                        elementum
-                        tristique. Duis cursus, mi quis viverra ornare, eros dolor.</p>
+                        eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor.</p>
                 </div>
                 <div class="gallery-column-right w-col w-col-6">
                     <div class="small-gallery-row w-row">
@@ -231,7 +226,6 @@
             </div>
         </div>
     </div>
-
     <c:if test="${sessionScope.loggedUser ne null}">
         <jsp:include page="order-info.jsp" />
     </c:if>

@@ -24,6 +24,7 @@ import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
 public class RemoveFromOrderCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(RemoveFromOrderCommand.class);
+    @SuppressWarnings("FieldMayBeFinal")
     private OrderService orderService;
     public RemoveFromOrderCommand () {
         ApplicationServiceContext appContext = new ApplicationServiceContext();
@@ -60,6 +61,5 @@ public class RemoveFromOrderCommand implements Command {
             }
         }
     }
-
 
 }

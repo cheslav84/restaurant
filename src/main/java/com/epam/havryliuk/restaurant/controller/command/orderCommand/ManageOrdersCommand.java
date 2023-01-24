@@ -28,6 +28,7 @@ public class ManageOrdersCommand implements Command {
     private int pageNumber = 1;
     private int recordsPerPage = 4;
     private OrderSorting sortingParameter = OrderSorting.STATUS;
+    @SuppressWarnings("FieldMayBeFinal")
     private OrderService orderService;
 
     public ManageOrdersCommand () {

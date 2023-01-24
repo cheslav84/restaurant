@@ -8,35 +8,30 @@ import org.apache.logging.log4j.Logger;
 import java.util.Properties;
 
 public class DishFields {
-    private static final Logger log = LogManager.getLogger(DishFields.class);
-
-    private static final Properties properties;
-    public static String DISH_ID;
-    public static String DISH_NAME;
-    public static String DISH_DESCRIPTION;
-    public static String DISH_WEIGHT;
-    public static String DISH_PRICE;
-    public static String DISH_AMOUNT;
-    public static String DISH_SPECIAL;
-    public static String DISH_IMAGE;
-    public static String DISH_CATEGORY_ID;
+    private static final Logger LOG = LogManager.getLogger(DishFields.class);
+    private static final Properties PROPERTIES;
+    public static final String DISH_ID;
+    public static final String DISH_NAME;
+    public static final String DISH_DESCRIPTION;
+    public static final String DISH_WEIGHT;
+    public static final String DISH_PRICE;
+    public static final String DISH_AMOUNT;
+    public static final String DISH_SPECIAL;
+    public static final String DISH_IMAGE;
+    public static final String DISH_CATEGORY_ID;
 
     static {
-        properties = PropertiesLoader.getProperties(ResourcePath.DB_FIELDS_SETTING_FILE);
-        initialiseVariable();
-        log.debug("Database fields for \"Dish\" table have been initialised successfully.");
-    }
-
-    private static void initialiseVariable() {
-        DISH_ID = (String) properties.get("dish.id");
-        DISH_NAME = (String) properties.get("dish.name");
-        DISH_DESCRIPTION = (String) properties.get("dish.description");
-        DISH_WEIGHT = (String) properties.get("dish.weight");
-        DISH_PRICE = (String) properties.get("dish.price");
-        DISH_AMOUNT = (String) properties.get("dish.amount");
-        DISH_SPECIAL = (String) properties.get("dish.special");
-        DISH_IMAGE = (String) properties.get("dish.image");
-        DISH_CATEGORY_ID = (String) properties.get("dish.categoryId");
+        PROPERTIES = PropertiesLoader.getProperties(ResourcePath.DB_FIELDS_SETTING_FILE);
+        DISH_ID = (String) PROPERTIES.get("dish.id");
+        DISH_NAME = (String) PROPERTIES.get("dish.name");
+        DISH_DESCRIPTION = (String) PROPERTIES.get("dish.description");
+        DISH_WEIGHT = (String) PROPERTIES.get("dish.weight");
+        DISH_PRICE = (String) PROPERTIES.get("dish.price");
+        DISH_AMOUNT = (String) PROPERTIES.get("dish.amount");
+        DISH_SPECIAL = (String) PROPERTIES.get("dish.special");
+        DISH_IMAGE = (String) PROPERTIES.get("dish.image");
+        DISH_CATEGORY_ID = (String) PROPERTIES.get("dish.categoryId");
+        LOG.debug("Database fields for \"Dish\" table have been initialised successfully.");
     }
 
 }

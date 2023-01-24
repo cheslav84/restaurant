@@ -9,7 +9,6 @@ import com.epam.havryliuk.restaurant.model.exceptions.EntityNotFoundException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.util.MessageManager;
 import com.epam.havryliuk.restaurant.model.service.OrderService;
-import com.epam.havryliuk.restaurant.model.service.validation.Validator;
 import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,10 +28,6 @@ public class BasketCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(BasketCommand.class);
     @SuppressWarnings("FieldMayBeFinal")
     private OrderService orderService;
-    @SuppressWarnings("FieldMayBeFinal")
-    private MessageManager messageManager;
-//    private Validator validator = new Validator();
-
 
     public BasketCommand () {
         ApplicationServiceContext appContext = new ApplicationServiceContext();
@@ -42,7 +37,7 @@ public class BasketCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession();
-        messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
+        MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
         User user = (User) session.getAttribute(LOGGED_USER);
         try {
             List<Order> orders = orderService.getAllUserOrders(user);

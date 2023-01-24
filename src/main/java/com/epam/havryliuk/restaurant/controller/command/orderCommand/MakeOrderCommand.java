@@ -15,7 +15,7 @@ import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.util.MessageManager;
 import com.epam.havryliuk.restaurant.model.service.OrderService;
 import com.epam.havryliuk.restaurant.model.util.URLUtil;
-import com.epam.havryliuk.restaurant.model.service.validation.Validator;
+import com.epam.havryliuk.restaurant.model.util.validation.Validator;
 import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,9 +31,11 @@ import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.ER
 
 public class MakeOrderCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(MakeOrderCommand.class);
+    @SuppressWarnings("FieldMayBeFinal")
     private OrderService orderService;
+    @SuppressWarnings("FieldMayBeFinal")
     private Validator validator = new Validator();
-    private MessageManager messageManager;
+
 
     public MakeOrderCommand () {
         ApplicationServiceContext appContext = new ApplicationServiceContext();
@@ -42,10 +44,6 @@ public class MakeOrderCommand implements Command {
 
     /**
      * Method first tries to get an Order from HttpSession.
-     * @param request
-     * @param response
-     * @throws IOException
-     * @throws ServletException
      */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -59,9 +57,7 @@ public class MakeOrderCommand implements Command {
         } else {
             order = getFromStorageOrCreateOrder(request, user);
             session.setAttribute(CURRENT_ORDER, order);
-//            if (order != null) {// todo (order does not exist in database if null) think of refactoring
-                saveDishToOrder(request, order);
-//            }
+            saveDishToOrder(request, order);
         }
         String redirectionPage = getRedirectionPage(request);
         response.sendRedirect(redirectionPage);
@@ -70,8 +66,6 @@ public class MakeOrderCommand implements Command {
     /**
      * Methods requests an order from service. It can be the order that already exist in database
      * or the new one.
-     * @param request
-     * @param user
      */
     private Order getFromStorageOrCreateOrder(HttpServletRequest request, User user) {
         HttpSession session = request.getSession();
@@ -90,41 +84,34 @@ public class MakeOrderCommand implements Command {
             session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
             LOG.error(e.getMessage(), e);
         }
-//        if (order != null) {// todo (order does not exist in database if null) think of refactoring
-//            saveDishToOrder(request, orderService, order);
-//        }
         return order;
     }
 
-
-
     private void saveDishToOrder(HttpServletRequest request, Order order) {
         if (order != null) {// todo (order does not exist in database if null) think of refactoring
-
             HttpSession session = request.getSession();
-        messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
-        try {
-            Dish dish = getCurrentDish(request);
-            int dishesAmount = getDishesAmount(request);
-            orderService.addDishToOrder(order, dish, dishesAmount);
-            session.removeAttribute(CURRENT_DISH);
-        } catch (IrrelevantDataException e) {
-            LOG.error(e);
-            session.setAttribute(ORDER_MESSAGE,
-                    messageManager.getProperty(ResponseMessages.UNAVAILABLE_DISHES_AMOUNT));
-            session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
-        } catch (DuplicatedEntityException e) {
-            LOG.error(e);
-            session.setAttribute(ORDER_MESSAGE,
-                    messageManager.getProperty(ResponseMessages.DISH_ALREADY_IN_ORDER));
-            session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
-        } catch (ServiceException | ValidationException e) {
-            session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
-            LOG.error(e);
-        }
+            MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
+            try {
+                Dish dish = getCurrentDish(request);
+                int dishesAmount = getDishesAmount(request);
+                orderService.addDishToOrder(order, dish, dishesAmount);
+                session.removeAttribute(CURRENT_DISH);
+            } catch (IrrelevantDataException e) {
+                LOG.error(e);
+                session.setAttribute(ORDER_MESSAGE,
+                        messageManager.getProperty(ResponseMessages.UNAVAILABLE_DISHES_AMOUNT));
+                session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
+            } catch (DuplicatedEntityException e) {
+                LOG.error(e);
+                session.setAttribute(ORDER_MESSAGE,
+                        messageManager.getProperty(ResponseMessages.DISH_ALREADY_IN_ORDER));
+                session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
+            } catch (ServiceException | ValidationException e) {
+                session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
+                LOG.error(e);
+            }
         }
     }
-
 
     private Dish getCurrentDish(HttpServletRequest req) throws ServiceException {
         HttpSession session = req.getSession();
@@ -164,8 +151,7 @@ public class MakeOrderCommand implements Command {
      * redirected to his basket page. If any error situation occurs,
      * (any messages should be displayed to user) then user will get
      * the same page with the proper messages.
-     * @param request
-     * @return
+     * @return redirection page
      */
     private String getRedirectionPage(HttpServletRequest request) {
         String redirectionPage;
@@ -181,6 +167,5 @@ public class MakeOrderCommand implements Command {
         LOG.debug("redirectionPage " + redirectionPage);
         return redirectionPage;
     }
-
 
 }
