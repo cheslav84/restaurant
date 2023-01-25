@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="d" tagdir="/WEB-INF/tags" %>
 <fmt:setLocale value="${sessionScope.locale.country}" />
 <fmt:setBundle basename="language" />
 <!DOCTYPE html>
@@ -56,8 +57,7 @@
                             <div class="order-details">
                                 <div class="order-title">
                                     <div class="order-date">
-                                        <fmt:formatDate type="both" dateStyle="long" timeStyle="short"
-                                            value="${order.creationDate}" />
+                                        <d:date value="${order.creationDate}" />
                                     </div>
                                     <div class="order-status">
                                         <fmt:message key="status.message.${order.bookingStatus}" />
