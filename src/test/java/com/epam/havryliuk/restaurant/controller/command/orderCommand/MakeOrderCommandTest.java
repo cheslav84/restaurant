@@ -24,6 +24,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Locale;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
@@ -32,25 +33,19 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class MakeOrderCommandTest {
-
+    Locale locale = new Locale("en", "EN");
     @Mock
     private HttpServletRequest request;
-
     @Mock
     private HttpServletResponse response;
-
     @Mock
     private HttpSession session;
-
     @Mock
     private OrderService orderService;
-
     @Mock
     private Validator validator;
-
     @InjectMocks
     private MakeOrderCommand makeOrder;
-
     @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
@@ -70,7 +65,7 @@ class MakeOrderCommandTest {
         when(session.getAttribute(RequestAttributes.CURRENT_ORDER)).thenReturn(order);
         when(session.getAttribute(RequestAttributes.CURRENT_DISH)).thenReturn(dish);
         when(request.getParameter(RequestParameters.ORDER_DISHES_AMOUNT)).thenReturn(dishesAmount);
-        when(session.getAttribute(RequestAttributes.LOCALE)).thenReturn("EN");
+        when(session.getAttribute(LOCALE)).thenReturn(locale);
         when(request.getParameter(RequestParameters.CONTINUE_ORDERING)).thenReturn(null);
         makeOrder.execute(request, response);
         verify(session).removeAttribute(CURRENT_DISH);
@@ -93,7 +88,7 @@ class MakeOrderCommandTest {
         when(session.getAttribute(RequestAttributes.CURRENT_ORDER)).thenReturn(null);
         when(session.getAttribute(RequestAttributes.CURRENT_DISH)).thenReturn(dish);
         when(request.getParameter(RequestParameters.ORDER_DISHES_AMOUNT)).thenReturn(dishesAmount);
-        when(session.getAttribute(LOCALE)).thenReturn("EN");
+        when(session.getAttribute(LOCALE)).thenReturn(locale);
         when(request.getParameter(RequestParameters.CONTINUE_ORDERING)).thenReturn(null);
         when(orderService.getOrCreateOrder(user, deliveryAddress, deliveryPhone)).thenReturn(order);
         makeOrder.execute(request, response);
@@ -122,7 +117,7 @@ class MakeOrderCommandTest {
         when(session.getAttribute(RequestAttributes.CURRENT_DISH)).thenReturn(dish);
         when(request.getParameter(RequestParameters.ORDER_DISHES_AMOUNT)).thenReturn(dishesAmount);
         when(orderService.getOrCreateOrder(user, deliveryAddress, deliveryPhone)).thenReturn(order);
-        when(session.getAttribute(LOCALE)).thenReturn("EN");
+        when(session.getAttribute(LOCALE)).thenReturn(locale);
         when(request.getParameter(RequestParameters.CONTINUE_ORDERING)).thenReturn(continueOrderParameter);
         try (MockedStatic<URLUtil> util = Mockito.mockStatic(URLUtil.class)) {
             util.when(() -> URLUtil.getRefererPage(any(HttpServletRequest.class)))
@@ -148,7 +143,7 @@ class MakeOrderCommandTest {
         when(session.getAttribute(RequestAttributes.CURRENT_ORDER)).thenReturn(null);
         when(session.getAttribute(RequestAttributes.CURRENT_DISH)).thenReturn(null);
         when(orderService.getOrCreateOrder(user, deliveryAddress, deliveryPhone)).thenReturn(order);
-        when(session.getAttribute(LOCALE)).thenReturn("EN");
+        when(session.getAttribute(LOCALE)).thenReturn(locale);
         when(session.getAttribute(ERROR_MESSAGE)).thenReturn(null);
         when(session.getAttribute(ORDER_MESSAGE)).thenReturn(ORDER_MESSAGE);
         try (MockedStatic<URLUtil> util = Mockito.mockStatic(URLUtil.class)) {

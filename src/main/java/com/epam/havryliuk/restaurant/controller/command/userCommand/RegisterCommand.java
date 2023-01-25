@@ -9,7 +9,7 @@ import com.epam.havryliuk.restaurant.model.exceptions.ValidationException;
 import com.epam.havryliuk.restaurant.model.exceptions.DuplicatedEntityException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 
-import com.epam.havryliuk.restaurant.model.util.MessageManager;
+import com.epam.havryliuk.restaurant.model.util.BundleManager;
 import com.epam.havryliuk.restaurant.model.service.UserService;
 
 import com.epam.havryliuk.restaurant.model.util.validation.Validator;
@@ -41,7 +41,7 @@ public class RegisterCommand implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
         String redirectionPage;
-        MessageManager messageManager = MessageManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());
+        BundleManager bundleManager = BundleManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());
         User user;
         try {
             user = mapUser(request);
@@ -62,12 +62,12 @@ public class RegisterCommand implements Command {
         } catch (DuplicatedEntityException e) {
             LOG.error("The user with such login is already exists. Try to use another one." + e);
             session.setAttribute(REGISTRATION_ERROR_MESSAGE,
-                    messageManager.getProperty(ResponseMessages.REGISTRATION_USER_EXISTS));
+                    bundleManager.getProperty(ResponseMessages.REGISTRATION_USER_EXISTS));
             redirectionPage = getErrorPage(session);
         } catch (ServiceException e) {
             LOG.error("User hasn't been registered. " + e);
             session.setAttribute(REGISTRATION_ERROR_MESSAGE,
-                    messageManager.getProperty(ResponseMessages.REGISTRATION_ERROR));
+                    bundleManager.getProperty(ResponseMessages.REGISTRATION_ERROR));
             redirectionPage = getErrorPage(session);
         }
         response.sendRedirect(redirectionPage);

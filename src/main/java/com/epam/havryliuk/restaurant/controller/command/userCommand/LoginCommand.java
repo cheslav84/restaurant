@@ -7,7 +7,7 @@ import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
 import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.exceptions.EntityNotFoundException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
-import com.epam.havryliuk.restaurant.model.util.MessageManager;
+import com.epam.havryliuk.restaurant.model.util.BundleManager;
 import com.epam.havryliuk.restaurant.model.service.UserService;
 import com.epam.havryliuk.restaurant.model.util.PassEncryptor;
 import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
@@ -38,7 +38,7 @@ public class LoginCommand implements Command {
         String email = request.getParameter(RequestParameters.EMAIL);//todo перейменувати скрізь на email
         String password = request.getParameter(RequestParameters.PASSWORD);
         HttpSession session = request.getSession();
-        MessageManager messageManager = MessageManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());
+        BundleManager bundleManager = BundleManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());
         String page;
         try {
             User user = userService.getUserFromDatabase(email);
@@ -50,17 +50,17 @@ public class LoginCommand implements Command {
         } catch (EntityNotFoundException e) {
             page = AppPagesPath.REDIRECT_REGISTRATION;
             session.setAttribute(ERROR_MESSAGE,
-                    messageManager.getProperty(ResponseMessages.LOGIN_ERROR));
+                    bundleManager.getProperty(ResponseMessages.LOGIN_ERROR));
             LOG.error(e.getMessage());
         } catch (GeneralSecurityException e) {
             page = AppPagesPath.REDIRECT_REGISTRATION;
             session.setAttribute(ERROR_MESSAGE,
-                    messageManager.getProperty(ResponseMessages.PASSWORD_ERROR));
+                    bundleManager.getProperty(ResponseMessages.PASSWORD_ERROR));
             LOG.error(e.getMessage());
         } catch (ServiceException e) {
             page = AppPagesPath.REDIRECT_ERROR;
             session.setAttribute(ERROR_MESSAGE,
-                    messageManager.getProperty(ResponseMessages.GLOBAL_ERROR));
+                    bundleManager.getProperty(ResponseMessages.GLOBAL_ERROR));
             LOG.error(e.getMessage());
         }
         response.sendRedirect(page);

@@ -8,13 +8,12 @@ import com.epam.havryliuk.restaurant.model.entity.Order;
 import com.epam.havryliuk.restaurant.model.entity.OrderSorting;
 import com.epam.havryliuk.restaurant.model.entity.Page;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
-import com.epam.havryliuk.restaurant.model.util.MessageManager;
+import com.epam.havryliuk.restaurant.model.util.BundleManager;
 import com.epam.havryliuk.restaurant.model.service.OrderService;
 import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -39,7 +38,7 @@ public class ManageOrdersCommand implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        MessageManager messageManager = MessageManager.valueOf(((Locale) request.getSession().getAttribute(LOCALE)).getCountry());
+        BundleManager bundleManager = BundleManager.valueOf(((Locale) request.getSession().getAttribute(LOCALE)).getCountry());
         setSortingParameter(request);
         setPageNumber(request);
         setRecordsPerPage(request);
@@ -54,7 +53,7 @@ public class ManageOrdersCommand implements Command {
         } catch (ServiceException e) {
             LOG.error(e.getMessage(), e);
             request.setAttribute(ERROR_MESSAGE,
-                    messageManager.getProperty(ResponseMessages.ORDERS_ERROR));
+                    bundleManager.getProperty(ResponseMessages.ORDERS_ERROR));
         }
         request.getRequestDispatcher(AppPagesPath.FORWARD_MANAGE_ORDERS).forward(request, response);
     }

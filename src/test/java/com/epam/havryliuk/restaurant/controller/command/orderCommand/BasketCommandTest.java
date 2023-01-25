@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
@@ -31,7 +32,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class BasketCommandTest {
-
+    Locale locale = new Locale("en", "EN");
     @Mock
     private HttpServletRequest request;
     @Mock
@@ -59,7 +60,7 @@ class BasketCommandTest {
         User user = initTestUser();
         List<Order> orders = initTestOrderList(ordersInList);
         when(request.getSession()).thenReturn(session);
-        when(session.getAttribute(RequestAttributes.LOCALE)).thenReturn("EN");
+        when(session.getAttribute(LOCALE)).thenReturn(locale);
         when(session.getAttribute(RequestAttributes.LOGGED_USER)).thenReturn(user);
         when(orderService.getAllUserOrders(user)).thenReturn(orders);
         when(orderService.getTotalPrices(orders)).thenReturn(ordersAndTotalPriced);
@@ -74,7 +75,7 @@ class BasketCommandTest {
         User user = initTestUser();
         List<Order> orders = new ArrayList<>();
         when(request.getSession()).thenReturn(session);
-        when(session.getAttribute(RequestAttributes.LOCALE)).thenReturn("EN");
+        when(session.getAttribute(LOCALE)).thenReturn(locale);
         when(session.getAttribute(RequestAttributes.LOGGED_USER)).thenReturn(user);
         when(orderService.getAllUserOrders(user)).thenReturn(orders);
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);

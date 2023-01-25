@@ -12,7 +12,7 @@ import com.epam.havryliuk.restaurant.model.exceptions.ValidationException;
 import com.epam.havryliuk.restaurant.model.exceptions.DuplicatedEntityException;
 import com.epam.havryliuk.restaurant.model.exceptions.IrrelevantDataException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
-import com.epam.havryliuk.restaurant.model.util.MessageManager;
+import com.epam.havryliuk.restaurant.model.util.BundleManager;
 import com.epam.havryliuk.restaurant.model.service.OrderService;
 import com.epam.havryliuk.restaurant.model.util.URLUtil;
 import com.epam.havryliuk.restaurant.model.util.validation.Validator;
@@ -91,7 +91,7 @@ public class MakeOrderCommand implements Command {
     private void saveDishToOrder(HttpServletRequest request, Order order) {
         if (order != null) {// todo (order does not exist in database if null) think of refactoring
             HttpSession session = request.getSession();
-            MessageManager messageManager = MessageManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());
+            BundleManager bundleManager = BundleManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());
             try {
                 Dish dish = getCurrentDish(request);
                 int dishesAmount = getDishesAmount(request);
@@ -100,12 +100,12 @@ public class MakeOrderCommand implements Command {
             } catch (IrrelevantDataException e) {
                 LOG.error(e);
                 session.setAttribute(ORDER_MESSAGE,
-                        messageManager.getProperty(ResponseMessages.UNAVAILABLE_DISHES_AMOUNT));
+                        bundleManager.getProperty(ResponseMessages.UNAVAILABLE_DISHES_AMOUNT));
                 session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
             } catch (DuplicatedEntityException e) {
                 LOG.error(e);
                 session.setAttribute(ORDER_MESSAGE,
-                        messageManager.getProperty(ResponseMessages.DISH_ALREADY_IN_ORDER));
+                        bundleManager.getProperty(ResponseMessages.DISH_ALREADY_IN_ORDER));
                 session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
             } catch (ServiceException | ValidationException e) {
                 session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
@@ -118,9 +118,9 @@ public class MakeOrderCommand implements Command {
         HttpSession session = request.getSession();
         Dish dish = (Dish) session.getAttribute(CURRENT_DISH);
         if (dish == null) {
-            MessageManager messageManager = MessageManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());
+            BundleManager bundleManager = BundleManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());
             session.setAttribute(ORDER_MESSAGE,
-                    messageManager.getProperty(ResponseMessages.ORDER_DISH_NOT_FOUND));
+                    bundleManager.getProperty(ResponseMessages.ORDER_DISH_NOT_FOUND));
             LOG.error(ResponseMessages.ORDER_DISH_NOT_FOUND);
             throw new ServiceException(ResponseMessages.ORDER_DISH_NOT_FOUND);
         }
@@ -131,14 +131,14 @@ public class MakeOrderCommand implements Command {
     private int getDishesAmount(HttpServletRequest request) throws ValidationException {
         int dishesAmount;
         HttpSession session = request.getSession();
-        MessageManager messageManager = MessageManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());
+        BundleManager bundleManager = BundleManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());
         try {
             dishesAmount = Integer.parseInt(request.getParameter(RequestParameters.ORDER_DISHES_AMOUNT).trim());
             new Validator().validateDishesAmount(dishesAmount, request);
             LOG.debug("Request for \"" + dishesAmount + "\" has been received.");
         } catch (NumberFormatException | NullPointerException e) {
             session.setAttribute(ERROR_MESSAGE,
-                    messageManager.getProperty(ResponseMessages.NUMBER_OF_DISHES_IS_EMPTY_ERROR));
+                    bundleManager.getProperty(ResponseMessages.NUMBER_OF_DISHES_IS_EMPTY_ERROR));
             throw new ValidationException("Enter amount of dishes you want to order please.");
         }
         return dishesAmount;

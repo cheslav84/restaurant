@@ -7,7 +7,7 @@ import com.epam.havryliuk.restaurant.model.entity.Order;
 import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.exceptions.EntityNotFoundException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
-import com.epam.havryliuk.restaurant.model.util.MessageManager;
+import com.epam.havryliuk.restaurant.model.util.BundleManager;
 import com.epam.havryliuk.restaurant.model.service.OrderService;
 import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
 import jakarta.servlet.ServletException;
@@ -37,7 +37,7 @@ public class BasketCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession();
-        MessageManager messageManager = MessageManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());
+        BundleManager bundleManager = BundleManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());
         User user = (User) session.getAttribute(LOGGED_USER);
         try {
             List<Order> orders = orderService.getAllUserOrders(user);
@@ -46,11 +46,11 @@ public class BasketCommand implements Command {
             session.setAttribute(ORDER_PRICE_MAP, ordersAndTotalPriced);
         } catch (EntityNotFoundException e) {
             session.setAttribute(ERROR_MESSAGE,
-                    messageManager.getProperty(ResponseMessages.EMPTY_BASKET));
+                    bundleManager.getProperty(ResponseMessages.EMPTY_BASKET));
             LOG.error(e);
         } catch (ServiceException e) {
             session.setAttribute(ERROR_MESSAGE,
-                    messageManager.getProperty(ResponseMessages.USER_ORDERS_UNAVAILABLE));
+                    bundleManager.getProperty(ResponseMessages.USER_ORDERS_UNAVAILABLE));
             LOG.error(e);
         }
         request.getRequestDispatcher(AppPagesPath.FORWARD_BASKET).forward(request, response);

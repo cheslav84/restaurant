@@ -47,9 +47,6 @@
                         <div class="menu-page-tab-pane w-tab-pane w--tab-active order-content">
                             <h3 class="order-date">
                                 <d:date value="${orderAndPrice.key.creationDate}" />
-                                <hr>
-                                <fmt:formatDate type="both" dateStyle="long" timeStyle="short"
-                                    value="${orderAndPrice.key.creationDate}" />
                             </h3>
                             <div class="section-divider-line order-divider"></div>
                             <c:forEach var="basket" items="${orderAndPrice.key.baskets}">

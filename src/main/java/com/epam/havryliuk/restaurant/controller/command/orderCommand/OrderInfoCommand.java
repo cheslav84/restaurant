@@ -6,7 +6,7 @@ import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
 import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
-import com.epam.havryliuk.restaurant.model.util.MessageManager;
+import com.epam.havryliuk.restaurant.model.util.BundleManager;
 import com.epam.havryliuk.restaurant.model.service.DishService;
 import com.epam.havryliuk.restaurant.model.util.URLUtil;
 import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
@@ -43,9 +43,9 @@ public class OrderInfoCommand implements Command {
             session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);// value to show ordering menu of concrete dish
             session.removeAttribute(ORDER_MESSAGE);
         } catch (ServiceException e) {
-            MessageManager messageManager = MessageManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());
+            BundleManager bundleManager = BundleManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());
             session.setAttribute(ERROR_MESSAGE,
-                    messageManager.getProperty(ResponseMessages.DISH_IN_MENU_NOT_FOUND));
+                    bundleManager.getProperty(ResponseMessages.DISH_IN_MENU_NOT_FOUND));
             LOG.error(e);
         }
         String redirectingPage;

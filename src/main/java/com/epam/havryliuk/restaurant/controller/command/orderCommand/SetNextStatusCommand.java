@@ -9,7 +9,7 @@ import com.epam.havryliuk.restaurant.model.entity.Role;
 import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.exceptions.EntityNotFoundException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
-import com.epam.havryliuk.restaurant.model.util.MessageManager;
+import com.epam.havryliuk.restaurant.model.util.BundleManager;
 import com.epam.havryliuk.restaurant.model.service.OrderService;
 import com.epam.havryliuk.restaurant.model.util.URLUtil;
 import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
@@ -53,7 +53,7 @@ public class SetNextStatusCommand implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         long orderId = Long.parseLong(request.getParameter(RequestParameters.ORDER_ID));
         HttpSession session = request.getSession();
-        MessageManager messageManager = MessageManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());
+        BundleManager bundleManager = BundleManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());
         try {
             BookingStatus nextBookingStatus = getNextBookingStatus(request);
             checkAccessRights(session, nextBookingStatus);//todo подумати, може зробити через фільтр
@@ -61,15 +61,15 @@ public class SetNextStatusCommand implements Command {
             session.removeAttribute(CURRENT_ORDER);
         } catch (EntityNotFoundException e) {
             session.setAttribute(ERROR_MESSAGE,
-                    messageManager.getProperty(ResponseMessages.ABSENT_DISHES) + e.getMessage());
+                    bundleManager.getProperty(ResponseMessages.ABSENT_DISHES) + e.getMessage());
             LOG.error("Some of dishes are already absent in menu.", e);
         } catch (ServiceException e) {
             session.setAttribute(ERROR_MESSAGE,
-                    messageManager.getProperty(ResponseMessages.ORDER_CONFIRM_ERROR));
+                    bundleManager.getProperty(ResponseMessages.ORDER_CONFIRM_ERROR));
             LOG.error(e.getMessage(), e);
         } catch (AuthenticationException e) {
             session.setAttribute(ERROR_MESSAGE,
-                    messageManager.getProperty(ResponseMessages.UNAPPROPRIATED_RIGHTS_TO_CHANGE_STATUS));
+                    bundleManager.getProperty(ResponseMessages.UNAPPROPRIATED_RIGHTS_TO_CHANGE_STATUS));
             LOG.error(e.getMessage(), e);
         }
         response.sendRedirect(URLUtil.getRefererPage(request));

@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 import static com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath.FORWARD_INDEX;
@@ -33,6 +34,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class IndexCommandTest {
+    Locale locale = new Locale("en", "EN");
     @Mock
     private HttpServletRequest request;
     @Mock
@@ -59,7 +61,7 @@ class IndexCommandTest {
         List<Dish> dishes = getTestDishes(dishesAmount);
         when(menuResponseManager.getCurrentMenu(request)).thenReturn(currentMenu);
         when(request.getSession()).thenReturn(session);
-        when(session.getAttribute(LOCALE)).thenReturn("EN");
+        when(session.getAttribute(LOCALE)).thenReturn(locale);
         when(dishService.getMenuByCategory(currentMenu)).thenReturn(dishes);
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
         index.execute(request, response);
@@ -75,7 +77,7 @@ class IndexCommandTest {
         List<Dish> dishes = new ArrayList<>();
         when(menuResponseManager.getCurrentMenu(request)).thenReturn(currentMenu);
         when(request.getSession()).thenReturn(session);
-        when(session.getAttribute(LOCALE)).thenReturn("EN");
+        when(session.getAttribute(LOCALE)).thenReturn(locale);
         when(dishService.getMenuByCategory(currentMenu)).thenReturn(dishes);
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
         index.execute(request, response);
@@ -93,7 +95,7 @@ class IndexCommandTest {
         List<Dish> dishes = null;
         when(menuResponseManager.getCurrentMenu(request)).thenReturn(currentMenu);
         when(request.getSession()).thenReturn(session);
-        when(session.getAttribute(LOCALE)).thenReturn("EN");
+        when(session.getAttribute(LOCALE)).thenReturn(locale);
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
         when(dishService.getMenuByCategory(currentMenu)).thenThrow(new ServiceException("Such list of Dishes hasn't been found."));
         index.execute(request, response);

@@ -8,7 +8,7 @@ import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
 import com.epam.havryliuk.restaurant.model.entity.Category;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
-import com.epam.havryliuk.restaurant.model.util.MessageManager;
+import com.epam.havryliuk.restaurant.model.util.BundleManager;
 import com.epam.havryliuk.restaurant.model.service.DishService;
 import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
 import jakarta.servlet.ServletException;
@@ -50,7 +50,7 @@ public class MenuCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         Category currentMenu = menuResponseManager.getCurrentMenu(request);
-        MessageManager messageManager = MessageManager.valueOf(((Locale) request.getSession().getAttribute(LOCALE)).getCountry());
+        BundleManager bundleManager = BundleManager.valueOf(((Locale) request.getSession().getAttribute(LOCALE)).getCountry());
         List<Dish> dishes = null;
         List<Dish> specials = null;
         try {
@@ -62,13 +62,13 @@ public class MenuCommand implements Command {
             }
             if (dishes.isEmpty()) {
                 request.setAttribute(MENU_MESSAGE,
-                        messageManager.getProperty(ResponseMessages.MENU_EMPTY));
+                        bundleManager.getProperty(ResponseMessages.MENU_EMPTY));
             }
             specials = dishService.getMenuByCategory(Category.SPECIALS);
             LOG.debug("List of dishes received by servlet and going to be sending to client side.");
         } catch (ServiceException e) {
             request.setAttribute(ERROR_MESSAGE,
-                    messageManager.getProperty(ResponseMessages.MENU_UNAVAILABLE));
+                    bundleManager.getProperty(ResponseMessages.MENU_UNAVAILABLE));
             LOG.error(e);
         }
         menuResponseManager.setOrderInfoAttribute(request);

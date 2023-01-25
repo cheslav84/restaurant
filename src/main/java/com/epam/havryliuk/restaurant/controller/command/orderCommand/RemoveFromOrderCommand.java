@@ -7,7 +7,7 @@ import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
 import com.epam.havryliuk.restaurant.model.entity.Basket;
 import com.epam.havryliuk.restaurant.model.entity.Order;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
-import com.epam.havryliuk.restaurant.model.util.MessageManager;
+import com.epam.havryliuk.restaurant.model.util.BundleManager;
 import com.epam.havryliuk.restaurant.model.service.OrderService;
 import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
 import jakarta.servlet.ServletException;
@@ -44,9 +44,9 @@ public class RemoveFromOrderCommand implements Command {
             LOG.debug("Dish has been removed from order.");
             session.removeAttribute(ERROR_MESSAGE);
         } catch (ServiceException e) {
-            MessageManager messageManager = MessageManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());
+            BundleManager bundleManager = BundleManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());
             session.setAttribute(ERROR_MESSAGE,
-                    messageManager.getProperty(ResponseMessages.REMOVE_DISH_FROM_ORDER_ERROR));
+                    bundleManager.getProperty(ResponseMessages.REMOVE_DISH_FROM_ORDER_ERROR));
             LOG.error(e);
         }
         response.sendRedirect(AppPagesPath.REDIRECT_BASKET);

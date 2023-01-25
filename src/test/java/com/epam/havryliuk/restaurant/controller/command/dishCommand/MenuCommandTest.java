@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.DISH_LIST;
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.LOCALE;
@@ -36,6 +37,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class MenuCommandTest {
+    Locale locale = new Locale("en", "EN");
     @Mock
     private HttpServletRequest request;
     @Mock
@@ -62,7 +64,7 @@ class MenuCommandTest {
         List<Dish> dishes = getTestDishes(dishesAmount);
         when(menuResponseManager.getCurrentMenu(request)).thenReturn(currentMenu);
         when(request.getSession()).thenReturn(session);
-        when(session.getAttribute(LOCALE)).thenReturn("EN");
+        when(session.getAttribute(LOCALE)).thenReturn(locale);
         when(dishService.getMenuByCategory(currentMenu)).thenReturn(dishes);
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
         menu.execute(request, response);
@@ -81,7 +83,7 @@ class MenuCommandTest {
         List<Dish> dishes = getTestDishes(dishesAmount);
         when(menuResponseManager.getCurrentMenu(request)).thenReturn(currentMenu);
         when(request.getSession()).thenReturn(session);
-        when(session.getAttribute(LOCALE)).thenReturn("EN");
+        when(session.getAttribute(LOCALE)).thenReturn(locale);
         when(dishService.getAllMenuSortedBy(sortParameter)).thenReturn(dishes);
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
         menu.execute(request, response);
