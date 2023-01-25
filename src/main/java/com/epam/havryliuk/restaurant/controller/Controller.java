@@ -1,6 +1,5 @@
 package com.epam.havryliuk.restaurant.controller;
 
-
 import com.epam.havryliuk.restaurant.controller.command.Command;
 import com.epam.havryliuk.restaurant.controller.command.CommandFactory;
 import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
@@ -14,10 +13,9 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
-
-@WebServlet(name = "Controller", urlPatterns = {"/page/*", "/auth/*",  "/login", "/register", "/logout",
-        "/show_order_info", "/menu/*", "/locale/*", "/client/*", "/admin/*", "/index", "/make_order",
-        "/basket", "/remove_from_order", "/set_next_status/*", "/manage_orders", "/login_page", "/add_dish_page"})
+@WebServlet(name = "Controller", urlPatterns = {"/login_page", "/login", "/register", "/logout",
+        "/index", "/menu/*", "/show_order_info", "/make_order", "/basket", "/remove_from_order",
+       "/set_next_status/*", "/manage_orders", "/add_dish_page"})
 public class Controller extends HttpServlet {
     private static final Logger LOG = LogManager.getLogger(Controller.class);
 

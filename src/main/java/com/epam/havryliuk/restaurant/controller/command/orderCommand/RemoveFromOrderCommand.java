@@ -19,6 +19,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
@@ -43,7 +44,7 @@ public class RemoveFromOrderCommand implements Command {
             LOG.debug("Dish has been removed from order.");
             session.removeAttribute(ERROR_MESSAGE);
         } catch (ServiceException e) {
-            MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
+            MessageManager messageManager = MessageManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());
             session.setAttribute(ERROR_MESSAGE,
                     messageManager.getProperty(ResponseMessages.REMOVE_DISH_FROM_ORDER_ERROR));
             LOG.error(e);

@@ -5,6 +5,9 @@
       <item index="0" class="java.lang.String" itemvalue="jakarta.servlet.annotation.WebFilter" />
       <item index="1" class="java.lang.String" itemvalue="jakarta.servlet.annotation.WebServlet" />
     </list>
+    <writeAnnotations>
+      <writeAnnotation name="com.epam.havryliuk.restaurant.model.util.annotations.Autowired" />
+    </writeAnnotations>
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="MavenProjectsManager">

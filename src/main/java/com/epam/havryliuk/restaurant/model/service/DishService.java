@@ -1,9 +1,7 @@
 package com.epam.havryliuk.restaurant.model.service;
 
 import com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction;
-import com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao;
 import com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao;
-import com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao;
 import com.epam.havryliuk.restaurant.model.entity.Category;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
 import com.epam.havryliuk.restaurant.model.exceptions.DAOException;

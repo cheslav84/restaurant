@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
@@ -19,7 +20,7 @@ public class LogoutCommand implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
         if (session.getAttribute(LOGGED_USER) != null) {
-            String locale = (String) session.getAttribute(LOCALE);
+            Locale locale = (Locale) session.getAttribute(LOCALE);
             session.invalidate();
             request.getSession(true).setAttribute(LOCALE, locale);
             LOG.debug("User logged out.");

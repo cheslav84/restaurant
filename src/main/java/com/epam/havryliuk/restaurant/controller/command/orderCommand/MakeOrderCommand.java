@@ -25,6 +25,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.ERROR_MESSAGE;
@@ -90,7 +91,7 @@ public class MakeOrderCommand implements Command {
     private void saveDishToOrder(HttpServletRequest request, Order order) {
         if (order != null) {// todo (order does not exist in database if null) think of refactoring
             HttpSession session = request.getSession();
-            MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
+            MessageManager messageManager = MessageManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());
             try {
                 Dish dish = getCurrentDish(request);
                 int dishesAmount = getDishesAmount(request);
@@ -113,11 +114,11 @@ public class MakeOrderCommand implements Command {
         }
     }
 
-    private Dish getCurrentDish(HttpServletRequest req) throws ServiceException {
-        HttpSession session = req.getSession();
+    private Dish getCurrentDish(HttpServletRequest request) throws ServiceException {
+        HttpSession session = request.getSession();
         Dish dish = (Dish) session.getAttribute(CURRENT_DISH);
         if (dish == null) {
-            MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
+            MessageManager messageManager = MessageManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());
             session.setAttribute(ORDER_MESSAGE,
                     messageManager.getProperty(ResponseMessages.ORDER_DISH_NOT_FOUND));
             LOG.error(ResponseMessages.ORDER_DISH_NOT_FOUND);
@@ -130,7 +131,7 @@ public class MakeOrderCommand implements Command {
     private int getDishesAmount(HttpServletRequest request) throws ValidationException {
         int dishesAmount;
         HttpSession session = request.getSession();
-        MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
+        MessageManager messageManager = MessageManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());
         try {
             dishesAmount = Integer.parseInt(request.getParameter(RequestParameters.ORDER_DISHES_AMOUNT).trim());
             new Validator().validateDishesAmount(dishesAmount, request);

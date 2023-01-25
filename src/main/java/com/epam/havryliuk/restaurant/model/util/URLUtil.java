@@ -6,8 +6,10 @@ public class URLUtil {
 
     /**
      * Gets the referer URL from the header in request, and returns
-     * the "command" String for redirecting a response.
-     * @return String of 
+     * the "command" String for redirecting a response. Actually,
+     * user will be redirected to the same page the request have been
+     * done from.
+     * @return command that leads to the same user page.
      */
     public static String getRefererPage (HttpServletRequest req) {
         String referer = req.getHeader("Referer");

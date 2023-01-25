@@ -14,20 +14,22 @@ import java.io.IOException;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.LOGGED_USER;
 
-@WebFilter(filterName = "AuthenticationFilter",  urlPatterns = { "/manage_orders", "/add_dish_page"})
-public class AuthenticationFilter implements Filter {
-    private static final Logger LOG = LogManager.getLogger(AuthenticationFilter.class);
+
+@WebFilter(filterName = "AuthenticationManagerFilter",
+        urlPatterns = { "/show_order_info", "/make_order", "/basket", "/remove_from_order"})
+public class AuthenticationClientFilter implements Filter {
+    private static final Logger LOG = LogManager.getLogger(AuthenticationClientFilter.class);
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
                          FilterChain chain) throws IOException, ServletException {
-        LOG.debug("\"/AuthenticationFilter\" doFilter starts.");
+        LOG.debug("\"/AuthenticationManagerFilter\" doFilter starts.");
 
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
         User user = (User) httpRequest.getSession().getAttribute(LOGGED_USER);
-        if (user != null && user.getRole() == Role.MANAGER) {
+        if (user != null && user.getRole() == Role.CLIENT) {
             chain.doFilter(request, response);
         } else {
             httpResponse.sendRedirect(AppPagesPath.REDIRECT_INDEX);

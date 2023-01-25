@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="dh" uri="dishes"%>
-<fmt:setLocale value="${sessionScope.locale}" />
+<fmt:setLocale value="${sessionScope.locale.country}" />
 <fmt:setBundle basename="language" />
 <a name="menu"></a>
 <div id="reserv-dish" class="image-background-section wf-section">
@@ -47,21 +47,17 @@
                                         <div class="menu-item-text">
                                             <div class="menu-item-title">
                                                 <dh:dish name="${dish}" />
-                                                <%-- <c:out value="${dish.name}" /> --%>
                                             </div>
                                             <div class="menu-item-title description">
                                                 <dh:dish description="${dish}" />
-                                                <%-- <c:out value="${dish.description}" /> --%>
                                             </div>
                                             <div class="menu-item-title weight">
                                                 <dh:dish weight="${dish}" />
-                                                <%-- <c:out value="${dish.weight}" /> --%>
                                                 <span class="weight-marker"> <fmt:message key="index.weightMarker" /></span>
                                             </div>
                                         </div>
                                         <div class="menu-item-price">
                                             <dh:dish price="${dish}" />
-                                            <%-- <c:out value="${dish.price}" /> --%>
                                             <span class="price-marker">₴</span>
                                         </div>
                                         <c:if test="${sessionScope.loggedUser.role != 'MANAGER'}">

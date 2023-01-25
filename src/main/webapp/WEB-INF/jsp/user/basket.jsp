@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<fmt:setLocale value="${sessionScope.locale}" />
+<%@ taglib prefix="d" tagdir="/WEB-INF/tags" %>
+<fmt:setLocale value="${sessionScope.locale.country}" />
 <fmt:setBundle basename="language" />
 <!DOCTYPE html>
 <html lang="${sessionScope.language}">
@@ -45,6 +46,8 @@
                     <div class="menu-page-tabs-content w-tab-content">
                         <div class="menu-page-tab-pane w-tab-pane w--tab-active order-content">
                             <h3 class="order-date">
+                                <d:date value="${orderAndPrice.key.creationDate}" />
+                                <hr>
                                 <fmt:formatDate type="both" dateStyle="long" timeStyle="short"
                                     value="${orderAndPrice.key.creationDate}" />
                             </h3>

@@ -19,6 +19,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
@@ -36,7 +37,7 @@ public class UploadPictureCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         Category currentMenu = getCurrentMenu(request);
-        MessageManager messageManager = MessageManager.valueOf((String) request.getSession().getAttribute(LOCALE));
+        MessageManager messageManager = MessageManager.valueOf(((Locale) request.getSession().getAttribute(LOCALE)).getCountry());
         List<Dish> dishes = null;
         try {
             dishes = dishService.getMenuByCategory(currentMenu);

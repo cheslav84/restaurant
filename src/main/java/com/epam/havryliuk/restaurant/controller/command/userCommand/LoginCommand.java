@@ -19,6 +19,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.Locale;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
@@ -37,7 +38,7 @@ public class LoginCommand implements Command {
         String email = request.getParameter(RequestParameters.EMAIL);//todo перейменувати скрізь на email
         String password = request.getParameter(RequestParameters.PASSWORD);
         HttpSession session = request.getSession();
-        MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
+        MessageManager messageManager = MessageManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());
         String page;
         try {
             User user = userService.getUserFromDatabase(email);

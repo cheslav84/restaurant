@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<fmt:setLocale value="${sessionScope.locale}" />
+<fmt:setLocale value="${sessionScope.locale.country}" />
 <fmt:setBundle basename="language" />
 <!DOCTYPE html>
-<html lang="${sessionScope.language}">
+<html lang="${sessionScope.locale.language}">
 <head>
     <meta content="text/html; charset=UTF-8">
     <title>V&amp;H VICTORY</title>

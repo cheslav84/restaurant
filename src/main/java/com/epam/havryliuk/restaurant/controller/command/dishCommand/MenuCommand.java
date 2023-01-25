@@ -19,6 +19,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
@@ -36,10 +37,20 @@ public class MenuCommand implements Command {
         dishService = appContext.getInstance(DishService.class);
         menuResponseManager = new MenuResponseManager();
     }
+
+    /**
+     * Method executes the "menu" command, it gets list of dishes that is dependent on
+     * Category (menu) which user asks, and sets that list as attribute to HttpServletRequest.
+     * If dishes list is empty then correspondent message will be showed to user. Method also
+     * asks the Response Manager to show or hide part of html code in menu page that allows
+     * to display dish order information on that page. In contradistinction to index page,
+     * menu page can show to user all dishes, and if user asks that he can choose the way of
+     * sorting dishes.
+     */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         Category currentMenu = menuResponseManager.getCurrentMenu(request);
-        MessageManager messageManager = MessageManager.valueOf((String) request.getSession().getAttribute(LOCALE));
+        MessageManager messageManager = MessageManager.valueOf(((Locale) request.getSession().getAttribute(LOCALE)).getCountry());
         List<Dish> dishes = null;
         List<Dish> specials = null;
         try {
@@ -66,6 +77,10 @@ public class MenuCommand implements Command {
         request.getRequestDispatcher(AppPagesPath.FORWARD_MENU_PAGE).forward(request, response);
     }
 
+    /**
+     * @param request HttpServletRequest from user.
+     * @return String dishes sorting option that obtains from HttpServletRequest.
+     */
     private String getSortParameter(HttpServletRequest request) {
         return Optional.ofNullable(request.getParameter(RequestParameters.MENU_SORTING_OPTION)).orElse(DEFAULT_SORTING);
     }

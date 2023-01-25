@@ -1,9 +1,10 @@
 package com.epam.havryliuk.restaurant.controller.filters;
 
 import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
+import com.epam.havryliuk.restaurant.model.entity.Role;
+import com.epam.havryliuk.restaurant.model.entity.User;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
@@ -13,25 +14,25 @@ import java.io.IOException;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.LOGGED_USER;
 
-@WebFilter(filterName = "LogInFilter",  urlPatterns = {"/show_order_info", "/make_order",  "/basket",
-        "/remove_from_order", "/set_next_status/*", "/manage_orders", "/add_dish_page"})
-public class LogInFilter implements Filter {
-    private static final Logger LOG = LogManager.getLogger(LogInFilter.class);
+@WebFilter(filterName = "AuthenticationManagerFilter",
+        urlPatterns = { "/manage_orders", "/add_dish_page"})
+public class AuthenticationManagerFilter implements Filter {
+    private static final Logger LOG = LogManager.getLogger(AuthenticationManagerFilter.class);
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
                          FilterChain chain) throws IOException, ServletException {
-        LOG.debug("\"/LogInFilter\" doFilter starts.");
+        LOG.debug("\"/AuthenticationManagerFilter\" doFilter starts.");
+
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
-        if (!isUserLoggedIn(httpRequest)) {
-            httpResponse.sendRedirect(AppPagesPath.REDIRECT_REGISTRATION);
-        } else {
+
+        User user = (User) httpRequest.getSession().getAttribute(LOGGED_USER);
+        if (user != null && user.getRole() == Role.MANAGER) {
             chain.doFilter(request, response);
+        } else {
+            httpResponse.sendRedirect(AppPagesPath.REDIRECT_INDEX);
         }
     }
 
-    private boolean isUserLoggedIn(HttpServletRequest httpRequest) {
-        return  httpRequest.getSession().getAttribute(LOGGED_USER) != null;
-    }
 }

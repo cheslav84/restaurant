@@ -23,10 +23,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.security.sasl.AuthenticationException;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
@@ -56,7 +53,7 @@ public class SetNextStatusCommand implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         long orderId = Long.parseLong(request.getParameter(RequestParameters.ORDER_ID));
         HttpSession session = request.getSession();
-        MessageManager messageManager = MessageManager.valueOf((String) session.getAttribute(LOCALE));
+        MessageManager messageManager = MessageManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());
         try {
             BookingStatus nextBookingStatus = getNextBookingStatus(request);
             checkAccessRights(session, nextBookingStatus);//todo подумати, може зробити через фільтр
