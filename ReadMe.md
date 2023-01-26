@@ -1,4 +1,6 @@
-Restaurant
+#Restaurant
+
+##Task
 
 There are roles: Client, Manager.
 The client (authorized user) places orders from the menu - the catalog of dishes,
@@ -12,6 +14,8 @@ The manager manages the orders: after receiving a new order, sends it for cookin
 the Manager passes the order for delivery. After delivery and receiving payment,
 the Manager changes the status of the order to "completed".
 
+
+![alt text](readMeSupport/database_representation.png "Database Schema")
 
 
 
