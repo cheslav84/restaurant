@@ -1,5 +1,5 @@
-[DEBUG] 2023-01-26 14:04:50.670 [main] DatabaseContext - DatabaseContext initialised.
-[ERROR] 2023-01-26 14:04:50.682 [main] ConnectionManager - Can't get Initial context for DataSource.
+[DEBUG] 2023-01-26 17:48:53.769 [main] DatabaseContext - DatabaseContext initialised.
+[ERROR] 2023-01-26 17:48:53.779 [main] ConnectionManager - Can't get Initial context for DataSource.
 javax.naming.NoInitialContextException: Need to specify class name in environment or system property, or in an application resource file: java.naming.factory.initial
 	at javax.naming.spi.NamingManager.getInitialContext(NamingManager.java:704) ~[?:?]
 	at javax.naming.InitialContext.getDefaultInitCtx(InitialContext.java:305) ~[?:?]
@@ -19,7 +19,7 @@ javax.naming.NoInitialContextException: Need to specify class name in environmen
 	at com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext.getInstance(ApplicationServiceContext.java:33) ~[classes/:?]
 	at com.epam.havryliuk.restaurant.controller.command.dishCommand.IndexCommand.<init>(IndexCommand.java:36) ~[classes/:?]
 	at java.lang.invoke.MethodHandle.invokeWithArguments(MethodHandle.java:732) ~[?:?]
-	at org.mockito.internal.util.reflection.InstrumentationMemberAccessor$Dispatcher$ByteBuddy$AZphwjCX.invokeWithArguments(Unknown Source) ~[?:?]
+	at org.mockito.internal.util.reflection.InstrumentationMemberAccessor$Dispatcher$ByteBuddy$fOukuYk3.invokeWithArguments(Unknown Source) ~[?:?]
 	at org.mockito.internal.util.reflection.InstrumentationMemberAccessor.lambda$newInstance$0(InstrumentationMemberAccessor.java:191) ~[mockito-core-4.11.0.jar:?]
 	at org.mockito.internal.util.reflection.InstrumentationMemberAccessor.newInstance(InstrumentationMemberAccessor.java:188) ~[mockito-core-4.11.0.jar:?]
 	at org.mockito.internal.util.reflection.InstrumentationMemberAccessor.newInstance(InstrumentationMemberAccessor.java:161) ~[mockito-core-4.11.0.jar:?]
@@ -97,152 +97,76 @@ javax.naming.NoInitialContextException: Need to specify class name in environmen
 	at com.intellij.rt.junit.IdeaTestRunner$Repeater.startRunnerWithArgs(IdeaTestRunner.java:35) ~[junit-rt.jar:?]
 	at com.intellij.rt.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:235) ~[junit-rt.jar:?]
 	at com.intellij.rt.junit.JUnitStarter.main(JUnitStarter.java:54) ~[junit-rt.jar:?]
-[DEBUG] 2023-01-26 14:04:50.768 [main] IndexCommand - List of dishes received by servlet and going to be sending to client side.
-[DEBUG] 2023-01-26 14:04:50.770 [main] AppPagesPath - Application paths are initialised.
-[DEBUG] 2023-01-26 14:04:50.805 [main] IndexCommand - List of dishes received by servlet and going to be sending to client side.
-[ERROR] 2023-01-26 14:04:50.857 [main] IndexCommand - com.epam.havryliuk.restaurant.model.exceptions.ServiceException: Such list of Dishes hasn't been found.
-[ERROR] 2023-01-26 14:04:50.944 [main] UserService - User hasn't been found.
-[ERROR] 2023-01-26 14:04:50.954 [main] UserService - An error occurs during receiving the user.
-[ERROR] 2023-01-26 14:04:50.959 [main] UserService - The user with such login is already exists. Try to use another one.
-[ERROR] 2023-01-26 14:04:50.959 [main] UserService - The user with such login is already exists. Try to use another one.
-[ERROR] 2023-01-26 14:04:50.963 [main] UserService - Error in creating the user.
-[DEBUG] 2023-01-26 14:04:50.967 [main] UserService - The user was successfully created.
-[DEBUG] 2023-01-26 14:04:50.970 [main] UserService - User got from database. Login and password are correct.
-[ERROR] 2023-01-26 14:04:51.008 [main] DishService - Such list of Dishes hasn't been found.
-[ERROR] 2023-01-26 14:04:51.017 [main] DishService - Such dish hasn't been found.
-[DEBUG] 2023-01-26 14:04:51.062 [main] ManageOrdersCommand - Sorting parameter: STATUS
-[DEBUG] 2023-01-26 14:04:51.068 [main] ManageOrdersCommand - Sorting parameter: STATUS
-[DEBUG] 2023-01-26 14:04:51.114 [main] MakeOrderCommand - Order in session: Order{id=null, address='Kyiv', phoneNumber='0961150084', isPayed=false, creationDate=null, closeDate=null, user=null, bookingStatus=NEW, baskets=[]}
-[DEBUG] 2023-01-26 14:04:51.115 [main] MakeOrderCommand - Request for "2" has been received.
-[DEBUG] 2023-01-26 14:04:51.115 [main] MakeOrderCommand - continueOrder: null
-[DEBUG] 2023-01-26 14:04:51.116 [main] MakeOrderCommand - redirectionPage basket
-[DEBUG] 2023-01-26 14:04:51.138 [main] MakeOrderCommand - Order{id=null, address='Kyiv', phoneNumber='0961150084', isPayed=false, creationDate=null, closeDate=null, user=null, bookingStatus=NEW, baskets=[]}
-[DEBUG] 2023-01-26 14:04:51.138 [main] MakeOrderCommand - Created new order: Order{id=null, address='Kyiv', phoneNumber='0961150084', isPayed=false, creationDate=null, closeDate=null, user=null, bookingStatus=NEW, baskets=[]}
-[ERROR] 2023-01-26 14:04:51.139 [main] MakeOrderCommand - message.orderDishNotFound
-[ERROR] 2023-01-26 14:04:51.139 [main] MakeOrderCommand - com.epam.havryliuk.restaurant.model.exceptions.ServiceException: message.orderDishNotFound
-[DEBUG] 2023-01-26 14:04:51.139 [main] MakeOrderCommand - continueOrder: null
-[DEBUG] 2023-01-26 14:04:51.140 [main] MakeOrderCommand - redirectionPage samePage
-[DEBUG] 2023-01-26 14:04:51.146 [main] MakeOrderCommand - Order{id=null, address='Kyiv', phoneNumber='0961150084', isPayed=false, creationDate=null, closeDate=null, user=null, bookingStatus=NEW, baskets=[]}
-[DEBUG] 2023-01-26 14:04:51.147 [main] MakeOrderCommand - Created new order: Order{id=null, address='Kyiv', phoneNumber='0961150084', isPayed=false, creationDate=null, closeDate=null, user=null, bookingStatus=NEW, baskets=[]}
-[DEBUG] 2023-01-26 14:04:51.147 [main] MakeOrderCommand - Request for "2" has been received.
-[DEBUG] 2023-01-26 14:04:51.147 [main] MakeOrderCommand - continueOrder: continue
-[DEBUG] 2023-01-26 14:04:51.148 [main] MakeOrderCommand - redirectionPage samePage
-[DEBUG] 2023-01-26 14:04:51.154 [main] MakeOrderCommand - Order{id=null, address='Kyiv', phoneNumber='0961150084', isPayed=false, creationDate=null, closeDate=null, user=null, bookingStatus=NEW, baskets=[]}
-[DEBUG] 2023-01-26 14:04:51.154 [main] MakeOrderCommand - Created new order: Order{id=null, address='Kyiv', phoneNumber='0961150084', isPayed=false, creationDate=null, closeDate=null, user=null, bookingStatus=NEW, baskets=[]}
-[DEBUG] 2023-01-26 14:04:51.155 [main] MakeOrderCommand - Request for "2" has been received.
-[DEBUG] 2023-01-26 14:04:51.155 [main] MakeOrderCommand - continueOrder: null
-[DEBUG] 2023-01-26 14:04:51.155 [main] MakeOrderCommand - redirectionPage basket
-[ERROR] 2023-01-26 14:04:51.246 [main] BasketCommand - com.epam.havryliuk.restaurant.model.exceptions.EntityNotFoundException
-[ERROR] 2023-01-26 14:04:51.273 [main] LoginCommand - null
-[DEBUG] 2023-01-26 14:04:51.366 [main] LoginCommand - User logged in.
-[ERROR] 2023-01-26 14:04:51.374 [main] LoginCommand - null
-[ERROR] 2023-01-26 14:04:51.406 [main] LoginCommand - null
-[DEBUG] 2023-01-26 14:04:51.411 [main] MenuResponseManager - Current menu: COFFEE
-[ERROR] 2023-01-26 14:04:51.466 [main] OrderService - Unable to get orders.
-[DEBUG] 2023-01-26 14:04:51.470 [main] OrderService - A dish has been removed from the order.
-[DEBUG] 2023-01-26 14:04:51.480 [main] OrderService - A dish has been removed from the order.
-[ERROR] 2023-01-26 14:04:51.485 [main] OrderService - Unable to get orders.
-[ERROR] 2023-01-26 14:04:51.491 [main] OrderService - Obtained incorrect amount of dishes in order 0
-[ERROR] 2023-01-26 14:04:51.494 [main] OrderService - Unable to get orders.
-[DEBUG] 2023-01-26 14:04:51.497 [main] OrderService - The page was successfully created.
-[ERROR] 2023-01-26 14:04:51.503 [main] OrderService - Unable to change order status.
-[ERROR] 2023-01-26 14:04:51.507 [main] OrderService - The request number of dishes exceed available.
-[DEBUG] 2023-01-26 14:04:51.511 [main] OrderService - The order list was successfully created.
-[DEBUG] 2023-01-26 14:04:51.521 [main] OrderService - Has been created new order: Order{id=1, address='address', phoneNumber='0961150080', isPayed=false, creationDate=null, closeDate=null, user=User{id=0, email='email', name='name', surname='surname', gender='male', isOverEighteen=true}, bookingStatus=BOOKING, baskets=[]}
-[ERROR] 2023-01-26 14:04:51.528 [main] OrderService - Unable to get or create an order.
-[DEBUG] 2023-01-26 14:04:51.537 [main] OrderService - "order status" has been changed to NEW
-[DEBUG] 2023-01-26 14:04:51.541 [main] OrderService - Order has been received: Order{id=null, address='address', phoneNumber='0961150080', isPayed=false, creationDate=null, closeDate=null, user=User{id=0, email='email', name='name', surname='surname', gender='male', isOverEighteen=true}, bookingStatus=BOOKING, baskets=[]}
-[ERROR] 2023-01-26 14:04:51.547 [main] OrderService - Unable to get or create an order.
-[ERROR] 2023-01-26 14:04:51.551 [main] OrderService - Unable to get orders.
-[DEBUG] 2023-01-26 14:04:51.559 [main] OrderService - A dish has been added to the order.
-[DEBUG] 2023-01-26 14:04:51.566 [main] MenuCommand - List of dishes received by servlet and going to be sending to client side.
-[DEBUG] 2023-01-26 14:04:51.571 [main] MenuCommand - List of dishes received by servlet and going to be sending to client side.
-[DEBUG] 2023-01-26 14:04:51.576 [main] CommandFactory - Restaurant action was received.
-[ERROR] 2023-01-26 14:04:51.577 [main] CommandFactory - Wrong action.
-java.lang.IllegalArgumentException: No enum constant com.epam.havryliuk.restaurant.controller.command.CommandEnum.RESTAURANT
-	at java.lang.Enum.valueOf(Enum.java:273) ~[?:?]
-	at com.epam.havryliuk.restaurant.controller.command.CommandEnum.valueOf(CommandEnum.java:9) ~[classes/:?]
-	at com.epam.havryliuk.restaurant.controller.command.CommandFactory.defineCommand(CommandFactory.java:23) ~[classes/:?]
-	at com.epam.havryliuk.restaurant.controller.command.CommandFactoryTest.defineCommandDefault(CommandFactoryTest.java:55) ~[test-classes/:?]
-	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
-	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[?:?]
-	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
-	at java.lang.reflect.Method.invoke(Method.java:568) ~[?:?]
-	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:727) ~[junit-platform-commons-1.9.1.jar:1.9.1]
-	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
-	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
-	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:156) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
-	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:147) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
-	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:86) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
-	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(InterceptingExecutableInvoker.java:103) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
-	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.lambda$invoke$0(InterceptingExecutableInvoker.java:93) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
-	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
-	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
-	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
-	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
-	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:92) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
-	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:86) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
-	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$7(TestMethodTestDescriptor.java:217) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
-	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.9.1.jar:1.9.1]
-	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:213) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
-	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:138) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
-	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:68) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:151) ~[junit-platform-engine-1.9.1.jar:1.9.1]
-	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.9.1.jar:1.9.1]
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141) ~[junit-platform-engine-1.9.1.jar:1.9.1]
-	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.9.1.jar:1.9.1]
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139) ~[junit-platform-engine-1.9.1.jar:1.9.1]
-	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.9.1.jar:1.9.1]
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138) ~[junit-platform-engine-1.9.1.jar:1.9.1]
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95) ~[junit-platform-engine-1.9.1.jar:1.9.1]
-	at java.util.ArrayList.forEach(ArrayList.java:1511) ~[?:?]
-	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.9.1.jar:1.9.1]
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155) ~[junit-platform-engine-1.9.1.jar:1.9.1]
-	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.9.1.jar:1.9.1]
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141) ~[junit-platform-engine-1.9.1.jar:1.9.1]
-	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.9.1.jar:1.9.1]
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139) ~[junit-platform-engine-1.9.1.jar:1.9.1]
-	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.9.1.jar:1.9.1]
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138) ~[junit-platform-engine-1.9.1.jar:1.9.1]
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95) ~[junit-platform-engine-1.9.1.jar:1.9.1]
-	at java.util.ArrayList.forEach(ArrayList.java:1511) ~[?:?]
-	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.9.1.jar:1.9.1]
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155) ~[junit-platform-engine-1.9.1.jar:1.9.1]
-	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.9.1.jar:1.9.1]
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141) ~[junit-platform-engine-1.9.1.jar:1.9.1]
-	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.9.1.jar:1.9.1]
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139) ~[junit-platform-engine-1.9.1.jar:1.9.1]
-	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.9.1.jar:1.9.1]
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138) ~[junit-platform-engine-1.9.1.jar:1.9.1]
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95) ~[junit-platform-engine-1.9.1.jar:1.9.1]
-	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35) ~[junit-platform-engine-1.9.1.jar:1.9.1]
-	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57) ~[junit-platform-engine-1.9.1.jar:1.9.1]
-	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54) ~[junit-platform-engine-1.9.1.jar:1.9.1]
-	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:147) ~[junit-platform-launcher-1.9.1.jar:1.9.1]
-	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:127) ~[junit-platform-launcher-1.9.1.jar:1.9.1]
-	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:90) ~[junit-platform-launcher-1.9.1.jar:1.9.1]
-	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:55) ~[junit-platform-launcher-1.9.1.jar:1.9.1]
-	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:102) ~[junit-platform-launcher-1.9.1.jar:1.9.1]
-	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:54) ~[junit-platform-launcher-1.9.1.jar:1.9.1]
-	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:114) ~[junit-platform-launcher-1.9.1.jar:1.9.1]
-	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:86) ~[junit-platform-launcher-1.9.1.jar:1.9.1]
-	at org.junit.platform.launcher.core.DefaultLauncherSession$DelegatingLauncher.execute(DefaultLauncherSession.java:86) ~[junit-platform-launcher-1.9.1.jar:1.9.1]
-	at org.junit.platform.launcher.core.SessionPerRequestLauncher.execute(SessionPerRequestLauncher.java:53) ~[junit-platform-launcher-1.9.1.jar:1.9.1]
-	at com.intellij.junit5.JUnit5IdeaTestRunner.startRunnerWithArgs(JUnit5IdeaTestRunner.java:71) ~[junit5-rt.jar:?]
-	at com.intellij.rt.junit.IdeaTestRunner$Repeater$1.execute(IdeaTestRunner.java:38) ~[junit-rt.jar:?]
-	at com.intellij.rt.execution.junit.TestsRepeater.repeat(TestsRepeater.java:11) ~[idea_rt.jar:?]
-	at com.intellij.rt.junit.IdeaTestRunner$Repeater.startRunnerWithArgs(IdeaTestRunner.java:35) ~[junit-rt.jar:?]
-	at com.intellij.rt.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:235) ~[junit-rt.jar:?]
-	at com.intellij.rt.junit.JUnitStarter.main(JUnitStarter.java:54) ~[junit-rt.jar:?]
-[DEBUG] 2023-01-26 14:04:51.631 [main] CommandFactory - index action was received.
-[DEBUG] 2023-01-26 14:04:51.631 [main] CommandFactory - INDEX command is going to be performed.
-[DEBUG] 2023-01-26 14:04:51.639 [main] CommandFactory - show_order_info action was received.
-[DEBUG] 2023-01-26 14:04:51.639 [main] CommandFactory - SHOW_ORDER_INFO command is going to be performed.
-[DEBUG] 2023-01-26 14:04:51.642 [main] CommandFactory - login_page action was received.
-[DEBUG] 2023-01-26 14:04:51.642 [main] CommandFactory - LOGIN_PAGE command is going to be performed.
-[DEBUG] 2023-01-26 14:04:51.645 [main] CommandFactory - manage_orders action was received.
-[DEBUG] 2023-01-26 14:04:51.645 [main] CommandFactory - MANAGE_ORDERS command is going to be performed.
-[DEBUG] 2023-01-26 14:04:51.647 [main] CommandFactory - register action was received.
-[DEBUG] 2023-01-26 14:04:51.647 [main] CommandFactory - REGISTER command is going to be performed.
-[DEBUG] 2023-01-26 14:04:51.649 [main] CommandFactory - remove_from_order action was received.
-[DEBUG] 2023-01-26 14:04:51.649 [main] CommandFactory - REMOVE_FROM_ORDER command is going to be performed.
+[DEBUG] 2023-01-26 17:48:53.857 [main] IndexCommand - List of dishes received by servlet and going to be sending to client side.
+[DEBUG] 2023-01-26 17:48:53.858 [main] AppPagesPath - Application paths are initialised.
+[DEBUG] 2023-01-26 17:48:53.883 [main] IndexCommand - List of dishes received by servlet and going to be sending to client side.
+[ERROR] 2023-01-26 17:48:53.899 [main] IndexCommand - com.epam.havryliuk.restaurant.model.exceptions.ServiceException: Such list of Dishes hasn't been found.
+[ERROR] 2023-01-26 17:48:53.962 [main] UserService - User hasn't been found.
+[ERROR] 2023-01-26 17:48:53.962 [main] UserService - An error occurs during receiving the user.
+[ERROR] 2023-01-26 17:48:53.977 [main] UserService - The user with such login is already exists
+[ERROR] 2023-01-26 17:48:53.977 [main] UserService - The user with such login is already exists
+[ERROR] 2023-01-26 17:48:53.977 [main] UserService - Error in creating the user.
+[DEBUG] 2023-01-26 17:48:53.993 [main] UserService - The user was successfully created.
+[DEBUG] 2023-01-26 17:48:53.993 [main] UserService - User got from database. Login and password are correct.
+[ERROR] 2023-01-26 17:48:54.024 [main] DishService - Such list of Dishes hasn't been found.
+[ERROR] 2023-01-26 17:48:54.040 [main] DishService - Such dish hasn't been found.
+[DEBUG] 2023-01-26 17:48:54.071 [main] ManageOrdersCommand - Sorting parameter: STATUS
+[DEBUG] 2023-01-26 17:48:54.071 [main] ManageOrdersCommand - Sorting parameter: STATUS
+[DEBUG] 2023-01-26 17:48:54.102 [main] MakeOrderCommand - Order in session: Order{id=null, address='Kyiv', phoneNumber='0961150084', isPayed=false, creationDate=null, closeDate=null, user=null, bookingStatus=NEW, baskets=[]}
+[DEBUG] 2023-01-26 17:48:54.102 [main] MakeOrderCommand - Request for "2" has been received.
+[DEBUG] 2023-01-26 17:48:54.102 [main] MakeOrderCommand - continueOrder: null
+[DEBUG] 2023-01-26 17:48:54.102 [main] MakeOrderCommand - redirectionPage basket
+[DEBUG] 2023-01-26 17:48:54.133 [main] MakeOrderCommand - Order{id=null, address='Kyiv', phoneNumber='0961150084', isPayed=false, creationDate=null, closeDate=null, user=null, bookingStatus=NEW, baskets=[]}
+[DEBUG] 2023-01-26 17:48:54.133 [main] MakeOrderCommand - Created new order: Order{id=null, address='Kyiv', phoneNumber='0961150084', isPayed=false, creationDate=null, closeDate=null, user=null, bookingStatus=NEW, baskets=[]}
+[ERROR] 2023-01-26 17:48:54.133 [main] MakeOrderCommand - message.orderDishNotFound
+[ERROR] 2023-01-26 17:48:54.133 [main] MakeOrderCommand - com.epam.havryliuk.restaurant.model.exceptions.ServiceException: message.orderDishNotFound
+[DEBUG] 2023-01-26 17:48:54.138 [main] MakeOrderCommand - continueOrder: null
+[DEBUG] 2023-01-26 17:48:54.138 [main] MakeOrderCommand - redirectionPage samePage
+[DEBUG] 2023-01-26 17:48:54.144 [main] MakeOrderCommand - Order{id=null, address='Kyiv', phoneNumber='0961150084', isPayed=false, creationDate=null, closeDate=null, user=null, bookingStatus=NEW, baskets=[]}
+[DEBUG] 2023-01-26 17:48:54.146 [main] MakeOrderCommand - Created new order: Order{id=null, address='Kyiv', phoneNumber='0961150084', isPayed=false, creationDate=null, closeDate=null, user=null, bookingStatus=NEW, baskets=[]}
+[DEBUG] 2023-01-26 17:48:54.146 [main] MakeOrderCommand - Request for "2" has been received.
+[DEBUG] 2023-01-26 17:48:54.146 [main] MakeOrderCommand - continueOrder: continue
+[DEBUG] 2023-01-26 17:48:54.146 [main] MakeOrderCommand - redirectionPage samePage
+[DEBUG] 2023-01-26 17:48:54.150 [main] MakeOrderCommand - Order{id=null, address='Kyiv', phoneNumber='0961150084', isPayed=false, creationDate=null, closeDate=null, user=null, bookingStatus=NEW, baskets=[]}
+[DEBUG] 2023-01-26 17:48:54.150 [main] MakeOrderCommand - Created new order: Order{id=null, address='Kyiv', phoneNumber='0961150084', isPayed=false, creationDate=null, closeDate=null, user=null, bookingStatus=NEW, baskets=[]}
+[DEBUG] 2023-01-26 17:48:54.150 [main] MakeOrderCommand - Request for "2" has been received.
+[DEBUG] 2023-01-26 17:48:54.150 [main] MakeOrderCommand - continueOrder: null
+[DEBUG] 2023-01-26 17:48:54.150 [main] MakeOrderCommand - redirectionPage basket
+[ERROR] 2023-01-26 17:48:54.284 [main] BasketCommand - com.epam.havryliuk.restaurant.model.exceptions.EntityNotFoundException
+[ERROR] 2023-01-26 17:48:54.316 [main] LoginCommand - null
+[DEBUG] 2023-01-26 17:48:54.418 [main] LoginCommand - User logged in.
+[ERROR] 2023-01-26 17:48:54.418 [main] LoginCommand - null
+[ERROR] 2023-01-26 17:48:54.455 [main] LoginCommand - null
+[DEBUG] 2023-01-26 17:48:54.455 [main] MenuResponseManager - Current menu: COFFEE
+[ERROR] 2023-01-26 17:48:54.508 [main] OrderService - Unable to get orders.
+[DEBUG] 2023-01-26 17:48:54.511 [main] OrderService - A dish has been removed from the order.
+[DEBUG] 2023-01-26 17:48:54.520 [main] OrderService - A dish has been removed from the order.
+[ERROR] 2023-01-26 17:48:54.524 [main] OrderService - Unable to get orders.
+[ERROR] 2023-01-26 17:48:54.529 [main] OrderService - Obtained incorrect amount of dishes in order 0
+[ERROR] 2023-01-26 17:48:54.532 [main] OrderService - Unable to get orders.
+[DEBUG] 2023-01-26 17:48:54.534 [main] OrderService - The page was successfully created.
+[ERROR] 2023-01-26 17:48:54.534 [main] OrderService - Unable to change order status.
+[ERROR] 2023-01-26 17:48:54.534 [main] OrderService - The request number of dishes exceed available.
+[DEBUG] 2023-01-26 17:48:54.534 [main] OrderService - The order list was successfully created.
+[DEBUG] 2023-01-26 17:48:54.550 [main] OrderService - Has been created new order: Order{id=1, address='address', phoneNumber='0961150080', isPayed=false, creationDate=null, closeDate=null, user=User{id=0, email='email', name='name', surname='surname', gender='male', isOverEighteen=true}, bookingStatus=BOOKING, baskets=[]}
+[ERROR] 2023-01-26 17:48:54.550 [main] OrderService - Unable to get or create an order.
+[DEBUG] 2023-01-26 17:48:54.565 [main] OrderService - "order status" has been changed to NEW
+[DEBUG] 2023-01-26 17:48:54.565 [main] OrderService - Order has been received: Order{id=null, address='address', phoneNumber='0961150080', isPayed=false, creationDate=null, closeDate=null, user=User{id=0, email='email', name='name', surname='surname', gender='male', isOverEighteen=true}, bookingStatus=BOOKING, baskets=[]}
+[ERROR] 2023-01-26 17:48:54.565 [main] OrderService - Unable to get or create an order.
+[ERROR] 2023-01-26 17:48:54.583 [main] OrderService - Unable to get orders.
+[DEBUG] 2023-01-26 17:48:54.583 [main] OrderService - A dish has been added to the order.
+[DEBUG] 2023-01-26 17:48:54.597 [main] MenuCommand - List of dishes received by servlet and going to be sending to client side.
+[DEBUG] 2023-01-26 17:48:54.597 [main] MenuCommand - List of dishes received by servlet and going to be sending to client side.
+[DEBUG] 2023-01-26 17:48:54.597 [main] CommandFactory - Restaurant action was received.
+[DEBUG] 2023-01-26 17:48:54.645 [main] CommandFactory - index action was received.
+[DEBUG] 2023-01-26 17:48:54.645 [main] CommandFactory - INDEX command is going to be performed.
+[DEBUG] 2023-01-26 17:48:54.645 [main] CommandFactory - show_order_info action was received.
+[DEBUG] 2023-01-26 17:48:54.645 [main] CommandFactory - SHOW_ORDER_INFO command is going to be performed.
+[DEBUG] 2023-01-26 17:48:54.645 [main] CommandFactory - login_page action was received.
+[DEBUG] 2023-01-26 17:48:54.645 [main] CommandFactory - LOGIN_PAGE command is going to be performed.
+[DEBUG] 2023-01-26 17:48:54.661 [main] CommandFactory - manage_orders action was received.
+[DEBUG] 2023-01-26 17:48:54.661 [main] CommandFactory - MANAGE_ORDERS command is going to be performed.
+[DEBUG] 2023-01-26 17:48:54.663 [main] CommandFactory - register action was received.
+[DEBUG] 2023-01-26 17:48:54.663 [main] CommandFactory - REGISTER command is going to be performed.
+[DEBUG] 2023-01-26 17:48:54.663 [main] CommandFactory - remove_from_order action was received.
+[DEBUG] 2023-01-26 17:48:54.663 [main] CommandFactory - REMOVE_FROM_ORDER command is going to be performed.

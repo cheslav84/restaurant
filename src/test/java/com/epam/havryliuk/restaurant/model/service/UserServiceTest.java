@@ -51,7 +51,7 @@ class UserServiceTest {
         User user = User.getInstance("email", "password", "name", "surname", "Male", true);
         when(userDao.findByEmail(user.getEmail())).thenReturn(user);
         Exception exception = assertThrows(ServiceException.class, () -> userService.addNewUser(user));
-        assertEquals("The user with such login is already exists. Try to use another one.", exception.getMessage());
+        assertEquals("The user with such login is already exists.", exception.getMessage());
     }
 
     @Test

@@ -6,6 +6,10 @@ import com.epam.havryliuk.restaurant.controller.command.dishCommand.MenuCommand;
 import com.epam.havryliuk.restaurant.controller.command.orderCommand.*;
 import com.epam.havryliuk.restaurant.controller.command.userCommand.*;
 
+/**
+ * Returns instances of Command by the command name.
+ */
+
 public enum CommandEnum {
     INDEX {
         { this.command = new IndexCommand(); }
