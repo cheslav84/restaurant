@@ -1,6 +1,6 @@
 package com.epam.havryliuk.restaurant.model.constants.queries;
 
-import com.epam.havryliuk.restaurant.model.constants.ResourcePath;
+import com.epam.havryliuk.restaurant.model.constants.ResourceProperties;
 import com.epam.havryliuk.restaurant.model.util.PropertiesLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,7 +24,7 @@ public class OrderQuery {
     public static String GET_NUMBER_OF_CONFIRMED_ORDERS;
 
     static {
-        PROPERTIES = PropertiesLoader.getProperties(ResourcePath.DB_QUERIES_FILE);
+        PROPERTIES = PropertiesLoader.getProperties(ResourceProperties.DB_QUERIES_FILE);
         GET_BY_USER_ID_ADDRESS_AND_STATUS = (String) PROPERTIES.get("order.GET_BY_USER_ID_ADDRESS_AND_STATUS");
         ADD_ORDER = (String) PROPERTIES.get("order.ADD_ORDER");
         GET_CREATION_DATE_BY_ID = (String) PROPERTIES.get("order.GET_CREATION_DATE_BY_ID");

@@ -1,7 +1,6 @@
 package com.epam.havryliuk.restaurant.model.service;
 
 import com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction;
-import com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao;
 import com.epam.havryliuk.restaurant.model.database.dao.daoImpl.UserDao;
 import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.exceptions.DAOException;
@@ -22,21 +21,16 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class UserServiceTest {
-
     @Mock
     private UserDao userDao;
-
     @Mock
     private EntityTransaction transaction;
-
     @InjectMocks
     private UserService userService;
-
     @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }
-
 
     @Test
     void addNewUserWhenDoeNotExist() throws DAOException, ServiceException {
@@ -87,8 +81,5 @@ class UserServiceTest {
         Exception exception = assertThrows(ServiceException.class, () -> userService.getUserFromDatabase(email));
         assertEquals("An error occurs during receiving the user.", exception.getMessage());
     }
-
-
-
 
 }

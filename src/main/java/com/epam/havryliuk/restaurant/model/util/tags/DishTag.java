@@ -5,6 +5,9 @@ import jakarta.servlet.jsp.*;
 
 import java.io.IOException;
 
+/**
+ * Tag that writes values of Dish fields to JSP page by the name of that fields.
+ */
 public class DishTag extends TagSupport {
     private String name;
     private String description;

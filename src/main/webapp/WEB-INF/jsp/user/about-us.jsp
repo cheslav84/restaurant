@@ -21,18 +21,6 @@
                     adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra
                     ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.</p>
                 <div class="rating-block">
-                    <div class="rating-stars-wrapper"><img
-                            src="view/pictures/dish_pictures/Icon-star-orange.png" alt=""
-                            class="star-rating"><img
-                            src="view/pictures/dish_pictures/Icon-star-orange.png" alt=""
-                            class="star-rating"><img
-                            src="view/pictures/dish_pictures/Icon-star-orange.png" alt=""
-                            class="star-rating"><img
-                            src="view/pictures/dish_pictures/Icon-star-orange.png" alt=""
-                            class="star-rating">
-                            <img src="./About us_files/55d8316da811abde4e36a1fa_Icon-star.png"
-                                                     alt="" class="star-rating gray">
-                        </div>
                     <div class="rating-title">
                         <fmt:message key="aboutUs.bestCafe" />
                     </div>

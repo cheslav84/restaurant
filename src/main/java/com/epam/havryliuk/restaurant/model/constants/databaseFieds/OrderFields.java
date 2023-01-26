@@ -1,6 +1,6 @@
 package com.epam.havryliuk.restaurant.model.constants.databaseFieds;
 
-import com.epam.havryliuk.restaurant.model.constants.ResourcePath;
+import com.epam.havryliuk.restaurant.model.constants.ResourceProperties;
 import com.epam.havryliuk.restaurant.model.util.PropertiesLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,7 +22,7 @@ public class OrderFields {
     public static final String NUMBER_OF_ORDERS;
 
     static {
-        PROPERTIES = PropertiesLoader.getProperties(ResourcePath.DB_FIELDS_SETTING_FILE);
+        PROPERTIES = PropertiesLoader.getProperties(ResourceProperties.DB_FIELDS_SETTING_FILE);
         ORDER_ID = (String) PROPERTIES.get("order.id");
         ORDER_ADDRESS = (String) PROPERTIES.get("order.address");
         ORDER_PHONE_NUMBER = (String) PROPERTIES.get("order.phoneNumber");

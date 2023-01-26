@@ -1,7 +1,7 @@
 package com.epam.havryliuk.restaurant.model.constants.databaseFieds;
 
 import com.epam.havryliuk.restaurant.model.util.PropertiesLoader;
-import com.epam.havryliuk.restaurant.model.constants.ResourcePath;
+import com.epam.havryliuk.restaurant.model.constants.ResourceProperties;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,7 +25,7 @@ public class UserFields {
     public static final String MANAGER_BANK_ACCOUNT;
 
     static {
-        PROPERTIES = PropertiesLoader.getProperties(ResourcePath.DB_FIELDS_SETTING_FILE);
+        PROPERTIES = PropertiesLoader.getProperties(ResourceProperties.DB_FIELDS_SETTING_FILE);
         USER_ID = (String) PROPERTIES.get("user.id");
         USER_EMAIL = (String) PROPERTIES.get("user.email");
         USER_PASSWORD = (String) PROPERTIES.get("user.password");

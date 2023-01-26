@@ -13,7 +13,7 @@ public class DatabaseContext {
     public static final String SOURCE;
 
     static {
-        PROPERTIES = PropertiesLoader.getProperties(ResourcePath.DB_CONTEXT);
+        PROPERTIES = PropertiesLoader.getProperties(ResourceProperties.DB_CONTEXT);
         CONTEXT = (String) PROPERTIES.get("database.context");
         SOURCE = (String) PROPERTIES.get("database.source");
         LOG.debug("DatabaseContext initialised.");

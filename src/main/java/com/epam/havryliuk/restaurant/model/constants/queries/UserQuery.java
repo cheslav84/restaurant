@@ -1,6 +1,6 @@
 package com.epam.havryliuk.restaurant.model.constants.queries;
 
-import com.epam.havryliuk.restaurant.model.constants.ResourcePath;
+import com.epam.havryliuk.restaurant.model.constants.ResourceProperties;
 import com.epam.havryliuk.restaurant.model.util.PropertiesLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,7 +19,7 @@ public class UserQuery {
     public static String DELETE_USER_BY_ID;
 
     static {
-        PROPERTIES = PropertiesLoader.getProperties(ResourcePath.DB_QUERIES_FILE);
+        PROPERTIES = PropertiesLoader.getProperties(ResourceProperties.DB_QUERIES_FILE);
         ADD_USER = (String) PROPERTIES.get("user.ADD_USER");
         FIND_USER_BY_ID = (String) PROPERTIES.get("user.FIND_USER_BY_ID");
         FIND_USER_BY_LOGIN = (String) PROPERTIES.get("user.FIND_USER_BY_LOGIN");

@@ -12,7 +12,7 @@ import com.epam.havryliuk.restaurant.model.util.annotations.Autowired;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class UserService {
+public class UserService implements Service {
     private static final Logger LOG = LogManager.getLogger(UserService.class);
     @Autowired
     private UserDao userDao;

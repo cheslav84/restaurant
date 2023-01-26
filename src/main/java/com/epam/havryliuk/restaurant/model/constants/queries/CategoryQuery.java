@@ -1,6 +1,6 @@
 package com.epam.havryliuk.restaurant.model.constants.queries;
 
-import com.epam.havryliuk.restaurant.model.constants.ResourcePath;
+import com.epam.havryliuk.restaurant.model.constants.ResourceProperties;
 import com.epam.havryliuk.restaurant.model.util.PropertiesLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,7 +19,7 @@ public class CategoryQuery {
     public static final String DELETE_CATEGORY_BY_ID;
 
     static {
-        PROPERTIES = PropertiesLoader.getProperties(ResourcePath.DB_QUERIES_FILE);
+        PROPERTIES = PropertiesLoader.getProperties(ResourceProperties.DB_QUERIES_FILE);
         ADD_CATEGORY = (String) PROPERTIES.get("category.ADD_CATEGORY");
         FIND_CATEGORY_BY_ID = (String) PROPERTIES.get("category.FIND_CATEGORY_BY_ID");
         FIND_CATEGORY_BY_NAME = (String) PROPERTIES.get("category.FIND_CATEGORY_BY_NAME");

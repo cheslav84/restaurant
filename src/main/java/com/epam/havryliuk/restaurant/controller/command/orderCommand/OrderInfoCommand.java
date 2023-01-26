@@ -46,7 +46,7 @@ public class OrderInfoCommand implements Command {
      * nothing, execution this command will lead him to the login page.
      */
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         long dishId = Long.parseLong(request.getParameter(RequestParameters.DISH_ID));
         LOG.debug("\"/dishId\" " + dishId + " has been received from user.");
         HttpSession session = request.getSession();

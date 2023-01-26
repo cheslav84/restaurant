@@ -1,6 +1,6 @@
 package com.epam.havryliuk.restaurant.model.constants.databaseFieds;
 
-import com.epam.havryliuk.restaurant.model.constants.ResourcePath;
+import com.epam.havryliuk.restaurant.model.constants.ResourceProperties;
 import com.epam.havryliuk.restaurant.model.util.PropertiesLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,7 +16,7 @@ public class BasketFields {
     public static final String DISH_AMOUNT;
 
     static {
-        PROPERTIES = PropertiesLoader.getProperties(ResourcePath.DB_FIELDS_SETTING_FILE);
+        PROPERTIES = PropertiesLoader.getProperties(ResourceProperties.DB_FIELDS_SETTING_FILE);
         ORDER_ID = (String) PROPERTIES.get("basket.orderId");
         DISH_ID = (String) PROPERTIES.get("basket.dishId");
         DISH_PRICE = (String) PROPERTIES.get("basket.price");

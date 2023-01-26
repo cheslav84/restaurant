@@ -15,7 +15,7 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class OrderService {
+public class OrderService implements Service {
     private static final Logger LOG = LogManager.getLogger(OrderService.class);
     @Autowired
     private OrderDao orderDao;

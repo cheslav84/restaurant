@@ -27,9 +27,7 @@ import java.util.Locale;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.DISH_LIST;
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.LOCALE;
-import static com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath.FORWARD_INDEX;
 import static com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath.FORWARD_MENU_PAGE;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -90,7 +88,7 @@ class MenuCommandTest {
         verify(dishService).getAllMenuSortedBy(sortParameter);
         verify(menuResponseManager).setOrderInfoAttribute(request);
         verify(request).setAttribute(DISH_LIST, dishes);
-        verify(request).getRequestDispatcher(FORWARD_MENU_PAGE);;
+        verify(request).getRequestDispatcher(FORWARD_MENU_PAGE);
     }
 
 

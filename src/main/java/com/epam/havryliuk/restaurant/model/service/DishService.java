@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
-public class DishService {
+public class DishService implements Service {
     private static final Logger log = LogManager.getLogger(DishService.class);
     @Autowired
     private DishDao dishDao;

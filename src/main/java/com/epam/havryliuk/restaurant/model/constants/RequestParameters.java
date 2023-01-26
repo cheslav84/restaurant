@@ -1,5 +1,8 @@
 package com.epam.havryliuk.restaurant.model.constants;
 
+/**
+ * A list of parameters that can be got from HttpServletRequest.
+ */
 public interface RequestParameters {
 
     String EMAIL = "email";
@@ -21,11 +24,6 @@ public interface RequestParameters {
     String MENU_SORTING_OPTION = "menuSortingOption";
     String PAGE_NUMBER = "page";
     String ORDER_SORTING_PARAMETER = "sorted";
-    String ORDER_SORTING_DATE = "date";
-    String ORDER_SORTING_STATUS = "status";
     String RECORDS_PER_PAGE = "recordsPerPage";
-
     String CONTINUE_ORDERING = "continue";
-
-
 }

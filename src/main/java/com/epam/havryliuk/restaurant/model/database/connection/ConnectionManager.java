@@ -12,15 +12,13 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class ConnectionManager {
-
     private static final Logger LOG = LogManager.getLogger(ConnectionManager.class);
-
     private static final ConnectionManager INSTANCE = new ConnectionManager();
-
     private static DataSource ds = null;
 
     static {
         initDataSource();
+        LOG.info("DataSource initialised.");
     }
 
     private ConnectionManager() {
@@ -38,7 +36,18 @@ public class ConnectionManager {
 //            }
 //        }
 //        return localInstance;
+        LOG.debug("It is asked for instance of DataSource.");
         return INSTANCE;
+    }
+
+    private static void initDataSource() {
+        try {
+            Context initContext = new InitialContext();
+            Context envContext = (Context) initContext.lookup(DatabaseContext.CONTEXT);
+            ds = (DataSource) envContext.lookup(DatabaseContext.SOURCE);
+        } catch (NamingException e) {
+            LOG.error("Can't get Initial context for DataSource.", e);
+        }
     }
 
     public Connection getConnection() throws SQLException {
@@ -51,15 +60,6 @@ public class ConnectionManager {
         }
     }
 
-    private static void initDataSource() {
-        try {
-            Context initContext = new InitialContext();
-            Context envContext = (Context) initContext.lookup(DatabaseContext.CONTEXT);
-            ds = (DataSource) envContext.lookup(DatabaseContext.SOURCE);
-        } catch (NamingException e) {
-            LOG.error("Can't get Initial context for DataSource.", e);
-        }
-    }
 
     public void close(AutoCloseable closeable) {
 //        synchronized (ConnectionManager.class) {

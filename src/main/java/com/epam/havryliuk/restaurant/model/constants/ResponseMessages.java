@@ -1,5 +1,9 @@
 package com.epam.havryliuk.restaurant.model.constants;
 
+/**
+ * A list of messages that should be displayed to user
+ * in some cases during the running of application.
+ */
 public interface ResponseMessages {
 
     String LOGIN_ERROR = "message.loginError";

@@ -1,6 +1,6 @@
 package com.epam.havryliuk.restaurant.model.constants.queries;
 
-import com.epam.havryliuk.restaurant.model.constants.ResourcePath;
+import com.epam.havryliuk.restaurant.model.constants.ResourceProperties;
 import com.epam.havryliuk.restaurant.model.util.PropertiesLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,7 +26,7 @@ import java.util.Properties;
      public static final String CHANGE_DISHES_AMOUNT_BY_ORDERED_VALUES;
 
      static {
-         PROPERTIES = PropertiesLoader.getProperties(ResourcePath.DB_QUERIES_FILE);
+         PROPERTIES = PropertiesLoader.getProperties(ResourceProperties.DB_QUERIES_FILE);
          ADD_DISH = (String) PROPERTIES.get("dish.ADD_DISH");
          FIND_DISH_BY_NAME = (String) PROPERTIES.get("dish.FIND_DISH_BY_NAME");
          FIND_DISH_BY_ID = (String) PROPERTIES.get("dish.FIND_DISH_BY_ID");

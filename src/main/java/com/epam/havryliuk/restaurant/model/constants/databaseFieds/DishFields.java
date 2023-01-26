@@ -1,6 +1,6 @@
 package com.epam.havryliuk.restaurant.model.constants.databaseFieds;
 
-import com.epam.havryliuk.restaurant.model.constants.ResourcePath;
+import com.epam.havryliuk.restaurant.model.constants.ResourceProperties;
 import com.epam.havryliuk.restaurant.model.util.PropertiesLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,7 +21,7 @@ public class DishFields {
     public static final String DISH_CATEGORY_ID;
 
     static {
-        PROPERTIES = PropertiesLoader.getProperties(ResourcePath.DB_FIELDS_SETTING_FILE);
+        PROPERTIES = PropertiesLoader.getProperties(ResourceProperties.DB_FIELDS_SETTING_FILE);
         DISH_ID = (String) PROPERTIES.get("dish.id");
         DISH_NAME = (String) PROPERTIES.get("dish.name");
         DISH_DESCRIPTION = (String) PROPERTIES.get("dish.description");
