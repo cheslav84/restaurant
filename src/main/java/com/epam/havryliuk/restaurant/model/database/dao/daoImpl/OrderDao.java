@@ -60,31 +60,6 @@ public class OrderDao extends AbstractDao<Order> {
         return order;
     }
 
-//    public boolean addNewDishesToOrder(Order order, Dish dish, int amount) throws DAOException, DuplicatedEntityException {
-//        try (PreparedStatement stmt = connection.prepareStatement(OrderQuery.ADD_DISH_TO_BASKET)) {
-//            int k = 0;
-//            stmt.setLong(++k, order.getId());
-//            stmt.setLong(++k, dish.getId());
-//            stmt.setInt(++k, amount);
-//            stmt.setBigDecimal(++k, dish.getPrice());
-//            stmt.executeUpdate();
-//            log.debug("Dish has been added to database");
-//        }  catch (SQLIntegrityConstraintViolationException e) {
-//            String errorMassage = "Something went wrong. Dish haven't been added to basket. Try please again later.";
-//            log.error(errorMassage, e);
-//            throw new DuplicatedEntityException(errorMassage, e);
-//        }catch (SQLException e) {
-//            String errorMassage = "Something went wrong. Dish haven't been added to basket. Try please again later.";
-//            log.error(errorMassage, e);
-//            throw new DAOException(errorMassage, e);
-//        }
-//        return true;
-//    }
-
-    public boolean changeBookingStatus(Order order, BookingStatus status) throws DAOException {
-        throw new UnsupportedOperationException();
-    }
-
     public List<Order> getByUserSortedByTime(User user) throws DAOException {
         List<Order> orders = new ArrayList<>();
         try (PreparedStatement stmt = connection.prepareStatement(OrderQuery.GET_ALL_ORDERS_BY_USER)) {
@@ -129,7 +104,6 @@ public class OrderDao extends AbstractDao<Order> {
         return orders;
     }
 
-
     public int getNoOfOrders() throws DAOException {
         int numberOfOrders = 0;
         try (PreparedStatement stmt = connection.prepareStatement(OrderQuery.GET_NUMBER_OF_CONFIRMED_ORDERS)) {
@@ -146,12 +120,6 @@ public class OrderDao extends AbstractDao<Order> {
         return numberOfOrders;
 
     }
-
-    public List<Order> getByBookingStatus(BookingStatus status) throws DAOException {
-        throw new UnsupportedOperationException();
-    }
-
-
 
     private Order mapOrder(ResultSet rs) throws SQLException {
         long id = rs.getLong(OrderFields.ORDER_ID);
@@ -182,7 +150,7 @@ public class OrderDao extends AbstractDao<Order> {
         }
         return date;
     }
-
+    @SuppressWarnings("UnusedAssignment")
     private void setOrderParameters(Order order, PreparedStatement stmt) throws SQLException {
         int k = 1;
         stmt.setString(k++, order.getAddress());
@@ -192,29 +160,12 @@ public class OrderDao extends AbstractDao<Order> {
         stmt.setLong(k++, order.getBookingStatus().getId());
     }
 
-
-
     @Override
-    public Optional<Order> findById(long id) throws DAOException {
+    public Optional<Order> findById(long id) {
         throw new UnsupportedOperationException();
-
-//        Order order = null;
-//        try (PreparedStatement stmt = connection.prepareStatement(OrderQuery.FIND_ORDER_BY_ID)) {
-//            stmt.setLong(1, id);
-//            try (ResultSet rs = stmt.executeQuery()) {
-//                if (rs.next()) {
-//                    order = mapOrder(rs);
-//                }
-//            }
-//            log.debug("The order with \"id=" + id + "\" has been received from database.");
-//        } catch (SQLException e) {
-//            log.error("Error in getting order with \"id=" + id + "\" from database. ", e);
-//            throw new DAOException(e);
-//        }
-//        return order;
     }
 
-
+    @SuppressWarnings("UnusedAssignment")
     public boolean changeOrderStatus(long orderId, BookingStatus bookingStatus) throws DAOException {
         try (PreparedStatement stmt = connection.prepareStatement(OrderQuery.CHANGE_ORDER_STATUS_BY_ID)) {
             int k = 1;
@@ -232,17 +183,17 @@ public class OrderDao extends AbstractDao<Order> {
     }
 
     @Override
-    public List<Order> findAll() throws DAOException {
+    public List<Order> findAll() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Order update(Order entity) throws DAOException {
+    public Order update(Order entity) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean delete(Order entity) throws DAOException {
+    public boolean delete(Order entity) {
         throw new UnsupportedOperationException();
     }
 
@@ -289,7 +240,5 @@ public class OrderDao extends AbstractDao<Order> {
         }
         return numberOfDishes;
     }
-
-
 
 }

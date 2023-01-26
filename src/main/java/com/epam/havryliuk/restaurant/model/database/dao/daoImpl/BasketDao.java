@@ -38,27 +38,27 @@ public class BasketDao extends AbstractDao<Basket> {
     }
 
     @Override
-    public Optional<Basket> findById(long id) throws DAOException {
+    public Optional<Basket> findById(long id)  {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public List<Basket> findAll() throws DAOException {
+    public List<Basket> findAll() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Basket update(Basket entity) throws DAOException {
+    public Basket update(Basket entity)  {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean delete(Basket entity) throws DAOException {
+    public boolean delete(Basket entity)  {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean delete(long id) throws DAOException {
+    public boolean delete(long id) {
         throw new UnsupportedOperationException();
     }
 

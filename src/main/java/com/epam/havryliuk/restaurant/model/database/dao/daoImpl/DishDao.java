@@ -104,22 +104,22 @@ public class DishDao extends AbstractDao<Dish> {
     }
 
     @Override
-    public List<Dish> findAll() throws DAOException {
+    public List<Dish> findAll() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Dish update(Dish entity) throws DAOException {
+    public Dish update(Dish entity) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean delete(Dish entity) throws DAOException {
+    public boolean delete(Dish entity) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean delete(long id) throws DAOException {
+    public boolean delete(long id) {
         throw new UnsupportedOperationException();
     }
 

@@ -24,6 +24,9 @@ import java.util.Optional;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
+/**
+ * Command to show the menu page and list of dishes in it.
+ */
 public class MenuCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(MenuCommand.class);
     private static final String DEFAULT_SORTING = "name";

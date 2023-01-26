@@ -15,6 +15,7 @@ public class ApplicationServiceContext {
     private static final Predicate<Field> HAS_ANNOTATION = field -> field.getDeclaredAnnotation(Autowired.class) != null;
     private static final Logger LOG = LogManager.getLogger(ApplicationServiceContext.class);
 
+    @SuppressWarnings("unchecked")
     public <T> T getInstance(Class<T> clazz) {
         T object;
         try {

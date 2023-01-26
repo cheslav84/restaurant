@@ -181,7 +181,7 @@
                                                 </div>
                                                 <c:if test="${sessionScope.loggedUser.role != 'MANAGER'}">
                                                     <form method="get" action="show_order_info" name="dishOrder">
-                                                        <button value="${dish.id}" name="dishId" class="button order-menu-button">
+                                                        <button value="${dishSpecial.id}" name="dishId" class="button order-menu-button">
                                                             <fmt:message key="menu.orderBtn" />
                                                         </button>
                                                     </form>

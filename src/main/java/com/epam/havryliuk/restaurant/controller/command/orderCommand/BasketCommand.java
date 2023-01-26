@@ -24,6 +24,11 @@ import java.util.*;
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.ERROR_MESSAGE;
 
+/**
+ * Command to show the user orders page and list of orders in it. With orders for user
+ * will be showed order statuses, dates that orders have been made, and lists of dishes
+ * in each order.
+ */
 public class BasketCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(BasketCommand.class);
     @SuppressWarnings("FieldMayBeFinal")
@@ -34,8 +39,15 @@ public class BasketCommand implements Command {
         orderService = appContext.getInstance(OrderService.class);
     }
 
+    /**
+     * Method executes the command that obtains list of user orders. If any order presents in the list,
+     * the total price will be calculated for each order and will be placed to map. That map is storing
+     * in session to display orders and their prices to user. If user haven't made any order or that orders
+     * ara temporary unavailable for some reason, user will get the corespondent message from session.
+     */
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void execute(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException {
         HttpSession session = request.getSession();
         BundleManager bundleManager = BundleManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());
         User user = (User) session.getAttribute(LOGGED_USER);
@@ -56,6 +68,10 @@ public class BasketCommand implements Command {
         request.getRequestDispatcher(AppPagesPath.FORWARD_BASKET).forward(request, response);
     }
 
+    /**
+     * Method checks if any order is present in list that have been received from storage.
+     * @throws EntityNotFoundException if the list is empty.
+     */
     private void checkIfOrdersPresent(List<Order> orders) throws EntityNotFoundException {
         if (orders.size() == 0) {
             throw new EntityNotFoundException();

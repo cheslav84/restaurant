@@ -50,7 +50,7 @@ public class SetNextStatusCommand implements Command {
      * message to user.
      */
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         long orderId = Long.parseLong(request.getParameter(RequestParameters.ORDER_ID));
         HttpSession session = request.getSession();
         BundleManager bundleManager = BundleManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());

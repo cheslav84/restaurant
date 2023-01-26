@@ -59,6 +59,7 @@ public class Validator {
         }
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     private boolean regexChecker (String toCheck, String regex) {
         Pattern regexPattern = Pattern.compile(regex);
         Matcher regexMatcher = regexPattern.matcher(toCheck);

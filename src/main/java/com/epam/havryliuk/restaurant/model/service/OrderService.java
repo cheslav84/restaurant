@@ -94,7 +94,7 @@ public class OrderService {
      * @param page - number of current Page that displays Order list for User.
      * @param recordsPerPage - orders amount that has to be displayed per page.
      * @param sorting - sorting parameter. Orders can be sorted by date or status.
-     * @return page of Orders that has to be displayed in one user page.
+     * @return Page of Orders that has to be displayed in one user page.
      * @throws ServiceException when impossible to get data.
      */
     public Page<Order> getAllOrders(int page, int recordsPerPage, OrderSorting sorting) throws ServiceException {

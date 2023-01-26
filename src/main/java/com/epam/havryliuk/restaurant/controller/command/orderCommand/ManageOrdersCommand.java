@@ -23,6 +23,10 @@ import java.util.Locale;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
+/**
+ * Command that displays list of orders to manager, navigates pagination,
+ * and manages the sorting of order lists.
+ */
 public class ManageOrdersCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(ManageOrdersCommand.class);
     private int pageNumber = 1;
@@ -36,9 +40,18 @@ public class ManageOrdersCommand implements Command {
         orderService = appContext.getInstance(OrderService.class);
     }
 
+    /**
+     * Method executes ManageOrder command that sets to class fields sorting parameters
+     * (by creation time or by order status), sets current page number of displaying orders list
+     * (in pagination process), and sets the amount of orders that is going to be displayed
+     * in current page. Method receives Page of Orders from service that has to be displayed
+     * in one user page, then sets to session following attributes: list of orders, total number
+     * of pages for displaying navigation in user page and current page number. In case of receiving
+     * ServiceException user will be informed by correspondent message.
+     */
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        BundleManager bundleManager = BundleManager.valueOf(((Locale) request.getSession().getAttribute(LOCALE)).getCountry());
+    public void execute(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException {
         setSortingParameter(request);
         setPageNumber(request);
         setRecordsPerPage(request);
@@ -51,6 +64,8 @@ public class ManageOrdersCommand implements Command {
             request.setAttribute(ORDER_LIST, orders);
             request.removeAttribute(ERROR_MESSAGE);
         } catch (ServiceException e) {
+            BundleManager bundleManager = BundleManager.valueOf((
+                    (Locale) request.getSession().getAttribute(LOCALE)).getCountry());
             LOG.error(e.getMessage(), e);
             request.setAttribute(ERROR_MESSAGE,
                     bundleManager.getProperty(ResponseMessages.ORDERS_ERROR));
@@ -58,15 +73,24 @@ public class ManageOrdersCommand implements Command {
         request.getRequestDispatcher(AppPagesPath.FORWARD_MANAGE_ORDERS).forward(request, response);
     }
 
+    /**
+     * Method extracts the sorting parameters of order from request (by creation time or by order status),
+     * and sets that value as the class field. If any exception occurs sorting orders will be by default.
+     */
     private void setSortingParameter(HttpServletRequest request) {
         try {
-            sortingParameter = OrderSorting.valueOf(request.getParameter(RequestParameters.ORDER_SORTING_PARAMETER).toUpperCase());
+            sortingParameter = OrderSorting.valueOf(request.getParameter(
+                    RequestParameters.ORDER_SORTING_PARAMETER).toUpperCase());
             LOG.debug("Sorting parameter: " + sortingParameter);
         } catch (Exception e) {
             LOG.error("Sorting parameter is not correct.");
         }
     }
 
+    /**
+     * Method extracts the number of page that should be displayed for user, and sets that
+     * value as the class field. If any exception occurs, the page number will be by default.
+     */
     private void setPageNumber(HttpServletRequest request) {
         try {
              pageNumber = Integer.parseInt(request.getParameter(RequestParameters.PAGE_NUMBER));
@@ -75,6 +99,10 @@ public class ManageOrdersCommand implements Command {
         }
     }
 
+    /**
+     * Method extracts the number of orders per page that should be displayed for user, and sets that
+     * value as the class field. If any exception occurs, the number records will be by default.
+     */
     private void setRecordsPerPage(HttpServletRequest request) {
         try {
             recordsPerPage = Integer.parseInt(request.getParameter(RequestParameters.RECORDS_PER_PAGE));

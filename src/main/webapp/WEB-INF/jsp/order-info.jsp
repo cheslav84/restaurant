@@ -58,7 +58,7 @@
                             </div>
                             <select name="amount" class="dishes-amout" 
                                 <c:forEach var="i" begin="0" end="${dish.amount}" step="1">
-                                    <option value="${i}">${i}</option>
+                                    <option class="dishes-amount-item" value="${i}">${i}</option>
                                 </c:forEach>
                             </select>
                         </div>

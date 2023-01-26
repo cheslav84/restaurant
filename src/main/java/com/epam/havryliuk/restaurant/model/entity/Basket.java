@@ -1,15 +1,12 @@
 package com.epam.havryliuk.restaurant.model.entity;
 
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Basket it's an entity that represents only one row in database
  * table "order_has_dishes".
  */
-public class Basket implements Entity {// todo think of renaming, for example DishInOrder
+public class Basket implements Entity {
     private Order order;
     private Dish dish;
     private BigDecimal fixedPrice;
@@ -60,9 +57,7 @@ public class Basket implements Entity {// todo think of renaming, for example Di
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Basket basket = (Basket) o;
-
         if (order != null ? !order.equals(basket.order) : basket.order != null) return false;
         if (dish != null ? !dish.equals(basket.dish) : basket.dish != null) return false;
         if (fixedPrice != null ? !fixedPrice.equals(basket.fixedPrice) : basket.fixedPrice != null) return false;
@@ -71,9 +66,7 @@ public class Basket implements Entity {// todo think of renaming, for example Di
 
     @Override
     public int hashCode() {
-        int
-                result = 1;
-//                result = order != null ? order.hashCode() : 0;
+        int result = 1;
         result = 31 * result + (dish != null ? dish.hashCode() : 0);
         result = 31 * result + (fixedPrice != null ? fixedPrice.hashCode() : 0);
         result = 31 * result + (amount != null ? amount.hashCode() : 0);

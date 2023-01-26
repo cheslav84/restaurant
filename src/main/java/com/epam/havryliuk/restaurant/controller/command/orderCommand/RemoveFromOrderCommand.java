@@ -34,7 +34,7 @@ public class RemoveFromOrderCommand implements Command {
     }
 
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         long orderId = Long.parseLong(request.getParameter(RequestParameters.ORDER_ID));
         long dishId = Long.parseLong(request.getParameter(RequestParameters.DISH_ID));
         HttpSession session = request.getSession();

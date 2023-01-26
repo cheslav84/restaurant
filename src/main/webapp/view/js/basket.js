@@ -17,10 +17,7 @@ $(document).ready(function () {
   if (localStorage.selectVal) {
     $('select').val(localStorage.selectVal);
   } 
-  // else {
-    // $('select').val(4);
-  // }
-
+ 
 });
 
 

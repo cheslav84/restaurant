@@ -22,6 +22,9 @@ import java.util.Locale;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
+/**
+ * Command to show the welcome page and list of dishes in it.
+ */
 public class IndexCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(IndexCommand.class);
     @SuppressWarnings("FieldMayBeFinal")
@@ -62,5 +65,4 @@ public class IndexCommand implements Command {
         request.setAttribute(DISH_LIST, dishes);
         request.getRequestDispatcher(AppPagesPath.FORWARD_INDEX).forward(request, response);
     }
-
 }

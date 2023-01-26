@@ -30,6 +30,10 @@ import java.util.Locale;
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.ERROR_MESSAGE;
 
+/**
+ * Command that manages creating or getting the order from session or storage,
+ * and saving dishes and dishes amount in that order.
+ */
 public class MakeOrderCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(MakeOrderCommand.class);
     @SuppressWarnings("FieldMayBeFinal")
@@ -37,32 +41,51 @@ public class MakeOrderCommand implements Command {
     @SuppressWarnings("FieldMayBeFinal")
     private Validator validator = new Validator();
 
-
     public MakeOrderCommand () {
         ApplicationServiceContext appContext = new ApplicationServiceContext();
         orderService = appContext.getInstance(OrderService.class);
     }
 
     /**
-     * Method first tries to get an Order from HttpSession.
+     * Method executes command that gets order and saves the dishes to it. Firstly method tries to get an
+     * Order from HttpSession, if it doesn't in session then method asks for order in storage or a new one.
      */
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void execute(HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(RequestAttributes.LOGGED_USER);
         Order order = (Order) session.getAttribute(CURRENT_ORDER);
-        if (order != null) {
-            saveDishToOrder(request, order);
-            session.removeAttribute(ERROR_MESSAGE);
-            LOG.debug("Order in session: " + order);
-        } else {
+        if (order == null) {
             order = getFromStorageOrCreateOrder(request, user);
             session.setAttribute(CURRENT_ORDER, order);
-            saveDishToOrder(request, order);
+            LOG.debug("Created new order: " + order);
+        } else {
+            session.removeAttribute(ERROR_MESSAGE);
+            LOG.debug("Order in session: " + order);
         }
+        saveDishToOrder(request, order);
         String redirectionPage = getRedirectionPage(request);
         response.sendRedirect(redirectionPage);
     }
+//    @Override
+//    public void execute(HttpServletRequest request, HttpServletResponse response)
+//    throws IOException, ServletException {
+//        HttpSession session = request.getSession();
+//        User user = (User) session.getAttribute(RequestAttributes.LOGGED_USER);
+//        Order order = (Order) session.getAttribute(CURRENT_ORDER);
+//        if (order != null) {
+//            saveDishToOrder(request, order);
+//            session.removeAttribute(ERROR_MESSAGE);
+//            LOG.debug("Order in session: " + order);
+//        } else {
+//            order = getFromStorageOrCreateOrder(request, user);
+//            session.setAttribute(CURRENT_ORDER, order);
+//            saveDishToOrder(request, order);
+//        }
+//        String redirectionPage = getRedirectionPage(request);
+//        response.sendRedirect(redirectionPage);
+//    }
 
     /**
      * Methods requests an order from service. It can be the order that already exist in database
@@ -88,8 +111,17 @@ public class MakeOrderCommand implements Command {
         return order;
     }
 
+    /**
+     * Method saves dish and its amount to an Order. Method also removes Dish entity from session,
+     * as it is going to order in that session, and that dish in order.
+     * @param request HttpServletRequest from user.
+     * @param order that dish needs to be saved in.
+     * Catches ServiceException when impossible to get data from storage or to write data to it.
+     * Catches DuplicatedEntityException when dish is already exists in that order.
+     * Catches IrrelevantDataException when the amount of requested dishes exceed available ones in menu.
+     */
     private void saveDishToOrder(HttpServletRequest request, Order order) {
-        if (order != null) {// todo (order does not exist in database if null) think of refactoring
+//        if (order != null) {
             HttpSession session = request.getSession();
             BundleManager bundleManager = BundleManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());
             try {
@@ -111,9 +143,17 @@ public class MakeOrderCommand implements Command {
                 session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
                 LOG.error(e);
             }
-        }
+//        }
     }
 
+    /**
+     * Method obtains a dish saved in session. If there is no dish in it, the ServiceException will be
+     * thrown and the corresponding message will be set to session for informing user. Dish had to be set
+     * in session while user press "Order" button and performing "show_dish_info" command preceding the current
+     * command.
+     * @return Dish that need to be saved to order.
+     * @throws ServiceException if there is no Dish present in session.
+     */
     private Dish getCurrentDish(HttpServletRequest request) throws ServiceException {
         HttpSession session = request.getSession();
         Dish dish = (Dish) session.getAttribute(CURRENT_DISH);
@@ -127,7 +167,13 @@ public class MakeOrderCommand implements Command {
         return dish;
     }
 
-
+    /**
+     * Method extracts dishes amount from HttpServletRequest and validates that data. If number of dishes is
+     * not valid, the ValidationException will be thrown, and corresponding message will be set to session
+     * for informing user.
+     * @return amount of the same dishes that has to be saved to order.
+     * @throws ValidationException if the dishes amount data is not valid.
+     */
     private int getDishesAmount(HttpServletRequest request) throws ValidationException {
         int dishesAmount;
         HttpSession session = request.getSession();
@@ -145,13 +191,10 @@ public class MakeOrderCommand implements Command {
     }
 
     /**
-     * Returns String page that is going to be redirected to.
-     * If user press "continue ordering" button, then request will
-     * receive such parameter, and response will be redirected to the
-     * page the request have been done from. Otherwise, user will be
-     * redirected to his basket page. If any error situation occurs,
-     * (any messages should be displayed to user) then user will get
-     * the same page with the proper messages.
+     * Returns String page that is going to be redirected to. If user press "continue ordering" button,
+     * then request will receive such parameter, and response will be redirected to the page the request
+     * have been done from. Otherwise, user will be redirected to his basket page. If any error situation
+     * occurs, (any messages should be displayed to user) then user will get the same page with the proper messages.
      * @return redirection page
      */
     private String getRedirectionPage(HttpServletRequest request) {

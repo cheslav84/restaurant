@@ -22,6 +22,9 @@ import java.util.Locale;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
+/**
+ *
+ */
 public class OrderInfoCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(OrderInfoCommand.class);
     @SuppressWarnings("FieldMayBeFinal")

@@ -1,10 +1,7 @@
 package com.epam.havryliuk.restaurant.model.database.dao.daoImpl;
 
-import com.epam.havryliuk.restaurant.model.constants.databaseFieds.OrderFields;
 import com.epam.havryliuk.restaurant.model.database.dao.AbstractDao;
-import com.epam.havryliuk.restaurant.model.constants.databaseFieds.RoleFields;
 import com.epam.havryliuk.restaurant.model.constants.queries.UserQuery;
-import com.epam.havryliuk.restaurant.model.entity.BookingStatus;
 import com.epam.havryliuk.restaurant.model.entity.Role;
 import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.entity.UserDetails;
@@ -25,7 +22,7 @@ public class UserDao extends AbstractDao<User> {
 
 
     public User findByEmail(String email) throws DAOException {
-        User user = null;
+        User user;
         try (PreparedStatement stmt = connection.prepareStatement(UserQuery.FIND_USER_BY_LOGIN)) {
             stmt.setString(1, email);
             user = extractUser(stmt);
@@ -83,7 +80,6 @@ public class UserDao extends AbstractDao<User> {
         return user;
     }
 
-
     @Override
     public List<User> findAll() throws DAOException {
         List<User> users = new ArrayList<>();
@@ -140,16 +136,8 @@ public class UserDao extends AbstractDao<User> {
         return true;
     }
 
-
-    private void setUserParameters(User user, PreparedStatement stmt) throws SQLException, DAOException {
-//        Role userRole = user.getRole();
-//        long roleId = user.getRole().getId();
-//        if (roleId == 0){
-//            RoleDao roleDAO = new RoleDao();
-//            userRole = roleDAO.findByName(userRole.getUserRole().name());
-//            roleId = userRole.getId();
-//        }
-
+    @SuppressWarnings("UnusedAssignment")
+    private void setUserParameters(User user, PreparedStatement stmt) throws SQLException {
         int k = 1;
         stmt.setString(k++, user.getEmail());
         stmt.setString(k++, user.getPassword());
@@ -159,7 +147,6 @@ public class UserDao extends AbstractDao<User> {
         stmt.setBoolean(k++, user.isOverEighteen());
         stmt.setLong(k++, user.getRole().getId());
     }
-
 
     private User mapUser(ResultSet rs) throws SQLException, DAOException {
         long id = rs.getLong(UserFields.USER_ID);
@@ -181,26 +168,11 @@ public class UserDao extends AbstractDao<User> {
                 gender, isOverEighteen, accountCreationDate, role, userDetails);
     }
 
-//    private Role getUserRole(ResultSet rs) throws SQLException, DAOException {
-//        String roleName = rs.getString(RoleFields.ROLE_NAME);
-//        Role role = Role.getInstance(UserRole.valueOf(roleName));
-//        if (role.getUserRole().equals(UserRole.MANAGER) ||
-//                role.getUserRole().equals(UserRole.CLIENT)) {
-//            return role;
-//        } else {
-//            String errorMessage ="UserRole can't be instantiated";
-//            log.debug(errorMessage);
-//            throw new DAOException(errorMessage);
-//        }
-//
-//    }
-
     private UserDetails mapUserDetails(ResultSet rs) throws SQLException {// todo винести потім в UserDetailsDao
         Date birthDate = new Date(rs.getDate(UserFields.MANAGER_BIRTH_DATE).getTime());
         String passport = rs.getString(UserFields.MANAGER_PASSPORT);
         String bankAccount = rs.getString(UserFields.MANAGER_BANK_ACCOUNT);
         return UserDetails.getInstance(birthDate, passport, bankAccount);
     }
-
 
 }
