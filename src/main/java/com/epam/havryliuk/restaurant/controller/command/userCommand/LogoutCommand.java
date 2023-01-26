@@ -13,9 +13,17 @@ import java.util.Locale;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
+/**
+ * Command logs out User (invalidates HttpSession).
+ */
 public class LogoutCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(LogoutCommand.class);
 
+    /**
+     * Method executes the "LogoutCommand", that is checks if User is present in
+     * HttpSession, and if it is invalidates that session. Method also sets "Local"
+     * back to Session to prevent setting locale to default after invalidating session.
+     */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();

@@ -18,6 +18,14 @@ import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.DE
 
 public class Validator {
 
+    /**
+     * Method validates the data entered by user during registration. If some data is incorrect
+     * ValidationException will be thrown, and correspondent message set to HttpSession
+     * (in case the checkbox or password data is invalid), or message can be set directly to user
+     * String fields for displaying that massage on proper place, for example in HTML input fields.
+     * @param user User that data of which has to be validated.
+     * @throws ValidationException in case some data is invalid.
+     */
     public void validateUserData(User user, HttpServletRequest req) throws ValidationException {
         HttpSession session = req.getSession();
         BundleManager bundleManager = BundleManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());

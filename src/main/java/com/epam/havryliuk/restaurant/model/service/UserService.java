@@ -26,7 +26,7 @@ public class UserService {
         try {
             transaction.init(userDao);
             checkIfLoginDoesNotExist(user, userDao);
-            user.setRole(Role.CLIENT);
+//            user.setRole(Role.CLIENT);
             userDao.create(user);
             log.debug("The user was successfully created.");
         } catch (DuplicatedEntityException e) {
