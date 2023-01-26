@@ -32,7 +32,7 @@ public class AuthenticationClientFilter implements Filter {
         if (user != null && user.getRole() == Role.CLIENT) {
             chain.doFilter(request, response);
         } else {
-            httpResponse.sendRedirect(AppPagesPath.REDIRECT_INDEX);
+            httpResponse.sendRedirect(AppPagesPath.REDIRECT_REGISTRATION);
         }
     }
 

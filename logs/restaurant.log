@@ -1,5 +1,5 @@
-[DEBUG] 2023-01-26 02:15:44.382 [main] DatabaseContext - DatabaseContext initialised.
-[ERROR] 2023-01-26 02:15:44.451 [main] ConnectionManager - Can't get Initial context for DataSource.
+[DEBUG] 2023-01-26 12:14:02.972 [main] DatabaseContext - DatabaseContext initialised.
+[ERROR] 2023-01-26 12:14:03.020 [main] ConnectionManager - Can't get Initial context for DataSource.
 javax.naming.NoInitialContextException: Need to specify class name in environment or system property, or in an application resource file: java.naming.factory.initial
 	at javax.naming.spi.NamingManager.getInitialContext(NamingManager.java:704) ~[?:?]
 	at javax.naming.InitialContext.getDefaultInitCtx(InitialContext.java:305) ~[?:?]
@@ -19,7 +19,7 @@ javax.naming.NoInitialContextException: Need to specify class name in environmen
 	at com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext.getInstance(ApplicationServiceContext.java:33) ~[classes/:?]
 	at com.epam.havryliuk.restaurant.controller.command.orderCommand.ManageOrdersCommand.<init>(ManageOrdersCommand.java:40) ~[classes/:?]
 	at java.lang.invoke.MethodHandle.invokeWithArguments(MethodHandle.java:732) ~[?:?]
-	at org.mockito.internal.util.reflection.InstrumentationMemberAccessor$Dispatcher$ByteBuddy$X2HCKnbH.invokeWithArguments(Unknown Source) ~[?:?]
+	at org.mockito.internal.util.reflection.InstrumentationMemberAccessor$Dispatcher$ByteBuddy$cQQ6lmsQ.invokeWithArguments(Unknown Source) ~[?:?]
 	at org.mockito.internal.util.reflection.InstrumentationMemberAccessor.lambda$newInstance$0(InstrumentationMemberAccessor.java:191) ~[mockito-core-4.11.0.jar:?]
 	at org.mockito.internal.util.reflection.InstrumentationMemberAccessor.newInstance(InstrumentationMemberAccessor.java:188) ~[mockito-core-4.11.0.jar:?]
 	at org.mockito.internal.util.reflection.InstrumentationMemberAccessor.newInstance(InstrumentationMemberAccessor.java:161) ~[mockito-core-4.11.0.jar:?]
@@ -97,6 +97,6 @@ javax.naming.NoInitialContextException: Need to specify class name in environmen
 	at com.intellij.rt.junit.IdeaTestRunner$Repeater.startRunnerWithArgs(IdeaTestRunner.java:35) ~[junit-rt.jar:?]
 	at com.intellij.rt.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:235) ~[junit-rt.jar:?]
 	at com.intellij.rt.junit.JUnitStarter.main(JUnitStarter.java:54) ~[junit-rt.jar:?]
-[DEBUG] 2023-01-26 02:15:44.756 [main] AppPagesPath - Application paths are initialised.
-[DEBUG] 2023-01-26 02:15:44.778 [main] ManageOrdersCommand - Sorting parameter: STATUS
-[DEBUG] 2023-01-26 02:15:44.960 [main] ManageOrdersCommand - Sorting parameter: STATUS
+[DEBUG] 2023-01-26 12:14:03.304 [main] AppPagesPath - Application paths are initialised.
+[DEBUG] 2023-01-26 12:14:03.337 [main] ManageOrdersCommand - Sorting parameter: STATUS
+[DEBUG] 2023-01-26 12:14:03.476 [main] ManageOrdersCommand - Sorting parameter: STATUS

@@ -13,13 +13,11 @@ import com.epam.havryliuk.restaurant.model.util.BundleManager;
 import com.epam.havryliuk.restaurant.model.service.OrderService;
 import com.epam.havryliuk.restaurant.model.util.URLUtil;
 import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jetbrains.annotations.NotNull;
 
 import javax.security.sasl.AuthenticationException;
 import java.io.IOException;
@@ -27,6 +25,9 @@ import java.util.*;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
+/**
+ * Command changes Order Statuses to the next position.
+ */
 public class SetNextStatusCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(SetNextStatusCommand.class);
     private static final Map<BookingStatus, Role> bookingAccessRoles;
@@ -93,7 +94,6 @@ public class SetNextStatusCommand implements Command {
      * Method retrieves current BookingStatus from the request,
      * and returns the status that has to be set next.
      */
-    @NotNull
     private BookingStatus getNextBookingStatus(HttpServletRequest request) {
         String current = request.getParameter(RequestParameters.CURRENT_STATUS);
         BookingStatus currentStatus = BookingStatus.valueOf(current);

@@ -23,6 +23,10 @@ import java.util.Locale;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
+/**
+ * Command that verifies user and redirects him to the "Index" page if
+ * entered email/login and password are correct.
+ */
 public class LoginCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(LoginCommand.class);
     @SuppressWarnings("FieldMayBeFinal")
@@ -33,9 +37,19 @@ public class LoginCommand implements Command {
         userService = appContext.getInstance(UserService.class);
     }
 
+    /**
+     * Method obtains User email and password from HttpServletRequest. Then, receives User from storage
+     * by User email. If password that User entered coincides the password in storage, saves User
+     * in HttpSession and redirects him to the "Index" Page.
+     * If entered email is absent it the storage, method get EntityNotFoundException and user will be
+     * informed that "User with such email doesn't exist".
+     * If entered password doesn't coincide with the password in the storage, then GeneralSecurityException
+     * method catch and user will receive message that entered password is wrong.
+     * In case of ServiceException, User will be redirected to "Error" page.
+     */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String email = request.getParameter(RequestParameters.EMAIL);//todo перейменувати скрізь на email
+        String email = request.getParameter(RequestParameters.EMAIL);
         String password = request.getParameter(RequestParameters.PASSWORD);
         HttpSession session = request.getSession();
         BundleManager bundleManager = BundleManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());
