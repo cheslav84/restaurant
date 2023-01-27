@@ -38,7 +38,7 @@ public class OrderDao extends AbstractDao<Order> {
         return order;
     }
 
-    public Order geByUserAddressStatus(User user, String address, BookingStatus bookingStatus) throws DAOException {//todo think if it could be a list
+    public Order geByUserAddressStatus(User user, String address, BookingStatus bookingStatus) throws DAOException {
         Order order = null;
         try (PreparedStatement stmt = connection.prepareStatement(OrderQuery.GET_BY_USER_ID_ADDRESS_AND_STATUS)) {
             int k=0;
@@ -47,7 +47,7 @@ public class OrderDao extends AbstractDao<Order> {
             stmt.setString(++k, bookingStatus.name());
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    order = mapOrder(rs);//todo наскільки коректно мапити неповноцінний об'єкт, якщо в ньому використувується не всі поля?
+                    order = mapOrder(rs);
                     order.setUser(user);
                 }
             }

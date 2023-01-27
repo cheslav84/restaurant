@@ -18,34 +18,6 @@ import java.util.*;
 public class DishDao extends AbstractDao<Dish> {
     private static final Logger log = LogManager.getLogger(DishDao.class);
 
-//    public Dish findByName(String name) throws DAOException {
-//        Dish dish = null;
-//        try (PreparedStatement stmt = connection.prepareStatement(DishQuery.FIND_DISH_BY_NAME)) {
-//            stmt.setString(1, name);
-//            try (ResultSet rs = stmt.executeQuery()) {
-//                if (rs.next()) {
-//                    dish = mapDish(rs);
-//                }
-//            }
-//            log.debug("The \"" + name + "\" dish has been received from database.");
-//        } catch (SQLException e) {
-//            log.error("Error in getting dish from database. ", e);
-//            throw new DAOException(e);
-//        }
-//        return dish;
-//    }
-
-//    public List<Dish> findByCategory(Category category) throws DAOException {
-//        List<Dish> dishes = new ArrayList<>();
-//        try (PreparedStatement stmt = connection.prepareStatement(DishQuery.FIND_ALL_BY_CATEGORY)) {
-//            getDishesByCategory(category, dishes, stmt);
-//        } catch (SQLException e) {
-//            log.error("Error in getting list of dishes from database. ", e);
-//            throw new DAOException(e);
-//        }
-//        return dishes;
-//    }
-
     public List<Dish> findPresentsByCategory(Category category) throws DAOException {
         List<Dish> dishes = new ArrayList<>();
         try (PreparedStatement stmt = connection.prepareStatement(DishQuery.FIND_ALL_PRESENTS_BY_CATEGORY)) {
@@ -66,7 +38,6 @@ public class DishDao extends AbstractDao<Dish> {
         }
         log.debug("List of dishes (by category) has been received from database. ");
     }
-
 
     public List<Dish> getSortedByName() throws DAOException {
         return getDishes(DishQuery.FIND_ALL_AVAILABLE_ORDERED_BY_NAME);
@@ -138,38 +109,6 @@ public class DishDao extends AbstractDao<Dish> {
         return dishes;
     }
 
-
-//    /**
-//     * Method gets returns dishes, and dishes amount for corespondent dish in order consequently.
-//     * If order is not confirmed yet (user just put it to his basket), will be displayed
-//     * the actual price of a dish. Otherwise, user will get the fixed price of a dish for the
-//     * moment of the confirmation an order.
-//     * @param order
-//     * @return
-//     * @throws DAOException
-//     */
-//    public Map<Dish, Integer> getOrderDishes(Order order) throws DAOException {
-//        Map<Dish, Integer>  dishes = new HashMap<>();
-//        try (PreparedStatement stmt = connection.prepareStatement(DishQuery.FIND_ALL_BY_ORDER)) {
-//            stmt.setLong(1, order.getId());
-//            try (ResultSet rs = stmt.executeQuery()) {
-//                while (rs.next()) {
-//                    Dish dish = mapDish(rs);
-//                    if (order.getBookingStatus() != BookingStatus.BOOKING) {
-//                         dish.setPrice(rs.getBigDecimal(OrderFields.ORDER_DISH_FIXED_PRICE));
-//                    }
-//                    Integer amountInOrder = rs.getInt(OrderFields.ORDER_DISH_AMOUNT_IN_ORDER);
-//                    dishes.put(dish, amountInOrder);
-//                }
-//            }
-//            log.debug("List of dishes (by category) has been received from database. ");
-//        } catch (SQLException e) {
-//            log.error("Error in getting list of dishes from database. ", e);
-//            throw new DAOException(e);
-//        }
-//        return dishes;
-//    }
-
     Dish mapDish(ResultSet rs) throws SQLException {// todo mapper
         long id = rs.getLong(DishFields.DISH_ID);
         String name = rs.getString(DishFields.DISH_NAME);
@@ -178,7 +117,6 @@ public class DishDao extends AbstractDao<Dish> {
         BigDecimal price = rs.getBigDecimal(DishFields.DISH_PRICE);
         int amount = rs.getInt(DishFields.DISH_AMOUNT);
         String image = rs.getString(DishFields.DISH_IMAGE);
-//        Category category = mapCategoryForDish(rs);
         return Dish.getInstance(id, name, description, weight, price, amount, image);
     }
 
@@ -229,10 +167,4 @@ public class DishDao extends AbstractDao<Dish> {
         return dishes;
     }
 
-
-//    private Category mapCategoryForDish(ResultSet rs) throws SQLException { //todo low coupling
-//        long id = rs.getLong(DishFields.DISH_CATEGORY_ID);
-//        String name = rs.getString(CategoryFields.CATEGORY_NAME);
-//        return Category.getInstance(id, CategoryName.valueOf(name));
-//    }
 }

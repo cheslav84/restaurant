@@ -48,7 +48,7 @@ public class UserDao extends AbstractDao<User> {
         return Optional.ofNullable(user);
     }
 
-    private User extractUser(PreparedStatement stmt) throws SQLException, DAOException {
+    private User extractUser(PreparedStatement stmt) throws SQLException {
         User user = null;
         try (ResultSet rs = stmt.executeQuery()) {
             if (rs.next()) {
@@ -107,7 +107,7 @@ public class UserDao extends AbstractDao<User> {
             log.error("The user has not been updated", e);
             throw new DAOException(e);
         }
-        return user;//todo навіщо тут повертати того ж самого юзера?
+        return user;
     }
 
     @Override
@@ -148,7 +148,7 @@ public class UserDao extends AbstractDao<User> {
         stmt.setLong(k++, user.getRole().getId());
     }
 
-    private User mapUser(ResultSet rs) throws SQLException, DAOException {
+    private User mapUser(ResultSet rs) throws SQLException {
         long id = rs.getLong(UserFields.USER_ID);
         String email = rs.getString(UserFields.USER_EMAIL);
         String password = rs.getString(UserFields.USER_PASSWORD);
@@ -159,16 +159,15 @@ public class UserDao extends AbstractDao<User> {
         Date accountCreationDate = rs.getTimestamp(UserFields.USER_ACCOUNT_CREATION_DATE);
         long roleId = rs.getLong(UserFields.USER_ROLE_ID);
         Role role = Role.getRole(roleId);
-
         UserDetails userDetails = null;
-        if (role == Role.MANAGER) { //todo
+        if (role == Role.MANAGER) {
             userDetails = mapUserDetails(rs);
         }
         return User.getInstance(id, email, password, name, surname,
                 gender, isOverEighteen, accountCreationDate, role, userDetails);
     }
 
-    private UserDetails mapUserDetails(ResultSet rs) throws SQLException {// todo винести потім в UserDetailsDao
+    private UserDetails mapUserDetails(ResultSet rs) throws SQLException {
         Date birthDate = new Date(rs.getDate(UserFields.MANAGER_BIRTH_DATE).getTime());
         String passport = rs.getString(UserFields.MANAGER_PASSPORT);
         String bankAccount = rs.getString(UserFields.MANAGER_BANK_ACCOUNT);

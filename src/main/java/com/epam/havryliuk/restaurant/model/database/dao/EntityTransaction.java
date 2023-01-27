@@ -76,13 +76,12 @@ public class EntityTransaction {
         }
     }
 
-    public void rollback() {//todo
+    public void rollback() {
         try {
             connection.rollback();
         } catch (SQLException e) {
             LOG.error("Error in rolling back changes." , e);
         }
     }
-
 
 }

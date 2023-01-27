@@ -5,7 +5,7 @@
 <fmt:setLocale value="${sessionScope.locale.country}" />
 <fmt:setBundle basename="language" />
 <!DOCTYPE html>
-<html lang="${sessionScope.language}">
+<html lang="${sessionScope.locale.language}">
 <head>
     <meta content="text/html; charset=UTF-8">
     <title>

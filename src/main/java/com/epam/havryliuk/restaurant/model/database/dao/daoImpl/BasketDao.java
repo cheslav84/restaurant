@@ -7,7 +7,6 @@ import com.epam.havryliuk.restaurant.model.constants.queries.DishQuery;
 import com.epam.havryliuk.restaurant.model.database.dao.AbstractDao;
 import com.epam.havryliuk.restaurant.model.entity.*;
 import com.epam.havryliuk.restaurant.model.exceptions.DAOException;
-import com.epam.havryliuk.restaurant.model.exceptions.DuplicatedEntityException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,7 +19,7 @@ public class BasketDao extends AbstractDao<Basket> {
 
 
     @Override
-    public Basket create(Basket basket) throws DAOException, SQLIntegrityConstraintViolationException {// todo void
+    public Basket create(Basket basket) throws DAOException, SQLIntegrityConstraintViolationException {
         try (PreparedStatement stmt = connection.prepareStatement(BasketQuery.ADD_DISH_TO_BASKET)) {
             int k = 0;
             stmt.setLong(++k, basket.getOrder().getId());
@@ -64,17 +63,14 @@ public class BasketDao extends AbstractDao<Basket> {
 
 
     /**
-     * Method returns dishes, and dishes amount for corespondent dish in order consequently.
+     * Method returns list of Basket, that is: Order, Dish, dish price and dish amount.
      * If order is not confirmed yet (user just put it to his basket), will be displayed
      * the actual price of a dish. Otherwise, user will get the fixed price of a dish for the
      * moment of the confirmation an order.
-     * @param order
-     * @return
-     * @throws DAOException
      */
     public List<Basket> getOrderDishes(Order order) throws DAOException {
         List<Basket>  baskets = new ArrayList<>();
-        try (PreparedStatement stmt = connection.prepareStatement(DishQuery.FIND_ALL_BY_ORDER)) {//todo think
+        try (PreparedStatement stmt = connection.prepareStatement(DishQuery.FIND_ALL_BY_ORDER)) {
             stmt.setLong(1, order.getId());
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
@@ -88,8 +84,14 @@ public class BasketDao extends AbstractDao<Basket> {
         return baskets;
     }
 
+    /**
+     * Method maps Dish, dish amount and dish price from ResultSet.
+     * If BookingStatus is "Booking" - the order is not confirmed yet by user,
+     * then for Basket sets price from Dish table, otherwise, for Basket sets
+     * fixed price from table with baskets
+     */
     private Basket mapBasket(ResultSet rs, Order order) throws SQLException {
-        DishDao dishDao = new DishDao();//todo подумати... з BasketDao викликається DishDao
+        DishDao dishDao = new DishDao();
         Dish dish =  dishDao.mapDish(rs);
         int amount = rs.getInt(BasketFields.DISH_AMOUNT);
         BigDecimal price = rs.getBigDecimal(BasketFields.DISH_PRICE);

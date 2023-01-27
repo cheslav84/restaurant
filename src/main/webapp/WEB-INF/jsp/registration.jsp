@@ -10,8 +10,7 @@
     <title>
         <fmt:message key="registration.registration" />
     </title>
-    <meta
-        content="Easy Times is a Restaurant website Restaurant, Cafe including the presentation of menus, events, blogging functionality, multiple contact forms and more."
+    <meta content="V&H Victory is a Restaurant website Restaurant, Cafe including the presentation of menus"
         name="description">
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <meta content="Webflow" name="generator">
@@ -52,9 +51,7 @@
                             <div class="section-divider-line"></div>
                             <!-- LOGING IN -->
                             <form method="post" action="login" name="logInForm" data-name="Log in form">
-                                <%-- <vld:mail  id="Email-3" name="email">
-   </vld:mail> --%>
-                                    <input type="email" name="email" data-name="Email" 
+                                    <input type="email" name="email" data-name="Email"
                                         placeholder="<fmt:message key="registration.ph.email" />" 
                                         maxlength="32" required="true" class="field w-input" value="${sessionScope.email}">
                                         <div class="password-wrap">

@@ -1,6 +1,6 @@
 <%@ page isErrorPage="true" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="${sessionScope.language}">
+<html lang="${sessionScope.locale.language}">
 
 <head>
     <meta content="text/html; charset=UTF-8">
@@ -8,14 +8,10 @@
     <meta content="V&H Victory is a Restaurant website Restaurant, Cafe including the presentation of menus"
         name="description">
     <meta content="width=device-width, initial-scale=1" name="viewport">
-    <%-- <meta content="Webflow" name="generator"> --%>
-
         <link href="view/css/common.css" rel="stylesheet" type="text/css">
         <link href="view/css/menu.css" rel="stylesheet" type="text/css">
         <link href="view/css/sidebar.css" rel="stylesheet" type="text/css">
         <link href="view/css/order-info.css" rel="stylesheet" type="text/css">
-
-        <!-- <script src="view/js/menu.js" type="text/javascript"></script> -->
 
 </head>
 
@@ -43,15 +39,9 @@
 
     </div>
 
-
-
-
-
-
     <%-- <jsp:include page="footer.jsp" /> --%>
 
     <script src="view/js/jquery3.6.1.js" type="text/javascript" crossorigin="anonymous"></script>
-
 
 </body>
 
