@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 public abstract class AbstractDao<T extends Entity> {
-    private static final Logger log = LogManager.getLogger(AbstractDao.class);
+    private static final Logger LOG = LogManager.getLogger(AbstractDao.class);
 
     protected Connection connection;
 
@@ -33,7 +33,7 @@ public abstract class AbstractDao<T extends Entity> {
                 statement.close();
             }
         } catch (SQLException e) {
-            log.error("SQL exception while closing Statement.");
+            LOG.error("SQL exception while closing Statement.");
         }
     }
     public void setConnection(Connection connection) {

@@ -16,14 +16,14 @@ import java.sql.SQLException;
 import java.util.*;
 
 public class DishDao extends AbstractDao<Dish> {
-    private static final Logger log = LogManager.getLogger(DishDao.class);
+    private static final Logger LOG = LogManager.getLogger(DishDao.class);
 
     public List<Dish> findPresentsByCategory(Category category) throws DAOException {
         List<Dish> dishes = new ArrayList<>();
         try (PreparedStatement stmt = connection.prepareStatement(DishQuery.FIND_ALL_PRESENTS_BY_CATEGORY)) {
             getDishesByCategory(category, dishes, stmt);
         } catch (SQLException e) {
-            log.error("Error in getting list of dishes from database. ");
+            LOG.error("Error in getting list of dishes from database. ");
             throw new DAOException(e);
         }
         return dishes;
@@ -36,7 +36,7 @@ public class DishDao extends AbstractDao<Dish> {
                 dishes.add(mapDish(rs));
             }
         }
-        log.debug("List of dishes (by category) has been received from database. ");
+        LOG.debug("List of dishes (by category) has been received from database. ");
     }
 
     public List<Dish> getSortedByName() throws DAOException {
@@ -66,9 +66,9 @@ public class DishDao extends AbstractDao<Dish> {
                     dish = mapDish(rs);
                 }
             }
-            log.debug("The dish with \"id=" + id + "\" has been received from database.");
+            LOG.debug("The dish with \"id=" + id + "\" has been received from database.");
         } catch (SQLException e) {
-            log.error( "Error in getting dish from database. ", e);
+            LOG.error( "Error in getting dish from database. ", e);
             throw new DAOException(e);
         }
         return Optional.ofNullable(dish);
@@ -101,9 +101,9 @@ public class DishDao extends AbstractDao<Dish> {
             while (rs.next()) {
                 dishes.add(mapDish(rs));
             }
-            log.debug("List of dishes have been received from database.");
+            LOG.debug("List of dishes have been received from database.");
         } catch (SQLException e) {
-            log.error("Error in getting list of dishes from DB.", e);
+            LOG.error("Error in getting list of dishes from DB.", e);
             throw new DAOException(e);
         }
         return dishes;
@@ -129,9 +129,9 @@ public class DishDao extends AbstractDao<Dish> {
                     numberOfDishes = rs.getInt(DishFields.DISH_AMOUNT);
                 }
             }
-            log.debug("The number of dishes has been received from database.");
+            LOG.debug("The number of dishes has been received from database.");
         } catch (SQLException e) {
-            log.error( "Error in getting number of dishes from database. ", e);
+            LOG.error( "Error in getting number of dishes from database. ", e);
             throw new DAOException(e);
         }
         return numberOfDishes;
@@ -141,9 +141,9 @@ public class DishDao extends AbstractDao<Dish> {
         try (PreparedStatement stmt = connection.prepareStatement(DishQuery.CHANGE_DISHES_AMOUNT_BY_ORDERED_VALUES)) {
             stmt.setLong(1, orderId);
             stmt.executeUpdate();
-            log.debug("The amount of dishes has been successfully changed");
+            LOG.debug("The amount of dishes has been successfully changed");
         } catch (SQLException e) {
-            log.error("The amount of dishes has not been changed");
+            LOG.error("The amount of dishes has not been changed");
             throw new DAOException(e);
         }
         return true;
@@ -161,7 +161,7 @@ public class DishDao extends AbstractDao<Dish> {
                 }
             }
         } catch (SQLException e) {
-            log.error("Error in getting list of dishes from database. ");
+            LOG.error("Error in getting list of dishes from database. ");
             throw new DAOException(e);
         }
         return dishes;

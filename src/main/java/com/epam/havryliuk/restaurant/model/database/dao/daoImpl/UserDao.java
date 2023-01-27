@@ -18,7 +18,7 @@ import java.util.Optional;
 
 
 public class UserDao extends AbstractDao<User> {
-    private static final Logger log = LogManager.getLogger(UserDao.class);
+    private static final Logger LOG = LogManager.getLogger(UserDao.class);
 
 
     public User findByEmail(String email) throws DAOException {
@@ -26,9 +26,9 @@ public class UserDao extends AbstractDao<User> {
         try (PreparedStatement stmt = connection.prepareStatement(UserQuery.FIND_USER_BY_LOGIN)) {
             stmt.setString(1, email);
             user = extractUser(stmt);
-            log.debug("The \"" + user + "\" user received from database.");
+            LOG.debug("The \"" + user + "\" user received from database.");
         } catch (SQLException e) {
-            log.error("Error in getting user from database.", e);
+            LOG.error("Error in getting user from database.", e);
             throw new DAOException(e);
         }
         return user;
@@ -40,9 +40,9 @@ public class UserDao extends AbstractDao<User> {
           try (PreparedStatement stmt = connection.prepareStatement(UserQuery.FIND_USER_BY_ID)) {
             stmt.setLong(1, id);
             user = extractUser(stmt);
-            log.debug("The user with id \"" + id + "\" received from database.");
+            LOG.debug("The user with id \"" + id + "\" received from database.");
         } catch (SQLException e) {
-            log.error("Error in getting user with id from database.", e);
+            LOG.error("Error in getting user with id from database.", e);
             throw new DAOException(e);
         }
         return Optional.ofNullable(user);
@@ -71,10 +71,10 @@ public class UserDao extends AbstractDao<User> {
                     }
                 }
             }
-            log.debug("The \"" + user.getName() + "\" user has been added to database.");
+            LOG.debug("The \"" + user.getName() + "\" user has been added to database.");
         } catch (SQLException e) {
             String message = "Something went wrong. Try to sign in later please.";
-            log.error("Error in inserting user to database.", e);
+            LOG.error("Error in inserting user to database.", e);
             throw new DAOException(message, e);
         }
         return user;
@@ -88,9 +88,9 @@ public class UserDao extends AbstractDao<User> {
             while (rs.next()) {
                 users.add(mapUser(rs));
             }
-            log.debug("List of user have been received from database.");
+            LOG.debug("List of user have been received from database.");
         } catch (SQLException e) {
-            log.debug("Error in getting list of user from database.", e);
+            LOG.debug("Error in getting list of user from database.", e);
             throw new DAOException(e);
         }
         return users;
@@ -101,10 +101,10 @@ public class UserDao extends AbstractDao<User> {
         try ( PreparedStatement stmt = connection.prepareStatement(UserQuery.UPDATE_USER)) {
             setUserParameters(user, stmt);
             stmt.executeUpdate();
-            log.debug("The user with id \"" + user.getId() +
+            LOG.debug("The user with id \"" + user.getId() +
                     "\", has been successfully updated");
         } catch (SQLException e) {
-            log.error("The user has not been updated", e);
+            LOG.error("The user has not been updated", e);
             throw new DAOException(e);
         }
         return user;
@@ -115,9 +115,9 @@ public class UserDao extends AbstractDao<User> {
         try ( PreparedStatement stmt = connection.prepareStatement(UserQuery.DELETE_USER)) {
             stmt.setString(1, user.getEmail());
             stmt.executeUpdate();
-            log.debug("The user \"" + user.getName() + "\", has been successfully deleted.");
+            LOG.debug("The user \"" + user.getName() + "\", has been successfully deleted.");
         } catch (SQLException e) {
-            log.error("The user  has not been deleted.", e);
+            LOG.error("The user  has not been deleted.", e);
             throw new DAOException(e);
         }
         return true;
@@ -128,9 +128,9 @@ public class UserDao extends AbstractDao<User> {
         try ( PreparedStatement stmt = connection.prepareStatement(UserQuery.DELETE_USER_BY_ID)) {
             stmt.setLong(1, id);
             stmt.executeUpdate();
-            log.debug("The user with id \"" + id + "\", has been successfully deleted");
+            LOG.debug("The user with id \"" + id + "\", has been successfully deleted");
         } catch (SQLException e) {
-            log.error("The user has not been deleted.", e);
+            LOG.error("The user has not been deleted.", e);
             throw new DAOException(e);
         }
         return true;

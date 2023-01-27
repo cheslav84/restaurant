@@ -15,8 +15,7 @@ import java.sql.*;
 import java.util.*;
 
 public class BasketDao extends AbstractDao<Basket> {
-    private static final Logger log = LogManager.getLogger(BasketDao.class);
-
+    private static final Logger LOG = LogManager.getLogger(BasketDao.class);
 
     @Override
     public Basket create(Basket basket) throws DAOException, SQLIntegrityConstraintViolationException {
@@ -27,7 +26,7 @@ public class BasketDao extends AbstractDao<Basket> {
             stmt.setInt(++k, basket.getAmount());
             stmt.setBigDecimal(++k, basket.getFixedPrice());
             stmt.executeUpdate();
-            log.debug("Basket has been created.");
+            LOG.debug("Basket has been created.");
         } catch (SQLIntegrityConstraintViolationException e) {
             throw e;
         } catch (SQLException e) {
@@ -77,7 +76,7 @@ public class BasketDao extends AbstractDao<Basket> {
                     baskets.add(mapBasket(rs, order));
                 }
             }
-            log.debug("List of baskets has been received from database. ");
+            LOG.debug("List of baskets has been received from database. ");
         } catch (SQLException e) {
             throw new DAOException(e);
         }
@@ -112,7 +111,7 @@ public class BasketDao extends AbstractDao<Basket> {
                     dishes.put(dishName, dishesAmount);
                 }
             }
-            log.debug("Number of requested dishes has been receive from database.");
+            LOG.debug("Number of requested dishes has been receive from database.");
         } catch (SQLException e) {
             throw new DAOException(e);
         }
