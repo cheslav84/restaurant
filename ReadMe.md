@@ -13,7 +13,7 @@ the Manager passes the order for delivery. After delivery and receiving payment,
 the Manager changes the status of the order to "completed".
 
 ### Database Schema:
-![alt text](readMeSupport/database_representation.png "Database Schema")
+![alt text](JavaDoc/database_representation.png "Database Schema")
 
 
 ## Реалізація
