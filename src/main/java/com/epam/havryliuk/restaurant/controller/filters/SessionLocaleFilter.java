@@ -12,7 +12,7 @@ import java.util.Locale;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.LOCALE;
 
-@WebFilter(filterName = "SessionLocaleFilter", urlPatterns = { "/*" })
+@WebFilter(filterName = "SessionLocaleFilter", urlPatterns = {"/*"})
 public class SessionLocaleFilter implements Filter {
     private static final Logger LOG = LogManager.getLogger(SessionLocaleFilter.class);
 

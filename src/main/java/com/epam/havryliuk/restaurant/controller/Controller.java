@@ -15,7 +15,7 @@ import java.io.IOException;
 
 @WebServlet(name = "Controller", urlPatterns = {"/login_page", "/login", "/register", "/logout",
         "/index", "/menu/*", "/show_order_info", "/make_order", "/basket", "/remove_from_order",
-       "/set_next_status/*", "/manage_orders", "/add_dish_page"})
+        "/set_next_status/*", "/manage_orders", "/add_dish_page"})
 public class Controller extends HttpServlet {
     private static final Logger LOG = LogManager.getLogger(Controller.class);
 
@@ -23,10 +23,12 @@ public class Controller extends HttpServlet {
             throws IOException {
         processRequest(request, response);
     }
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         processRequest(request, response);
     }
+
     private void processRequest(HttpServletRequest request,
                                 HttpServletResponse response) throws IOException {
         CommandFactory client = new CommandFactory();

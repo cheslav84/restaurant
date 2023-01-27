@@ -32,7 +32,7 @@ public class LoginCommand implements Command {
     @SuppressWarnings("FieldMayBeFinal")
     private UserService userService;
 
-    public LoginCommand () {
+    public LoginCommand() {
         ApplicationServiceContext appContext = new ApplicationServiceContext();
         userService = appContext.getInstance(UserService.class);
     }

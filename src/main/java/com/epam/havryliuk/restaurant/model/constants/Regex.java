@@ -13,5 +13,4 @@ public interface Regex {
     String ADDRESS = "^[A-Za-zА-Яа-я\\d\\s.,/-]{13,100}$";
 
 
-
 }

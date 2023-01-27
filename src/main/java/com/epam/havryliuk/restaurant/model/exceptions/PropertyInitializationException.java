@@ -1,6 +1,6 @@
 package com.epam.havryliuk.restaurant.model.exceptions;
 
-public class PropertyInitializationException extends RuntimeException{
+public class PropertyInitializationException extends RuntimeException {
 
     public PropertyInitializationException() {
         super();

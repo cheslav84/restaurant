@@ -31,7 +31,8 @@ public class IndexCommand implements Command {
     private MenuResponseManager menuResponseManager;
     @SuppressWarnings("FieldMayBeFinal")
     private DishService dishService;
-    public IndexCommand () {
+
+    public IndexCommand() {
         ApplicationServiceContext appContext = new ApplicationServiceContext();
         dishService = appContext.getInstance(DishService.class);
         menuResponseManager = new MenuResponseManager();

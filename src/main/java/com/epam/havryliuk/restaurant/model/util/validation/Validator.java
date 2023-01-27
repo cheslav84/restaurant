@@ -14,7 +14,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
-import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.DELIVERY_PHONE;
 
 public class Validator {
 
@@ -23,6 +22,7 @@ public class Validator {
      * ValidationException will be thrown, and correspondent message set to HttpSession
      * (in case the checkbox or password data is invalid), or message can be set directly to user
      * String fields for displaying that massage on proper place, for example in HTML input fields.
+     *
      * @param user User that data of which has to be validated.
      * @throws ValidationException in case some data is invalid.
      */
@@ -30,28 +30,28 @@ public class Validator {
         HttpSession session = req.getSession();
         BundleManager bundleManager = BundleManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());
         boolean correctFields = true;
-        if(!user.getGender().equalsIgnoreCase(RequestParameters.MALE) &&
-                !user.getGender().equalsIgnoreCase(RequestParameters.FEMALE)){
+        if (!user.getGender().equalsIgnoreCase(RequestParameters.MALE) &&
+                !user.getGender().equalsIgnoreCase(RequestParameters.FEMALE)) {
             String message = bundleManager.getProperty(ResponseMessages.WRONG_GENDER_FIELD);
             session.setAttribute(REGISTRATION_ERROR_MESSAGE, message);
             correctFields = false;
         }
-        if(!regexChecker(user.getName(), Regex.NAME)){
+        if (!regexChecker(user.getName(), Regex.NAME)) {
             String message = bundleManager.getProperty(ResponseMessages.WRONG_NAME_FIELD);
             user.setName(message);
             correctFields = false;
         }
-        if(!regexChecker(user.getSurname(), Regex.NAME)){
+        if (!regexChecker(user.getSurname(), Regex.NAME)) {
             String message = bundleManager.getProperty(ResponseMessages.WRONG_SURNAME_FIELD);
             user.setSurname(message);
             correctFields = false;
         }
-        if(!regexChecker(user.getEmail(), Regex.EMAIL)){
+        if (!regexChecker(user.getEmail(), Regex.EMAIL)) {
             String message = bundleManager.getProperty(ResponseMessages.WRONG_EMAIL_FIELD);
             user.setEmail(message);
             correctFields = false;
         }
-        if(!regexChecker(user.getPassword(), Regex.PASSWORD)){
+        if (!regexChecker(user.getPassword(), Regex.PASSWORD)) {
             String message = bundleManager.getProperty(ResponseMessages.WRONG_PASSWORD_FIELD);
             session.setAttribute(REGISTRATION_ERROR_MESSAGE, message);
             correctFields = false;
@@ -68,7 +68,7 @@ public class Validator {
     }
 
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-    private boolean regexChecker (String toCheck, String regex) {
+    private boolean regexChecker(String toCheck, String regex) {
         Pattern regexPattern = Pattern.compile(regex);
         Matcher regexMatcher = regexPattern.matcher(toCheck);
         return regexMatcher.matches();
@@ -79,31 +79,32 @@ public class Validator {
         HttpSession session = req.getSession();
         BundleManager bundleManager = BundleManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());
         boolean correctFields = true;
-        if(!regexChecker(deliveryAddress, Regex.ADDRESS)){
+        if (!regexChecker(deliveryAddress, Regex.ADDRESS)) {
             session.setAttribute(ORDER_MESSAGE,
                     bundleManager.getProperty(ResponseMessages.INCORRECT_DELIVERY_ADDRESS));
             correctFields = false;
         }
         session.setAttribute(DELIVERY_ADDRESS, deliveryAddress);
         deliveryPhone = deliveryPhone.replaceAll("[\\s()-]", "");
-        if(!regexChecker(deliveryPhone, Regex.PHONE)) {
+        if (!regexChecker(deliveryPhone, Regex.PHONE)) {
             session.setAttribute(ORDER_MESSAGE,
                     bundleManager.getProperty(ResponseMessages.INCORRECT_DELIVERY_PHONE));
             correctFields = false;
         }
         session.setAttribute(DELIVERY_PHONE, deliveryPhone);
-        if (!correctFields){
+        if (!correctFields) {
             throw new ValidationException("The delivery data is incorrect.");
         }
     }
 
     public void validateDishesAmount(int dishesAmount, HttpServletRequest req) throws ValidationException {
-        if ((dishesAmount <= 0)){
+        if ((dishesAmount <= 0)) {
             HttpSession session = req.getSession();
             BundleManager bundleManager = BundleManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());
             session.setAttribute(ERROR_MESSAGE,
                     bundleManager.getProperty(ResponseMessages.INCORRECT_NUMBER_OF_DISHES_ERROR));
-            throw new ValidationException("The number of dishes is incorrect.");        }
+            throw new ValidationException("The number of dishes is incorrect.");
+        }
     }
 
 }

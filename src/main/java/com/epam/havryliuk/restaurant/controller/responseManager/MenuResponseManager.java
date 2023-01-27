@@ -33,6 +33,7 @@ public class MenuResponseManager {
      * in request will be null, and user haven't visited that page before,
      * the attribute MENU_CATEGORY in session is null than method sets
      * the default category.
+     *
      * @param req HttpServletRequest from user.
      * @return Category of menu that will be displayed for client.
      */
@@ -54,15 +55,16 @@ public class MenuResponseManager {
      * dish information on jsp page when user clicked the button
      * to display it, and removes that attribute telling to hide
      * that menu when user reload page.
+     *
      * @param req HttpServletRequest from user.
      */
-    public void setOrderInfoAttribute(HttpServletRequest req)  {
+    public void setOrderInfoAttribute(HttpServletRequest req) {
         HttpSession session = req.getSession();
-        if (session.getAttribute(SHOW_DISH_INFO) != null){
+        if (session.getAttribute(SHOW_DISH_INFO) != null) {
             if (req.getAttribute(SHOW_DISH_INFO) == null) {
                 req.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
                 LOG.debug("Order information going to be displayed.");
-            } else  {
+            } else {
                 req.removeAttribute(SHOW_DISH_INFO);
                 LOG.debug("Order information going to be hide.");
             }

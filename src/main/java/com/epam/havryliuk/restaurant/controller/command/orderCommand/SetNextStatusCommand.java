@@ -38,10 +38,9 @@ public class SetNextStatusCommand implements Command {
         bookingAccessRoles = getBookingAccessRoles();
     }
 
-    public SetNextStatusCommand () {
+    public SetNextStatusCommand() {
         ApplicationServiceContext appContext = new ApplicationServiceContext();
         orderService = appContext.getInstance(OrderService.class);
-        System.out.println(orderService);
     }
 
     /**
@@ -57,7 +56,7 @@ public class SetNextStatusCommand implements Command {
         BundleManager bundleManager = BundleManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());
         try {
             BookingStatus nextBookingStatus = getNextBookingStatus(request);
-            checkAccessRights(session, nextBookingStatus);//todo подумати, може зробити через фільтр
+            checkAccessRights(session, nextBookingStatus);
             orderService.changeOrderStatus(orderId, nextBookingStatus);
             session.removeAttribute(CURRENT_ORDER);
         } catch (EntityNotFoundException e) {
@@ -78,10 +77,11 @@ public class SetNextStatusCommand implements Command {
 
     /**
      * Checks if user has the rights to change the order status.
+     *
      * @param nextBookingStatus Booking status that needs to be set as next Status
      * @throws AuthenticationException when user doesn't have right to change it, for example
-     * if User Role is Manager than he can't change Booking status from "Booking" to "New", or
-     * if User Role is User, Status also can't be changed from "New" to "Cooking", and so on.
+     *                                 if User Role is Manager than he can't change Booking status from "Booking" to "New", or
+     *                                 if User Role is User, Status also can't be changed from "New" to "Cooking", and so on.
      */
     private void checkAccessRights(HttpSession session, BookingStatus nextBookingStatus) throws AuthenticationException {
         User user = (User) session.getAttribute(LOGGED_USER);

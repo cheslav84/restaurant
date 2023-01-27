@@ -29,16 +29,6 @@ public class DishDao extends AbstractDao<Dish> {
         return dishes;
     }
 
-    private void getDishesByCategory(Category category, List<Dish> dishes, PreparedStatement stmt) throws SQLException {
-        stmt.setString(1, category.name());
-        try (ResultSet rs = stmt.executeQuery()) {
-            while (rs.next()) {
-                dishes.add(mapDish(rs));
-            }
-        }
-        LOG.debug("List of dishes (by category) has been received from database. ");
-    }
-
     public List<Dish> getSortedByName() throws DAOException {
         return getDishes(DishQuery.FIND_ALL_AVAILABLE_ORDERED_BY_NAME);
     }
@@ -49,11 +39,6 @@ public class DishDao extends AbstractDao<Dish> {
 
     public List<Dish> getSortedByCategory() throws DAOException {
         return getDishes(DishQuery.FIND_ALL_AVAILABLE_ORDERED_BY_CATEGORY);
-    }
-
-    @Override
-    public Dish create(Dish dish) {
-        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -68,56 +53,10 @@ public class DishDao extends AbstractDao<Dish> {
             }
             LOG.debug("The dish with \"id=" + id + "\" has been received from database.");
         } catch (SQLException e) {
-            LOG.error( "Error in getting dish from database. ", e);
+            LOG.error("Error in getting dish from database. ", e);
             throw new DAOException(e);
         }
         return Optional.ofNullable(dish);
-    }
-
-    @Override
-    public List<Dish> findAll() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Dish update(Dish entity) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean delete(Dish entity) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean delete(long id) {
-        throw new UnsupportedOperationException();
-    }
-
-    private List<Dish> getDishes(String query) throws DAOException {
-        List<Dish> dishes = new ArrayList<>();
-        try ( PreparedStatement stmt = connection.prepareStatement(query);
-             ResultSet rs = stmt.executeQuery()) {
-            while (rs.next()) {
-                dishes.add(mapDish(rs));
-            }
-            LOG.debug("List of dishes have been received from database.");
-        } catch (SQLException e) {
-            LOG.error("Error in getting list of dishes from DB.", e);
-            throw new DAOException(e);
-        }
-        return dishes;
-    }
-
-    Dish mapDish(ResultSet rs) throws SQLException {// todo mapper
-        long id = rs.getLong(DishFields.DISH_ID);
-        String name = rs.getString(DishFields.DISH_NAME);
-        String description = rs.getString(DishFields.DISH_DESCRIPTION);
-        int weight = rs.getInt(DishFields.DISH_WEIGHT);
-        BigDecimal price = rs.getBigDecimal(DishFields.DISH_PRICE);
-        int amount = rs.getInt(DishFields.DISH_AMOUNT);
-        String image = rs.getString(DishFields.DISH_IMAGE);
-        return Dish.getInstance(id, name, description, weight, price, amount, image);
     }
 
     public int getNumberOfAllDishesInOrder(Dish dish) throws DAOException {
@@ -131,7 +70,7 @@ public class DishDao extends AbstractDao<Dish> {
             }
             LOG.debug("The number of dishes has been received from database.");
         } catch (SQLException e) {
-            LOG.error( "Error in getting number of dishes from database. ", e);
+            LOG.error("Error in getting number of dishes from database. ", e);
             throw new DAOException(e);
         }
         return numberOfDishes;
@@ -153,8 +92,8 @@ public class DishDao extends AbstractDao<Dish> {
         Map<String, Integer> dishes = new HashMap<>();
         try (PreparedStatement stmt = connection.prepareStatement(DishQuery.GET_NUMBER_OF_EACH_DISH_IN_ORDER)) {
             stmt.setLong(1, orderId);
-            try(ResultSet rs = stmt.executeQuery()){
-                while (rs.next()){
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
                     String dishName = rs.getString(DishFields.DISH_NAME);
                     int dishesAmount = rs.getInt(DishFields.DISH_AMOUNT);
                     dishes.put(dishName, dishesAmount);
@@ -165,6 +104,67 @@ public class DishDao extends AbstractDao<Dish> {
             throw new DAOException(e);
         }
         return dishes;
+    }
+
+    Dish mapDish(ResultSet rs) throws SQLException {
+        long id = rs.getLong(DishFields.DISH_ID);
+        String name = rs.getString(DishFields.DISH_NAME);
+        String description = rs.getString(DishFields.DISH_DESCRIPTION);
+        int weight = rs.getInt(DishFields.DISH_WEIGHT);
+        BigDecimal price = rs.getBigDecimal(DishFields.DISH_PRICE);
+        int amount = rs.getInt(DishFields.DISH_AMOUNT);
+        String image = rs.getString(DishFields.DISH_IMAGE);
+        return Dish.getInstance(id, name, description, weight, price, amount, image);
+    }
+
+    private void getDishesByCategory(Category category, List<Dish> dishes, PreparedStatement stmt) throws SQLException {
+        stmt.setString(1, category.name());
+        try (ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                dishes.add(mapDish(rs));
+            }
+        }
+        LOG.debug("List of dishes (by category) has been received from database. ");
+    }
+
+    private List<Dish> getDishes(String query) throws DAOException {
+        List<Dish> dishes = new ArrayList<>();
+        try (PreparedStatement stmt = connection.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                dishes.add(mapDish(rs));
+            }
+            LOG.debug("List of dishes have been received from database.");
+        } catch (SQLException e) {
+            LOG.error("Error in getting list of dishes from DB.", e);
+            throw new DAOException(e);
+        }
+        return dishes;
+    }
+
+    @Override
+    public Dish create(Dish dish) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public List<Dish> findAll() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Dish update(Dish entity) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean delete(Dish entity) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean delete(long id) {
+        throw new UnsupportedOperationException();
     }
 
 }

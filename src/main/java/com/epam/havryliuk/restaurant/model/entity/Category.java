@@ -7,12 +7,12 @@ package com.epam.havryliuk.restaurant.model.entity;
  * at the same time.
  */
 public enum Category implements Entity {
-    COFFEE (1),// todo set such id in database
-    LUNCH (2),
-    DINER (3),
-    DRINKS (4),
-    SPECIALS (5),
-    ALL (6);
+    COFFEE(1),
+    LUNCH(2),
+    DINER(3),
+    DRINKS(4),
+    SPECIALS(5),
+    ALL(6);
 
     Category(final long id) {
         this.id = id;
@@ -24,7 +24,7 @@ public enum Category implements Entity {
         return id;
     }
 
-    public static Category getCategory (long id) {
+    public static Category getCategory(long id) {
 
         return Category.values()[(int) id - 1];
     }

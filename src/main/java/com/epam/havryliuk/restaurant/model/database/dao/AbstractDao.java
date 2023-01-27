@@ -20,11 +20,16 @@ public abstract class AbstractDao<T extends Entity> {
     public AbstractDao() {
     }
 
-    public abstract  T create(T entity) throws DAOException, SQLIntegrityConstraintViolationException;
+    public abstract T create(T entity) throws DAOException, SQLIntegrityConstraintViolationException;
+
     public abstract Optional<T> findById(long id) throws DAOException;
+
     public abstract List<T> findAll() throws DAOException;
+
     public abstract T update(T entity) throws DAOException;
+
     public abstract boolean delete(T entity) throws DAOException;
+
     public abstract boolean delete(long id) throws DAOException;
 
     public void close(Statement statement) {
@@ -36,6 +41,7 @@ public abstract class AbstractDao<T extends Entity> {
             LOG.error("SQL exception while closing Statement.");
         }
     }
+
     public void setConnection(Connection connection) {
         this.connection = connection;
     }

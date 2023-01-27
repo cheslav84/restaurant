@@ -22,7 +22,6 @@ import java.math.BigDecimal;
 import java.util.*;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
-import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.ERROR_MESSAGE;
 
 /**
  * Command to show the user orders page and list of orders in it. With orders for user
@@ -31,10 +30,10 @@ import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.ER
  */
 public class BasketCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(BasketCommand.class);
-    @SuppressWarnings({"FieldMayBeFinal"})
+    @SuppressWarnings("FieldMayBeFinal")
     private OrderService orderService;
 
-    public BasketCommand () {
+    public BasketCommand() {
         ApplicationServiceContext appContext = new ApplicationServiceContext();
         orderService = appContext.getInstance(OrderService.class);
     }
@@ -70,6 +69,7 @@ public class BasketCommand implements Command {
 
     /**
      * Method checks if any order is present in list that have been received from storage.
+     *
      * @throws EntityNotFoundException if the list is empty.
      */
     private void checkIfOrdersPresent(List<Order> orders) throws EntityNotFoundException {

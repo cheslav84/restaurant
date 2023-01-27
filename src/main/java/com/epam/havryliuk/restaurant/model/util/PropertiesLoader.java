@@ -16,6 +16,7 @@ public class PropertiesLoader {
 
     /**
      * Method creates the instance of Properties and loads to it the properties from file.
+     *
      * @param propertiesFileName String representing a propertiesFileName to properties file
      * @return Properties that loaded from corresponding file.
      * @throws PropertyInitializationException if the properties could not be loaded from file.

@@ -10,7 +10,6 @@ import com.epam.havryliuk.restaurant.model.util.BundleManager;
 import com.epam.havryliuk.restaurant.model.service.DishService;
 import com.epam.havryliuk.restaurant.model.util.URLUtil;
 import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -32,7 +31,7 @@ public class OrderInfoCommand implements Command {
     @SuppressWarnings("FieldMayBeFinal")
     private DishService dishService;
 
-    public OrderInfoCommand () {
+    public OrderInfoCommand() {
         ApplicationServiceContext appContext = new ApplicationServiceContext();
         dishService = appContext.getInstance(DishService.class);
     }

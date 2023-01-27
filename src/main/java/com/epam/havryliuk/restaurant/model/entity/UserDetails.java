@@ -2,14 +2,13 @@ package com.epam.havryliuk.restaurant.model.entity;
 
 import java.util.Date;
 
-public class UserDetails{
+public class UserDetails {
     private Date birthDate;
     private String passport;
     private String bankAccount;
 
 
-
-    public static UserDetails getInstance(Date birthDate, String passport, String bankAccount ) {
+    public static UserDetails getInstance(Date birthDate, String passport, String bankAccount) {
         UserDetails userDetails = new UserDetails();
         userDetails.setBirthDate(birthDate);
         userDetails.setPassport(passport);
@@ -42,13 +41,12 @@ public class UserDetails{
     }
 
 
+    @SuppressWarnings("EqualsReplaceableByObjectsCall")
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         UserDetails that = (UserDetails) o;
-
         if (birthDate != null ? !birthDate.equals(that.birthDate) : that.birthDate != null) return false;
         if (passport != null ? !passport.equals(that.passport) : that.passport != null) return false;
         return bankAccount != null ? bankAccount.equals(that.bankAccount) : that.bankAccount == null;

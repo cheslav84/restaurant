@@ -30,10 +30,11 @@ public class UploadPictureCommand implements Command {
     @SuppressWarnings("FieldMayBeFinal")
     private DishService dishService;
 
-    public UploadPictureCommand () {
+    public UploadPictureCommand() {
         ApplicationServiceContext appContext = new ApplicationServiceContext();
         dishService = appContext.getInstance(DishService.class);
     }
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         Category currentMenu = getCurrentMenu(request);
@@ -68,12 +69,12 @@ public class UploadPictureCommand implements Command {
         return Category.valueOf(currentMenu);
     }
 
-    private void hideOrderInfoOnReloadPage(HttpServletRequest req)  {
+    private void hideOrderInfoOnReloadPage(HttpServletRequest req) {
         HttpSession session = req.getSession();
-        if (session.getAttribute(SHOW_DISH_INFO) != null){
+        if (session.getAttribute(SHOW_DISH_INFO) != null) {
             if (req.getAttribute(SHOW_DISH_INFO) == null) {
                 req.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
-            } else  {
+            } else {
                 req.removeAttribute(SHOW_DISH_INFO);
             }
             session.removeAttribute(SHOW_DISH_INFO);

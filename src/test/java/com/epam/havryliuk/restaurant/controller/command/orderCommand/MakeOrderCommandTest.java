@@ -11,7 +11,6 @@ import com.epam.havryliuk.restaurant.model.exceptions.ValidationException;
 import com.epam.havryliuk.restaurant.model.service.OrderService;
 import com.epam.havryliuk.restaurant.model.util.validation.Validator;
 import com.epam.havryliuk.restaurant.model.util.URLUtil;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -52,7 +51,7 @@ class MakeOrderCommandTest {
     }
 
     @Test
-    void executeOrderInSessionRedirectionToBasket() throws ServletException, IOException {
+    void executeOrderInSessionRedirectionToBasket() throws IOException {
         String deliveryAddress = "Kyiv";
         String deliveryPhone = "0961150084";
         String dishesAmount = "2";
@@ -73,7 +72,7 @@ class MakeOrderCommandTest {
     }
 
     @Test
-    void executeOrderIsNotInSessionRedirectionToBasket() throws ValidationException, ServiceException, ServletException, IOException {
+    void executeOrderIsNotInSessionRedirectionToBasket() throws ValidationException, ServiceException, IOException {
         String deliveryAddress = "Kyiv";
         String deliveryPhone = "0961150084";
         String dishesAmount = "2";
@@ -100,7 +99,7 @@ class MakeOrderCommandTest {
 
 
     @Test
-    void executeContinueWhenButtonContinuePressed() throws ValidationException, ServiceException, ServletException, IOException {
+    void executeContinueWhenButtonContinuePressed() throws ValidationException, ServiceException, IOException {
         String deliveryAddress = "Kyiv";
         String deliveryPhone = "0961150084";
         String continueOrderParameter = "continue";
@@ -130,7 +129,7 @@ class MakeOrderCommandTest {
     }
 
     @Test
-    void executeContinueWhenDishNotFound() throws ValidationException, ServiceException, ServletException, IOException {
+    void executeContinueWhenDishNotFound() throws ValidationException, ServiceException, IOException {
         String deliveryAddress = "Kyiv";
         String deliveryPhone = "0961150084";
         String redirectionPage = "samePage";

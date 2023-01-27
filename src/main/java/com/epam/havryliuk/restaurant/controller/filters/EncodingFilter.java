@@ -8,9 +8,9 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
-@WebFilter(filterName = "EncodingFilter", urlPatterns = { "/*" },
+@WebFilter(filterName = "EncodingFilter", urlPatterns = {"/*"},
         initParams = {
-                @WebInitParam(name = "encoding", value = "UTF-8", description = "Encoding Param") })
+                @WebInitParam(name = "encoding", value = "UTF-8", description = "Encoding Param")})
 public class EncodingFilter implements Filter {
     private static final Logger LOG = LogManager.getLogger(EncodingFilter.class);
 

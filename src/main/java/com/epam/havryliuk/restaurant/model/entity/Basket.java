@@ -53,6 +53,7 @@ public class Basket implements Entity {
         this.amount = amount;
     }
 
+    @SuppressWarnings("EqualsReplaceableByObjectsCall")
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

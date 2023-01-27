@@ -2,7 +2,7 @@ package com.epam.havryliuk.restaurant.model.entity;
 
 import java.util.*;
 
-public class Order implements Entity{
+public class Order implements Entity {
     private Long id;
     private String address;
     private String phoneNumber;
@@ -14,18 +14,14 @@ public class Order implements Entity{
     private List<Basket> baskets;
 
 
-
-
     public static Order getInstance(String address,
                                     String phoneNumber,
                                     boolean isPayed,
-//                                    User user,
                                     BookingStatus bookingStatus) {
         Order order = new Order();
         order.setAddress(address);
         order.setPhoneNumber(phoneNumber);
         order.setPayed(isPayed);
-//        order.setUser(user);
         order.setBookingStatus(bookingStatus);
         order.setBaskets(new ArrayList<>());
         return order;
@@ -39,13 +35,12 @@ public class Order implements Entity{
                                     Date creationDate,
                                     Date closeDate,
                                     BookingStatus bookingStatus) {
-        Order order =getInstance( address, phoneNumber, isPayed, bookingStatus);
+        Order order = getInstance(address, phoneNumber, isPayed, bookingStatus);
         order.setId(id);
         order.setCreationDate(creationDate);
         order.setCloseDate(closeDate);
         return order;
     }
-
 
 
     public Long getId() {
@@ -89,9 +84,9 @@ public class Order implements Entity{
         this.creationDate = creationDate;
     }
 
-    public Date getCloseDate() {
-        return closeDate;
-    }
+//    public Date getCloseDate() {
+//        return closeDate;
+//    }
 
     public void setCloseDate(Date closeDate) {
         this.closeDate = closeDate;
@@ -122,13 +117,12 @@ public class Order implements Entity{
     }
 
 
+    @SuppressWarnings("EqualsReplaceableByObjectsCall")
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Order order = (Order) o;
-
         if (isPayed != order.isPayed) return false;
         if (id != null ? !id.equals(order.id) : order.id != null) return false;
         if (address != null ? !address.equals(order.address) : order.address != null) return false;

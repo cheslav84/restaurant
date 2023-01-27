@@ -21,6 +21,7 @@ public class DishService implements Service {
 
     /**
      * Method receives list of Dishes that belongs to a certain Category.
+     *
      * @param category of which list of Dishes should be received.
      * @return Dishes list of certain Category.
      * @throws ServiceException when some Exception occurs during receiving list of Dishes from a storage.
@@ -42,6 +43,7 @@ public class DishService implements Service {
 
     /**
      * Receives the Dish by its id from the storage.
+     *
      * @param dishId id of the Dish that is need to be received.
      * @return Dish from storage that is got by dish id.
      * @throws ServiceException while an Exception occurs in getting a dish from a storage.
@@ -61,6 +63,7 @@ public class DishService implements Service {
 
     /**
      * Method receives the list of Dishes from a storage ordered by name, price or category.
+     *
      * @param sortParameter that list of Dishes has to be sorted by.
      * @return list of Dishes that is sorted by name, price or category.
      * @throws ServiceException when some Exception occurs during receiving list of Dishes from a storage.

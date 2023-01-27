@@ -80,7 +80,7 @@ public class EntityTransaction {
         try {
             connection.rollback();
         } catch (SQLException e) {
-            LOG.error("Error in rolling back changes." , e);
+            LOG.error("Error in rolling back changes.", e);
         }
     }
 

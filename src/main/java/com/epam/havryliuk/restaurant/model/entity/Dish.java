@@ -10,10 +10,7 @@ public class Dish implements Entity {
     private BigDecimal price;
     private int amount;
 
-    private boolean spirits;// todo add field
-
     private String image;
-//    private Category category;
 
     public Dish() {
     }
@@ -92,6 +89,7 @@ public class Dish implements Entity {
         this.image = image;
     }
 
+    @SuppressWarnings("EqualsReplaceableByObjectsCall")
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -100,7 +98,6 @@ public class Dish implements Entity {
         Dish dish = (Dish) o;
 
         if (id != dish.id) return false;
-        if (spirits != dish.spirits) return false;
         return name != null ? name.equals(dish.name) : dish.name == null;
     }
 
@@ -108,7 +105,6 @@ public class Dish implements Entity {
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (spirits ? 1 : 0);
         return result;
     }
 
@@ -121,7 +117,7 @@ public class Dish implements Entity {
                 ", price=" + price +
                 ", amount=" + amount +
                 ", image='" + image + '\'' +
-                '}' + "\n" ;
+                '}' + "\n";
     }
 
 }

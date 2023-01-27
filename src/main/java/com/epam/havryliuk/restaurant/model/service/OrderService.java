@@ -36,16 +36,17 @@ public class OrderService implements Service {
      * occurs during these operations, the transaction performs "rollback" and nothing be change in storage.
      * If it needs to do the following BookingStatus changes (from NEW to COOKING, etc.), BookingStatus changes
      * just for demonstration without any additional control.
-     * @param orderId - id of the Order that status has to be changed.
+     *
+     * @param orderId   - id of the Order that status has to be changed.
      * @param newStatus - new BookingStatus that has to be set in the Order.
-     * @throws ServiceException when impossible to make changes in storage.
+     * @throws ServiceException        when impossible to make changes in storage.
      * @throws EntityNotFoundException the child of ServiceException, throws if the requested amount any of
-     * dishes are more that presented dishes in menu.
+     *                                 dishes are more that presented dishes in menu.
      */
     public void changeOrderStatus(long orderId, BookingStatus newStatus) throws ServiceException {
         try {
             transaction.initTransaction(orderDao, dishDao, basketDao);
-            if(isOrderInConfirmingProcess(newStatus)) {
+            if (isOrderInConfirmingProcess(newStatus)) {
                 checkDishesIfPresent(dishDao, basketDao, orderId);
                 dishDao.updateDishesAmountByOrderedValues(orderId);
             }
@@ -64,6 +65,7 @@ public class OrderService implements Service {
     /**
      * Method gets the list of user Order from storage, that sorted by
      * creation time of that Order. For every Order method set list of Baskets.
+     *
      * @param user - current user in session.
      * @return list of orders that belong to current User.
      * @throws ServiceException when impossible to get data from storage.
@@ -91,9 +93,10 @@ public class OrderService implements Service {
      * the total numbers of Orders (noOfRecords). Then receives appropriate list of
      * Orders that need to be displayed in user page, and set corresponding information
      * to the Page.
-     * @param page - number of current Page that displays Order list for User.
+     *
+     * @param page           - number of current Page that displays Order list for User.
      * @param recordsPerPage - orders amount that has to be displayed per page.
-     * @param sorting - sorting parameter. Orders can be sorted by date or status.
+     * @param sorting        - sorting parameter. Orders can be sorted by date or status.
      * @return Page of Orders that has to be displayed in one user page.
      * @throws ServiceException when impossible to get data.
      */
@@ -128,19 +131,20 @@ public class OrderService implements Service {
      * creates a new one from data that received from the user side (delivery address, delivery phone).
      * As that order is new, then payment status is set to false, and the BookingStatus is "BOOKING".
      * Other data, like id and creation is formed by storage.
-     * @param user current User in session.
+     * @param user            current User in session.
      * @param deliveryAddress the address that Order needs to be delivered to.
-     * @param deliveryPhone the contact phone number.
+     * @param deliveryPhone   the contact phone number.
      * @return an Order, from storage if it exists in it, or the new one.
-     * @throws ServiceException when impossible to get data from storage or to write data to it.
+     * @throws ServiceException    when impossible to get data from storage or to write data to it.
      * @throws ValidationException when delivery address or delivery phone is not valid.
      */
-    public Order getOrCreateOrder(User user, String deliveryAddress, String deliveryPhone) throws ServiceException, ValidationException {
+    public Order getOrCreateOrder(User user, String deliveryAddress, String deliveryPhone)
+            throws ServiceException, ValidationException {
         Order order;
         try {
             transaction.initTransaction(orderDao);
             order = orderDao.geByUserAddressStatus(user, deliveryAddress, BookingStatus.BOOKING);
-            if(order != null) {
+            if (order != null) {
                 order.setUser(user);
                 LOG.debug("Order has been received: " + order);
             } else {
@@ -165,12 +169,13 @@ public class OrderService implements Service {
     /**
      * Method checks whether dishes that user wants to order are available in menu (checkAvailableDishes),
      * if it is, creates a Basket and adds it to the Order list.
-     * @param order - current user Order.
-     * @param dish that user wants to order.
+     *
+     * @param order               - current user Order.
+     * @param dish                that user wants to order.
      * @param dishesAmountInOrder - amount of dishes that user wants to order.
-     * @throws ServiceException when impossible to get data from storage or to write data to it.
+     * @throws ServiceException          when impossible to get data from storage or to write data to it.
      * @throws DuplicatedEntityException when dish is already exists in that order.
-     * @throws IrrelevantDataException when the amount of requested dishes exceed available ones in menu.
+     * @throws IrrelevantDataException   when the amount of requested dishes exceed available ones in menu.
      */
     public void addDishToOrder(Order order, Dish dish, int dishesAmountInOrder)
             throws ServiceException, DuplicatedEntityException {
@@ -181,7 +186,7 @@ public class OrderService implements Service {
             basket = basketDao.create(basket);
             List<Basket> baskets = order.getBaskets();
             baskets.add(basket);
-            transaction.commit(); // todo виконується без комміту.. з'ясувати
+            transaction.commit();
             LOG.debug("A dish has been added to the order.");
         } catch (SQLIntegrityConstraintViolationException e) {
             transaction.rollback();
@@ -190,8 +195,7 @@ public class OrderService implements Service {
         } catch (DAOException e) {
             transaction.rollback();
             throw new ServiceException(e.getMessage(), e);
-        }
-        finally {
+        } finally {
             transaction.endTransaction();
         }
     }
@@ -199,15 +203,16 @@ public class OrderService implements Service {
     /**
      * Method removes dishes from order. If it remains the only one dish in an order,
      * then order will be removed completely.
+     *
      * @param orderId Order id received from the user.
-     * @param dishId Dish id received from the user.
+     * @param dishId  Dish id received from the user.
      * @throws ServiceException when impossible to get or to delete data from storage.
      */
     public void removeDishFromOrder(long orderId, long dishId) throws ServiceException {
         try {
             transaction.init(orderDao);
             int dishesInOrder = orderDao.findDishesNumberInOrder(orderId);
-            if (dishesInOrder == 1) {//todo check such data in all methods
+            if (dishesInOrder == 1) {
                 orderDao.delete(orderId);
             } else if (dishesInOrder > 1) {
                 orderDao.deleteDishFromOrderById(orderId, dishId);
@@ -230,9 +235,10 @@ public class OrderService implements Service {
      * RequestedDishes - gets the requested amounts and names of the dishes within an order.
      * PresentDishes - gets the actual amounts and names of the dishes within an order that are presents in menu.
      * If the requested amount any of dishes are more that presented dishes in menu, method th
+     *
      * @param orderId id of user Order.
      * @throws EntityNotFoundException If the requested amount any of dishes are more that presented dishes in menu,
-     * method throws the EntityAbsentException with the list of absent dishes in its message.
+     *                                 method throws the EntityAbsentException with the list of absent dishes in its message.
      */
     private void checkDishesIfPresent(DishDao dishDao, BasketDao basketDao, long orderId) throws EntityNotFoundException, DAOException {
         Map<String, Integer> requestedDishes = basketDao.getNumberOfRequestedDishesInOrder(orderId);
@@ -246,13 +252,14 @@ public class OrderService implements Service {
         if (absentDishesList.size() != 0) {
             String absentDishes = "\"" + String.join("\", \"", absentDishesList) + "\"";
             LOG.debug("Some of dishes are not present.");
-            throw new EntityNotFoundException(absentDishes); //todo наскільки коректно через exception передавати повідомлення на view?
+            throw new EntityNotFoundException(absentDishes);
         }
     }
 
 
     /**
      * Method checks if the user wants to confirm order (the status has to be set from BOOKING to NEW).
+     *
      * @param newStatus - new BookingStatus that has to be set in the Order.
      * @return true if the BookingStatus that has to be set is "NEW". Otherwise, return false.
      */
@@ -263,9 +270,10 @@ public class OrderService implements Service {
     /**
      * Method gets receives the number of available dishes in menu, and compares it with the request
      * amount of dishes.
-     * @param dish that user wants to order.
+     *
+     * @param dish                that user wants to order.
      * @param dishesAmountInOrder - amount of dishes that user wants to order.
-     * @throws DAOException when impossible to get data from storage or to write data to it.
+     * @throws DAOException            when impossible to get data from storage or to write data to it.
      * @throws IrrelevantDataException when the amount of requested dishes exceed available ones in menu.
      */
     private void checkAvailableDishes(Dish dish, int dishesAmountInOrder, DishDao dishDao)
@@ -280,6 +288,7 @@ public class OrderService implements Service {
 
     /**
      * Method calculates the total price of each order.
+     *
      * @param orders list of orders which prices need to be calculated.
      * @return map of orders, the keys are the orders, and values are the
      * total prices of that order.
@@ -299,6 +308,7 @@ public class OrderService implements Service {
 
     /**
      * Sort map by creation date of the orders.
+     *
      * @param ordersAndPrices unsorted map.
      * @return map sorted by creation date.
      */

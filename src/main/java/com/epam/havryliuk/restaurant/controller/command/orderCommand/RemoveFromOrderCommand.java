@@ -29,7 +29,8 @@ public class RemoveFromOrderCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(RemoveFromOrderCommand.class);
     @SuppressWarnings("FieldMayBeFinal")
     private OrderService orderService;
-    public RemoveFromOrderCommand () {
+
+    public RemoveFromOrderCommand() {
         ApplicationServiceContext appContext = new ApplicationServiceContext();
         orderService = appContext.getInstance(OrderService.class);
     }
@@ -68,8 +69,9 @@ public class RemoveFromOrderCommand implements Command {
      * that is received from user coincides with Order id and Dish id that is present in
      * session, then Dish will be removed from that Order. Moreover, if it is the last Dish
      * in that Order (Basket list of Order is empty) than Order will be removed from Session.
+     *
      * @param orderId that is received from client side.
-     * @param dishId that is received from client side.
+     * @param dishId  that is received from client side.
      * @param session HttpSession from which Dish should be removed.
      */
     private void removeDishFromSession(long orderId, long dishId, HttpSession session) {
@@ -77,7 +79,7 @@ public class RemoveFromOrderCommand implements Command {
         if (order != null) {
             List<Basket> basketList = order.getBaskets();
             basketList.removeIf(basket -> basket.getDish().getId() == dishId && basket.getOrder().getId() == orderId);
-            if (basketList.size() == 0){
+            if (basketList.size() == 0) {
                 session.removeAttribute(CURRENT_ORDER);
             }
         }

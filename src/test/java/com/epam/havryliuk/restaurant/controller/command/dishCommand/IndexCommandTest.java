@@ -92,7 +92,6 @@ class IndexCommandTest {
     void executeExceptionFromService() throws ServletException, IOException, ServiceException {
         String messageMenuEmpty = "Menu is temporary unavailable. Try again later please.";
         Category currentMenu = Category.COFFEE;
-        List<Dish> dishes = null;
         when(menuResponseManager.getCurrentMenu(request)).thenReturn(currentMenu);
         when(request.getSession()).thenReturn(session);
         when(session.getAttribute(LOCALE)).thenReturn(locale);
@@ -101,7 +100,7 @@ class IndexCommandTest {
         index.execute(request, response);
         verify(request).setAttribute(ERROR_MESSAGE, messageMenuEmpty);
         verify(menuResponseManager).setOrderInfoAttribute(request);
-        verify(request).setAttribute(DISH_LIST, dishes);
+        verify(request).setAttribute(DISH_LIST, null);
         verify(request).getRequestDispatcher(FORWARD_INDEX);
     }
 

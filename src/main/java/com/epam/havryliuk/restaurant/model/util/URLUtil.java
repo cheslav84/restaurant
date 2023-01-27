@@ -9,9 +9,10 @@ public class URLUtil {
      * the "command" String for redirecting a response. Actually,
      * user will be redirected to the same page the request have been
      * done from.
+     *
      * @return command that leads to the same user page.
      */
-    public static String getRefererPage (HttpServletRequest req) {
+    public static String getRefererPage(HttpServletRequest req) {
         String referer = req.getHeader("Referer");
         int lastSlashIndex = referer.lastIndexOf('/');
         return referer.substring(lastSlashIndex + 1);

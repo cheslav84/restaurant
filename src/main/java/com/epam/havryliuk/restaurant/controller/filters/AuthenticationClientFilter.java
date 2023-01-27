@@ -16,7 +16,7 @@ import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.LO
 
 
 @WebFilter(filterName = "AuthenticationManagerFilter",
-        urlPatterns = { "/show_order_info", "/make_order", "/basket", "/remove_from_order"})
+        urlPatterns = {"/show_order_info", "/make_order", "/basket", "/remove_from_order"})
 public class AuthenticationClientFilter implements Filter {
     private static final Logger LOG = LogManager.getLogger(AuthenticationClientFilter.class);
 

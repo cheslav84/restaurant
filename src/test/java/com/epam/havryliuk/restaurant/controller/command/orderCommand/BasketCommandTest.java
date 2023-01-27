@@ -32,7 +32,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class BasketCommandTest {
-    Locale locale = new Locale("en", "EN");
+    private final Locale locale = new Locale("en", "EN");
     @Mock
     private HttpServletRequest request;
     @Mock

@@ -3,7 +3,6 @@ package com.epam.havryliuk.restaurant.controller.filters;
 import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
@@ -13,7 +12,7 @@ import java.io.IOException;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.LOGGED_USER;
 
-@WebFilter(filterName = "LogInFilter",  urlPatterns = {"/show_order_info", "/make_order",  "/basket",
+@WebFilter(filterName = "LogInFilter", urlPatterns = {"/show_order_info", "/make_order", "/basket",
         "/remove_from_order", "/set_next_status/*", "/manage_orders", "/add_dish_page"})
 public class LogInFilter implements Filter {
     private static final Logger LOG = LogManager.getLogger(LogInFilter.class);
@@ -32,6 +31,6 @@ public class LogInFilter implements Filter {
     }
 
     private boolean isUserLoggedIn(HttpServletRequest httpRequest) {
-        return  httpRequest.getSession().getAttribute(LOGGED_USER) != null;
+        return httpRequest.getSession().getAttribute(LOGGED_USER) != null;
     }
 }

@@ -2,7 +2,7 @@ package com.epam.havryliuk.restaurant.model.entity;
 
 import java.util.Date;
 
-public class User implements Entity{
+public class User implements Entity {
     private long id;
     private String email;
     private String password;
@@ -15,7 +15,7 @@ public class User implements Entity{
     private UserDetails userDetails;
 
     public static User getInstance(String email, String password, String name, String surname,
-                                    String gender, boolean isOverEighteen) {
+                                   String gender, boolean isOverEighteen) {
         User user = new User();
         user.setEmail(email);
         user.setPassword(password);
@@ -27,12 +27,10 @@ public class User implements Entity{
     }
 
 
-
-
     public static User getInstance(Long id, String email, String password, String name,
                                    String surname, String gender, boolean isOverEighteen,
-                                   Date accountCreationDate, Role role,  UserDetails userDetails) {
-        User user = getInstance(email, password, name, surname,gender, isOverEighteen);
+                                   Date accountCreationDate, Role role, UserDetails userDetails) {
+        User user = getInstance(email, password, name, surname, gender, isOverEighteen);
         user.setId(id);
         user.setAccountCreationDate(accountCreationDate);
         user.setRole(role);
@@ -121,13 +119,12 @@ public class User implements Entity{
     }
 
 
+    @SuppressWarnings("EqualsReplaceableByObjectsCall")
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         User user = (User) o;
-
         if (isOverEighteen != user.isOverEighteen) return false;
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
         if (password != null ? !password.equals(user.password) : user.password != null) return false;

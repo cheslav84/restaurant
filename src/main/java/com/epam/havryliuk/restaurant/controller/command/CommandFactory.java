@@ -11,7 +11,6 @@ import org.apache.logging.log4j.Logger;
 import java.util.Locale;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.LOCALE;
-import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.REGISTRATION_ERROR_MESSAGE;
 
 /**
  * Choose the necessary command to execution depends on received user request.
@@ -26,6 +25,7 @@ public class CommandFactory {
      * If method receives the empty part of URL, the default Command will be assigned.
      * In case of wrong command that is not in the Enum list, method set in session
      * message about wrong action and throws IllegalArgumentException.
+     *
      * @param request HttpServletRequest user side.
      * @return Command instance that has to be performed.
      * @throws IllegalArgumentException when the command has to be executed doesn't exist.

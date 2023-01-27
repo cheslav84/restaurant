@@ -20,7 +20,6 @@ import java.util.Optional;
 public class UserDao extends AbstractDao<User> {
     private static final Logger LOG = LogManager.getLogger(UserDao.class);
 
-
     public User findByEmail(String email) throws DAOException {
         User user;
         try (PreparedStatement stmt = connection.prepareStatement(UserQuery.FIND_USER_BY_LOGIN)) {
@@ -37,7 +36,7 @@ public class UserDao extends AbstractDao<User> {
     @Override
     public Optional<User> findById(long id) throws DAOException {
         User user;
-          try (PreparedStatement stmt = connection.prepareStatement(UserQuery.FIND_USER_BY_ID)) {
+        try (PreparedStatement stmt = connection.prepareStatement(UserQuery.FIND_USER_BY_ID)) {
             stmt.setLong(1, id);
             user = extractUser(stmt);
             LOG.debug("The user with id \"" + id + "\" received from database.");
@@ -48,19 +47,9 @@ public class UserDao extends AbstractDao<User> {
         return Optional.ofNullable(user);
     }
 
-    private User extractUser(PreparedStatement stmt) throws SQLException {
-        User user = null;
-        try (ResultSet rs = stmt.executeQuery()) {
-            if (rs.next()) {
-                user = mapUser(rs);
-            }
-        }
-        return user;
-    }
-
     @Override
     public User create(User user) throws DAOException {
-        try(PreparedStatement stmt = connection.prepareStatement(UserQuery.ADD_USER,
+        try (PreparedStatement stmt = connection.prepareStatement(UserQuery.ADD_USER,
                 Statement.RETURN_GENERATED_KEYS)) {
             setUserParameters(user, stmt);
             int insertionAmount = stmt.executeUpdate();
@@ -83,7 +72,7 @@ public class UserDao extends AbstractDao<User> {
     @Override
     public List<User> findAll() throws DAOException {
         List<User> users = new ArrayList<>();
-        try ( PreparedStatement stmt = connection.prepareStatement(UserQuery.FIND_ALL_USERS);
+        try (PreparedStatement stmt = connection.prepareStatement(UserQuery.FIND_ALL_USERS);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 users.add(mapUser(rs));
@@ -98,7 +87,7 @@ public class UserDao extends AbstractDao<User> {
 
     @Override
     public User update(User user) throws DAOException {
-        try ( PreparedStatement stmt = connection.prepareStatement(UserQuery.UPDATE_USER)) {
+        try (PreparedStatement stmt = connection.prepareStatement(UserQuery.UPDATE_USER)) {
             setUserParameters(user, stmt);
             stmt.executeUpdate();
             LOG.debug("The user with id \"" + user.getId() +
@@ -112,7 +101,7 @@ public class UserDao extends AbstractDao<User> {
 
     @Override
     public boolean delete(User user) throws DAOException {
-        try ( PreparedStatement stmt = connection.prepareStatement(UserQuery.DELETE_USER)) {
+        try (PreparedStatement stmt = connection.prepareStatement(UserQuery.DELETE_USER)) {
             stmt.setString(1, user.getEmail());
             stmt.executeUpdate();
             LOG.debug("The user \"" + user.getName() + "\", has been successfully deleted.");
@@ -125,7 +114,7 @@ public class UserDao extends AbstractDao<User> {
 
     @Override
     public boolean delete(long id) throws DAOException {
-        try ( PreparedStatement stmt = connection.prepareStatement(UserQuery.DELETE_USER_BY_ID)) {
+        try (PreparedStatement stmt = connection.prepareStatement(UserQuery.DELETE_USER_BY_ID)) {
             stmt.setLong(1, id);
             stmt.executeUpdate();
             LOG.debug("The user with id \"" + id + "\", has been successfully deleted");
@@ -134,6 +123,16 @@ public class UserDao extends AbstractDao<User> {
             throw new DAOException(e);
         }
         return true;
+    }
+
+    private User extractUser(PreparedStatement stmt) throws SQLException {
+        User user = null;
+        try (ResultSet rs = stmt.executeQuery()) {
+            if (rs.next()) {
+                user = mapUser(rs);
+            }
+        }
+        return user;
     }
 
     @SuppressWarnings("UnusedAssignment")

@@ -6,13 +6,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Properties;
+
 public class AppPagesPath {
     private static final Logger LOG = LogManager.getLogger(AppPagesPath.class);
     private static final Properties PROPERTIES;
     public static final String FORWARD_INDEX;
     public static final String FORWARD_MENU_PAGE;
     public static final String REDIRECT_INDEX;
-//    public static final String REDIRECT_MENU;
+    //    public static final String REDIRECT_MENU;
     public static final String FORWARD_REGISTRATION;
     public static final String REDIRECT_REGISTRATION;
     public static final String REDIRECT_BASKET;

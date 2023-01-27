@@ -35,7 +35,7 @@ public class ManageOrdersCommand implements Command {
     @SuppressWarnings("FieldMayBeFinal")
     private OrderService orderService;
 
-    public ManageOrdersCommand () {
+    public ManageOrdersCommand() {
         ApplicationServiceContext appContext = new ApplicationServiceContext();
         orderService = appContext.getInstance(OrderService.class);
     }
@@ -93,7 +93,7 @@ public class ManageOrdersCommand implements Command {
      */
     private void setPageNumber(HttpServletRequest request) {
         try {
-             pageNumber = Integer.parseInt(request.getParameter(RequestParameters.PAGE_NUMBER));
+            pageNumber = Integer.parseInt(request.getParameter(RequestParameters.PAGE_NUMBER));
         } catch (Exception e) {
             LOG.error("Page number isn't a Number.");
         }

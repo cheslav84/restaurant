@@ -9,29 +9,25 @@
   <version>0.3</version>
   <packaging>war</packaging>
 
-
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
+<!--    <maven.compiler.source>1.8</maven.compiler.source>-->
+<!--    <maven.compiler.target>1.8</maven.compiler.target>-->
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+
     <jakarta.servlet.version>6.0.0</jakarta.servlet.version>
     <log4j.version>2.19.0</log4j.version>
   </properties>
 
   <dependencies>
+
     <!-- https://mvnrepository.com/artifact/jakarta.servlet/jakarta.servlet-api -->
     <dependency>
       <groupId>jakarta.servlet</groupId>
       <artifactId>jakarta.servlet-api</artifactId>
       <version>${jakarta.servlet.version}</version>
       <scope>provided</scope>
-    </dependency>
-
-<!--     https://mvnrepository.com/artifact/taglibs/standard -->
-    <dependency>
-      <groupId>taglibs</groupId>
-      <artifactId>standard</artifactId>
-      <version>1.1.2</version>
     </dependency>
 
     <!--     https://mvnrepository.com/artifact/jakarta.servlet.jsp.jstl/jakarta.servlet.jsp.jstl-api -->
@@ -41,7 +37,6 @@
       <version>3.0.0</version>
     </dependency>
 
-
     <!-- https://mvnrepository.com/artifact/jakarta.servlet.jsp/jakarta.servlet.jsp-api -->
     <dependency>
       <groupId>jakarta.servlet.jsp</groupId>
@@ -50,6 +45,12 @@
       <scope>provided</scope>
     </dependency>
 
+    <!--     https://mvnrepository.com/artifact/taglibs/standard -->
+    <dependency>
+      <groupId>taglibs</groupId>
+      <artifactId>standard</artifactId>
+      <version>1.1.2</version>
+    </dependency>
 
     <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
     <dependency>
@@ -80,7 +81,6 @@
       <scope>test</scope>
     </dependency>
 
-
     <!-- https://mvnrepository.com/artifact/org.mockito/mockito-inline -->
     <dependency>
       <groupId>org.mockito</groupId>
@@ -89,7 +89,6 @@
       <scope>test</scope>
     </dependency>
 
-
     <!-- https://mvnrepository.com/artifact/org.mockito/mockito-junit-jupiter -->
     <dependency>
       <groupId>org.mockito</groupId>
@@ -97,15 +96,6 @@
       <version>4.11.0</version>
       <scope>test</scope>
     </dependency>
-
-<!--    &lt;!&ndash; https://mvnrepository.com/artifact/org.powermock/powermock-api-mockito2 &ndash;&gt;-->
-<!--    <dependency>-->
-<!--      <groupId>org.powermock</groupId>-->
-<!--      <artifactId>powermock-api-mockito2</artifactId>-->
-<!--      <version>2.0.9</version>-->
-<!--      <scope>test</scope>-->
-<!--    </dependency>-->
-<!--    -->
 
     <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
     <dependency>
@@ -119,18 +109,6 @@
       <artifactId>log4j-core</artifactId>
       <version>${log4j.version}</version>
     </dependency>
-
-    <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j-impl -->
-<!--    <dependency>-->
-<!--      <groupId>org.apache.logging.log4j</groupId>-->
-<!--      <artifactId>log4j-slf4j-impl</artifactId>-->
-<!--      <version>${log4j.version}</version>-->
-<!--&lt;!&ndash;      <scope>test</scope>&ndash;&gt;-->
-<!--    </dependency>-->
-
-
-
-
 
 
     <dependency>
@@ -147,22 +125,6 @@
       <artifactId>argon2-jvm</artifactId>
       <version>2.11</version>
     </dependency>
-
-
-<!--    &lt;!&ndash; https://mvnrepository.com/artifact/org.reflections/reflections &ndash;&gt;-->
-<!--    <dependency>-->
-<!--      <groupId>org.reflections</groupId>-->
-<!--      <artifactId>reflections</artifactId>-->
-<!--      <version>0.10.2</version>-->
-<!--    </dependency>-->
-
-<!--      <dependency>-->
-<!--          <groupId>org.testng</groupId>-->
-<!--          <artifactId>testng</artifactId>-->
-<!--          <version>7.0.0-beta1</version>-->
-<!--          <scope>compile</scope>-->
-<!--      </dependency>-->
-
 
   </dependencies>
 

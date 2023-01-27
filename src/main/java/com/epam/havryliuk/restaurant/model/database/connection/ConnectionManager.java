@@ -63,12 +63,12 @@ public class ConnectionManager {
 
     public void close(AutoCloseable closeable) {
 //        synchronized (ConnectionManager.class) {
-            if (closeable != null) {
-                try {
-                    closeable.close();
-                } catch (Exception e) {
-                    LOG.error("Error closing " + closeable, e);
-                }
+        if (closeable != null) {
+            try {
+                closeable.close();
+            } catch (Exception e) {
+                LOG.error("Error closing " + closeable, e);
+            }
 //            }
         }
     }

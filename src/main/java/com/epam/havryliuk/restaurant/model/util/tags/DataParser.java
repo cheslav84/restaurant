@@ -17,15 +17,16 @@ public class DataParser {
      * should be extracted from the object. The values in object can be enclosed in quotation
      * marks - String ones, and cannot be enclosed in quotation marks - Numeric values.
      * That is different method implies to extract that object.
+     *
      * @param object String that represent some Object.
-     * @param key by which value should be extracted, that is the name of an object field.
+     * @param key    by which value should be extracted, that is the name of an object field.
      * @return String value extracted from object, that is actually the value of an object field.
      */
     public String getItem(String object, String key) {
-        object = object.substring(object.indexOf("{")+1, object.indexOf("}"));
+        object = object.substring(object.indexOf("{") + 1, object.indexOf("}"));
         String[] fields = object.split(SPLIT_BY_COMMA, -1);
         String field = getRow(fields, key);
-        if (field.contains("'")){
+        if (field.contains("'")) {
             return getStringValue(field);
         } else {
             return getNumberValue(field);
@@ -54,8 +55,9 @@ public class DataParser {
 
     /**
      * Method searches a String in Strings array that contains the key.
+     *
      * @param fields array of Strings that represent object fields as data split by delimiters.
-     * @param key by which value should be extracted.
+     * @param key    by which value should be extracted.
      * @return String in with key and value is present.
      */
     private String getRow(String[] fields, String key) {

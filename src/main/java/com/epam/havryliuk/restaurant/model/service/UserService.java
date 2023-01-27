@@ -22,9 +22,10 @@ public class UserService implements Service {
     /**
      * Method adds the User to a storage. Before adding the User to it, method checks if email
      * of that user does not exist in that storage.
+     *
      * @param user that has to be added to a storage.
      * @throws DuplicatedEntityException if the user with such email is already exist in a storage.
-     * @throws ServiceException if any Exception situation occurs while adding user to a storage.
+     * @throws ServiceException          if any Exception situation occurs while adding user to a storage.
      */
     public void addNewUser(User user) throws ServiceException, DuplicatedEntityException {
         try {
@@ -48,10 +49,11 @@ public class UserService implements Service {
 
     /**
      * Method gets the user from storage by email.
+     *
      * @param email of the user that User entity has to be received from a storage.
      * @return User that received from storage by email.
      * @throws EntityNotFoundException if User with such email doesn't exist in a storage.
-     * @throws ServiceException if any Exception situation occurs while receiving user from storage.
+     * @throws ServiceException        if any Exception situation occurs while receiving user from storage.
      */
     public User getUserFromDatabase(String email) throws ServiceException {
         User user;
@@ -77,13 +79,14 @@ public class UserService implements Service {
     /**
      * Checking for User email uniqueness before registration that User. Trying to get from database user with the
      * same email (login), if it presents there method throws DuplicatedEntityException with correspondent message
-     * @param user whose email needs to be checked for uniqueness.
+     *
+     * @param user    whose email needs to be checked for uniqueness.
      * @param userDao Data Access Object instance that doing such trying to get user by email.
-     * @throws DAOException if any Exception situation occurs while receiving user from a storage.
+     * @throws DAOException              if any Exception situation occurs while receiving user from a storage.
      * @throws DuplicatedEntityException if the user with such email is already exist in a storage.
      */
     private void checkIfEmailDoesNotExist(User user, UserDao userDao) throws ServiceException, DAOException {
-        if (userDao.findByEmail(user.getEmail()) != null){
+        if (userDao.findByEmail(user.getEmail()) != null) {
             String errorMessage = "The user with such login is already exists.";
             LOG.error(errorMessage);
             throw new DuplicatedEntityException(errorMessage);

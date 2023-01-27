@@ -26,10 +26,11 @@ public class ApplicationServiceContext {
      * Method receives as parameter a Service class, creates an instance of that class,
      * then gets declared fields of created class and instantiates that fields of class which
      * marked by certain annotation.
+     *
      * @param clazz Service class that should be instantiated as well as the fields of that class
      *              which is marked by certain annotation.
+     * @param <T>   any class that implements Service interface.
      * @return the instance of the Service class.
-     * @param <T> any class that implements Service interface.
      * @throws IllegalStateException if some Exception occurs during instantiation Service class.
      */
     @SuppressWarnings("unchecked")
@@ -57,7 +58,8 @@ public class ApplicationServiceContext {
      * and sets the instance to every field that has annotation. In case of that instantiated
      * objects has its own fields with the proper annotation, the instantiation procedure
      * will be repeated with recursion.
-     * @param object fields of which should be instantiated.
+     *
+     * @param object         fields of which should be instantiated.
      * @param declaredFields an Array of declared fields of that object.
      */
     private <T> void injectAnnotatedFields(T object, Field[] declaredFields) {

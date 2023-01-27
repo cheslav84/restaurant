@@ -35,32 +35,6 @@ public class BasketDao extends AbstractDao<Basket> {
         return basket;
     }
 
-    @Override
-    public Optional<Basket> findById(long id)  {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public List<Basket> findAll() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Basket update(Basket entity)  {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean delete(Basket entity)  {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean delete(long id) {
-        throw new UnsupportedOperationException();
-    }
-
-
     /**
      * Method returns list of Basket, that is: Order, Dish, dish price and dish amount.
      * If order is not confirmed yet (user just put it to his basket), will be displayed
@@ -68,7 +42,7 @@ public class BasketDao extends AbstractDao<Basket> {
      * moment of the confirmation an order.
      */
     public List<Basket> getOrderDishes(Order order) throws DAOException {
-        List<Basket>  baskets = new ArrayList<>();
+        List<Basket> baskets = new ArrayList<>();
         try (PreparedStatement stmt = connection.prepareStatement(DishQuery.FIND_ALL_BY_ORDER)) {
             stmt.setLong(1, order.getId());
             try (ResultSet rs = stmt.executeQuery()) {
@@ -91,7 +65,7 @@ public class BasketDao extends AbstractDao<Basket> {
      */
     private Basket mapBasket(ResultSet rs, Order order) throws SQLException {
         DishDao dishDao = new DishDao();
-        Dish dish =  dishDao.mapDish(rs);
+        Dish dish = dishDao.mapDish(rs);
         int amount = rs.getInt(BasketFields.DISH_AMOUNT);
         BigDecimal price = rs.getBigDecimal(BasketFields.DISH_PRICE);
         if (order.getBookingStatus() != BookingStatus.BOOKING) {
@@ -104,8 +78,8 @@ public class BasketDao extends AbstractDao<Basket> {
         Map<String, Integer> dishes = new HashMap<>();
         try (PreparedStatement stmt = connection.prepareStatement(BasketQuery.GET_NUMBER_OF_REQUESTED_DISHES_IN_ORDER)) {
             stmt.setLong(1, orderId);
-            try(ResultSet rs = stmt.executeQuery()){
-                while (rs.next()){
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
                     String dishName = rs.getString(DishFields.DISH_NAME);
                     int dishesAmount = rs.getInt(BasketFields.DISH_AMOUNT);
                     dishes.put(dishName, dishesAmount);
@@ -118,4 +92,28 @@ public class BasketDao extends AbstractDao<Basket> {
         return dishes;
     }
 
+    @Override
+    public Optional<Basket> findById(long id) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public List<Basket> findAll() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Basket update(Basket entity) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean delete(Basket entity) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean delete(long id) {
+        throw new UnsupportedOperationException();
+    }
 }
