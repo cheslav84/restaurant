@@ -22,6 +22,9 @@ public class AppPagesPath {
     public static final String FORWARD_MANAGE_ORDERS;
     public static final String REDIRECT_ERROR;
 
+    public static final String DISH_IMAGE_PATH;
+
+
     static {
         PROPERTIES = PropertiesLoader.getProperties(ResourceProperties.PAGES_PATH_FILE);
 
@@ -42,6 +45,8 @@ public class AppPagesPath {
         FORWARD_ADD_DISH_PAGE = (String) PROPERTIES.get("path.page.forward.addDishPage");
 
         REDIRECT_ERROR = (String) PROPERTIES.get("path.page.redirect.error");
+
+       DISH_IMAGE_PATH = (String) PROPERTIES.get("path.dishImage");
 
         LOG.debug("Application paths are initialised.");
     }

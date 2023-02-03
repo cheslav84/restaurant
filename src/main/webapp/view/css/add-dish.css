@@ -22,7 +22,7 @@
 
   .reservation-image-block {
     height: 368px;
-    background-image: url("../pictures/dish_pictures/example-bg.png");
+    /* background-image: url("../pictures/dish_pictures/example-bg.png"); */
   }
 
   .upload-picture{

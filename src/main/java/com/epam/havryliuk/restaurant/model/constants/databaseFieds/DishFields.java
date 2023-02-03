@@ -18,6 +18,7 @@ public class DishFields {
     public static final String DISH_AMOUNT;
     public static final String DISH_SPECIAL;
     public static final String DISH_IMAGE;
+    public static final String DISH_ALCOHOL;
     public static final String DISH_CATEGORY_ID;
 
     static {
@@ -30,6 +31,7 @@ public class DishFields {
         DISH_AMOUNT = (String) PROPERTIES.get("dish.amount");
         DISH_SPECIAL = (String) PROPERTIES.get("dish.special");
         DISH_IMAGE = (String) PROPERTIES.get("dish.image");
+        DISH_ALCOHOL = (String) PROPERTIES.get("dish.spirits");
         DISH_CATEGORY_ID = (String) PROPERTIES.get("dish.categoryId");
         LOG.debug("Database fields for \"Dish\" table have been initialised successfully.");
     }

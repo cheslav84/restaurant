@@ -5,6 +5,7 @@ import com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao;
 import com.epam.havryliuk.restaurant.model.entity.Category;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
 import com.epam.havryliuk.restaurant.model.exceptions.DAOException;
+import com.epam.havryliuk.restaurant.model.exceptions.DuplicatedEntityException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.util.annotations.Autowired;
 import org.apache.logging.log4j.LogManager;
@@ -13,7 +14,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 
 public class DishService implements Service {
-    private static final Logger log = LogManager.getLogger(DishService.class);
+    private static final Logger LOG = LogManager.getLogger(DishService.class);
     @Autowired
     private DishDao dishDao;
     @Autowired
@@ -33,7 +34,7 @@ public class DishService implements Service {
             dishes = dishDao.findPresentsByCategory(category);
         } catch (DAOException e) {
             String errorMessage = "Such list of Dishes hasn't been found.";
-            log.error(errorMessage);
+            LOG.error(errorMessage);
             throw new ServiceException(errorMessage, e);
         } finally {
             transaction.end();
@@ -54,7 +55,7 @@ public class DishService implements Service {
             return dishDao.findById(dishId).orElseThrow(DAOException::new);
         } catch (DAOException e) {
             String errorMessage = "Such dish hasn't been found.";
-            log.error(errorMessage);
+            LOG.error(errorMessage);
             throw new ServiceException(errorMessage, e);
         } finally {
             transaction.end();
@@ -80,12 +81,33 @@ public class DishService implements Service {
                 default -> throw new ServiceException();
             }
         } catch (DAOException e) {
-            log.error("Such list of Dishes hasn't been found.");
+            LOG.error("Such list of Dishes hasn't been found.");
             throw new ServiceException(e);
         } finally {
             transaction.end();
         }
         return dishes;
+    }
+
+
+
+    public void addNewDish(Dish dish) throws ServiceException, DuplicatedEntityException {
+        try {
+            transaction.initTransaction(dishDao);
+            dish = dishDao.create(dish);
+            dishDao.addDishToCategory(dish, dish.getCategory());
+            if (dish.isSpecial()) {
+                dishDao.addDishToCategory(dish, Category.SPECIALS);
+            }
+            LOG.debug("The dish was successfully created.");
+        } catch (DAOException e) {
+            String errorMessage = "Error in creating the dish.";
+            transaction.rollback();
+            LOG.error(errorMessage);
+            throw new ServiceException(errorMessage, e);
+        } finally {
+            transaction.endTransaction();
+        }
     }
 
 }

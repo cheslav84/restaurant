@@ -38,26 +38,27 @@
         <div class="container w-container">
             <div class="reservation-row w-row">
 
+            
+            <form method="post" action="add_dish" id="wf-form-Reservation-Form" name="addDishForm" data-name="Reservation Form" enctype="multipart/form-data">
 
                 <div class="reservation-image-column w-col w-col-6">
 
-                    <c:if test="${sessionScope.dishImage eq null}">
-                        <%-- <div style="background-image: url('../../../view/pictures/dish_pictures/example-bg.png');"
-                             class="menu-item-image-box" data-ix="fade-in-on-load-4"></div> --%>
-                        <div data-ix="fade-in-on-load-4" class="reservation-image-block"></div>
-                    </c:if>
+                    <%-- <c:if test="${sessionScope.dishImage eq null}"> --%>
+                        <%-- <div data-ix="fade-in-on-load-4" class="reservation-image-block"></div> --%>
+                        <img id="target" data-ix="fade-in-on-load-4" class="reservation-image-block" style="background-image: url('view/pictures/dish_pictures/example-bg.png');"/>
+                    <%-- </c:if> --%>
 
 
-                    <div style="background-image: url('view/pictures/dish_pictures/${dish.image}');"
+                    <%-- <div style="background-image: url('view/pictures/dish_pictures/${dish.image}');"
                          class="menu-item-image-box">
-                    </div>
-
-                    <form method="post" action="upload_image" id="wf-form-Upload-file-Form" name="dishAddingForm"
-                          enctype="multipart/form-data">
-                        <input type="file" name="dishImage" class="upload-picture"/>
-                        <input type="submit" value="Submit" data-wait="Please wait..."
-                               class="button submit-button w-button">
-                    </form>
+                    </div> --%>
+<%-- 
+                    <form method="post" action="upload_picture" id="wf-form-Upload-file-Form" name="dishAddingForm"
+                          enctype="multipart/form-data"> --%>
+                        <input type="file" id="src" name="dishImage" class="upload-picture"/>
+                        <%-- <input type="submit" value="Submit" data-wait="Please wait..."
+                               class="button submit-button w-button"> --%>
+                    <%-- </form> --%>
                 </div>
 
 
@@ -68,7 +69,7 @@
 
 
 
-                        <form method="post" id="wf-form-Reservation-Form" name="registrationForm" data-name="Reservation Form">
+                        <%-- <form method="post" id="wf-form-Reservation-Form" name="registrationForm" data-name="Reservation Form"> --%>
                             <input type="text" id="dishName" name="dishName" placeholder="Dish name"
                                 maxlength="24" class="field w-input" >
                             <textarea id="dishDescription" name="dishDescription" placeholder="Enter dish description" maxlength="5000"
@@ -87,29 +88,31 @@
 
                             <select id="dish-category" name="dishCategory" data-name="Dish category"
                                     class="field first-half w-select">
-                                <option value="">Gender</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
+                                <option value="">Select dish category</option>
+                                <option value="Coffee">Coffee</option>
+                                <option value="Lunch">Lunch</option>
+                                <option value="Diner">Diner</option>
+                                <option value="Drinks">Drinks</option>
                             </select>
 
                             <div class="w-row">
                                 <div class="w-clearfix w-col w-col-6">
                                     <div class="w-row field last-half w-select">
                                         <label for="special-ch-box" class="w-col user-age-label">Special</label>
-                                        <input type="checkbox" id="special-ch-box" name="userOverEighteenAge"  class="w-col w-select user-age" value="">
+                                        <input type="checkbox" id="special-ch-box" name="specialDish"  class="w-col w-select user-age" value="">
                                     </div>
                                 </div>
                                 <div class="w-clearfix w-col w-col-6">
                                     <div class="w-row field last-half w-select">
                                         <label for="alcohol-ch-box" class="w-col user-age-label">Alcohol</label>
-                                        <input type="checkbox" id="alcohol-ch-box" name="userOverEighteenAge"  class="w-col w-select user-age" value="">
+                                        <input type="checkbox" id="alcohol-ch-box" name="alcoholDish"  class="w-col w-select user-age" value="">
                                     </div>
                                 </div>
                             </div>
 
                             <input type="submit" value="Submit" data-wait="Please wait..."
                                 class="button submit-button w-button">
-                        </form>
+                        <%-- </form> --%>
 
 
 
@@ -120,7 +123,7 @@
                 </div>
 
 
-
+</form>
 
             </div>
         </div>
@@ -132,6 +135,7 @@
 
             <script src="view/js/jquery3.6.1.js" type="text/javascript" crossorigin="anonymous"></script>
             <script src="view/js/webflow.e.js" type="text/javascript"></script>
+            <script src="view/js/addDish.js" type="text/javascript"></script>
 
 </body>
 

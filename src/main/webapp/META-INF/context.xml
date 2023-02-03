@@ -6,7 +6,7 @@
               maxIdle="30"
               maxWaitMillis="10000"
               username="root"
-              password="1111"
+              password="11111111"
               driverClassName="com.mysql.cj.jdbc.Driver"
               url="jdbc:mysql://localhost:3306/restaurant"/>
 </Context>

@@ -34,4 +34,5 @@ public interface ResponseMessages {
     String EMPTY_BASKET = "message.emptyBasket";
     String UNAPPROPRIATED_RIGHTS_TO_CHANGE_STATUS = "message.unappropriatedRightsToChangeStatus";
     String GLOBAL_ERROR = "message.somethingWentWrong";
+
 }

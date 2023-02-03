@@ -9,10 +9,12 @@ public class Dish implements Entity {
     private int weight;
     private BigDecimal price;
     private int amount;
-
+    private boolean alcohol;
+    private boolean special;
     private String image;
+    private Category category;
 
-    public Dish() {
+    public Dish() {//todo remove
     }
 
     public static Dish getInstance(String name, BigDecimal price, int amount) {
@@ -24,14 +26,31 @@ public class Dish implements Entity {
     }
 
     public static Dish getInstance(long id, String name, String description, int weight,
-                                   BigDecimal price, int amount, String image) {
+                                   BigDecimal price, int amount, String image, boolean alcohol) {
         Dish dish = getInstance(name, price, amount);
         dish.setId(id);
         dish.setDescription(description);
         dish.setWeight(weight);
         dish.setImage(image);
+        dish.setAlcohol(alcohol);
         return dish;
     }
+
+    public static Dish getInstance(String name, String description, int weight,
+                                   BigDecimal price, String image, boolean alcohol,
+                                    boolean special, Category category) {
+        Dish dish = new Dish();
+        dish.setName(name);
+        dish.setPrice(price);
+        dish.setDescription(description);
+        dish.setWeight(weight);
+        dish.setImage(image);
+        dish.setAlcohol(alcohol);
+        dish.setSpecial(special);
+        dish.setCategory(category);
+        return dish;
+    }
+
 
     public long getId() {
         return id;
@@ -81,6 +100,30 @@ public class Dish implements Entity {
         this.amount = amount;
     }
 
+    public boolean isAlcohol() {
+        return alcohol;
+    }
+
+    public void setAlcohol(boolean alcohol) {
+        this.alcohol = alcohol;
+    }
+
+    public boolean isSpecial() {
+        return special;
+    }
+
+    public void setSpecial(boolean special) {
+        this.special = special;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     public String getImage() {
         return image;
     }
@@ -89,15 +132,13 @@ public class Dish implements Entity {
         this.image = image;
     }
 
-    @SuppressWarnings("EqualsReplaceableByObjectsCall")
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Dish dish = (Dish) o;
-
         if (id != dish.id) return false;
+        if (alcohol != dish.alcohol) return false;
         return name != null ? name.equals(dish.name) : dish.name == null;
     }
 
@@ -105,6 +146,7 @@ public class Dish implements Entity {
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (alcohol ? 1 : 0);
         return result;
     }
 
@@ -116,8 +158,10 @@ public class Dish implements Entity {
                 ", weight=" + weight +
                 ", price=" + price +
                 ", amount=" + amount +
+                ", alcohol='" + alcohol +
+                ", special='" + special +
                 ", image='" + image + '\'' +
-                '}' + "\n";
+                '}' + "\n" ;
     }
 
 }

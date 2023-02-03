@@ -1,5 +1,5 @@
-[DEBUG] 2023-01-26 20:08:34.254 [main] DatabaseContext - DatabaseContext initialised.
-[ERROR] 2023-01-26 20:08:34.305 [main] ConnectionManager - Can't get Initial context for DataSource.
+[DEBUG] 2023-01-27 14:01:22.492 [main] DatabaseContext - DatabaseContext initialised.
+[ERROR] 2023-01-27 14:01:22.516 [main] ConnectionManager - Can't get Initial context for DataSource.
 javax.naming.NoInitialContextException: Need to specify class name in environment or system property, or in an application resource file: java.naming.factory.initial
 	at javax.naming.spi.NamingManager.getInitialContext(NamingManager.java:704) ~[?:?]
 	at javax.naming.InitialContext.getDefaultInitCtx(InitialContext.java:305) ~[?:?]
@@ -13,13 +13,13 @@ javax.naming.NoInitialContextException: Need to specify class name in environmen
 	at jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[?:?]
 	at java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499) ~[?:?]
 	at java.lang.reflect.Constructor.newInstance(Constructor.java:480) ~[?:?]
-	at com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext.lambda$injectAnnotatedFields$1(ApplicationServiceContext.java:70) ~[classes/:?]
+	at com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext.lambda$injectAnnotatedFields$1(ApplicationServiceContext.java:72) ~[classes/:?]
 	at java.lang.Iterable.forEach(Iterable.java:75) ~[?:?]
-	at com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext.injectAnnotatedFields(ApplicationServiceContext.java:66) ~[classes/:?]
-	at com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext.getInstance(ApplicationServiceContext.java:50) ~[classes/:?]
-	at com.epam.havryliuk.restaurant.controller.command.dishCommand.IndexCommand.<init>(IndexCommand.java:36) ~[classes/:?]
+	at com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext.injectAnnotatedFields(ApplicationServiceContext.java:68) ~[classes/:?]
+	at com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext.getInstance(ApplicationServiceContext.java:51) ~[classes/:?]
+	at com.epam.havryliuk.restaurant.controller.command.dishCommand.IndexCommand.<init>(IndexCommand.java:37) ~[classes/:?]
 	at java.lang.invoke.MethodHandle.invokeWithArguments(MethodHandle.java:732) ~[?:?]
-	at org.mockito.internal.util.reflection.InstrumentationMemberAccessor$Dispatcher$ByteBuddy$WlSAXItn.invokeWithArguments(Unknown Source) ~[?:?]
+	at org.mockito.internal.util.reflection.InstrumentationMemberAccessor$Dispatcher$ByteBuddy$DYfRkeKg.invokeWithArguments(Unknown Source) ~[?:?]
 	at org.mockito.internal.util.reflection.InstrumentationMemberAccessor.lambda$newInstance$0(InstrumentationMemberAccessor.java:191) ~[mockito-core-4.11.0.jar:?]
 	at org.mockito.internal.util.reflection.InstrumentationMemberAccessor.newInstance(InstrumentationMemberAccessor.java:188) ~[mockito-core-4.11.0.jar:?]
 	at org.mockito.internal.util.reflection.InstrumentationMemberAccessor.newInstance(InstrumentationMemberAccessor.java:161) ~[mockito-core-4.11.0.jar:?]
@@ -97,106 +97,7 @@ javax.naming.NoInitialContextException: Need to specify class name in environmen
 	at com.intellij.rt.junit.IdeaTestRunner$Repeater.startRunnerWithArgs(IdeaTestRunner.java:35) ~[junit-rt.jar:?]
 	at com.intellij.rt.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:235) ~[junit-rt.jar:?]
 	at com.intellij.rt.junit.JUnitStarter.main(JUnitStarter.java:54) ~[junit-rt.jar:?]
-[INFO ] 2023-01-26 20:08:34.348 [main] ConnectionManager - DataSource initialised.
-[DEBUG] 2023-01-26 20:08:34.348 [main] ConnectionManager - It is asked for instance of DataSource.
-[DEBUG] 2023-01-26 20:08:34.685 [main] IndexCommand - List of dishes received by servlet and going to be sending to client side.
-[DEBUG] 2023-01-26 20:08:34.688 [main] AppPagesPath - Application paths are initialised.
-[DEBUG] 2023-01-26 20:08:34.872 [main] IndexCommand - List of dishes received by servlet and going to be sending to client side.
-[ERROR] 2023-01-26 20:08:34.902 [main] IndexCommand - com.epam.havryliuk.restaurant.model.exceptions.ServiceException: Such list of Dishes hasn't been found.
-[ERROR] 2023-01-26 20:08:35.153 [main] UserService - User hasn't been found.
-[ERROR] 2023-01-26 20:08:35.193 [main] UserService - An error occurs during receiving the user.
-[ERROR] 2023-01-26 20:08:35.206 [main] UserService - The user with such login is already exists.
-[ERROR] 2023-01-26 20:08:35.206 [main] UserService - The user with such login is already exists.
-[ERROR] 2023-01-26 20:08:35.220 [main] UserService - Error in creating the user.
-[DEBUG] 2023-01-26 20:08:35.227 [main] UserService - The user was successfully created.
-[DEBUG] 2023-01-26 20:08:35.237 [main] UserService - User got from database. Login and password are correct.
-[ERROR] 2023-01-26 20:08:35.327 [main] DishService - Such list of Dishes hasn't been found.
-[ERROR] 2023-01-26 20:08:35.356 [main] DishService - Such dish hasn't been found.
-[DEBUG] 2023-01-26 20:08:35.454 [main] ConnectionManager - It is asked for instance of DataSource.
-[DEBUG] 2023-01-26 20:08:35.470 [main] ManageOrdersCommand - Sorting parameter: STATUS
-[DEBUG] 2023-01-26 20:08:35.482 [main] ManageOrdersCommand - Sorting parameter: STATUS
-[DEBUG] 2023-01-26 20:08:35.532 [main] ConnectionManager - It is asked for instance of DataSource.
-[DEBUG] 2023-01-26 20:08:35.577 [main] MakeOrderCommand - Order in session: Order{id=null, address='Kyiv', phoneNumber='0961150084', isPayed=false, creationDate=null, closeDate=null, user=null, bookingStatus=NEW, baskets=[]}
-[DEBUG] 2023-01-26 20:08:35.578 [main] MakeOrderCommand - Request for "2" has been received.
-[DEBUG] 2023-01-26 20:08:35.578 [main] MakeOrderCommand - continueOrder: null
-[DEBUG] 2023-01-26 20:08:35.578 [main] MakeOrderCommand - redirectionPage basket
-[DEBUG] 2023-01-26 20:08:35.631 [main] MakeOrderCommand - Order{id=null, address='Kyiv', phoneNumber='0961150084', isPayed=false, creationDate=null, closeDate=null, user=null, bookingStatus=NEW, baskets=[]}
-[DEBUG] 2023-01-26 20:08:35.633 [main] MakeOrderCommand - Created new order: Order{id=null, address='Kyiv', phoneNumber='0961150084', isPayed=false, creationDate=null, closeDate=null, user=null, bookingStatus=NEW, baskets=[]}
-[ERROR] 2023-01-26 20:08:35.633 [main] MakeOrderCommand - message.orderDishNotFound
-[ERROR] 2023-01-26 20:08:35.633 [main] MakeOrderCommand - com.epam.havryliuk.restaurant.model.exceptions.ServiceException: message.orderDishNotFound
-[DEBUG] 2023-01-26 20:08:35.635 [main] MakeOrderCommand - continueOrder: null
-[DEBUG] 2023-01-26 20:08:35.635 [main] MakeOrderCommand - redirectionPage samePage
-[DEBUG] 2023-01-26 20:08:35.647 [main] MakeOrderCommand - Order{id=null, address='Kyiv', phoneNumber='0961150084', isPayed=false, creationDate=null, closeDate=null, user=null, bookingStatus=NEW, baskets=[]}
-[DEBUG] 2023-01-26 20:08:35.647 [main] MakeOrderCommand - Created new order: Order{id=null, address='Kyiv', phoneNumber='0961150084', isPayed=false, creationDate=null, closeDate=null, user=null, bookingStatus=NEW, baskets=[]}
-[DEBUG] 2023-01-26 20:08:35.650 [main] MakeOrderCommand - Request for "2" has been received.
-[DEBUG] 2023-01-26 20:08:35.650 [main] MakeOrderCommand - continueOrder: continue
-[DEBUG] 2023-01-26 20:08:35.650 [main] MakeOrderCommand - redirectionPage samePage
-[DEBUG] 2023-01-26 20:08:35.663 [main] MakeOrderCommand - Order{id=null, address='Kyiv', phoneNumber='0961150084', isPayed=false, creationDate=null, closeDate=null, user=null, bookingStatus=NEW, baskets=[]}
-[DEBUG] 2023-01-26 20:08:35.663 [main] MakeOrderCommand - Created new order: Order{id=null, address='Kyiv', phoneNumber='0961150084', isPayed=false, creationDate=null, closeDate=null, user=null, bookingStatus=NEW, baskets=[]}
-[DEBUG] 2023-01-26 20:08:35.663 [main] MakeOrderCommand - Request for "2" has been received.
-[DEBUG] 2023-01-26 20:08:35.663 [main] MakeOrderCommand - continueOrder: null
-[DEBUG] 2023-01-26 20:08:35.663 [main] MakeOrderCommand - redirectionPage basket
-[DEBUG] 2023-01-26 20:08:35.820 [main] ConnectionManager - It is asked for instance of DataSource.
-[ERROR] 2023-01-26 20:08:35.838 [main] BasketCommand - com.epam.havryliuk.restaurant.model.exceptions.EntityNotFoundException
-[DEBUG] 2023-01-26 20:08:35.876 [main] ConnectionManager - It is asked for instance of DataSource.
-[ERROR] 2023-01-26 20:08:35.892 [main] LoginCommand - null
-[DEBUG] 2023-01-26 20:08:36.190 [main] LoginCommand - User logged in.
-[ERROR] 2023-01-26 20:08:36.211 [main] LoginCommand - null
-[ERROR] 2023-01-26 20:08:36.268 [main] LoginCommand - null
-[DEBUG] 2023-01-26 20:08:36.316 [main] MenuResponseManager - Current menu: COFFEE
-[ERROR] 2023-01-26 20:08:36.438 [main] OrderService - Unable to get orders.
-[DEBUG] 2023-01-26 20:08:36.443 [main] OrderService - A dish has been removed from the order.
-[DEBUG] 2023-01-26 20:08:36.469 [main] OrderService - A dish has been removed from the order.
-[ERROR] 2023-01-26 20:08:36.479 [main] OrderService - Unable to get orders.
-[ERROR] 2023-01-26 20:08:36.491 [main] OrderService - Obtained incorrect amount of dishes in order 0
-[ERROR] 2023-01-26 20:08:36.502 [main] OrderService - Unable to get orders.
-[DEBUG] 2023-01-26 20:08:36.510 [main] OrderService - The page was successfully created.
-[ERROR] 2023-01-26 20:08:36.526 [main] OrderService - Unable to change order status.
-[ERROR] 2023-01-26 20:08:36.536 [main] OrderService - The request number of dishes exceed available.
-[DEBUG] 2023-01-26 20:08:36.546 [main] OrderService - The order list was successfully created.
-[DEBUG] 2023-01-26 20:08:36.575 [main] OrderService - Has been created new order: Order{id=1, address='address', phoneNumber='0961150080', isPayed=false, creationDate=null, closeDate=null, user=User{id=0, email='email', name='name', surname='surname', gender='male', isOverEighteen=true}, bookingStatus=BOOKING, baskets=[]}
-[ERROR] 2023-01-26 20:08:36.588 [main] OrderService - Unable to get or create an order.
-[DEBUG] 2023-01-26 20:08:36.613 [main] OrderService - "order status" has been changed to NEW
-[DEBUG] 2023-01-26 20:08:36.617 [main] OrderService - Order has been received: Order{id=null, address='address', phoneNumber='0961150080', isPayed=false, creationDate=null, closeDate=null, user=User{id=0, email='email', name='name', surname='surname', gender='male', isOverEighteen=true}, bookingStatus=BOOKING, baskets=[]}
-[ERROR] 2023-01-26 20:08:36.631 [main] OrderService - Unable to get or create an order.
-[ERROR] 2023-01-26 20:08:36.642 [main] OrderService - Unable to get orders.
-[DEBUG] 2023-01-26 20:08:36.670 [main] OrderService - A dish has been added to the order.
-[DEBUG] 2023-01-26 20:08:36.680 [main] ConnectionManager - It is asked for instance of DataSource.
-[DEBUG] 2023-01-26 20:08:36.686 [main] MenuCommand - List of dishes received by servlet and going to be sending to client side.
-[DEBUG] 2023-01-26 20:08:36.690 [main] MenuCommand - List of dishes received by servlet and going to be sending to client side.
-[DEBUG] 2023-01-26 20:08:36.701 [main] ConnectionManager - It is asked for instance of DataSource.
-[DEBUG] 2023-01-26 20:08:36.702 [main] CommandFactory - Restaurant action was received.
-[DEBUG] 2023-01-26 20:08:36.778 [main] ConnectionManager - It is asked for instance of DataSource.
-[DEBUG] 2023-01-26 20:08:36.778 [main] ConnectionManager - It is asked for instance of DataSource.
-[DEBUG] 2023-01-26 20:08:36.778 [main] ConnectionManager - It is asked for instance of DataSource.
-[DEBUG] 2023-01-26 20:08:36.778 [main] ConnectionManager - It is asked for instance of DataSource.
-[DEBUG] 2023-01-26 20:08:36.778 [main] ConnectionManager - It is asked for instance of DataSource.
-[DEBUG] 2023-01-26 20:08:36.861 [main] ConnectionManager - It is asked for instance of DataSource.
-[DEBUG] 2023-01-26 20:08:36.861 [main] CommandFactory - index action was received.
-[DEBUG] 2023-01-26 20:08:36.861 [main] ConnectionManager - It is asked for instance of DataSource.
-[DEBUG] 2023-01-26 20:08:36.861 [main] ConnectionManager - It is asked for instance of DataSource.
-[DEBUG] 2023-01-26 20:08:36.861 [main] ConnectionManager - It is asked for instance of DataSource.
-[DEBUG] 2023-01-26 20:08:36.861 [main] ConnectionManager - It is asked for instance of DataSource.
-[DEBUG] 2023-01-26 20:08:36.861 [main] ConnectionManager - It is asked for instance of DataSource.
-[DEBUG] 2023-01-26 20:08:36.861 [main] ConnectionManager - It is asked for instance of DataSource.
-[DEBUG] 2023-01-26 20:08:36.867 [main] ConnectionManager - It is asked for instance of DataSource.
-[DEBUG] 2023-01-26 20:08:36.867 [main] ConnectionManager - It is asked for instance of DataSource.
-[DEBUG] 2023-01-26 20:08:36.867 [main] ConnectionManager - It is asked for instance of DataSource.
-[DEBUG] 2023-01-26 20:08:36.869 [main] ConnectionManager - It is asked for instance of DataSource.
-[DEBUG] 2023-01-26 20:08:36.870 [main] ConnectionManager - It is asked for instance of DataSource.
-[DEBUG] 2023-01-26 20:08:36.870 [main] CommandFactory - INDEX command is going to be performed.
-[DEBUG] 2023-01-26 20:08:36.885 [main] ConnectionManager - It is asked for instance of DataSource.
-[DEBUG] 2023-01-26 20:08:36.886 [main] CommandFactory - show_order_info action was received.
-[DEBUG] 2023-01-26 20:08:36.886 [main] CommandFactory - SHOW_ORDER_INFO command is going to be performed.
-[DEBUG] 2023-01-26 20:08:36.893 [main] ConnectionManager - It is asked for instance of DataSource.
-[DEBUG] 2023-01-26 20:08:36.894 [main] CommandFactory - login_page action was received.
-[DEBUG] 2023-01-26 20:08:36.894 [main] CommandFactory - LOGIN_PAGE command is going to be performed.
-[DEBUG] 2023-01-26 20:08:36.898 [main] ConnectionManager - It is asked for instance of DataSource.
-[DEBUG] 2023-01-26 20:08:36.899 [main] CommandFactory - manage_orders action was received.
-[DEBUG] 2023-01-26 20:08:36.899 [main] CommandFactory - MANAGE_ORDERS command is going to be performed.
-[DEBUG] 2023-01-26 20:08:36.903 [main] ConnectionManager - It is asked for instance of DataSource.
-[DEBUG] 2023-01-26 20:08:36.903 [main] CommandFactory - register action was received.
-[DEBUG] 2023-01-26 20:08:36.904 [main] CommandFactory - REGISTER command is going to be performed.
-[DEBUG] 2023-01-26 20:08:36.909 [main] ConnectionManager - It is asked for instance of DataSource.
-[DEBUG] 2023-01-26 20:08:36.910 [main] CommandFactory - remove_from_order action was received.
-[DEBUG] 2023-01-26 20:08:36.910 [main] CommandFactory - REMOVE_FROM_ORDER command is going to be performed.
+[INFO ] 2023-01-27 14:01:22.544 [main] ConnectionManager - DataSource initialised.
+[DEBUG] 2023-01-27 14:01:22.544 [main] ConnectionManager - It is asked for instance of DataSource.
+[ERROR] 2023-01-27 14:01:22.856 [main] IndexCommand - com.epam.havryliuk.restaurant.model.exceptions.ServiceException: Such list of Dishes hasn't been found.
+[DEBUG] 2023-01-27 14:01:22.861 [main] AppPagesPath - Application paths are initialised.

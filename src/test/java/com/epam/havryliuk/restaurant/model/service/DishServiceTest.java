@@ -129,6 +129,6 @@ class DishServiceTest {
 
     private Optional<Dish> getDishForTest (Long dishId) {
        return Optional.of(Dish.getInstance(dishId, "Name", "lorem ispum",
-                50, new BigDecimal(450), 30, "image.png"));
+                50, new BigDecimal(450), 30, "image.png", false));
     }
 }

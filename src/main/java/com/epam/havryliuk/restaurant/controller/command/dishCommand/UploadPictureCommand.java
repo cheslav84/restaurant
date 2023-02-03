@@ -10,75 +10,93 @@ import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.util.BundleManager;
 import com.epam.havryliuk.restaurant.model.service.DishService;
 import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
-
+//@MultipartConfig
 public class UploadPictureCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(UploadPictureCommand.class);
-    private static final String DEFAULT_MENU = "COFFEE";
     @SuppressWarnings("FieldMayBeFinal")
     private DishService dishService;
 
-    public UploadPictureCommand() {
+    public UploadPictureCommand () {
         ApplicationServiceContext appContext = new ApplicationServiceContext();
         dishService = appContext.getInstance(DishService.class);
     }
-
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        Category currentMenu = getCurrentMenu(request);
         BundleManager bundleManager = BundleManager.valueOf(((Locale) request.getSession().getAttribute(LOCALE)).getCountry());
-        List<Dish> dishes = null;
-        try {
-            dishes = dishService.getMenuByCategory(currentMenu);
-            if (dishes.isEmpty()) {
-                request.setAttribute(MENU_MESSAGE,
-                        bundleManager.getProperty(ResponseMessages.MENU_EMPTY));
-            }
+        HttpSession session = request.getSession();
+
+        Part part = request.getPart("dishImage");
+
+        String fileName = part.getSubmittedFileName();
+
+//        String lineSeparator = System.;
+
+        System.err.println(part.getContentType());
+        System.err.println(part.getName());
+        System.err.println(fileName);
+
+        String path = "view/pictures/dish_pictures/" + fileName;
+        System.err.println(path);
+        path = request.getServletContext().getRealPath(path);
+
+
+        InputStream is = part.getInputStream();
+
+        byte[] imageBytes = new byte[is.available()];
+        is.read(imageBytes);
+
+
+        response.setContentType("image/jpeg");
+        response.setContentLength(imageBytes.length);
+
+        response.getOutputStream().write(imageBytes);
+
+
+//        Files.copy(is, Paths.get(path), StandardCopyOption.REPLACE_EXISTING);
+
+
+
+
+
+
+//        session.setAttribute();
+
+//        File dishImage = (File) request.getParameter("dishImage");
+
+//        try {
+
+
             LOG.debug("List of dishes received by servlet and going to be sending to client side.");
-        } catch (ServiceException e) {
-            request.setAttribute(ERROR_MESSAGE,
-                    bundleManager.getProperty(ResponseMessages.MENU_UNAVAILABLE));
-            LOG.error(e);
-        }
-        hideOrderInfoOnReloadPage(request);
-        request.setAttribute(DISH_LIST, dishes);
-        request.getRequestDispatcher(AppPagesPath.FORWARD_INDEX).forward(request, response);
+//        } catch (ServiceException e) {
+//            request.setAttribute(ERROR_MESSAGE,
+//                    bundleManager.getProperty(ResponseMessages.MENU_UNAVAILABLE));
+//            LOG.error(e);
+//        }
+
+        request.getRequestDispatcher(AppPagesPath.FORWARD_ADD_DISH_PAGE).forward(request, response);
     }
 
-    private Category getCurrentMenu(HttpServletRequest req) {
-        HttpSession session = req.getSession();
-        String lastVisitedMenu = (String) session.getAttribute(MENU_CATEGORY);
-        String currentMenu = req.getParameter(RequestParameters.MENU_CATEGORY);
-        if (currentMenu != null) {
-            session.setAttribute(MENU_CATEGORY, currentMenu);
-        } else {
-            currentMenu = Optional.ofNullable(lastVisitedMenu).orElse(DEFAULT_MENU);
-        }
-        return Category.valueOf(currentMenu);
-    }
-
-    private void hideOrderInfoOnReloadPage(HttpServletRequest req) {
-        HttpSession session = req.getSession();
-        if (session.getAttribute(SHOW_DISH_INFO) != null) {
-            if (req.getAttribute(SHOW_DISH_INFO) == null) {
-                req.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
-            } else {
-                req.removeAttribute(SHOW_DISH_INFO);
-            }
-            session.removeAttribute(SHOW_DISH_INFO);
-        }
-    }
 
 }
