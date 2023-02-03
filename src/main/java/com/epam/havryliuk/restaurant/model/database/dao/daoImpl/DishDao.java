@@ -1,12 +1,10 @@
 package com.epam.havryliuk.restaurant.model.database.dao.daoImpl;
 
-import com.epam.havryliuk.restaurant.model.constants.queries.UserQuery;
 import com.epam.havryliuk.restaurant.model.database.dao.AbstractDao;
 import com.epam.havryliuk.restaurant.model.constants.databaseFieds.DishFields;
 import com.epam.havryliuk.restaurant.model.constants.queries.DishQuery;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
 import com.epam.havryliuk.restaurant.model.entity.Category;
-import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.exceptions.DAOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,36 +19,51 @@ import java.util.*;
 public class DishDao extends AbstractDao<Dish> {
     private static final Logger LOG = LogManager.getLogger(DishDao.class);
 
-    public List<Dish> findPresentsByCategory(Category category) throws DAOException {
+    public List<Dish> findAllByCategory(Category category) throws DAOException {
+        return getDishesByCategory(category, DishQuery.FIND_ALL_BY_CATEGORY);
+    }
+
+    public List<Dish> findAvailableByCategory(Category category) throws DAOException {
+        return getDishesByCategory(category, DishQuery.FIND_ALL_AVAILABLE_BY_CATEGORY);
+    }
+
+    public List<Dish> getDishesByCategory(Category category, String query) throws DAOException {
         List<Dish> dishes = new ArrayList<>();
-        try (PreparedStatement stmt = connection.prepareStatement(DishQuery.FIND_ALL_PRESENTS_BY_CATEGORY)) {
-            getDishesByCategory(category, dishes, stmt);
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, category.name());
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    dishes.add(mapDish(rs));
+                }
+            }
+            LOG.debug("List of dishes (by category) has been received from database. ");
         } catch (SQLException e) {
             LOG.error("Error in getting list of dishes from database. ");
             throw new DAOException(e);
         }
         return dishes;
+
     }
 
-    private void getDishesByCategory(Category category, List<Dish> dishes, PreparedStatement stmt) throws SQLException {
-        stmt.setString(1, category.name());
-        try (ResultSet rs = stmt.executeQuery()) {
-            while (rs.next()) {
-                dishes.add(mapDish(rs));
-            }
-        }
-        LOG.debug("List of dishes (by category) has been received from database. ");
+    public List<Dish> getAllSortedByName() throws DAOException {
+        return getDishes(DishQuery.FIND_ALL_ORDERED_BY_NAME);
     }
 
-    public List<Dish> getSortedByName() throws DAOException {
+    public List<Dish> getAllAvailableSortedByName() throws DAOException {
         return getDishes(DishQuery.FIND_ALL_AVAILABLE_ORDERED_BY_NAME);
     }
-
-    public List<Dish> getSortedByPrice() throws DAOException {
+    public List<Dish> getAllSortedByPrice() throws DAOException {
+        return getDishes(DishQuery.FIND_ALL_ORDERED_BY_PRICE);
+    }
+    public List<Dish> getAllAvailableSortedByPrice() throws DAOException {
         return getDishes(DishQuery.FIND_ALL_AVAILABLE_ORDERED_BY_PRICE);
     }
 
-    public List<Dish> getSortedByCategory() throws DAOException {
+    public List<Dish> getAllSortedByCategory() throws DAOException {
+        return getDishes(DishQuery.FIND_ALL_ORDERED_BY_CATEGORY);
+    }
+
+    public List<Dish> getAllAvailableSortedByCategory() throws DAOException {
         return getDishes(DishQuery.FIND_ALL_AVAILABLE_ORDERED_BY_CATEGORY);
     }
 
@@ -91,6 +104,35 @@ public class DishDao extends AbstractDao<Dish> {
         }
     }
 
+    public void updateDishCategory(Dish dish, Category category) throws DAOException {
+        try(PreparedStatement stmt = connection.prepareStatement(DishQuery.UPDATE_DISH_CATEGORY)) {
+            int k = 1;
+            stmt.setLong(k++, category.getId());
+            stmt.setLong(k++, dish.getId());
+            stmt.executeUpdate();
+            LOG.debug("The \"" + category.name() + "\" has been updated in dish \"" + dish.getName() + "\".");
+        } catch (SQLException e) {
+            String message = "Something went wrong. Dish category hasn't been updated.";
+            LOG.error(message, e);
+            throw new DAOException(message, e);
+        }
+    }
+
+    public void removeDishFromCategory(Dish dish, Category category) throws DAOException {
+        try(PreparedStatement stmt = connection.prepareStatement(DishQuery.REMOVE_DISH_FROM_CATEGORY)) {
+            int k = 1;
+            stmt.setLong(k++, dish.getId());
+            stmt.setLong(k++, category.getId());
+            stmt.executeUpdate();
+            LOG.debug("The \"" + category.name() + "\" has been updated in dish \"" + dish.getName() + "\".");
+        } catch (SQLException e) {
+            String message = "Something went wrong. Dish category hasn't been updated.";
+            LOG.error(message, e);
+            throw new DAOException(message, e);
+        }
+    }
+
+
     @Override
     public Optional<Dish> findById(long id) throws DAOException {
         Dish dish = null;
@@ -115,8 +157,18 @@ public class DishDao extends AbstractDao<Dish> {
     }
 
     @Override
-    public Dish update(Dish entity) {
-        throw new UnsupportedOperationException();
+    public Dish update(Dish dish) throws DAOException {
+        try(PreparedStatement stmt = connection.prepareStatement(DishQuery.UPDATE_DISH)) {
+            int k = setDishParameters(dish, stmt);
+            stmt.setLong(k, dish.getId());
+            stmt.executeUpdate();
+            LOG.debug("The \"" + dish.getName() + "\" dish has been updated.");
+        } catch (SQLException e) {
+            String message = "Something went wrong. Dish hasn't been updated";
+            LOG.error(message, e);
+            throw new DAOException(message, e);
+        }
+        return dish;
     }
 
     @Override
@@ -203,8 +255,7 @@ public class DishDao extends AbstractDao<Dish> {
         return dishes;
     }
 
-    @SuppressWarnings("UnusedAssignment")
-    private void setDishParameters(Dish dish, PreparedStatement stmt) throws SQLException {
+    private int setDishParameters(Dish dish, PreparedStatement stmt) throws SQLException {
         int k = 1;
         stmt.setString(k++, dish.getName());
         stmt.setString(k++, dish.getDescription());
@@ -213,5 +264,8 @@ public class DishDao extends AbstractDao<Dish> {
         stmt.setInt(k++, dish.getAmount());
         stmt.setBoolean(k++, dish.isAlcohol());
         stmt.setString(k++, dish.getImage());
+        return k;
     }
+
+
 }

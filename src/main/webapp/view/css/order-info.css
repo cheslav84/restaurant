@@ -37,6 +37,7 @@
     right: 18px;
     top: 20px;
     cursor: pointer;
+    z-index: 100;
 }
 
 .close-icon:hover {

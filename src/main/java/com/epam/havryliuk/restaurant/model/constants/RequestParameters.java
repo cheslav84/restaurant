@@ -31,6 +31,7 @@ public interface RequestParameters {
     String DISH_DESCRIPTION = "dishDescription";
     String DISH_PRICE = "dishPrice";
     String DISH_WEIGHT = "dishWeight";
+    String DISH_AMOUNT = "dishAmount";
     String DISH_CATEGORY = "dishCategory";
     String DISH_SPECIAL = "specialDish";
     String DISH_ALCOHOL = "alcoholDish";

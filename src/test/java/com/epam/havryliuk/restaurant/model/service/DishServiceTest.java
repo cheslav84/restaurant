@@ -4,8 +4,11 @@ import com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction;
 import com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao;
 import com.epam.havryliuk.restaurant.model.entity.Category;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
+import com.epam.havryliuk.restaurant.model.entity.Role;
+import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.exceptions.DAOException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -29,6 +32,8 @@ import static org.mockito.Mockito.when;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class DishServiceTest {
 
+    private User user;
+
     @Mock
     private DishDao dishDao;
 
@@ -37,6 +42,11 @@ class DishServiceTest {
 
     @InjectMocks
     private DishService dishService;
+    @BeforeAll
+    public void initUser() {
+        user = User.getInstance("email", "password", "name", "surname", "Male", true);
+        user.setRole(Role.CLIENT);
+    }
 
     @BeforeEach
     public void setup() {
@@ -46,8 +56,8 @@ class DishServiceTest {
     @Test
     void getMenuByCategory() throws DAOException, ServiceException {
         int dishesInList = 5;
-        when(dishDao.findPresentsByCategory(Category.SPECIALS)).thenReturn(getDishes(dishesInList));
-        List<Dish> actual = dishService.getMenuByCategory(Category.SPECIALS);
+        when(dishDao.findAvailableByCategory(Category.SPECIALS)).thenReturn(getDishes(dishesInList));
+        List<Dish> actual = dishService.getMenuByCategory(Category.SPECIALS, user);
         List<Dish> expected = getDishes(5);
         assertEquals(expected, actual);
         assertEquals(dishesInList, actual.size());
@@ -56,8 +66,8 @@ class DishServiceTest {
     @Test
     void getMenuByCategoryNegative() throws DAOException, ServiceException {
         int dishesInList = 5;
-        when(dishDao.findPresentsByCategory(Category.SPECIALS)).thenReturn(getDishes(dishesInList));
-        List<Dish> actual = dishService.getMenuByCategory(Category.SPECIALS);
+        when(dishDao.findAvailableByCategory(Category.SPECIALS)).thenReturn(getDishes(dishesInList));
+        List<Dish> actual = dishService.getMenuByCategory(Category.SPECIALS, user);
         actual.get(0).setName("Differ dish");
         List<Dish> expected = getDishes(5);
         assertNotEquals(expected, actual);
@@ -65,8 +75,8 @@ class DishServiceTest {
 
     @Test
     void getMenuByCategoryException() throws DAOException {
-        when(dishDao.findPresentsByCategory(Category.SPECIALS)).thenThrow(new DAOException());
-        Exception exception = assertThrows(ServiceException.class, () -> dishService.getMenuByCategory(Category.SPECIALS));
+        when(dishDao.findAvailableByCategory(Category.SPECIALS)).thenThrow(new DAOException());
+        Exception exception = assertThrows(ServiceException.class, () -> dishService.getMenuByCategory(Category.SPECIALS, user));
         assertEquals("Such list of Dishes hasn't been found.", exception.getMessage());
     }
 
@@ -90,13 +100,15 @@ class DishServiceTest {
     @Test
     void getAllMenuSortedBy() throws DAOException, ServiceException {
         int dishesInList = 5;
-        when(dishDao.getSortedByName()).thenReturn(getDishesByName(dishesInList));
-        when(dishDao.getSortedByPrice()).thenReturn(getDishesByPrice(dishesInList));
-        when(dishDao.getSortedByCategory()).thenReturn(getDishes(dishesInList));
+//        User user = User.getInstance("email", "password", "name", "surname", "Male", true);
+//        user.setRole(Role.CLIENT);
+        when(dishDao.getAllAvailableSortedByName()).thenReturn(getDishesByName(dishesInList));
+        when(dishDao.getAllAvailableSortedByPrice()).thenReturn(getDishesByPrice(dishesInList));
+        when(dishDao.getAllAvailableSortedByCategory()).thenReturn(getDishes(dishesInList));
 
-        List<Dish> sortedByName = dishService.getAllMenuSortedBy("name");
-        List<Dish> sortedByPrice = dishService.getAllMenuSortedBy("price");
-        List<Dish> sortedByCategory = dishService.getAllMenuSortedBy("category");
+        List<Dish> sortedByName = dishService.getAllAvailableMenuSortedBy("name", user);
+        List<Dish> sortedByPrice = dishService.getAllAvailableMenuSortedBy("price", user);
+        List<Dish> sortedByCategory = dishService.getAllAvailableMenuSortedBy("category", user);
 
         List<Dish> expectedByName = getDishesByName(5);
         List<Dish> expectedByPrice = getDishesByPrice(5);
@@ -106,6 +118,7 @@ class DishServiceTest {
         assertEquals(expectedByPrice, sortedByPrice);
         assertEquals(expectedByCategory, sortedByCategory);
     }
+
 
     private List<Dish> getDishesByName(int size){
         return getDishes(size).stream()
@@ -131,4 +144,7 @@ class DishServiceTest {
        return Optional.of(Dish.getInstance(dishId, "Name", "lorem ispum",
                 50, new BigDecimal(450), 30, "image.png", false));
     }
+
+
+
 }

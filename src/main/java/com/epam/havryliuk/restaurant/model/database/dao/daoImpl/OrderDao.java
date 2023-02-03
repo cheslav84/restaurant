@@ -19,16 +19,17 @@ public class OrderDao extends AbstractDao<Order> {
 
     @Override
     public Order create(Order order) throws DAOException {
-        try (PreparedStatement stmt = connection.prepareStatement(OrderQuery.ADD_ORDER, Statement.RETURN_GENERATED_KEYS)) {
-            setOrderParameters(order, stmt);
-            int insertionAmount = stmt.executeUpdate();
-            if (insertionAmount > 0) {
-                try (ResultSet rs = stmt.getGeneratedKeys()) {
-                    if (rs.next()) {
-                        order.setId(rs.getLong(1));
+        try (PreparedStatement stmt = connection.prepareStatement(OrderQuery.ADD_ORDER,
+                Statement.RETURN_GENERATED_KEYS)) {
+                setOrderParameters(order, stmt);
+                int insertionAmount = stmt.executeUpdate();
+                if (insertionAmount > 0) {
+                    try (ResultSet rs = stmt.getGeneratedKeys()) {
+                        if (rs.next()) {
+                            order.setId(rs.getLong(1));
+                        }
                     }
                 }
-            }
             LOG.debug("The order has been added to database.");
         } catch (SQLException e) {
             String message = "Error in inserting order to database.";
@@ -121,6 +122,18 @@ public class OrderDao extends AbstractDao<Order> {
 
     }
 
+    private Order mapOrder(ResultSet rs) throws SQLException {
+        long id = rs.getLong(OrderFields.ORDER_ID);
+        String address = rs.getString(OrderFields.ORDER_ADDRESS);
+        String phoneNumber = rs.getString(OrderFields.ORDER_PHONE_NUMBER);
+        boolean isPayed = rs.getBoolean(OrderFields.ORDER_PAYMENT);
+        Date creationDate = rs.getTimestamp(OrderFields.ORDER_CREATION_DATE);
+        Date closeDate = rs.getTimestamp(OrderFields.ORDER_CLOSE_DATE);
+        long bookingStatusId = rs.getLong(OrderFields.ORDER_BOOKING_STATUS);
+        BookingStatus bookingStatus = BookingStatus.getStatus(bookingStatusId);
+        return Order.getInstance(id, address, phoneNumber, isPayed, creationDate, closeDate, bookingStatus);
+    }
+
     public Date getCreationDate(long orderId) throws DAOException {
         Date date = null;
         try (PreparedStatement stmt = connection.prepareStatement(OrderQuery.GET_CREATION_DATE_BY_ID)) {
@@ -138,9 +151,22 @@ public class OrderDao extends AbstractDao<Order> {
         }
         return date;
     }
+    @SuppressWarnings("UnusedAssignment")
+    private void setOrderParameters(Order order, PreparedStatement stmt) throws SQLException {
+        int k = 1;
+        stmt.setString(k++, order.getAddress());
+        stmt.setString(k++, order.getPhoneNumber());
+        stmt.setBoolean(k++, order.isPayed());
+        stmt.setLong(k++, order.getUser().getId());
+        stmt.setLong(k++, order.getBookingStatus().getId());
+    }
 
+    @Override
+    public Optional<Order> findById(long id) {
+        throw new UnsupportedOperationException();
+    }
 
-    @SuppressWarnings({"UnusedAssignment", "UnusedReturnValue"})
+    @SuppressWarnings("UnusedAssignment")
     public boolean changeOrderStatus(long orderId, BookingStatus bookingStatus) throws DAOException {
         try (PreparedStatement stmt = connection.prepareStatement(OrderQuery.CHANGE_ORDER_STATUS_BY_ID)) {
             int k = 1;
@@ -158,6 +184,21 @@ public class OrderDao extends AbstractDao<Order> {
     }
 
     @Override
+    public List<Order> findAll() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Order update(Order entity) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean delete(Order entity) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public boolean delete(long id) throws DAOException {
         try (PreparedStatement stmt = connection.prepareStatement(OrderQuery.DELETE_ORDER_BY_ID)) {
             stmt.setLong(1, id);
@@ -170,7 +211,6 @@ public class OrderDao extends AbstractDao<Order> {
         return true;
     }
 
-    @SuppressWarnings("UnusedReturnValue")
     public boolean deleteDishFromOrderById(long orderId, long dishId) throws DAOException {
         try (PreparedStatement stmt = connection.prepareStatement(OrderQuery.REMOVE_DISH_FROM_ORDER)) {
             int k = 0;
@@ -200,48 +240,6 @@ public class OrderDao extends AbstractDao<Order> {
             throw new DAOException(e);
         }
         return numberOfDishes;
-    }
-
-    private Order mapOrder(ResultSet rs) throws SQLException {
-        long id = rs.getLong(OrderFields.ORDER_ID);
-        String address = rs.getString(OrderFields.ORDER_ADDRESS);
-        String phoneNumber = rs.getString(OrderFields.ORDER_PHONE_NUMBER);
-        boolean isPayed = rs.getBoolean(OrderFields.ORDER_PAYMENT);
-        Date creationDate = rs.getTimestamp(OrderFields.ORDER_CREATION_DATE);
-        Date closeDate = rs.getTimestamp(OrderFields.ORDER_CLOSE_DATE);
-        long bookingStatusId = rs.getLong(OrderFields.ORDER_BOOKING_STATUS);
-        BookingStatus bookingStatus = BookingStatus.getStatus(bookingStatusId);
-        return Order.getInstance(id, address, phoneNumber, isPayed, creationDate, closeDate, bookingStatus);
-    }
-
-    @SuppressWarnings("UnusedAssignment")
-    private void setOrderParameters(Order order, PreparedStatement stmt) throws SQLException {
-        int k = 1;
-        stmt.setString(k++, order.getAddress());
-        stmt.setString(k++, order.getPhoneNumber());
-        stmt.setBoolean(k++, order.isPayed());
-        stmt.setLong(k++, order.getUser().getId());
-        stmt.setLong(k++, order.getBookingStatus().getId());
-    }
-
-    @Override
-    public Optional<Order> findById(long id) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public List<Order> findAll() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Order update(Order entity) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean delete(Order entity) {
-        throw new UnsupportedOperationException();
     }
 
 }

@@ -59,13 +59,14 @@
     top: 30px;
     width: 56px;
     height: 24px;
-    padding: 4px 5px;
+    padding: 4px 0px;
     border-radius: 3px;
     line-height: 40px;
     line-height: 16px;
     font-weight: 700;
     font-size: 9px;
     cursor: pointer;
+    font-stretch: condensed;
   }
 
   .menu-item-title.weight {

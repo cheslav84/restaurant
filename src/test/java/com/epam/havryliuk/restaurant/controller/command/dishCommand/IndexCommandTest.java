@@ -3,6 +3,8 @@ package com.epam.havryliuk.restaurant.controller.command.dishCommand;
 import com.epam.havryliuk.restaurant.controller.responseManager.MenuResponseManager;
 import com.epam.havryliuk.restaurant.model.entity.Category;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
+import com.epam.havryliuk.restaurant.model.entity.Role;
+import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.service.DishService;
 import jakarta.servlet.RequestDispatcher;
@@ -10,6 +12,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -34,7 +37,9 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class IndexCommandTest {
-    Locale locale = new Locale("en", "EN");
+    private Locale locale = new Locale("en", "EN");
+
+    private User user;
     @Mock
     private HttpServletRequest request;
     @Mock
@@ -49,6 +54,13 @@ class IndexCommandTest {
     private MenuResponseManager menuResponseManager;
     @InjectMocks
     private IndexCommand index;
+
+    @BeforeAll
+    public void initUser() {
+        user = User.getInstance("email", "password", "name", "surname", "Male", true);
+        user.setRole(Role.CLIENT);
+    }
+
     @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
@@ -62,7 +74,8 @@ class IndexCommandTest {
         when(menuResponseManager.getCurrentMenu(request)).thenReturn(currentMenu);
         when(request.getSession()).thenReturn(session);
         when(session.getAttribute(LOCALE)).thenReturn(locale);
-        when(dishService.getMenuByCategory(currentMenu)).thenReturn(dishes);
+        when(session.getAttribute(LOGGED_USER)).thenReturn(user);
+        when(dishService.getMenuByCategory(currentMenu, user)).thenReturn(dishes);
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
         index.execute(request, response);
         verify(menuResponseManager).setOrderInfoAttribute(request);
@@ -78,7 +91,8 @@ class IndexCommandTest {
         when(menuResponseManager.getCurrentMenu(request)).thenReturn(currentMenu);
         when(request.getSession()).thenReturn(session);
         when(session.getAttribute(LOCALE)).thenReturn(locale);
-        when(dishService.getMenuByCategory(currentMenu)).thenReturn(dishes);
+        when(session.getAttribute(LOGGED_USER)).thenReturn(user);
+        when(dishService.getMenuByCategory(currentMenu, user)).thenReturn(dishes);
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
         index.execute(request, response);
         verify(request).setAttribute(MENU_MESSAGE, messageMenuEmpty);
@@ -95,8 +109,9 @@ class IndexCommandTest {
         when(menuResponseManager.getCurrentMenu(request)).thenReturn(currentMenu);
         when(request.getSession()).thenReturn(session);
         when(session.getAttribute(LOCALE)).thenReturn(locale);
+        when(session.getAttribute(LOGGED_USER)).thenReturn(user);
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
-        when(dishService.getMenuByCategory(currentMenu)).thenThrow(new ServiceException("Such list of Dishes hasn't been found."));
+        when(dishService.getMenuByCategory(currentMenu, user)).thenThrow(new ServiceException("Such list of Dishes hasn't been found."));
         index.execute(request, response);
         verify(request).setAttribute(ERROR_MESSAGE, messageMenuEmpty);
         verify(menuResponseManager).setOrderInfoAttribute(request);

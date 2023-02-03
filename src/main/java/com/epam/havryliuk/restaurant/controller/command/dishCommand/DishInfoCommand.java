@@ -1,9 +1,8 @@
-package com.epam.havryliuk.restaurant.controller.command.orderCommand;
+package com.epam.havryliuk.restaurant.controller.command.dishCommand;
 
 import com.epam.havryliuk.restaurant.controller.command.Command;
 import com.epam.havryliuk.restaurant.model.constants.RequestParameters;
 import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
-import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.util.BundleManager;
@@ -21,21 +20,22 @@ import java.util.Locale;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
+//todo edit description
 /**
  * Command displays to user order info panel on his click to "order" button
  * with following information: dish details, fields for entering amount of dishes,
  * delivery address and phone with buttons that sends dish to basket on press of them.
  */
-public class OrderInfoCommand implements Command {
-    private static final Logger LOG = LogManager.getLogger(OrderInfoCommand.class);
+public class DishInfoCommand implements Command {
+    private static final Logger LOG = LogManager.getLogger(DishInfoCommand.class);
     @SuppressWarnings("FieldMayBeFinal")
     private DishService dishService;
 
-    public OrderInfoCommand() {
+    public DishInfoCommand() {
         ApplicationServiceContext appContext = new ApplicationServiceContext();
         dishService = appContext.getInstance(DishService.class);
     }
-
+//todo edit description
     /**
      * Method executes command that receives dish by its id, sets it to HttpSession, and set to session
      * attribute flag that informs user page to show ordering menu of concrete dish. If, on some reason,
@@ -62,11 +62,11 @@ public class OrderInfoCommand implements Command {
             LOG.error(e);
         }
         String redirectingPage;
-        if (session.getAttribute(LOGGED_USER) != null) {
+//        if (session.getAttribute(LOGGED_USER) != null) {
             redirectingPage = URLUtil.getRefererPage(request);
-        } else {
-            redirectingPage = AppPagesPath.FORWARD_REGISTRATION;
-        }
+//        } else {
+//            redirectingPage = AppPagesPath.FORWARD_REGISTRATION;
+//        }
         response.sendRedirect(redirectingPage);
     }
 }

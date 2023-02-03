@@ -1,5 +1,5 @@
-[DEBUG] 2023-01-27 14:01:22.492 [main] DatabaseContext - DatabaseContext initialised.
-[ERROR] 2023-01-27 14:01:22.516 [main] ConnectionManager - Can't get Initial context for DataSource.
+[DEBUG] 2023-02-03 13:01:01.250 [main] DatabaseContext - DatabaseContext initialised.
+[ERROR] 2023-02-03 13:01:01.258 [main] ConnectionManager - Can't get Initial context for DataSource.
 javax.naming.NoInitialContextException: Need to specify class name in environment or system property, or in an application resource file: java.naming.factory.initial
 	at javax.naming.spi.NamingManager.getInitialContext(NamingManager.java:704) ~[?:?]
 	at javax.naming.InitialContext.getDefaultInitCtx(InitialContext.java:305) ~[?:?]
@@ -13,42 +13,35 @@ javax.naming.NoInitialContextException: Need to specify class name in environmen
 	at jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[?:?]
 	at java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499) ~[?:?]
 	at java.lang.reflect.Constructor.newInstance(Constructor.java:480) ~[?:?]
-	at com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext.lambda$injectAnnotatedFields$1(ApplicationServiceContext.java:72) ~[classes/:?]
+	at com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext.lambda$injectAnnotatedFields$1(ApplicationServiceContext.java:70) ~[classes/:?]
 	at java.lang.Iterable.forEach(Iterable.java:75) ~[?:?]
-	at com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext.injectAnnotatedFields(ApplicationServiceContext.java:68) ~[classes/:?]
-	at com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext.getInstance(ApplicationServiceContext.java:51) ~[classes/:?]
-	at com.epam.havryliuk.restaurant.controller.command.dishCommand.IndexCommand.<init>(IndexCommand.java:37) ~[classes/:?]
-	at java.lang.invoke.MethodHandle.invokeWithArguments(MethodHandle.java:732) ~[?:?]
-	at org.mockito.internal.util.reflection.InstrumentationMemberAccessor$Dispatcher$ByteBuddy$DYfRkeKg.invokeWithArguments(Unknown Source) ~[?:?]
-	at org.mockito.internal.util.reflection.InstrumentationMemberAccessor.lambda$newInstance$0(InstrumentationMemberAccessor.java:191) ~[mockito-core-4.11.0.jar:?]
-	at org.mockito.internal.util.reflection.InstrumentationMemberAccessor.newInstance(InstrumentationMemberAccessor.java:188) ~[mockito-core-4.11.0.jar:?]
-	at org.mockito.internal.util.reflection.InstrumentationMemberAccessor.newInstance(InstrumentationMemberAccessor.java:161) ~[mockito-core-4.11.0.jar:?]
-	at org.mockito.internal.util.reflection.ModuleMemberAccessor.newInstance(ModuleMemberAccessor.java:42) ~[mockito-core-4.11.0.jar:?]
-	at org.mockito.internal.util.reflection.FieldInitializer$NoArgConstructorInstantiator.instantiate(FieldInitializer.java:203) ~[mockito-core-4.11.0.jar:?]
-	at org.mockito.internal.util.reflection.FieldInitializer.acquireFieldInstance(FieldInitializer.java:146) ~[mockito-core-4.11.0.jar:?]
-	at org.mockito.internal.util.reflection.FieldInitializer.initialize(FieldInitializer.java:91) ~[mockito-core-4.11.0.jar:?]
-	at org.mockito.internal.configuration.injection.PropertyAndSetterInjection.initializeInjectMocksField(PropertyAndSetterInjection.java:92) ~[mockito-core-4.11.0.jar:?]
-	at org.mockito.internal.configuration.injection.PropertyAndSetterInjection.processInjection(PropertyAndSetterInjection.java:73) ~[mockito-core-4.11.0.jar:?]
-	at org.mockito.internal.configuration.injection.MockInjectionStrategy.process(MockInjectionStrategy.java:68) ~[mockito-core-4.11.0.jar:?]
-	at org.mockito.internal.configuration.injection.MockInjectionStrategy.relayProcessToNextStrategy(MockInjectionStrategy.java:91) ~[mockito-core-4.11.0.jar:?]
-	at org.mockito.internal.configuration.injection.MockInjectionStrategy.process(MockInjectionStrategy.java:71) ~[mockito-core-4.11.0.jar:?]
-	at org.mockito.internal.configuration.injection.MockInjectionStrategy.relayProcessToNextStrategy(MockInjectionStrategy.java:91) ~[mockito-core-4.11.0.jar:?]
-	at org.mockito.internal.configuration.injection.MockInjectionStrategy.process(MockInjectionStrategy.java:71) ~[mockito-core-4.11.0.jar:?]
-	at org.mockito.internal.configuration.injection.MockInjection$OngoingMockInjection.apply(MockInjection.java:88) ~[mockito-core-4.11.0.jar:?]
-	at org.mockito.internal.configuration.DefaultInjectionEngine.injectMocksOnFields(DefaultInjectionEngine.java:26) ~[mockito-core-4.11.0.jar:?]
-	at org.mockito.internal.configuration.InjectingAnnotationEngine.injectCloseableMocks(InjectingAnnotationEngine.java:118) ~[mockito-core-4.11.0.jar:?]
-	at org.mockito.internal.configuration.InjectingAnnotationEngine.processInjectMocks(InjectingAnnotationEngine.java:61) ~[mockito-core-4.11.0.jar:?]
-	at org.mockito.internal.configuration.InjectingAnnotationEngine.process(InjectingAnnotationEngine.java:48) ~[mockito-core-4.11.0.jar:?]
-	at org.mockito.MockitoAnnotations.openMocks(MockitoAnnotations.java:81) ~[mockito-core-4.11.0.jar:?]
-	at org.mockito.internal.framework.DefaultMockitoSession.<init>(DefaultMockitoSession.java:43) ~[mockito-core-4.11.0.jar:?]
-	at org.mockito.internal.session.DefaultMockitoSessionBuilder.startMocking(DefaultMockitoSessionBuilder.java:83) ~[mockito-core-4.11.0.jar:?]
-	at org.mockito.junit.jupiter.MockitoExtension.beforeEach(MockitoExtension.java:153) ~[mockito-junit-jupiter-4.11.0.jar:?]
-	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeBeforeEachCallbacks$2(TestMethodTestDescriptor.java:166) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
-	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeBeforeMethodsOrCallbacksUntilExceptionOccurs$6(TestMethodTestDescriptor.java:202) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
+	at com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext.injectAnnotatedFields(ApplicationServiceContext.java:66) ~[classes/:?]
+	at com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext.getInstance(ApplicationServiceContext.java:50) ~[classes/:?]
+	at com.epam.havryliuk.restaurant.controller.command.dishCommand.IndexCommand.<init>(IndexCommand.java:36) ~[classes/:?]
+	at com.epam.havryliuk.restaurant.controller.command.CommandFactory.<init>(CommandFactory.java:21) ~[classes/:?]
+	at com.epam.havryliuk.restaurant.controller.command.CommandFactoryTest.defineCommandDefault(CommandFactoryTest.java:54) ~[test-classes/:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:568) ~[?:?]
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:727) ~[junit-platform-commons-1.9.1.jar:1.9.1]
+	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:156) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:147) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:86) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(InterceptingExecutableInvoker.java:103) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.lambda$invoke$0(InterceptingExecutableInvoker.java:93) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:92) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:86) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$7(TestMethodTestDescriptor.java:217) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.9.1.jar:1.9.1]
-	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeBeforeMethodsOrCallbacksUntilExceptionOccurs(TestMethodTestDescriptor.java:202) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
-	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeBeforeEachCallbacks(TestMethodTestDescriptor.java:165) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
-	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:132) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:213) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:138) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
 	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:68) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
 	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:151) ~[junit-platform-engine-1.9.1.jar:1.9.1]
 	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.9.1.jar:1.9.1]
@@ -97,7 +90,40 @@ javax.naming.NoInitialContextException: Need to specify class name in environmen
 	at com.intellij.rt.junit.IdeaTestRunner$Repeater.startRunnerWithArgs(IdeaTestRunner.java:35) ~[junit-rt.jar:?]
 	at com.intellij.rt.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:235) ~[junit-rt.jar:?]
 	at com.intellij.rt.junit.JUnitStarter.main(JUnitStarter.java:54) ~[junit-rt.jar:?]
-[INFO ] 2023-01-27 14:01:22.544 [main] ConnectionManager - DataSource initialised.
-[DEBUG] 2023-01-27 14:01:22.544 [main] ConnectionManager - It is asked for instance of DataSource.
-[ERROR] 2023-01-27 14:01:22.856 [main] IndexCommand - com.epam.havryliuk.restaurant.model.exceptions.ServiceException: Such list of Dishes hasn't been found.
-[DEBUG] 2023-01-27 14:01:22.861 [main] AppPagesPath - Application paths are initialised.
+[INFO ] 2023-02-03 13:01:01.266 [main] ConnectionManager - DataSource initialised.
+[DEBUG] 2023-02-03 13:01:01.266 [main] ConnectionManager - It is asked for instance of DataSource.
+[DEBUG] 2023-02-03 13:01:01.271 [main] CommandFactory - Restaurant action was received.
+[DEBUG] 2023-02-03 13:01:01.305 [main] ConnectionManager - It is asked for instance of DataSource.
+[DEBUG] 2023-02-03 13:01:01.307 [main] ConnectionManager - It is asked for instance of DataSource.
+[DEBUG] 2023-02-03 13:01:01.313 [main] ConnectionManager - It is asked for instance of DataSource.
+[DEBUG] 2023-02-03 13:01:01.316 [main] ConnectionManager - It is asked for instance of DataSource.
+[DEBUG] 2023-02-03 13:01:01.317 [main] ConnectionManager - It is asked for instance of DataSource.
+[DEBUG] 2023-02-03 13:01:01.346 [main] ConnectionManager - It is asked for instance of DataSource.
+[DEBUG] 2023-02-03 13:01:01.346 [main] CommandFactory - index action was received.
+[DEBUG] 2023-02-03 13:01:01.352 [main] ConnectionManager - It is asked for instance of DataSource.
+[DEBUG] 2023-02-03 13:01:01.354 [main] ConnectionManager - It is asked for instance of DataSource.
+[DEBUG] 2023-02-03 13:01:01.355 [main] ConnectionManager - It is asked for instance of DataSource.
+[DEBUG] 2023-02-03 13:01:01.357 [main] ConnectionManager - It is asked for instance of DataSource.
+[DEBUG] 2023-02-03 13:01:01.358 [main] ConnectionManager - It is asked for instance of DataSource.
+[DEBUG] 2023-02-03 13:01:01.358 [main] ConnectionManager - It is asked for instance of DataSource.
+[DEBUG] 2023-02-03 13:01:01.361 [main] ConnectionManager - It is asked for instance of DataSource.
+[DEBUG] 2023-02-03 13:01:01.361 [main] ConnectionManager - It is asked for instance of DataSource.
+[DEBUG] 2023-02-03 13:01:01.363 [main] ConnectionManager - It is asked for instance of DataSource.
+[DEBUG] 2023-02-03 13:01:01.363 [main] ConnectionManager - It is asked for instance of DataSource.
+[DEBUG] 2023-02-03 13:01:01.365 [main] ConnectionManager - It is asked for instance of DataSource.
+[DEBUG] 2023-02-03 13:01:01.366 [main] CommandFactory - INDEX command is going to be performed.
+[DEBUG] 2023-02-03 13:01:01.373 [main] ConnectionManager - It is asked for instance of DataSource.
+[DEBUG] 2023-02-03 13:01:01.373 [main] CommandFactory - show_order_info action was received.
+[DEBUG] 2023-02-03 13:01:01.373 [main] CommandFactory - SHOW_ORDER_INFO command is going to be performed.
+[DEBUG] 2023-02-03 13:01:01.376 [main] ConnectionManager - It is asked for instance of DataSource.
+[DEBUG] 2023-02-03 13:01:01.376 [main] CommandFactory - login_page action was received.
+[DEBUG] 2023-02-03 13:01:01.376 [main] CommandFactory - LOGIN_PAGE command is going to be performed.
+[DEBUG] 2023-02-03 13:01:01.380 [main] ConnectionManager - It is asked for instance of DataSource.
+[DEBUG] 2023-02-03 13:01:01.381 [main] CommandFactory - manage_orders action was received.
+[DEBUG] 2023-02-03 13:01:01.381 [main] CommandFactory - MANAGE_ORDERS command is going to be performed.
+[DEBUG] 2023-02-03 13:01:01.385 [main] ConnectionManager - It is asked for instance of DataSource.
+[DEBUG] 2023-02-03 13:01:01.385 [main] CommandFactory - register action was received.
+[DEBUG] 2023-02-03 13:01:01.386 [main] CommandFactory - REGISTER command is going to be performed.
+[DEBUG] 2023-02-03 13:01:01.389 [main] ConnectionManager - It is asked for instance of DataSource.
+[DEBUG] 2023-02-03 13:01:01.389 [main] CommandFactory - remove_from_order action was received.
+[DEBUG] 2023-02-03 13:01:01.389 [main] CommandFactory - REMOVE_FROM_ORDER command is going to be performed.

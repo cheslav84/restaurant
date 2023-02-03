@@ -14,28 +14,23 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import jakarta.servlet.http.Part;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.math.BigDecimal;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.Locale;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
+import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.ORDER_MESSAGE;
 
-public class AddDishCommand implements Command {
-    private static final Logger LOG = LogManager.getLogger(AddDishCommand.class);
-
+public class EditDishCommand implements Command {
+    private static final Logger LOG = LogManager.getLogger(EditDishCommand.class);
 
     @SuppressWarnings("FieldMayBeFinal")
     private DishService dishService;
 
-    public AddDishCommand() {
+    public EditDishCommand() {
         ApplicationServiceContext appContext = new ApplicationServiceContext();
         dishService = appContext.getInstance(DishService.class);
     }
@@ -47,17 +42,12 @@ public class AddDishCommand implements Command {
                 .getAttribute(LOCALE)).getCountry());
         HttpSession session = request.getSession();
         String redirectionPage;
-        Part part = request.getPart(RequestParameters.DISH_IMAGE);
-        String imageFileName = part.getSubmittedFileName();
-        String path = AppPagesPath.DISH_IMAGE_PATH + imageFileName;
-        Dish dish = mapDish(request, imageFileName);
-        //todo validate
-
         try {
-            dishService.addNewDish(dish);
-            path = request.getServletContext().getRealPath(path);
-            InputStream is = part.getInputStream();
-            Files.copy(is, Paths.get(path), StandardCopyOption.REPLACE_EXISTING);
+            Dish dish = getCurrentDish(request);
+
+            updateDishData(request, dish);
+        //todo validate
+            dishService.updateDish(dish);
             session.removeAttribute(ERROR_MESSAGE);
             redirectionPage = AppPagesPath.REDIRECT_INDEX;
 
@@ -71,17 +61,39 @@ public class AddDishCommand implements Command {
         response.sendRedirect(redirectionPage);
     }
 
-    private Dish mapDish(HttpServletRequest request, String imageFileName) {
-        final String name = request.getParameter(RequestParameters.DISH_NAME);
-        final String description = request.getParameter(RequestParameters.DISH_DESCRIPTION);
-        final int weight = Integer.parseInt(request.getParameter(RequestParameters.DISH_WEIGHT));
+    private void updateDishData(HttpServletRequest request, Dish dish) {
+        dish.setName(request.getParameter(RequestParameters.DISH_NAME));
+        dish.setDescription(request.getParameter(RequestParameters.DISH_DESCRIPTION));
+        dish.setWeight(Integer.parseInt(request.getParameter(RequestParameters.DISH_WEIGHT)));
+        dish.setAmount(Integer.parseInt(request.getParameter(RequestParameters.DISH_AMOUNT)));
         String priceStr = request.getParameter(RequestParameters.DISH_PRICE).replaceAll(",", ".");
-        final BigDecimal price = BigDecimal.valueOf(Double.parseDouble(priceStr));
-        final boolean alcohol = request.getParameter(RequestParameters.DISH_ALCOHOL) != null;
-        final boolean special = request.getParameter(RequestParameters.DISH_SPECIAL) != null;
-        final Category category = Category.valueOf(request.getParameter(RequestParameters.DISH_CATEGORY).toUpperCase());
-        return Dish.getInstance(name, description, weight,
-         price, imageFileName, alcohol, special, category);
+        dish.setPrice(BigDecimal.valueOf(Double.parseDouble(priceStr)));
+        dish.setAlcohol(request.getParameter(RequestParameters.DISH_ALCOHOL) != null);
+        dish.setSpecial(request.getParameter(RequestParameters.DISH_SPECIAL) != null);
+        dish.setCategory(Category.valueOf(request.getParameter(RequestParameters.DISH_CATEGORY).toUpperCase()));
+    }
+
+
+
+    /**
+     * Method obtains a dish saved in session. If there is no dish in it, the ServiceException will be
+     * thrown and the corresponding message will be set to session for informing user. Dish had to be set
+     * in session while user press "Order" button and performing "show_dish_info" command preceding the current
+     * command.
+     * @return Dish that need to be saved to order.
+     * @throws ServiceException if there is no Dish present in session.
+     */
+    private Dish getCurrentDish(HttpServletRequest request) throws ServiceException {
+        HttpSession session = request.getSession();
+        Dish dish = (Dish) session.getAttribute(CURRENT_DISH);
+        if (dish == null) {
+            BundleManager bundleManager = BundleManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());
+            session.setAttribute(ORDER_MESSAGE,
+                    bundleManager.getProperty(ResponseMessages.ORDER_DISH_NOT_FOUND));
+            LOG.error(ResponseMessages.ORDER_DISH_NOT_FOUND);
+            throw new ServiceException(ResponseMessages.ORDER_DISH_NOT_FOUND);
+        }
+        return dish;
     }
 
 

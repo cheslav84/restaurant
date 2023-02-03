@@ -6,14 +6,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Properties;
-
 public class AppPagesPath {
     private static final Logger LOG = LogManager.getLogger(AppPagesPath.class);
     private static final Properties PROPERTIES;
     public static final String FORWARD_INDEX;
     public static final String FORWARD_MENU_PAGE;
+    public static final String FORWARD_MANAGER_MENU_PAGE;
     public static final String REDIRECT_INDEX;
-    //    public static final String REDIRECT_MENU;
     public static final String FORWARD_REGISTRATION;
     public static final String REDIRECT_REGISTRATION;
     public static final String REDIRECT_BASKET;
@@ -40,6 +39,7 @@ public class AppPagesPath {
         FORWARD_MANAGE_ORDERS = (String) PROPERTIES.get("path.page.forward.manageOrders");
 
         FORWARD_MENU_PAGE = (String) PROPERTIES.get("path.page.forward.menu");
+        FORWARD_MANAGER_MENU_PAGE = (String) PROPERTIES.get("path.page.forward.managerMenu");
 //        REDIRECT_MENU = (String) PROPERTIES.get("path.page.redirect.menu");
 
         FORWARD_ADD_DISH_PAGE = (String) PROPERTIES.get("path.page.forward.addDishPage");

@@ -13,8 +13,8 @@ public enum CommandEnum {
         { this.command = new IndexCommand(); }
     }, MENU {
         { this.command = new MenuCommand(); }
-    }, SHOW_ORDER_INFO {
-        { this.command = new OrderInfoCommand(); }
+    }, SHOW_DISH_INFO {
+        { this.command = new DishInfoCommand(); }
     }, MAKE_ORDER {
         { this.command = new MakeOrderCommand(); }
     }, BASKET {
@@ -35,8 +35,10 @@ public enum CommandEnum {
         { this.command = new RegisterCommand(); }
     }, ADD_DISH_PAGE {
         { this.command = new AddDishPageCommand(); }
-    }, UPLOAD_IMAGE {
-        { this.command = new RegisterCommand(); }
+    }, ADD_DISH {
+        { this.command = new AddDishCommand(); }
+    }, EDIT_DISH {
+        { this.command = new EditDishCommand(); }
     }
     ;
 

@@ -61,7 +61,7 @@
                                             <span class="price-marker">₴</span>
                                         </div>
                                         <c:if test="${sessionScope.loggedUser.role != 'MANAGER'}">
-                                            <form method="get" action="show_order_info" name="dishOrder">
+                                            <form method="get" action="show_dish_info" name="dishOrder">
                                                 <button value="${dish.id}" name="dishId" class="button order-menu-button">
                                                     <fmt:message key="index.orderBtn" />
                                                 </button>

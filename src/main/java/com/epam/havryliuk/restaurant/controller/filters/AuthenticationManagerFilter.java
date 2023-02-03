@@ -15,7 +15,7 @@ import java.io.IOException;
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.LOGGED_USER;
 
 @WebFilter(filterName = "AuthenticationManagerFilter",
-        urlPatterns = {"/manage_orders", "/add_dish_page"})
+        urlPatterns = { "/manage_orders", "/add_dish_page", "/edit_dish"})
 public class AuthenticationManagerFilter implements Filter {
     private static final Logger LOG = LogManager.getLogger(AuthenticationManagerFilter.class);
 

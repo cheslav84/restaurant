@@ -6,6 +6,7 @@ import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
 import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
 import com.epam.havryliuk.restaurant.model.entity.Category;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
+import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.util.BundleManager;
 import com.epam.havryliuk.restaurant.model.service.DishService;
@@ -49,9 +50,10 @@ public class IndexCommand implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         Category currentMenu = menuResponseManager.getCurrentMenu(request);
         BundleManager bundleManager = BundleManager.valueOf(((Locale) request.getSession().getAttribute(LOCALE)).getCountry());
+        User user = (User) request.getSession().getAttribute(LOGGED_USER);
         List<Dish> dishes = null;
         try {
-            dishes = dishService.getMenuByCategory(currentMenu);
+            dishes = dishService.getMenuByCategory(currentMenu, user);
             if (dishes.isEmpty()) {
                 request.setAttribute(MENU_MESSAGE,
                         bundleManager.getProperty(ResponseMessages.MENU_EMPTY));

@@ -7,6 +7,8 @@ import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
 import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
 import com.epam.havryliuk.restaurant.model.entity.Category;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
+import com.epam.havryliuk.restaurant.model.entity.Role;
+import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.util.BundleManager;
 import com.epam.havryliuk.restaurant.model.service.DishService;
@@ -54,20 +56,21 @@ public class MenuCommand implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         Category currentMenu = menuResponseManager.getCurrentMenu(request);
         BundleManager bundleManager = BundleManager.valueOf(((Locale) request.getSession().getAttribute(LOCALE)).getCountry());
+        User user = (User) request.getSession().getAttribute(LOGGED_USER);
         List<Dish> dishes = null;
         List<Dish> specials = null;
         try {
             if (currentMenu.equals(Category.ALL)) {
                 String sortParameter = getSortParameter(request);
-                dishes = dishService.getAllMenuSortedBy(sortParameter);
+                dishes = dishService.getAllAvailableMenuSortedBy(sortParameter, user);
             } else {
-                dishes = dishService.getMenuByCategory(menuResponseManager.getCurrentMenu(request));
+                dishes = dishService.getMenuByCategory(menuResponseManager.getCurrentMenu(request), user);
             }
             if (dishes.isEmpty()) {
                 request.setAttribute(MENU_MESSAGE,
                         bundleManager.getProperty(ResponseMessages.MENU_EMPTY));
             }
-            specials = dishService.getMenuByCategory(Category.SPECIALS);
+            specials = dishService.getMenuByCategory(Category.SPECIALS, user);
             LOG.debug("List of dishes received by servlet and going to be sending to client side.");
         } catch (ServiceException e) {
             request.setAttribute(ERROR_MESSAGE,
@@ -77,7 +80,14 @@ public class MenuCommand implements Command {
         menuResponseManager.setOrderInfoAttribute(request);
         request.setAttribute(DISH_LIST, dishes);
         request.setAttribute(SPECIALS_DISH_LIST, specials);
-        request.getRequestDispatcher(AppPagesPath.FORWARD_MENU_PAGE).forward(request, response);
+
+        String redirectionPage;
+        if (user != null && user.getRole().equals(Role.MANAGER) ) {
+            redirectionPage = AppPagesPath.FORWARD_MANAGER_MENU_PAGE;
+        } else {
+            redirectionPage = AppPagesPath.FORWARD_MENU_PAGE;
+        }
+        request.getRequestDispatcher(redirectionPage).forward(request, response);
     }
 
     /**

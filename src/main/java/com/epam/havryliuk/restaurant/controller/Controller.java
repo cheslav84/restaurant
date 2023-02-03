@@ -16,8 +16,9 @@ import java.io.IOException;
 
 @MultipartConfig
 @WebServlet(name = "Controller", urlPatterns = {"/login_page", "/login", "/register", "/logout",
-        "/index", "/menu/*", "/show_order_info", "/make_order", "/basket", "/remove_from_order",
-       "/set_next_status/*", "/manage_orders", "/add_dish_page", "/upload_picture", "/add_dish"})
+        "/index", "/menu/*", "/show_dish_info", "/make_order", "/basket", "/remove_from_order",
+       "/set_next_status/*", "/manage_orders", "/add_dish_page", "/upload_picture", "/add_dish",
+        "/edit_dish"})
 public class Controller extends HttpServlet {
     private static final Logger LOG = LogManager.getLogger(Controller.class);
 

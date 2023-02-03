@@ -15,9 +15,10 @@
         <link href="view/css/sidebar.css" rel="stylesheet" type="text/css">
         <link href="view/css/menu.css" rel="stylesheet" type="text/css">
         <link href="view/css/order-info.css" rel="stylesheet" type="text/css">
+        <link href="view/css/edit-dish.css" rel="stylesheet" type="text/css">
     </head>
     <body>
-        <jsp:include page="sidebar.jsp" />
+        <jsp:include page="../sidebar.jsp"/>
         <div id="top" class="page-header wf-section">
             <div class="page-header-overlay menu">
                 <div class="container w-container">
@@ -128,13 +129,13 @@
                                         <c:out value="${dish.price}" />
                                         <span class="price-marker">₴</span>
                                     </div>
-                                        <c:if test="${sessionScope.loggedUser.role != 'MANAGER'}">
+                                        <%-- <c:if test="${sessionScope.loggedUser.role != 'MANAGER'}"> --%>
                                             <form method="get" action="show_dish_info" name="dishOrder">
                                                 <button value="${dish.id}" name="dishId" class="button order-menu-button">
-                                                    <fmt:message key="menu.orderBtn" />
+                                                    <fmt:message key="menu.editDishBtn" />
                                                 </button>
                                             </form>
-                                        </c:if>
+                                        <%-- </c:if> --%>
                                 </div>
                             </c:forEach>
                         </div>
@@ -179,13 +180,13 @@
                                                     <c:out value="${dishSpecial.price}" />
                                                     <span class="price-marker">₴</span>
                                                 </div>
-                                                <c:if test="${sessionScope.loggedUser.role != 'MANAGER'}">
+                                                <%-- <c:if test="${sessionScope.loggedUser.role == 'MANAGER'}"> --%>
                                                     <form method="get" action="show_dish_info" name="dishOrder">
                                                         <button value="${dishSpecial.id}" name="dishId" class="button order-menu-button">
-                                                            <fmt:message key="menu.orderBtn" />
+                                                            <fmt:message key="menu.editDishBtn" />
                                                         </button>
                                                     </form>
-                                                </c:if>
+                                                <%-- </c:if> --%>
                                             </div>
                                         </c:forEach>
                                     </div>
@@ -196,10 +197,10 @@
                 </div>
             </div>
         </div>
-        <c:if test="${sessionScope.loggedUser ne null}">
-            <jsp:include page="order-info.jsp" />
-        </c:if>
-        <jsp:include page="footer.jsp" />
+        <%-- <c:if test="${sessionScope.loggedUser ne null}"> --%>
+            <jsp:include page="editDish.jsp" />
+        <%-- </c:if> --%>
+        <jsp:include page="../footer.jsp"/>
         <script src="view/js/jquery3.6.1.js" type="text/javascript" crossorigin="anonymous"></script>
         <script src="view/js/webflow.e.js" type="text/javascript"></script>
         <script src="view/js/menu.js" type="text/javascript"></script>
