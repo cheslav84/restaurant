@@ -14,8 +14,13 @@ $(document).ready(function () {
 
   $(last).addClass('last-padding');
 
-  if (localStorage.selectVal) {
-    $('select').val(localStorage.selectVal);
+
+  if (localStorage.recordsPerPage == null) {
+    localStorage.setItem('recordsPerPage', 4);
+  } 
+
+  if (localStorage.recordsPerPage) {
+    $('select').val(localStorage.recordsPerPage);
   } 
  
 });
@@ -23,7 +28,7 @@ $(document).ready(function () {
 
 $('select').on('change', function () {
   var currentVal = $(this).val();
-  localStorage.setItem('selectVal', currentVal);
+  localStorage.setItem('recordsPerPage', currentVal);
 });
 
 

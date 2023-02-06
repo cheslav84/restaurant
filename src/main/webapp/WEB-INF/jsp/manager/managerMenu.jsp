@@ -48,6 +48,19 @@
                                 <fmt:message key="menu.sortBy" />
                             </div>
                             <select id="sort-menu-by-selector" name="menuSortingOption"
+                                class="menu-page-tab-title subtitle sort-menu-by" value="${sessionScope.sortParameter}">
+                                <fmt:message key="menu.sortBy" />
+                                <option value="Name" ${"Name" == sessionScope.menuSortingOption ? 'selected="selected"' : ''}>
+                                    <fmt:message key="menu.sortByName" />
+                                </option>
+                                <option value="Price" ${"Price" == sessionScope.menuSortingOption ? 'selected="selected"' : ''}>
+                                    <fmt:message key="menu.sortByPrice" />
+                                </option>
+                                <option value="Category" ${"Category" == sessionScope.menuSortingOption ? 'selected="selected"' : ''}>
+                                    <fmt:message key="menu.sortByCategory" />
+                                </option>
+                            </select>
+                            <%-- <select id="sort-menu-by-selector" name="menuSortingOption"
                                 class="menu-page-tab-title subtitle sort-menu-by">
                                 <fmt:message key="menu.sortBy" />
                                 <option selected value="Name" selected>
@@ -59,7 +72,7 @@
                                 <option value="Category">
                                     <fmt:message key="menu.sortByCategory" />
                                 </option>
-                            </select>
+                            </select> --%>
                             <input type="submit" value="ALL" name="menuCategory" data-w-tab="ALL"
                                 class="menu-hidden-input menu-tab-button transparent-button" />
                         </form>

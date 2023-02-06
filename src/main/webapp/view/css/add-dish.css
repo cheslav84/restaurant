@@ -1,3 +1,15 @@
+.page-header-overlay{
+  height: 200px;
+}
+
+.section-intro-block{
+  margin-top: -55px;
+}
+
+.section {
+  padding-top: 35px;
+}
+
 .field-border {
     border: 2px solid #f3f3f3;
 
@@ -43,4 +55,40 @@
     .reservation-image-block {
         height: 338px;
     }
+
+    .page-header-overlay{
+      height: 150px;
+    }
+    
+    .section-intro-block{
+      margin-top: -40px;
+    }
+    
+  }
+
+
+  @media (max-width: 767px) {
+    
+    .section {
+      padding-top: 25px;
+    }
+    
+    .section-intro-block{
+      margin-top: -20px;
+    }
+
+    .upload-picture{
+      margin-bottom: 10px;
+    }
+
+    .w-col .w-col{
+      padding-left: -2px;
+      padding-right: -2px;
+    }
+
+    .w-clearfix.w-col.w-col-6 {
+      padding-left: -2px !important;
+      padding-right: -2px;
+    }
+    
   }

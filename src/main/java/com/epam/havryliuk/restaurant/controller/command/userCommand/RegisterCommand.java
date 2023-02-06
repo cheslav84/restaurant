@@ -23,6 +23,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.Locale;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
@@ -36,7 +37,7 @@ public class RegisterCommand implements Command {
     @SuppressWarnings("FieldMayBeFinal")
     private UserService userService;
 
-    public RegisterCommand() {
+    public RegisterCommand () {
         ApplicationServiceContext appContext = new ApplicationServiceContext();
         userService = appContext.getInstance(UserService.class);
     }
@@ -89,7 +90,6 @@ public class RegisterCommand implements Command {
      * Method receives the Login/Registration page, and sets to HttpSession
      * flag that registration part of that page should be displayed for user
      * (REGISTRATION_PROCESS).
-     *
      * @return String representation of registration page.
      */
     private String getRegistrationPage(HttpSession session) {
@@ -98,6 +98,18 @@ public class RegisterCommand implements Command {
         return redirectionPage;
     }
 
+//    private String getRedirectionPage(HttpSession session) {
+//        String pageFromBeingRedirected = (String) session.getAttribute(PAGE_FROM_BEING_REDIRECTED);//todo set from security filter
+//        String redirectionPage;
+//        if (pageFromBeingRedirected != null) {
+//            redirectionPage = pageFromBeingRedirected;
+//        } else {
+//            redirectionPage = AppPagesPath.REDIRECT_INDEX;
+//        }
+//        session.removeAttribute(PAGE_FROM_BEING_REDIRECTED);
+//        return redirectionPage;
+//    }
+
     /**
      * Method maps User from data entered by User During registration process, and validates that data.
      * If some data is invalid, method gets ValidationException, removes User password and sets that User
@@ -105,11 +117,10 @@ public class RegisterCommand implements Command {
      * The User that is set to Session while ValidationException occurs, can contain in his Entity fields
      * messages of incorrect data. The fields that is valid will be displayed in proper input page fields
      * preventing user to enter correct data again.
-     *
      * @return correct User mapped from data entered by user.
      * @throws ValidationException when some data entered by user is incorrect.
      */
-    private User mapUser(HttpServletRequest req) throws ValidationException {
+    private User mapUser(HttpServletRequest req) throws ValidationException {//todo можливо винести метод, подумати...
         final String password = req.getParameter(RequestParameters.PASSWORD);
         final String email = req.getParameter(RequestParameters.EMAIL).trim();
         final String name = req.getParameter(RequestParameters.NAME).trim();
@@ -119,8 +130,9 @@ public class RegisterCommand implements Command {
         User user = User.getInstance(email, password, name, surname, gender, isOverEighteen);
         user.setRole(Role.CLIENT);
         try {
-            new Validator().validateUserData(user, req);
-        } catch (ValidationException e) {
+            Validator.validateUserData(user, req);
+//            new Validator().validateUserData(user, req);
+        } catch (ValidationException e){
             user.setPassword(null);
             req.getSession().setAttribute(USER_IN_LOGGING, user);
             throw new ValidationException();
@@ -130,10 +142,17 @@ public class RegisterCommand implements Command {
 
     /**
      * Method gets raw password from User, encrypts it and sets it back to user.
+     * If on some reason password isn't encrypted, ServiceException will be thrown.
      * @param user whose password should be encrypted.
      */
-    private void encryptUserPassword(User user) {
+    private void encryptUserPassword(User user) throws ServiceException {
+        try {
             String password = user.getPassword();
             user.setPassword(PassEncryptor.encrypt(password));
+        } catch (GeneralSecurityException e) {
+            String errorMessage = "Failed to encrypt password.";
+            LOG.error(errorMessage, e);
+            throw new ServiceException(errorMessage, e);
+        }
     }
 }

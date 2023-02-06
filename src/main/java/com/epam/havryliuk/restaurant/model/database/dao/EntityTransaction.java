@@ -33,7 +33,8 @@ public class EntityTransaction {
 
     // todo read about heap pollution
     @SafeVarargs
-    public final void initTransaction(AbstractDao<? extends Entity> dao, AbstractDao<? extends Entity>... daos) throws DAOException {
+    public final void initTransaction(AbstractDao<? extends Entity> dao, AbstractDao<? extends Entity>... daos)
+            throws DAOException {
         try {
             if (connection == null) {
                 connection = connectionManager.getConnection();

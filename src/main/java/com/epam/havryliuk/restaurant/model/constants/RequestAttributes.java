@@ -8,6 +8,7 @@ public interface RequestAttributes {
     String ORDER_LIST = "orders";
     String ORDER_PRICE_MAP = "ordersAndPrices";
     String DISH_LIST = "dishes";
+    String MENU_SORTING_OPTION = "menuSortingOption";
     String SPECIALS_DISH_LIST = "dishesSpecials";
     //    String EMAIL = "email";
     String CURRENT_DISH = "currentDish";
@@ -25,5 +26,7 @@ public interface RequestAttributes {
     String MENU_MESSAGE = "menuMessage";
     String NUMBER_OF_PAGES = "noOfPages";
     String CURRENT_PAGE = "currentPage";
+    String RECORDS_PER_PAGE = "recordsPerPage";
     String WRONG_ACTION = "wrongAction";
+    String WRONG_DISH_FIELD_MESSAGE = "wrongDishFieldMessage";
 }

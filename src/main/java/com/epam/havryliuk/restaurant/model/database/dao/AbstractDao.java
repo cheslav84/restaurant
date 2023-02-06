@@ -32,7 +32,7 @@ public abstract class AbstractDao<T extends Entity> {
 
     public abstract boolean delete(long id) throws DAOException;
 
-    public void close(Statement statement) {
+    public void close(Statement statement) {//todo check usages
         try {
             if (statement != null) {
                 statement.close();

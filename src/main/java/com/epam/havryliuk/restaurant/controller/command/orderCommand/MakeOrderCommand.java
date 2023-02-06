@@ -17,7 +17,6 @@ import com.epam.havryliuk.restaurant.model.service.OrderService;
 import com.epam.havryliuk.restaurant.model.util.URLUtil;
 import com.epam.havryliuk.restaurant.model.util.validation.Validator;
 import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -38,8 +37,6 @@ public class MakeOrderCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(MakeOrderCommand.class);
     @SuppressWarnings("FieldMayBeFinal")
     private OrderService orderService;
-    @SuppressWarnings("FieldMayBeFinal")
-    private Validator validator = new Validator();
 
     public MakeOrderCommand () {
         ApplicationServiceContext appContext = new ApplicationServiceContext();
@@ -70,24 +67,6 @@ public class MakeOrderCommand implements Command {
         String redirectionPage = getRedirectionPage(request);
         response.sendRedirect(redirectionPage);
     }
-//    @Override
-//    public void execute(HttpServletRequest request, HttpServletResponse response)
-//    throws IOException, ServletException {
-//        HttpSession session = request.getSession();
-//        User user = (User) session.getAttribute(RequestAttributes.LOGGED_USER);
-//        Order order = (Order) session.getAttribute(CURRENT_ORDER);
-//        if (order != null) {
-//            saveDishToOrder(request, order);
-//            session.removeAttribute(ERROR_MESSAGE);
-//            LOG.debug("Order in session: " + order);
-//        } else {
-//            order = getFromStorageOrCreateOrder(request, user);
-//            session.setAttribute(CURRENT_ORDER, order);
-//            saveDishToOrder(request, order);
-//        }
-//        String redirectionPage = getRedirectionPage(request);
-//        response.sendRedirect(redirectionPage);
-//    }
 
     /**
      * Methods requests an order from service. It can be the order that already exist in database
@@ -99,7 +78,7 @@ public class MakeOrderCommand implements Command {
         try {
             String deliveryAddress = request.getParameter(RequestParameters.DELIVERY_ADDRESS);
             String deliveryPhone = request.getParameter(RequestParameters.DELIVERY_PHONE);
-            validator.validateDeliveryData(deliveryAddress, deliveryPhone, request);
+            Validator.validateDeliveryData(deliveryAddress, deliveryPhone, request);
             order = orderService.getOrCreateOrder(user, deliveryAddress, deliveryPhone);
             session.removeAttribute(ERROR_MESSAGE);
             session.removeAttribute(ORDER_MESSAGE);
@@ -180,7 +159,7 @@ public class MakeOrderCommand implements Command {
         BundleManager bundleManager = BundleManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());
         try {
             dishesAmount = Integer.parseInt(request.getParameter(RequestParameters.ORDER_DISHES_AMOUNT).trim());
-            new Validator().validateDishesAmount(dishesAmount, request);
+            Validator.validateDishesAmount(dishesAmount, request);
             LOG.debug("Request for \"" + dishesAmount + "\" has been received.");
         } catch (NumberFormatException | NullPointerException e) {
             session.setAttribute(ERROR_MESSAGE,

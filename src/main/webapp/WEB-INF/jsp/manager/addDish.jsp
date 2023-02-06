@@ -31,9 +31,13 @@
     </div>
     <div class="section">
         <div class="container w-container">
-            <div class="reservation-row w-row">
+            <div class="reservation-row w-row"> 
+                <div class="intro-title">Dish data</div>
+                <div class="section-divider-line"></div>
+
                 <form method="post" action="add_dish" id="wf-form-Reservation-Form" name="addDishForm"
                     data-name="Reservation Form" enctype="multipart/form-data">
+                    <c:set var="dish" scope="request" value="${sessionScope.currentDish}" />
                     <div class="reservation-image-column w-col w-col-6">
                         <img id="target" data-ix="fade-in-on-load-4" class="reservation-image-block"
                             style="background-image: url('view/pictures/dish_pictures/example-bg.png');" />
@@ -41,20 +45,19 @@
                     </div>
                     <div data-ix="fade-in-on-load-3" class="contact-us-column form-left w-col w-col-6">
                         <div class="w-form">
-                            <div class="intro-title">Add dish</div>
-                            <div class="section-divider-line"></div>
+
                             <input type="text" id="dishName" name="dishName" placeholder="Dish name" maxlength="24"
-                                class="field w-input">
+                             class="field w-input" value="<c:out value="${dish.name}" />" >
                             <textarea id="dishDescription" name="dishDescription" placeholder="Enter dish description"
-                                maxlength="5000" data-name="Message" required="" class="field area w-input"></textarea>
+                                maxlength="5000" data-name="Message" required="" class="field area w-input"><c:out value="${dish.description}" /></textarea>
                             <div class="w-row">
                                 <div class="w-clearfix w-col w-col-6 field-border left-field">
                                     <input type="text" id="dishPrice" name="dishPrice" placeholder="Dish price"
-                                        maxlength="24" class="field w-input">
+                                        maxlength="24" class="field w-input" value="<c:out value="${dish.price}" />" >
                                 </div>
                                 <div class="w-clearfix w-col w-col-6 field-border right-field">
                                     <input type="text" id="dishWeight" name="dishWeight" placeholder="Dish weight"
-                                        maxlength="24" class="field w-input">
+                                        maxlength="24" class="field w-input" value="<c:out value="${dish.weight}" />" >
                                 </div>
                             </div>
                             <select id="dish-category" name="dishCategory" data-name="Dish category"
@@ -81,12 +84,12 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="error-message">
+                                <c:out value="${sessionScope.wrongDishFieldMessage}" />
+                                <c:out value="${sessionScope.errorMessage}" />
+                            </div>
                             <input type="submit" value="Submit" data-wait="Please wait..."
                                 class="button submit-button w-button">
-                            <div class="error-bg w-form-fail">
-                                <p class="error-text">Oops! Something went wrong while submitting the
-                                    form</p>
-                            </div>
                         </div>
                     </div>
                 </form>

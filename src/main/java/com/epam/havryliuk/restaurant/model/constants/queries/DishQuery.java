@@ -30,6 +30,7 @@ import java.util.Properties;
      public static final String ADD_DISH_TO_CATEGORY;
      public static final String UPDATE_DISH_CATEGORY;
      public static final String REMOVE_DISH_FROM_CATEGORY;
+     public static final String COUNT_DISHES_BY_NAME;
 
      static {
          PROPERTIES = PropertiesLoader.getProperties(ResourceProperties.DB_QUERIES_FILE);
@@ -53,6 +54,7 @@ import java.util.Properties;
          ADD_DISH_TO_CATEGORY = (String) PROPERTIES.get("dish.ADD_DISH_TO_CATEGORY");
          UPDATE_DISH_CATEGORY = (String) PROPERTIES.get("dish.UPDATE_DISH_CATEGORY");
          REMOVE_DISH_FROM_CATEGORY = (String) PROPERTIES.get("dish.REMOVE_DISH_FROM_CATEGORY");
+         COUNT_DISHES_BY_NAME = (String) PROPERTIES.get("dish.COUNT_DISHES_BY_NAME");
          LOG.debug("Database queries for \"Dish\" table have been initialised successfully.");
      }
  }

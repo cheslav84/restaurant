@@ -32,7 +32,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class MakeOrderCommandTest {
-    Locale locale = new Locale("en", "EN");
+    private final Locale locale = new Locale("en", "EN");
     @Mock
     private HttpServletRequest request;
     @Mock
@@ -41,8 +41,6 @@ class MakeOrderCommandTest {
     private HttpSession session;
     @Mock
     private OrderService orderService;
-    @Mock
-    private Validator validator;
     @InjectMocks
     private MakeOrderCommand makeOrder;
     @BeforeEach
@@ -90,10 +88,18 @@ class MakeOrderCommandTest {
         when(session.getAttribute(LOCALE)).thenReturn(locale);
         when(request.getParameter(RequestParameters.CONTINUE_ORDERING)).thenReturn(null);
         when(orderService.getOrCreateOrder(user, deliveryAddress, deliveryPhone)).thenReturn(order);
-        makeOrder.execute(request, response);
-        verify(session).setAttribute(CURRENT_ORDER, order);
-        verify(session).removeAttribute(CURRENT_DISH);
-        verify(response).sendRedirect(redirectionPage);
+        try (MockedStatic<Validator> validator = Mockito.mockStatic(Validator.class)) {
+            validator.when(() -> Validator.validateDeliveryData(deliveryAddress, deliveryPhone, request))
+                    .thenReturn(true);
+            try (MockedStatic<URLUtil> util = Mockito.mockStatic(URLUtil.class)) {
+                util.when(() -> URLUtil.getRefererPage(any(HttpServletRequest.class)))
+                        .thenReturn(redirectionPage);
+                makeOrder.execute(request, response);
+                verify(session).setAttribute(CURRENT_ORDER, order);
+                verify(session).removeAttribute(CURRENT_DISH);
+                verify(response).sendRedirect(redirectionPage);
+            }
+        }
     }
 
 
@@ -118,13 +124,17 @@ class MakeOrderCommandTest {
         when(orderService.getOrCreateOrder(user, deliveryAddress, deliveryPhone)).thenReturn(order);
         when(session.getAttribute(LOCALE)).thenReturn(locale);
         when(request.getParameter(RequestParameters.CONTINUE_ORDERING)).thenReturn(continueOrderParameter);
-        try (MockedStatic<URLUtil> util = Mockito.mockStatic(URLUtil.class)) {
-            util.when(() -> URLUtil.getRefererPage(any(HttpServletRequest.class)))
-                    .thenReturn(redirectionPage);
-            makeOrder.execute(request, response);
-            verify(session).setAttribute(CURRENT_ORDER, order);
-            verify(session).removeAttribute(CURRENT_DISH);
-            verify(response).sendRedirect(redirectionPage);
+        try (MockedStatic<Validator> validator = Mockito.mockStatic(Validator.class)) {
+            validator.when(() -> Validator.validateDeliveryData(deliveryAddress, deliveryPhone, request))
+                    .thenReturn(true);
+            try (MockedStatic<URLUtil> util = Mockito.mockStatic(URLUtil.class)) {
+                util.when(() -> URLUtil.getRefererPage(any(HttpServletRequest.class)))
+                        .thenReturn(redirectionPage);
+                makeOrder.execute(request, response);
+                verify(session).setAttribute(CURRENT_ORDER, order);
+                verify(session).removeAttribute(CURRENT_DISH);
+                verify(response).sendRedirect(redirectionPage);
+            }
         }
     }
 
@@ -145,14 +155,17 @@ class MakeOrderCommandTest {
         when(session.getAttribute(LOCALE)).thenReturn(locale);
         when(session.getAttribute(ERROR_MESSAGE)).thenReturn(null);
         when(session.getAttribute(ORDER_MESSAGE)).thenReturn(ORDER_MESSAGE);
-        try (MockedStatic<URLUtil> util = Mockito.mockStatic(URLUtil.class)) {
-            util.when(() -> URLUtil.getRefererPage(any(HttpServletRequest.class)))
-                    .thenReturn(redirectionPage);
-        makeOrder.execute(request, response);
-            verify(session).setAttribute(CURRENT_ORDER, order);
-            verify(session).setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
-            verify(response).sendRedirect(redirectionPage);
+        try (MockedStatic<Validator> validator = Mockito.mockStatic(Validator.class)) {
+            validator.when(() -> Validator.validateDeliveryData(deliveryAddress, deliveryPhone, request))
+                    .thenReturn(true);
+            try (MockedStatic<URLUtil> util = Mockito.mockStatic(URLUtil.class)) {
+                util.when(() -> URLUtil.getRefererPage(any(HttpServletRequest.class)))
+                        .thenReturn(redirectionPage);
+                makeOrder.execute(request, response);
+                verify(session).setAttribute(CURRENT_ORDER, order);
+                verify(session).setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
+                verify(response).sendRedirect(redirectionPage);
+            }
         }
     }
-
 }

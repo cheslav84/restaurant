@@ -51,9 +51,9 @@
                             <input type="text" id="dishAmount" name="dishAmount"
                             value="<c:out value="${dish.amount}" />"
                             class="field w-input">
-                            <select id="dish-category" name="dishCategory" data-name="Dish category"
+                            <select id="dish-category" name="dishCategory" data-name="Dish category" value="<c:out value="${dish.category}" />"
                                 class="field first-half w-select category">
-                                <option selected value="">Select dish category</option>
+                                <option value="">Select dish category</option>
                                 <option value="Coffee">Coffee</option>
                                 <option value="Lunch">Lunch</option>
                                 <option value="Diner">Diner</option>

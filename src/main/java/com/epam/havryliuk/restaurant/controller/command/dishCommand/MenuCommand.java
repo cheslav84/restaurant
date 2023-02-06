@@ -59,9 +59,9 @@ public class MenuCommand implements Command {
         User user = (User) request.getSession().getAttribute(LOGGED_USER);
         List<Dish> dishes = null;
         List<Dish> specials = null;
+        String sortParameter = getSortParameter(request);
         try {
             if (currentMenu.equals(Category.ALL)) {
-                String sortParameter = getSortParameter(request);
                 dishes = dishService.getAllAvailableMenuSortedBy(sortParameter, user);
             } else {
                 dishes = dishService.getMenuByCategory(menuResponseManager.getCurrentMenu(request), user);
@@ -80,6 +80,7 @@ public class MenuCommand implements Command {
         menuResponseManager.setOrderInfoAttribute(request);
         request.setAttribute(DISH_LIST, dishes);
         request.setAttribute(SPECIALS_DISH_LIST, specials);
+        request.getSession().setAttribute(MENU_SORTING_OPTION, sortParameter);
 
         String redirectionPage;
         if (user != null && user.getRole().equals(Role.MANAGER) ) {
@@ -95,7 +96,14 @@ public class MenuCommand implements Command {
      * @return String dishes sorting option that obtains from HttpServletRequest.
      */
     private String getSortParameter(HttpServletRequest request) {
-        return Optional.ofNullable(request.getParameter(RequestParameters.MENU_SORTING_OPTION)).orElse(DEFAULT_SORTING);
+        String parameterFromRequest = request.getParameter(RequestParameters.MENU_SORTING_OPTION);
+        String parameterFromSession = (String) request.getSession().getAttribute(MENU_SORTING_OPTION);
+        if(parameterFromRequest != null) {
+            return parameterFromRequest;
+        } else if (parameterFromSession != null) {
+            return parameterFromSession;
+        }
+        return DEFAULT_SORTING;
     }
 
 }

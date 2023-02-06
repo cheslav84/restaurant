@@ -14,6 +14,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
+import java.util.Optional;
 
 public class DishService implements Service {
     private static final Logger LOG = LogManager.getLogger(DishService.class);
@@ -135,6 +136,7 @@ public class DishService implements Service {
     public void addNewDish(Dish dish) throws ServiceException, DuplicatedEntityException {
         try {
             transaction.initTransaction(dishDao);
+            checkIfDishNameExists(dish, dishDao);
             dish = dishDao.create(dish);
             dishDao.addDishToCategory(dish, dish.getCategory());
             if (dish.isSpecial()) {
@@ -147,6 +149,15 @@ public class DishService implements Service {
             throw new ServiceException(e.getMessage(), e);
         } finally {
             transaction.endTransaction();
+        }
+    }
+
+    private void checkIfDishNameExists(Dish dish, DishDao dishDao)
+            throws DuplicatedEntityException, DAOException {
+        if (dishDao.isDishNameExists(dish)) {
+            String message = "Such dish is already exists.";
+            LOG.info(message);
+            throw new DuplicatedEntityException(message);
         }
     }
 
@@ -168,4 +179,5 @@ public class DishService implements Service {
             transaction.endTransaction();
         }
     }
+
 }

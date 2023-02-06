@@ -33,6 +33,14 @@ public interface ResponseMessages {
     String WRONG_GENDER_FIELD = "message.wrongGenderField";
     String EMPTY_BASKET = "message.emptyBasket";
     String UNAPPROPRIATED_RIGHTS_TO_CHANGE_STATUS = "message.unappropriatedRightsToChangeStatus";
+    String WRONG_DISH_NAME_FIELD = "message.wrongDishName";
+    String WRONG_DISH_DESCRIPTION_FIELD = "message.wrongDishDescription";
+    String WRONG_DISH_WEIGHT_FIELD = "message.wrongDishWeight";
+    String WRONG_DISH_PRICE_FIELD = "message.wrongDishPrice";
+    String WRONG_DISH_CATEGORY_FIELD = "message.wrongDishCategory";
+    String SUCH_DISH_NAME_EXISTS = "message.suchDishNameExists";
+    String SUCH_IMAGE_EXISTS = "message.suchImageExists";
+    String IMAGE_DOES_NOT_SET = "message.imageDoesNotSet";
     String GLOBAL_ERROR = "message.somethingWentWrong";
 
 }

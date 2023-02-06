@@ -104,6 +104,7 @@ public class DishDao extends AbstractDao<Dish> {
         }
     }
 
+    @SuppressWarnings("UnusedAssignment")
     public void updateDishCategory(Dish dish, Category category) throws DAOException {
         try(PreparedStatement stmt = connection.prepareStatement(DishQuery.UPDATE_DISH_CATEGORY)) {
             int k = 1;
@@ -118,6 +119,7 @@ public class DishDao extends AbstractDao<Dish> {
         }
     }
 
+    @SuppressWarnings("UnusedAssignment")
     public void removeDishFromCategory(Dish dish, Category category) throws DAOException {
         try(PreparedStatement stmt = connection.prepareStatement(DishQuery.REMOVE_DISH_FROM_CATEGORY)) {
             int k = 1;
@@ -144,6 +146,24 @@ public class DishDao extends AbstractDao<Dish> {
                 }
             }
             LOG.debug("The dish with \"id=" + id + "\" has been received from database.");
+        } catch (SQLException e) {
+            LOG.error( "Error in getting dish from database. ", e);
+            throw new DAOException(e);
+        }
+        return Optional.ofNullable(dish);
+    }
+
+
+    public Optional<Dish> findByName(String name) throws DAOException {
+        Dish dish = null;
+        try (PreparedStatement stmt = connection.prepareStatement(DishQuery.FIND_DISH_BY_NAME)) {
+            stmt.setString(1, name);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    dish = mapDish(rs);
+                }
+            }
+            LOG.debug("The dish with \"name=" + name + "\" has been received from database.");
         } catch (SQLException e) {
             LOG.error( "Error in getting dish from database. ", e);
             throw new DAOException(e);
@@ -268,4 +288,19 @@ public class DishDao extends AbstractDao<Dish> {
     }
 
 
+    public boolean isDishNameExists(Dish dish) throws DAOException {
+        int numberOfDishes = 1;
+        try (PreparedStatement stmt = connection.prepareStatement(DishQuery.COUNT_DISHES_BY_NAME)) {
+            stmt.setString(1, dish.getName());
+            try(ResultSet rs = stmt.executeQuery()){
+                if (rs.next()){
+                    numberOfDishes = rs.getInt(DishFields.DISH_AMOUNT);
+                }
+            }
+        } catch (SQLException e) {
+            LOG.error("Error in getting list of dishes from database. ");
+            throw new DAOException(e);
+        }
+        return numberOfDishes > 0;
+    }
 }

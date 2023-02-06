@@ -47,15 +47,15 @@
                                 <fmt:message key="menu.sortBy" />
                             </div>
                             <select id="sort-menu-by-selector" name="menuSortingOption"
-                                class="menu-page-tab-title subtitle sort-menu-by">
+                                class="menu-page-tab-title subtitle sort-menu-by" value="${sessionScope.sortParameter}">
                                 <fmt:message key="menu.sortBy" />
-                                <option selected value="Name" selected>
+                                <option value="Name" ${"Name" == sessionScope.menuSortingOption ? 'selected="selected"' : ''}>
                                     <fmt:message key="menu.sortByName" />
                                 </option>
-                                <option value="Price">
+                                <option value="Price" ${"Price" == sessionScope.menuSortingOption ? 'selected="selected"' : ''}>
                                     <fmt:message key="menu.sortByPrice" />
                                 </option>
-                                <option value="Category">
+                                <option value="Category" ${"Category" == sessionScope.menuSortingOption ? 'selected="selected"' : ''}>
                                     <fmt:message key="menu.sortByCategory" />
                                 </option>
                             </select>

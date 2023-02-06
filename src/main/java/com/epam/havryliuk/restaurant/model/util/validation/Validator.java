@@ -3,12 +3,14 @@ package com.epam.havryliuk.restaurant.model.util.validation;
 import com.epam.havryliuk.restaurant.model.constants.Regex;
 import com.epam.havryliuk.restaurant.model.constants.RequestParameters;
 import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
+import com.epam.havryliuk.restaurant.model.entity.Dish;
 import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.exceptions.ValidationException;
 import com.epam.havryliuk.restaurant.model.util.BundleManager;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
+import java.io.File;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -22,36 +24,35 @@ public class Validator {
      * ValidationException will be thrown, and correspondent message set to HttpSession
      * (in case the checkbox or password data is invalid), or message can be set directly to user
      * String fields for displaying that massage on proper place, for example in HTML input fields.
-     *
      * @param user User that data of which has to be validated.
      * @throws ValidationException in case some data is invalid.
      */
-    public void validateUserData(User user, HttpServletRequest req) throws ValidationException {
+    public static boolean validateUserData(User user, HttpServletRequest req) throws ValidationException {
         HttpSession session = req.getSession();
         BundleManager bundleManager = BundleManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());
         boolean correctFields = true;
-        if (!user.getGender().equalsIgnoreCase(RequestParameters.MALE) &&
-                !user.getGender().equalsIgnoreCase(RequestParameters.FEMALE)) {
+        if(!user.getGender().equalsIgnoreCase(RequestParameters.MALE) &&
+                !user.getGender().equalsIgnoreCase(RequestParameters.FEMALE)){
             String message = bundleManager.getProperty(ResponseMessages.WRONG_GENDER_FIELD);
             session.setAttribute(REGISTRATION_ERROR_MESSAGE, message);
             correctFields = false;
         }
-        if (!regexChecker(user.getName(), Regex.NAME)) {
+        if(!regexChecker(user.getName(), Regex.NAME)){
             String message = bundleManager.getProperty(ResponseMessages.WRONG_NAME_FIELD);
             user.setName(message);
             correctFields = false;
         }
-        if (!regexChecker(user.getSurname(), Regex.NAME)) {
+        if(!regexChecker(user.getSurname(), Regex.NAME)){
             String message = bundleManager.getProperty(ResponseMessages.WRONG_SURNAME_FIELD);
             user.setSurname(message);
             correctFields = false;
         }
-        if (!regexChecker(user.getEmail(), Regex.EMAIL)) {
+        if(!regexChecker(user.getEmail(), Regex.EMAIL)){
             String message = bundleManager.getProperty(ResponseMessages.WRONG_EMAIL_FIELD);
             user.setEmail(message);
             correctFields = false;
         }
-        if (!regexChecker(user.getPassword(), Regex.PASSWORD)) {
+        if(!regexChecker(user.getPassword(), Regex.PASSWORD)){
             String message = bundleManager.getProperty(ResponseMessages.WRONG_PASSWORD_FIELD);
             session.setAttribute(REGISTRATION_ERROR_MESSAGE, message);
             correctFields = false;
@@ -62,49 +63,137 @@ public class Validator {
             session.setAttribute(REGISTRATION_ERROR_MESSAGE, message);
             correctFields = false;
         }
+
+
+        //todo check if that image name exists
         if (!correctFields) {
             throw new ValidationException();
         }
+        return true;
     }
 
-    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-    private boolean regexChecker(String toCheck, String regex) {
-        Pattern regexPattern = Pattern.compile(regex);
-        Matcher regexMatcher = regexPattern.matcher(toCheck);
-        return regexMatcher.matches();
-    }
 
-    public void validateDeliveryData(String deliveryAddress, String deliveryPhone, HttpServletRequest req)
+
+    /**
+     * Validates delivery address and phone when User makes an order.
+     * @param deliveryAddress address that User wants the order has to be delivered to.
+     * @param deliveryPhone phone number that Manager can call to Client.
+     * @return true if data is correct.
+     * @throws ValidationException in case some data is invalid.
+     */
+    public static boolean validateDeliveryData(String deliveryAddress, String deliveryPhone, HttpServletRequest req)
             throws ValidationException {
         HttpSession session = req.getSession();
         BundleManager bundleManager = BundleManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());
         boolean correctFields = true;
-        if (!regexChecker(deliveryAddress, Regex.ADDRESS)) {
+        if(!regexChecker(deliveryAddress, Regex.ADDRESS)){
             session.setAttribute(ORDER_MESSAGE,
                     bundleManager.getProperty(ResponseMessages.INCORRECT_DELIVERY_ADDRESS));
             correctFields = false;
         }
         session.setAttribute(DELIVERY_ADDRESS, deliveryAddress);
         deliveryPhone = deliveryPhone.replaceAll("[\\s()-]", "");
-        if (!regexChecker(deliveryPhone, Regex.PHONE)) {
+        if(!regexChecker(deliveryPhone, Regex.PHONE)) {
             session.setAttribute(ORDER_MESSAGE,
                     bundleManager.getProperty(ResponseMessages.INCORRECT_DELIVERY_PHONE));
             correctFields = false;
         }
         session.setAttribute(DELIVERY_PHONE, deliveryPhone);
-        if (!correctFields) {
+        if (!correctFields){
             throw new ValidationException("The delivery data is incorrect.");
         }
+        return true;
     }
 
-    public void validateDishesAmount(int dishesAmount, HttpServletRequest req) throws ValidationException {
-        if ((dishesAmount <= 0)) {
+
+    /**
+     *Validates dishes amount that User wants to order.
+     * @param dishesAmount that needs to be validated
+     * @param req HttpServletRequest from User. From Request method get Session and set Error message
+     *            when dishes amount is 0 or less.
+     * @throws ValidationException when dishes amount is 0 or less.
+     */
+
+    public static void validateDishesAmount(int dishesAmount, HttpServletRequest req) throws ValidationException {
+        if ((dishesAmount <= 0)){
             HttpSession session = req.getSession();
             BundleManager bundleManager = BundleManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());
             session.setAttribute(ERROR_MESSAGE,
                     bundleManager.getProperty(ResponseMessages.INCORRECT_NUMBER_OF_DISHES_ERROR));
-            throw new ValidationException("The number of dishes is incorrect.");
-        }
+            throw new ValidationException("The number of dishes is incorrect.");        }
     }
+
+
+    public static boolean isDishDataValid(Dish dish, HttpServletRequest req, String path) {
+        HttpSession session = req.getSession();
+        session.removeAttribute(WRONG_DISH_FIELD_MESSAGE);
+        BundleManager bundleManager = BundleManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());
+        boolean correctFields = true;
+        StringBuilder builder = new StringBuilder();
+
+        if(!regexChecker(dish.getName(), Regex.DISH_NAME)){
+            String message = bundleManager.getProperty(ResponseMessages.WRONG_DISH_NAME_FIELD);
+            dish.setName(message);
+            correctFields = false;
+        }
+        if(!regexChecker(dish.getDescription(), Regex.DISH_DESCRIPTION)){
+            String message = bundleManager.getProperty(ResponseMessages.WRONG_DISH_DESCRIPTION_FIELD);
+            dish.setDescription(message);
+            correctFields = false;
+        }
+        if(dish.getWeight() < Regex.MIN_WEIGHT || dish.getWeight() > Regex.MAX_WEIGHT){
+            builder.append(bundleManager.getProperty(ResponseMessages.WRONG_DISH_WEIGHT_FIELD));
+
+//            String message = bundleManager.getProperty(ResponseMessages.WRONG_DISH_WEIGHT_FIELD);
+//            session.setAttribute(WRONG_DISH_FIELD_MESSAGE, message);
+            correctFields = false;
+        }
+        if(dish.getPrice().compareTo(Regex.MIN_PRICE) < 0 || dish.getPrice().compareTo(Regex.MAX_PRICE) > 0){
+            builder.append(bundleManager.getProperty(ResponseMessages.WRONG_DISH_PRICE_FIELD));
+
+//            String message = bundleManager.getProperty(ResponseMessages.WRONG_DISH_PRICE_FIELD);
+//            session.setAttribute(WRONG_DISH_FIELD_MESSAGE, message);
+            correctFields = false;
+        }
+        if(dish.getCategory() == null){
+            builder.append(bundleManager.getProperty(ResponseMessages.WRONG_DISH_CATEGORY_FIELD));
+
+//            String message = bundleManager.getProperty(ResponseMessages.WRONG_DISH_CATEGORY_FIELD);
+//            session.setAttribute(WRONG_DISH_FIELD_MESSAGE, message);
+            correctFields = false;
+        }
+        if(dish.getImage().isEmpty()){
+            builder.append(bundleManager.getProperty(ResponseMessages.IMAGE_DOES_NOT_SET));
+
+//            String message = bundleManager.getProperty(ResponseMessages.IMAGE_DOES_NOT_SET);
+//            session.setAttribute(WRONG_DISH_FIELD_MESSAGE, message);
+            correctFields = false;
+        }
+
+        if(isSuchImageExist(path)){
+            builder.append(bundleManager.getProperty(ResponseMessages.SUCH_IMAGE_EXISTS));
+
+//            String message = bundleManager.getProperty(ResponseMessages.IMAGE_DOES_NOT_SET);
+//            session.setAttribute(WRONG_DISH_FIELD_MESSAGE, message);
+            correctFields = false;
+        }
+        if (!correctFields) {
+            session.setAttribute(WRONG_DISH_FIELD_MESSAGE, builder.toString());
+        }
+        return correctFields;
+    }
+
+    private static boolean isSuchImageExist(String path) {
+        File file = new File(path);
+        return file.exists() && !file.isDirectory();
+    }
+
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
+    private static boolean regexChecker (String toCheck, String regex) {
+        Pattern regexPattern = Pattern.compile(regex);
+        Matcher regexMatcher = regexPattern.matcher(toCheck);
+        return regexMatcher.matches();
+    }
+
 
 }

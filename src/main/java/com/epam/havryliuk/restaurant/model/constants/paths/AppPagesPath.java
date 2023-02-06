@@ -12,6 +12,7 @@ public class AppPagesPath {
     public static final String FORWARD_INDEX;
     public static final String FORWARD_MENU_PAGE;
     public static final String FORWARD_MANAGER_MENU_PAGE;
+    public static final String REDIRECT_MENU;
     public static final String REDIRECT_INDEX;
     public static final String FORWARD_REGISTRATION;
     public static final String REDIRECT_REGISTRATION;
@@ -20,7 +21,7 @@ public class AppPagesPath {
     public static final String FORWARD_ADD_DISH_PAGE;
     public static final String FORWARD_MANAGE_ORDERS;
     public static final String REDIRECT_ERROR;
-
+    public static final String REDIRECT_ADD_DISH_PAGE;
     public static final String DISH_IMAGE_PATH;
 
 
@@ -40,13 +41,15 @@ public class AppPagesPath {
 
         FORWARD_MENU_PAGE = (String) PROPERTIES.get("path.page.forward.menu");
         FORWARD_MANAGER_MENU_PAGE = (String) PROPERTIES.get("path.page.forward.managerMenu");
-//        REDIRECT_MENU = (String) PROPERTIES.get("path.page.redirect.menu");
+        REDIRECT_MENU = (String) PROPERTIES.get("path.page.redirect.menu");
 
         FORWARD_ADD_DISH_PAGE = (String) PROPERTIES.get("path.page.forward.addDishPage");
+        REDIRECT_ADD_DISH_PAGE = (String) PROPERTIES.get("path.page.redirect.addDishPage");
 
         REDIRECT_ERROR = (String) PROPERTIES.get("path.page.redirect.error");
 
        DISH_IMAGE_PATH = (String) PROPERTIES.get("path.dishImage");
+
 
         LOG.debug("Application paths are initialised.");
     }
