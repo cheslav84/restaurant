@@ -9,10 +9,11 @@ public interface Regex {
     String PASSWORD = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,32}$";
     String NAME = "^[A-Za-zА-Яа-я]{2,24}$";
     String DISH_NAME = "^[A-Za-zА-Яа-я\\d]{2,24}$";
-    String DISH_DESCRIPTION = "^[A-Za-zА-Яа-я\\d\\s.,!?\"%&/-]{10,255}$";
+    String DISH_DESCRIPTION = "^[A-Za-zА-Яа-я\\d\\s.,!?\"%&/-]{45,255}$";
     String ADDRESS = "^[A-Za-zА-Яа-я\\d\\s.,/-]{13,100}$";
     int MIN_WEIGHT = 25;
     int MAX_WEIGHT = 999;
+    int MAX_AMOUNT = 500;
     BigDecimal MIN_PRICE = new BigDecimal(5);
     BigDecimal MAX_PRICE = new BigDecimal(5000);
 }

@@ -7,7 +7,7 @@
 .dish-item-label {
   margin: 10px 5px 3px 5px;
   font-family: Satisfy, sans-serif;
-  color: #eda03b;
+  color: #eeeeee;
   font-size: 13px;
   line-height: 14px;
   text-shadow: none;
@@ -69,7 +69,7 @@
   }
 
   .error-message {
-    margin-top: 15px;
+    margin: 5px auto;
     font-family: Satisfy, sans-serif;
     color: #eda03b;
     font-size: 13px;

@@ -56,9 +56,7 @@ public class AddDishCommand implements Command {
 
             String realPath = request.getServletContext()
                     .getRealPath(AppPagesPath.DISH_IMAGE_PATH + imageFileName);
-            if (!Validator.isDishDataValid(dish, request, realPath)) {
-                redirectionPage = AppPagesPath.REDIRECT_ADD_DISH_PAGE;
-            } else {
+            if (Validator.isDishCreatingDataValid(dish, realPath, session, bundleManager)) {
                 dishService.addNewDish(dish);
                 InputStream is = part.getInputStream();
                 Files.copy(is, Paths.get(realPath), StandardCopyOption.REPLACE_EXISTING);
@@ -67,6 +65,8 @@ public class AddDishCommand implements Command {
                 session.removeAttribute(ERROR_MESSAGE);
                 redirectionPage = AppPagesPath.REDIRECT_MENU;
                 LOG.debug("List of dishes received by servlet and going to be sending to client side.");
+            } else {
+                redirectionPage = AppPagesPath.REDIRECT_ADD_DISH_PAGE;
             }
         } catch (DuplicatedEntityException e) {
             redirectionPage = AppPagesPath.REDIRECT_ADD_DISH_PAGE;

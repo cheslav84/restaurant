@@ -75,12 +75,12 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="error-message">
+                                <c:out value="${sessionScope.wrongDishFieldMessage}" />
+                                <c:out value="${sessionScope.errorMessage}" />
+                            </div>
                             <input type="submit" value="Save" data-wait="Please wait..."
                                 class="button submit-button w-button">
-                            <div class="error-bg w-form-fail">
-                                <p class="error-text">Oops! Something went wrong while submitting the
-                                    form</p>
-                            </div>
                         </div>
                     </div>
                 </form>

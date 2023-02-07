@@ -64,8 +64,6 @@ public class Validator {
             correctFields = false;
         }
 
-
-        //todo check if that image name exists
         if (!correctFields) {
             throw new ValidationException();
         }
@@ -124,13 +122,37 @@ public class Validator {
     }
 
 
-    public static boolean isDishDataValid(Dish dish, HttpServletRequest req, String path) {
-        HttpSession session = req.getSession();
-        session.removeAttribute(WRONG_DISH_FIELD_MESSAGE);
-        BundleManager bundleManager = BundleManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());
-        boolean correctFields = true;
+    public static boolean isDishCreatingDataValid(Dish dish, String path,
+                                                  HttpSession session, BundleManager bundleManager) {
         StringBuilder builder = new StringBuilder();
+        boolean correctFields = validateDish(dish, session, bundleManager, builder);
+        if(dish.getImage().isEmpty()){
+            builder.append(bundleManager.getProperty(ResponseMessages.IMAGE_DOES_NOT_SET));
+            correctFields = false;
+        }
+        if(isSuchImageExist(path)){
+            builder.append(bundleManager.getProperty(ResponseMessages.SUCH_IMAGE_EXISTS));
+            correctFields = false;
+        }
+        setMessageIfDataNotValid(session, builder, correctFields);
+        return correctFields;
+    }
 
+    public static boolean isDishEditingDataValid(Dish dish, HttpSession session, BundleManager bundleManager) {
+        StringBuilder builder = new StringBuilder();
+        boolean correctFields = validateDish(dish, session, bundleManager, builder);
+        if(dish.getAmount() < 0 || dish.getAmount() > Regex.MAX_AMOUNT){
+            builder.append(bundleManager.getProperty(ResponseMessages.WRONG_DISH_AMOUNT_FIELD));
+            correctFields = false;
+        }
+        setMessageIfDataNotValid(session, builder, correctFields);
+        return correctFields;
+    }
+
+    private static boolean validateDish(Dish dish, HttpSession session,
+                                        BundleManager bundleManager, StringBuilder builder){
+        session.removeAttribute(WRONG_DISH_FIELD_MESSAGE);
+        boolean correctFields = true;
         if(!regexChecker(dish.getName(), Regex.DISH_NAME)){
             String message = bundleManager.getProperty(ResponseMessages.WRONG_DISH_NAME_FIELD);
             dish.setName(message);
@@ -143,45 +165,25 @@ public class Validator {
         }
         if(dish.getWeight() < Regex.MIN_WEIGHT || dish.getWeight() > Regex.MAX_WEIGHT){
             builder.append(bundleManager.getProperty(ResponseMessages.WRONG_DISH_WEIGHT_FIELD));
-
-//            String message = bundleManager.getProperty(ResponseMessages.WRONG_DISH_WEIGHT_FIELD);
-//            session.setAttribute(WRONG_DISH_FIELD_MESSAGE, message);
             correctFields = false;
         }
         if(dish.getPrice().compareTo(Regex.MIN_PRICE) < 0 || dish.getPrice().compareTo(Regex.MAX_PRICE) > 0){
             builder.append(bundleManager.getProperty(ResponseMessages.WRONG_DISH_PRICE_FIELD));
-
-//            String message = bundleManager.getProperty(ResponseMessages.WRONG_DISH_PRICE_FIELD);
-//            session.setAttribute(WRONG_DISH_FIELD_MESSAGE, message);
             correctFields = false;
         }
         if(dish.getCategory() == null){
             builder.append(bundleManager.getProperty(ResponseMessages.WRONG_DISH_CATEGORY_FIELD));
-
-//            String message = bundleManager.getProperty(ResponseMessages.WRONG_DISH_CATEGORY_FIELD);
-//            session.setAttribute(WRONG_DISH_FIELD_MESSAGE, message);
             correctFields = false;
-        }
-        if(dish.getImage().isEmpty()){
-            builder.append(bundleManager.getProperty(ResponseMessages.IMAGE_DOES_NOT_SET));
-
-//            String message = bundleManager.getProperty(ResponseMessages.IMAGE_DOES_NOT_SET);
-//            session.setAttribute(WRONG_DISH_FIELD_MESSAGE, message);
-            correctFields = false;
-        }
-
-        if(isSuchImageExist(path)){
-            builder.append(bundleManager.getProperty(ResponseMessages.SUCH_IMAGE_EXISTS));
-
-//            String message = bundleManager.getProperty(ResponseMessages.IMAGE_DOES_NOT_SET);
-//            session.setAttribute(WRONG_DISH_FIELD_MESSAGE, message);
-            correctFields = false;
-        }
-        if (!correctFields) {
-            session.setAttribute(WRONG_DISH_FIELD_MESSAGE, builder.toString());
         }
         return correctFields;
     }
+
+    private static void setMessageIfDataNotValid(HttpSession session, StringBuilder builder, boolean correctFields) {
+        if (!correctFields) {
+            session.setAttribute(WRONG_DISH_FIELD_MESSAGE, builder.toString());
+        }
+    }
+
 
     private static boolean isSuchImageExist(String path) {
         File file = new File(path);

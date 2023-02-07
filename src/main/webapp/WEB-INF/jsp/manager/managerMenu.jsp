@@ -142,13 +142,15 @@
                                         <c:out value="${dish.price}" />
                                         <span class="price-marker">₴</span>
                                     </div>
-                                        <%-- <c:if test="${sessionScope.loggedUser.role != 'MANAGER'}"> --%>
-                                            <form method="get" action="show_dish_info" name="dishOrder">
-                                                <button value="${dish.id}" name="dishId" class="button order-menu-button">
-                                                    <fmt:message key="menu.editDishBtn" />
-                                                </button>
-                                            </form>
-                                        <%-- </c:if> --%>
+                                    <%-- <div class="menu-item-amount">
+                                        <c:out value="${dish.amount}" />
+                                        <span class="price-marker">₴</span>
+                                    </div> --%>
+                                    <form method="get" action="show_dish_info" name="dishOrder">
+                                        <button value="${dish.id}" name="dishId" class="button order-menu-button">
+                                            <fmt:message key="menu.editDishBtn" />
+                                        </button>
+                                    </form>
                                 </div>
                             </c:forEach>
                         </div>

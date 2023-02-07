@@ -1,19 +1,24 @@
 .menu-page-tab-button {
   position: relative;
-  width: 19%;
-  height: 80px;
+  width: 20%;
+  height: 100px;
   padding-top: 10px;
-  padding-left: 58px;
+  padding-left: 48px;
+  padding-right: 5px;
   background-color: rgba(0, 0, 0, 0.4);
   -webkit-transition: background-color 200ms ease;
   transition: background-color 200ms ease;
   color: #fff;
 }
 
+.menu-tab-icon {
+  left: 14px;
+}
+
 .menu-page-tabs-menu{
   width: 100%;
   display: flex;
-  margin-top: -80px;
+  margin-top: -100px;
 }
 
 .menu-hidden-input {
@@ -89,6 +94,7 @@
     font-weight: 400;
     text-transform: uppercase;
     position: relative;
+    margin-left: -7px;
     z-index: 100;
     /* pointer-events: none;  */
   }
@@ -106,6 +112,8 @@
     cursor: pointer;
   }
 
+
+
   .error-message {
     margin-bottom: 40px;
     font-family: Satisfy, sans-serif;
@@ -115,7 +123,7 @@
     font-weight: bold;
 }
 
-  @media (max-width: 1110px){
+  @media screen and (max-width: 1110px){
    .menu-page-tabs-menu {
     margin-top: -120px;
   }
@@ -132,9 +140,15 @@
   .menu-tab-icon {
     position: static;
     float: none;
+    margin-top: -3px;
+    margin-bottom: 3px;
   }
   .menu-page-tab-pane {
     padding-top: 45px;
+  }
+
+  .menu-page-tab-title.subtitle.sort-menu-by {
+    margin-left: 0px;
   }
 }
 
@@ -144,6 +158,11 @@
     .button.order-menu-button {
       right: 4px;
     }
+
+    .menu-page-tab-button {
+      padding-right: 7px;
+      padding-left: 7px;
+  }
 
 }
 
@@ -166,6 +185,10 @@
     display: block;
     margin-top: -55px;
   }
+
+  .menu-page-tab-title.subtitle.sort-menu-by {
+    margin-left: 45px;
+}
   .menu-page-tab-button {
     display: block;
     width: 100%;

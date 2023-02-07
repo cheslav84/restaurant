@@ -10,6 +10,7 @@ import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.service.DishService;
 import com.epam.havryliuk.restaurant.model.util.BundleManager;
 import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
+import com.epam.havryliuk.restaurant.model.util.validation.Validator;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -41,17 +42,17 @@ public class EditDishCommand implements Command {
         BundleManager bundleManager = BundleManager.valueOf(((Locale) request.getSession()
                 .getAttribute(LOCALE)).getCountry());
         HttpSession session = request.getSession();
-        String redirectionPage;
+        String redirectionPage = AppPagesPath.REDIRECT_MENU;
         try {
             Dish dish = getCurrentDish(request);
-
             updateDishData(request, dish);
-        //todo validate
-            dishService.updateDish(dish);
-            session.removeAttribute(ERROR_MESSAGE);
-            redirectionPage = AppPagesPath.REDIRECT_INDEX;
-
-            LOG.debug("List of dishes received by servlet and going to be sending to client side.");
+            if (Validator.isDishEditingDataValid(dish, session, bundleManager)) {
+                dishService.updateDish(dish);
+                session.removeAttribute(ERROR_MESSAGE);
+                LOG.debug("List of dishes received by servlet and going to be sending to client side.");
+            } else {
+                session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
+            }
         } catch (ServiceException e) {
             session.setAttribute(ERROR_MESSAGE,
                     bundleManager.getProperty(ResponseMessages.GLOBAL_ERROR));
@@ -70,7 +71,11 @@ public class EditDishCommand implements Command {
         dish.setPrice(BigDecimal.valueOf(Double.parseDouble(priceStr)));
         dish.setAlcohol(request.getParameter(RequestParameters.DISH_ALCOHOL) != null);
         dish.setSpecial(request.getParameter(RequestParameters.DISH_SPECIAL) != null);
-        dish.setCategory(Category.valueOf(request.getParameter(RequestParameters.DISH_CATEGORY).toUpperCase()));
+        try {
+            dish.setCategory(Category.valueOf(request.getParameter(RequestParameters.DISH_CATEGORY).toUpperCase()));
+        } catch (Exception e) {
+            LOG.info("Category haven't been chosen while editing the dish.");
+        }
     }
 
 
