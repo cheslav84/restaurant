@@ -28,8 +28,7 @@ import java.util.List;
 import java.util.Locale;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
-import static com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath.FORWARD_MANAGER_MENU_PAGE;
-import static com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath.FORWARD_MENU_PAGE;
+import static com.epam.havryliuk.restaurant.controller.paths.AppPagesPath.FORWARD_MANAGER_MENU_PAGE;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;

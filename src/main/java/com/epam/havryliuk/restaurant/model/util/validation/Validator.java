@@ -1,6 +1,5 @@
 package com.epam.havryliuk.restaurant.model.util.validation;
 
-import com.epam.havryliuk.restaurant.model.constants.Regex;
 import com.epam.havryliuk.restaurant.model.constants.RequestParameters;
 import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
 import com.epam.havryliuk.restaurant.model.entity.Dish;

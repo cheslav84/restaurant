@@ -8,7 +8,7 @@ import com.epam.havryliuk.restaurant.controller.command.userCommand.*;
  * Returns instances of Command by the command name.
  */
 
-public enum CommandEnum {
+public enum CommandEnum { //todo переписати на хешмапу
     INDEX {
         { this.command = new IndexCommand(); }
     }, MENU {

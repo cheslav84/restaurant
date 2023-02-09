@@ -1,10 +1,9 @@
 package com.epam.havryliuk.restaurant.controller.command.dishCommand;
 
 import com.epam.havryliuk.restaurant.controller.command.Command;
-import com.epam.havryliuk.restaurant.model.constants.RequestParameters;
+import com.epam.havryliuk.restaurant.controller.requestMapper.DishRequestMapper;
 import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
-import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
-import com.epam.havryliuk.restaurant.model.entity.Category;
+import com.epam.havryliuk.restaurant.controller.paths.AppPagesPath;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.service.DishService;
@@ -19,7 +18,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.Locale;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
@@ -32,8 +30,7 @@ public class EditDishCommand implements Command {
     private DishService dishService;
 
     public EditDishCommand() {
-        ApplicationServiceContext appContext = new ApplicationServiceContext();
-        dishService = appContext.getInstance(DishService.class);
+        dishService = ApplicationServiceContext.getInstance(DishService.class);
     }
 
     @Override
@@ -44,8 +41,8 @@ public class EditDishCommand implements Command {
         HttpSession session = request.getSession();
         String redirectionPage = AppPagesPath.REDIRECT_MENU;
         try {
-            Dish dish = getCurrentDish(request);
-            updateDishData(request, dish);
+            Dish dish = getCurrentDish(session);
+            dish = DishRequestMapper.mapDish(request, dish.getImage());
             if (Validator.isDishEditingDataValid(dish, session, bundleManager)) {
                 dishService.updateDish(dish);
                 session.removeAttribute(ERROR_MESSAGE);
@@ -62,23 +59,6 @@ public class EditDishCommand implements Command {
         response.sendRedirect(redirectionPage);
     }
 
-    private void updateDishData(HttpServletRequest request, Dish dish) {
-        dish.setName(request.getParameter(RequestParameters.DISH_NAME));
-        dish.setDescription(request.getParameter(RequestParameters.DISH_DESCRIPTION));
-        dish.setWeight(Integer.parseInt(request.getParameter(RequestParameters.DISH_WEIGHT)));
-        dish.setAmount(Integer.parseInt(request.getParameter(RequestParameters.DISH_AMOUNT)));
-        String priceStr = request.getParameter(RequestParameters.DISH_PRICE).replaceAll(",", ".");
-        dish.setPrice(BigDecimal.valueOf(Double.parseDouble(priceStr)));
-        dish.setAlcohol(request.getParameter(RequestParameters.DISH_ALCOHOL) != null);
-        dish.setSpecial(request.getParameter(RequestParameters.DISH_SPECIAL) != null);
-        try {
-            dish.setCategory(Category.valueOf(request.getParameter(RequestParameters.DISH_CATEGORY).toUpperCase()));
-        } catch (Exception e) {
-            LOG.info("Category haven't been chosen while editing the dish.");
-        }
-    }
-
-
 
     /**
      * Method obtains a dish saved in session. If there is no dish in it, the ServiceException will be
@@ -88,8 +68,7 @@ public class EditDishCommand implements Command {
      * @return Dish that need to be saved to order.
      * @throws ServiceException if there is no Dish present in session.
      */
-    private Dish getCurrentDish(HttpServletRequest request) throws ServiceException {
-        HttpSession session = request.getSession();
+    private Dish getCurrentDish(HttpSession session) throws ServiceException {
         Dish dish = (Dish) session.getAttribute(CURRENT_DISH);
         if (dish == null) {
             BundleManager bundleManager = BundleManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());

@@ -1,7 +1,7 @@
 package com.epam.havryliuk.restaurant.controller.command.orderCommand;
 
 import com.epam.havryliuk.restaurant.model.constants.RequestParameters;
-import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
+import com.epam.havryliuk.restaurant.controller.paths.AppPagesPath;
 import com.epam.havryliuk.restaurant.model.entity.Order;
 import com.epam.havryliuk.restaurant.model.entity.OrderSorting;
 import com.epam.havryliuk.restaurant.model.entity.Page;

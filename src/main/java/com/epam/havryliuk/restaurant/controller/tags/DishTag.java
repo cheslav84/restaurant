@@ -1,4 +1,4 @@
-package com.epam.havryliuk.restaurant.model.util.tags;
+package com.epam.havryliuk.restaurant.controller.tags;
 
 import jakarta.servlet.jsp.tagext.TagSupport;
 import jakarta.servlet.jsp.*;

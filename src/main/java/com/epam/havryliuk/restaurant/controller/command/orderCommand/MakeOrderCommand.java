@@ -4,7 +4,7 @@ import com.epam.havryliuk.restaurant.controller.command.Command;
 import com.epam.havryliuk.restaurant.model.constants.RequestAttributes;
 import com.epam.havryliuk.restaurant.model.constants.RequestParameters;
 import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
-import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
+import com.epam.havryliuk.restaurant.controller.paths.AppPagesPath;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
 import com.epam.havryliuk.restaurant.model.entity.Order;
 import com.epam.havryliuk.restaurant.model.entity.User;

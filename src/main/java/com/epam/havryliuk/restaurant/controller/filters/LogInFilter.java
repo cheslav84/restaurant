@@ -1,9 +1,8 @@
 package com.epam.havryliuk.restaurant.controller.filters;
 
-import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
+import com.epam.havryliuk.restaurant.controller.paths.AppPagesPath;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;

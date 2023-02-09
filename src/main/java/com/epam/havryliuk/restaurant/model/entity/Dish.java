@@ -38,6 +38,7 @@ public class Dish implements Entity {
 
     public static Dish getInstance(String name, String description, int weight,
                                    BigDecimal price, String image, boolean alcohol,
+                                    int amount,
                                     boolean special, Category category) {
         Dish dish = new Dish();
         dish.setName(name);
@@ -46,10 +47,16 @@ public class Dish implements Entity {
         dish.setWeight(weight);
         dish.setImage(image);
         dish.setAlcohol(alcohol);
+        dish.setAmount(amount);
         dish.setSpecial(special);
         dish.setCategory(category);
         return dish;
     }
+
+
+
+
+
 
 
     public long getId() {

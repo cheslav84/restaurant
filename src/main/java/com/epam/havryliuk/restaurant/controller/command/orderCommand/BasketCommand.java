@@ -2,7 +2,7 @@ package com.epam.havryliuk.restaurant.controller.command.orderCommand;
 
 import com.epam.havryliuk.restaurant.controller.command.Command;
 import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
-import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
+import com.epam.havryliuk.restaurant.controller.paths.AppPagesPath;
 import com.epam.havryliuk.restaurant.model.entity.Order;
 import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.exceptions.EntityNotFoundException;

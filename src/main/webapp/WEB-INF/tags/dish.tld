@@ -8,7 +8,7 @@
     <uri>dishes</uri>
     <tag>
         <name>dish</name>
-        <tag-class>com.epam.havryliuk.restaurant.model.util.tags.DishTag</tag-class>
+        <tag-class>com.epam.havryliuk.restaurant.controller.tags.DishTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <name>name</name>

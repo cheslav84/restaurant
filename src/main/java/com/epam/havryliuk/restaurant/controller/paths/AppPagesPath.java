@@ -1,4 +1,4 @@
-package com.epam.havryliuk.restaurant.model.constants.paths;
+package com.epam.havryliuk.restaurant.controller.paths;
 
 import com.epam.havryliuk.restaurant.model.constants.ResourceProperties;
 import com.epam.havryliuk.restaurant.model.util.PropertiesLoader;

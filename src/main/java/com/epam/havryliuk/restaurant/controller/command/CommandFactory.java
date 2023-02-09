@@ -17,7 +17,8 @@ import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.LO
  */
 public class CommandFactory {
     private static final Logger LOG = LogManager.getLogger(CommandFactory.class);
-    private Command defaultCommand = new IndexCommand();
+//    private Command defaultCommand = new IndexCommand();
+    private Command defaultCommand = CommandEnum.INDEX.command;
 
     /**
      * Method obtains the representation of command in String as the last past of

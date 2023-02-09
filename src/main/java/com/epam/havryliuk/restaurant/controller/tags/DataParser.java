@@ -1,4 +1,4 @@
-package com.epam.havryliuk.restaurant.model.util.tags;
+package com.epam.havryliuk.restaurant.controller.tags;
 
 /**
  * Parses the String representation of Object, and returns the value

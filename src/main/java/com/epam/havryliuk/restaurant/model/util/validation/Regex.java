@@ -1,4 +1,4 @@
-package com.epam.havryliuk.restaurant.model.constants;
+package com.epam.havryliuk.restaurant.model.util.validation;
 
 import java.math.BigDecimal;
 

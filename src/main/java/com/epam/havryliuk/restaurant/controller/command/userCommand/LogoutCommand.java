@@ -1,7 +1,7 @@
 package com.epam.havryliuk.restaurant.controller.command.userCommand;
 
 import com.epam.havryliuk.restaurant.controller.command.Command;
-import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
+import com.epam.havryliuk.restaurant.controller.paths.AppPagesPath;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;

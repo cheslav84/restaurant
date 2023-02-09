@@ -4,7 +4,7 @@ import com.epam.havryliuk.restaurant.controller.command.Command;
 import com.epam.havryliuk.restaurant.controller.responseManager.MenuResponseManager;
 import com.epam.havryliuk.restaurant.model.constants.RequestParameters;
 import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
-import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
+import com.epam.havryliuk.restaurant.controller.paths.AppPagesPath;
 import com.epam.havryliuk.restaurant.model.entity.Category;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
 import com.epam.havryliuk.restaurant.model.entity.Role;
@@ -22,7 +22,6 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 
@@ -37,9 +36,8 @@ public class MenuCommand implements Command {
     @SuppressWarnings("FieldMayBeFinal")
     private DishService dishService;
 
-    public MenuCommand() {
-        ApplicationServiceContext appContext = new ApplicationServiceContext();
-        dishService = appContext.getInstance(DishService.class);
+    public MenuCommand () {
+        dishService = ApplicationServiceContext.getInstance(DishService.class);
         menuResponseManager = new MenuResponseManager();
     }
 

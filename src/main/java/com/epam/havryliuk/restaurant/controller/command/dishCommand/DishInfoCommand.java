@@ -32,8 +32,7 @@ public class DishInfoCommand implements Command {
     private DishService dishService;
 
     public DishInfoCommand() {
-        ApplicationServiceContext appContext = new ApplicationServiceContext();
-        dishService = appContext.getInstance(DishService.class);
+        dishService = ApplicationServiceContext.getInstance(DishService.class);
     }
 //todo edit description
     /**

@@ -26,7 +26,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
-import static com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath.FORWARD_BASKET;
+import static com.epam.havryliuk.restaurant.controller.paths.AppPagesPath.FORWARD_BASKET;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)

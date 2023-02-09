@@ -1,10 +1,10 @@
 package com.epam.havryliuk.restaurant.controller.command.dishCommand;
 
 import com.epam.havryliuk.restaurant.controller.command.Command;
+import com.epam.havryliuk.restaurant.controller.requestMapper.DishRequestMapper;
 import com.epam.havryliuk.restaurant.model.constants.RequestParameters;
 import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
-import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
-import com.epam.havryliuk.restaurant.model.entity.Category;
+import com.epam.havryliuk.restaurant.controller.paths.AppPagesPath;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
 import com.epam.havryliuk.restaurant.model.exceptions.DuplicatedEntityException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
@@ -22,7 +22,6 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
@@ -37,8 +36,7 @@ public class AddDishCommand implements Command {
     private DishService dishService;
 
     public AddDishCommand() {
-        ApplicationServiceContext appContext = new ApplicationServiceContext();
-        dishService = appContext.getInstance(DishService.class);
+        dishService = ApplicationServiceContext.getInstance(DishService.class);
     }
 
     @Override
@@ -51,7 +49,7 @@ public class AddDishCommand implements Command {
         try {
             Part part = request.getPart(RequestParameters.DISH_IMAGE);
             String imageFileName = part.getSubmittedFileName();
-            Dish dish = mapDish(request, imageFileName);
+            Dish dish = DishRequestMapper.mapDish(request, imageFileName);
             session.setAttribute(CURRENT_DISH, dish);
 
             String realPath = request.getServletContext()
@@ -80,34 +78,6 @@ public class AddDishCommand implements Command {
             LOG.error(e);
         }
         response.sendRedirect(redirectionPage);
-    }
-
-
-    private Dish mapDish(HttpServletRequest request, String imageFileName) {
-        String name = request.getParameter(RequestParameters.DISH_NAME);
-        String description = request.getParameter(RequestParameters.DISH_DESCRIPTION);
-        boolean alcohol = request.getParameter(RequestParameters.DISH_ALCOHOL) != null;
-        boolean special = request.getParameter(RequestParameters.DISH_SPECIAL) != null;
-        Category category = null;
-        int weight = 0;
-        BigDecimal price = BigDecimal.valueOf(0);
-        try {
-            weight = Integer.parseInt(request.getParameter(RequestParameters.DISH_WEIGHT));
-        } catch (IllegalArgumentException e) {
-            LOG.info("The weight received from user Dish data isn't correct.");
-        }
-        try {
-            String priceStr = request.getParameter(RequestParameters.DISH_PRICE).replaceAll(",", ".");
-            price = BigDecimal.valueOf(Double.parseDouble(priceStr));
-        } catch (IllegalArgumentException e) {
-            LOG.info("The price received from user Dish data isn't correct.");
-        }
-        try {
-            category = Category.valueOf(request.getParameter(RequestParameters.DISH_CATEGORY).toUpperCase());
-        } catch (IllegalArgumentException e) {
-            LOG.info("User has not chose Dish category.");
-        }
-        return Dish.getInstance(name, description, weight, price, imageFileName, alcohol, special, category);
     }
 
 }

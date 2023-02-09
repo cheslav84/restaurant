@@ -1,6 +1,6 @@
 package com.epam.havryliuk.restaurant.controller.filters;
 
-import com.epam.havryliuk.restaurant.model.constants.paths.AppPagesPath;
+import com.epam.havryliuk.restaurant.controller.paths.AppPagesPath;
 import com.epam.havryliuk.restaurant.model.entity.Role;
 import com.epam.havryliuk.restaurant.model.entity.User;
 import jakarta.servlet.*;

@@ -34,7 +34,7 @@ public class ApplicationServiceContext {
      * @throws IllegalStateException if some Exception occurs during instantiation Service class.
      */
     @SuppressWarnings("unchecked")
-    public <T extends Service> T getInstance(Class<? extends Service> clazz) {
+    public static  <T extends Service> T getInstance(Class<? extends Service> clazz) {
         T object;
         try {
             Constructor<?> constructor = clazz.getConstructor();
@@ -62,7 +62,7 @@ public class ApplicationServiceContext {
      * @param object         fields of which should be instantiated.
      * @param declaredFields an Array of declared fields of that object.
      */
-    private <T> void injectAnnotatedFields(T object, Field[] declaredFields) {
+    private static <T> void injectAnnotatedFields(T object, Field[] declaredFields) {
         Arrays.stream(declaredFields)
                 .filter(HAS_ANNOTATION).toList()
                 .forEach(field -> {
@@ -72,6 +72,7 @@ public class ApplicationServiceContext {
                         Object annotatedObject = clazz.getConstructor().newInstance();
                         field.set(object, annotatedObject);
                         injectAnnotatedFields(object, clazz.getDeclaredFields());
+                        LOG.debug(annotatedObject.getClass() + " class initialised.");
                     } catch (InstantiationException |
                              IllegalAccessException |
                              InvocationTargetException |
