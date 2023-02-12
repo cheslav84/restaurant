@@ -1,6 +1,6 @@
-package com.epam.havryliuk.restaurant.controller.responseManager;
+package com.epam.havryliuk.restaurant.controller.responseDispatcher;
 
-import com.epam.havryliuk.restaurant.model.constants.RequestParameters;
+import com.epam.havryliuk.restaurant.controller.constants.RequestParameters;
 import com.epam.havryliuk.restaurant.model.entity.Category;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -9,8 +9,8 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Optional;
 
-import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.MENU_CATEGORY;
-import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.SHOW_DISH_INFO;
+import static com.epam.havryliuk.restaurant.controller.constants.RequestAttributes.MENU_CATEGORY;
+import static com.epam.havryliuk.restaurant.controller.constants.RequestAttributes.SHOW_DISH_INFO;
 
 /**
  * Class manages which type of menu Category should be displayed
@@ -18,8 +18,8 @@ import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.SH
  * Class also decides whether should it be displayed order dish
  * information on uses page.
  */
-public class MenuResponseManager {
-    private static final Logger LOG = LogManager.getLogger(MenuResponseManager.class);
+public class MenuDispatcher {
+    private static final Logger LOG = LogManager.getLogger(MenuDispatcher.class);
 
     private static final String DEFAULT_MENU = "COFFEE";
 

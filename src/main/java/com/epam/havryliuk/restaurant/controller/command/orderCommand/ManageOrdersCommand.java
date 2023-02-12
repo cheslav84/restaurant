@@ -1,14 +1,14 @@
 package com.epam.havryliuk.restaurant.controller.command.orderCommand;
 
 import com.epam.havryliuk.restaurant.controller.command.Command;
-import com.epam.havryliuk.restaurant.model.constants.RequestParameters;
-import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
-import com.epam.havryliuk.restaurant.controller.paths.AppPagesPath;
+import com.epam.havryliuk.restaurant.controller.constants.RequestParameters;
+import com.epam.havryliuk.restaurant.controller.constants.ResponseMessages;
+import com.epam.havryliuk.restaurant.controller.constants.paths.AppPagesPath;
+import com.epam.havryliuk.restaurant.controller.responseDispatcher.MessageDispatcher;
 import com.epam.havryliuk.restaurant.model.entity.Order;
 import com.epam.havryliuk.restaurant.model.entity.OrderSorting;
 import com.epam.havryliuk.restaurant.model.entity.Page;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
-import com.epam.havryliuk.restaurant.model.util.BundleManager;
 import com.epam.havryliuk.restaurant.model.service.OrderService;
 import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
 import jakarta.servlet.ServletException;
@@ -19,9 +19,8 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Locale;
 
-import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
+import static com.epam.havryliuk.restaurant.controller.constants.RequestAttributes.*;
 
 /**
  * Command that displays list of orders to manager, navigates pagination,
@@ -36,8 +35,7 @@ public class ManageOrdersCommand implements Command {
     private OrderService orderService;
 
     public ManageOrdersCommand() {
-        ApplicationServiceContext appContext = new ApplicationServiceContext();
-        orderService = appContext.getInstance(OrderService.class);
+        orderService = ApplicationServiceContext.getInstance(OrderService.class);
     }
 
     /**
@@ -64,11 +62,8 @@ public class ManageOrdersCommand implements Command {
             request.setAttribute(ORDER_LIST, orders);
             request.removeAttribute(ERROR_MESSAGE);
         } catch (ServiceException e) {
-            BundleManager bundleManager = BundleManager.valueOf((
-                    (Locale) request.getSession().getAttribute(LOCALE)).getCountry());
+            MessageDispatcher.setToRequest(request, ERROR_MESSAGE, ResponseMessages.ORDERS_ERROR);
             LOG.error(e.getMessage(), e);
-            request.setAttribute(ERROR_MESSAGE,
-                    bundleManager.getProperty(ResponseMessages.ORDERS_ERROR));
         }
         request.getRequestDispatcher(AppPagesPath.FORWARD_MANAGE_ORDERS).forward(request, response);
     }

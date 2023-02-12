@@ -2,16 +2,16 @@ package com.epam.havryliuk.restaurant.controller.command.orderCommand;
 
 import com.epam.havryliuk.restaurant.controller.command.Command;
 
-import com.epam.havryliuk.restaurant.model.constants.RequestParameters;
-import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
+import com.epam.havryliuk.restaurant.controller.constants.RequestParameters;
+import com.epam.havryliuk.restaurant.controller.constants.ResponseMessages;
+import com.epam.havryliuk.restaurant.controller.responseDispatcher.MessageDispatcher;
 import com.epam.havryliuk.restaurant.model.entity.BookingStatus;
 import com.epam.havryliuk.restaurant.model.entity.Role;
 import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.exceptions.EntityNotFoundException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
-import com.epam.havryliuk.restaurant.model.util.BundleManager;
 import com.epam.havryliuk.restaurant.model.service.OrderService;
-import com.epam.havryliuk.restaurant.model.util.URLUtil;
+import com.epam.havryliuk.restaurant.controller.responseDispatcher.URLDispatcher;
 import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -23,7 +23,7 @@ import javax.security.sasl.AuthenticationException;
 import java.io.IOException;
 import java.util.*;
 
-import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
+import static com.epam.havryliuk.restaurant.controller.constants.RequestAttributes.*;
 
 /**
  * Command changes Order Statuses to the next position.
@@ -39,8 +39,7 @@ public class SetNextStatusCommand implements Command {
     }
 
     public SetNextStatusCommand() {
-        ApplicationServiceContext appContext = new ApplicationServiceContext();
-        orderService = appContext.getInstance(OrderService.class);
+        orderService = ApplicationServiceContext.getInstance(OrderService.class);
     }
 
     /**
@@ -53,26 +52,26 @@ public class SetNextStatusCommand implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         long orderId = Long.parseLong(request.getParameter(RequestParameters.ORDER_ID));
         HttpSession session = request.getSession();
-        BundleManager bundleManager = BundleManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());
         try {
             BookingStatus nextBookingStatus = getNextBookingStatus(request);
             checkAccessRights(session, nextBookingStatus);
             orderService.changeOrderStatus(orderId, nextBookingStatus);
             session.removeAttribute(CURRENT_ORDER);
         } catch (EntityNotFoundException e) {
-            session.setAttribute(ERROR_MESSAGE,
-                    bundleManager.getProperty(ResponseMessages.ABSENT_DISHES) + e.getMessage());
+            MessageDispatcher.setToSession(request, ERROR_MESSAGE,
+                    ResponseMessages.DISH_ALREADY_IN_ORDER + e.getMessage());
+//            session.setAttribute(ERROR_MESSAGE,
+//                    bundleManager.getProperty(ResponseMessages.ABSENT_DISHES) + e.getMessage());
             LOG.error("Some of dishes are already absent in menu.", e);
         } catch (ServiceException e) {
-            session.setAttribute(ERROR_MESSAGE,
-                    bundleManager.getProperty(ResponseMessages.ORDER_CONFIRM_ERROR));
+            MessageDispatcher.setToSession(request, ERROR_MESSAGE, ResponseMessages.ORDER_CONFIRM_ERROR);
             LOG.error(e.getMessage(), e);
         } catch (AuthenticationException e) {
-            session.setAttribute(ERROR_MESSAGE,
-                    bundleManager.getProperty(ResponseMessages.UNAPPROPRIATED_RIGHTS_TO_CHANGE_STATUS));
+            MessageDispatcher.setToSession(request, ERROR_MESSAGE, ResponseMessages.UNAPPROPRIATED_RIGHTS_TO_CHANGE_STATUS);
+
             LOG.error(e.getMessage(), e);
         }
-        response.sendRedirect(URLUtil.getRefererPage(request));
+        response.sendRedirect(URLDispatcher.getRefererPage(request));
     }
 
     /**

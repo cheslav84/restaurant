@@ -14,7 +14,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
-import java.util.Optional;
 
 public class DishService implements Service {
     private static final Logger LOG = LogManager.getLogger(DishService.class);

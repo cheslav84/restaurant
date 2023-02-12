@@ -1,4 +1,4 @@
-package com.epam.havryliuk.restaurant.model.constants;
+package com.epam.havryliuk.restaurant.controller.constants;
 
 /**
  * A list of attributes that belongs to HttpServletRequest or HttpSession.
@@ -29,4 +29,5 @@ public interface RequestAttributes {
     String RECORDS_PER_PAGE = "recordsPerPage";
     String WRONG_ACTION = "wrongAction";
     String WRONG_DISH_FIELD_MESSAGE = "wrongDishFieldMessage";
+    String COOKIE_LOCALE = "locale";
 }

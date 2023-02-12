@@ -1,4 +1,4 @@
-package com.epam.havryliuk.restaurant.model.constants;
+package com.epam.havryliuk.restaurant.controller.constants;
 
 /**
  * A list of messages that should be displayed to user

@@ -144,14 +144,12 @@
                                 <div class="error-message">
                                     <c:out value="${sessionScope.registrationErrorMessage}" />
                                 </div>
-                                <input type="submit"
-                                    value="<fmt:message key="registration.signIn" />" 
-                                    data-wait="Please wait..." class="button submit-button w-button">
+                                <input type="submit" class="button submit-button w-button"
+                                    value="<fmt:message key="registration.signIn" />" >
                             </form>
                             <div class="section-divider-line"></div>
-                            <input type="button" id="show-login-btn" 
-                                value="<fmt:message key="registration.haveAnAccount" />" 
-                                data-wait="Please wait..." class="button submit-button w-button">
+                            <input type="button" id="show-login-btn" class="button submit-button w-button"
+                                value="<fmt:message key="registration.haveAnAccount" />" >
                         </div>
                         <div class="section-divider-line"></div>
                 </div>

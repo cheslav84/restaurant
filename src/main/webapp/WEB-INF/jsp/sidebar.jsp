@@ -12,7 +12,7 @@
             <a href="?locale=UA" class="nav-social-button w-inline-block language-link">UA</a>
         </div>
         <div class="w-container">
-            <a href="index.html" aria-current="page" class="logo-container w-clearfix w-nav-brand w--current">
+            <a href="index" aria-current="page" class="logo-container w-clearfix w-nav-brand w--current">
                 <img src="view/pictures/icons/VH_logo_white.png" alt="" class="logo-icon">
                 <h1 class="logo-text">V&amp;H VICTORY</h1>
                 <h2 class="logo-text subtitle">

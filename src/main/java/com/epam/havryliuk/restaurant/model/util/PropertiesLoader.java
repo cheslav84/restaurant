@@ -21,7 +21,7 @@ public class PropertiesLoader {
      * @return Properties that loaded from corresponding file.
      * @throws PropertyInitializationException if the properties could not be loaded from file.
      */
-    public static Properties getProperties(String propertiesFileName) throws PropertyInitializationException {
+    public static synchronized Properties getProperties(String propertiesFileName) throws PropertyInitializationException {
         Properties properties = new Properties();
         try (InputStream is = PropertiesLoader.class.getClassLoader().getResourceAsStream(propertiesFileName)) {
             if (is == null) {

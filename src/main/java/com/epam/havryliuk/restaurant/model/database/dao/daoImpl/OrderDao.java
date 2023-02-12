@@ -1,8 +1,8 @@
 package com.epam.havryliuk.restaurant.model.database.dao.daoImpl;
 
 import com.epam.havryliuk.restaurant.model.database.dao.AbstractDao;
-import com.epam.havryliuk.restaurant.model.constants.databaseFieds.OrderFields;
-import com.epam.havryliuk.restaurant.model.constants.queries.OrderQuery;
+import com.epam.havryliuk.restaurant.model.database.databaseFieds.OrderFields;
+import com.epam.havryliuk.restaurant.model.database.queries.OrderQuery;
 import com.epam.havryliuk.restaurant.model.entity.*;
 import com.epam.havryliuk.restaurant.model.exceptions.DAOException;
 import org.apache.logging.log4j.LogManager;

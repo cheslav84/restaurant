@@ -1,6 +1,6 @@
 package com.epam.havryliuk.restaurant.controller.command.dishCommand;
 
-import com.epam.havryliuk.restaurant.controller.responseManager.MenuResponseManager;
+import com.epam.havryliuk.restaurant.controller.responseDispatcher.MenuDispatcher;
 import com.epam.havryliuk.restaurant.model.entity.Category;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
 import com.epam.havryliuk.restaurant.model.entity.Role;
@@ -25,10 +25,9 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
-import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
-import static com.epam.havryliuk.restaurant.controller.paths.AppPagesPath.FORWARD_MANAGER_MENU_PAGE;
+import static com.epam.havryliuk.restaurant.controller.constants.RequestAttributes.*;
+import static com.epam.havryliuk.restaurant.controller.constants.paths.AppPagesPath.FORWARD_MANAGER_MENU_PAGE;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -36,7 +35,6 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class MenuCommandTest {
-    private final Locale locale = new Locale("en", "EN");
     private User user;
     private List<Dish> dishes;
     @Mock
@@ -49,10 +47,8 @@ class MenuCommandTest {
     private RequestDispatcher requestDispatcher;
     @Mock
     private DishService dishService;
-//    @Mock
-
     @Mock
-    private MenuResponseManager menuResponseManager;
+    private MenuDispatcher menuDispatcher;
     @InjectMocks
     private MenuCommand menu;
     @BeforeEach
@@ -66,18 +62,15 @@ class MenuCommandTest {
 
     @Test
     void executeCoffeeDishesPresent() throws ServletException, IOException, ServiceException {
-//        int dishesAmount = 5;
         Category currentMenu = Category.COFFEE;
-//        List<Dish> dishes = getTestDishes(dishesAmount);
-        when(menuResponseManager.getCurrentMenu(request)).thenReturn(currentMenu);
+        when(menuDispatcher.getCurrentMenu(request)).thenReturn(currentMenu);
         when(request.getSession()).thenReturn(session);
-        when(session.getAttribute(LOCALE)).thenReturn(locale);
         when(session.getAttribute(LOGGED_USER)).thenReturn(user);
         when(dishService.getMenuByCategory(currentMenu, user)).thenReturn(dishes);
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
         menu.execute(request, response);
-        verify(dishService).getMenuByCategory(menuResponseManager.getCurrentMenu(request), user);
-        verify(menuResponseManager).setOrderInfoAttribute(request);
+        verify(dishService).getMenuByCategory(menuDispatcher.getCurrentMenu(request), user);
+        verify(menuDispatcher).setOrderInfoAttribute(request);
         verify(request).setAttribute(DISH_LIST, dishes);
         verify(request).getRequestDispatcher(FORWARD_MANAGER_MENU_PAGE);
     }
@@ -85,27 +78,19 @@ class MenuCommandTest {
 
     @Test
     void executeAllDishesPresent() throws ServletException, IOException, ServiceException {
-
         String sortParameter = "name";
         Category currentMenu = Category.ALL;
-//        User user = User.getInstance("email", "password", "name", "surname", "Male", true);
-//        user.setRole(Role.MANAGER);
-//        List<Dish> dishes = getTestDishes(dishesAmount);
-        when(menuResponseManager.getCurrentMenu(request)).thenReturn(currentMenu);
+        when(menuDispatcher.getCurrentMenu(request)).thenReturn(currentMenu);
         when(request.getSession()).thenReturn(session);
-        when(session.getAttribute(LOCALE)).thenReturn(locale);
         when(session.getAttribute(LOGGED_USER)).thenReturn(user);
         when(dishService.getAllAvailableMenuSortedBy(sortParameter, user)).thenReturn(dishes);
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
         menu.execute(request, response);
         verify(dishService).getAllAvailableMenuSortedBy(sortParameter, user);
-        verify(menuResponseManager).setOrderInfoAttribute(request);
+        verify(menuDispatcher).setOrderInfoAttribute(request);
         verify(request).setAttribute(DISH_LIST, dishes);
         verify(request).getRequestDispatcher(FORWARD_MANAGER_MENU_PAGE);
     }
-
-
-
 
     private List<Dish> getTestDishes(int size){
         List<Dish> dishes = new ArrayList<>();

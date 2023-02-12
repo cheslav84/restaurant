@@ -1,7 +1,7 @@
 package com.epam.havryliuk.restaurant.controller.command.userCommand;
 
 import com.epam.havryliuk.restaurant.controller.command.Command;
-import com.epam.havryliuk.restaurant.controller.paths.AppPagesPath;
+import com.epam.havryliuk.restaurant.controller.constants.paths.AppPagesPath;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.util.Locale;
 
-import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
+import static com.epam.havryliuk.restaurant.controller.constants.RequestAttributes.*;
 
 /**
  * Command logs out User (invalidates HttpSession).

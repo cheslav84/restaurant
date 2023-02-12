@@ -1,4 +1,4 @@
-package com.epam.havryliuk.restaurant.model.constants;
+package com.epam.havryliuk.restaurant.model;
 
 /**
  * Interface contains the list of property files that is need

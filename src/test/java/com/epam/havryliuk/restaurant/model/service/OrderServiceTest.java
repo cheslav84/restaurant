@@ -11,6 +11,7 @@ import com.epam.havryliuk.restaurant.model.exceptions.IrrelevantDataException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 
 import com.epam.havryliuk.restaurant.model.exceptions.ValidationException;
+import com.epam.havryliuk.restaurant.model.service.OrderService;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;

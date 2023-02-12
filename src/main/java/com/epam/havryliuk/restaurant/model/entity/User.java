@@ -5,7 +5,7 @@ import java.util.Date;
 public class User implements Entity {
     private long id;
     private String email;
-    private String password;
+    private transient String password;
     private String name;
     private String surname;
     private String gender;
@@ -110,9 +110,6 @@ public class User implements Entity {
         this.role = role;
     }
 
-    public UserDetails getUserDetails() {
-        return userDetails;
-    }
 
     public void setUserDetails(UserDetails userDetails) {
         this.userDetails = userDetails;

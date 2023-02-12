@@ -1,4 +1,4 @@
-package com.epam.havryliuk.restaurant.model.service;
+package com.epam.havryliuk.restaurant.model.service;//package com.epam.havryliuk.restaurant.model.service;
 
 import com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction;
 import com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao;
@@ -136,10 +136,9 @@ public class OrderService implements Service {
      * @param deliveryPhone   the contact phone number.
      * @return an Order, from storage if it exists in it, or the new one.
      * @throws ServiceException    when impossible to get data from storage or to write data to it.
-     * @throws ValidationException when delivery address or delivery phone is not valid.
      */
     public Order getOrCreateOrder(User user, String deliveryAddress, String deliveryPhone)
-            throws ServiceException, ValidationException {
+            throws ServiceException {
         Order order;
         try {
             transaction.initTransaction(orderDao);
@@ -170,9 +169,9 @@ public class OrderService implements Service {
      * Method checks whether dishes that user wants to order are available in menu (checkAvailableDishes),
      * if it is, creates a Basket and adds it to the Order list.
      *
-     * @param order               - current user Order.
+     * @param order               current user Order.
      * @param dish                that user wants to order.
-     * @param dishesAmountInOrder - amount of dishes that user wants to order.
+     * @param dishesAmountInOrder amount of dishes that user wants to order.
      * @throws ServiceException          when impossible to get data from storage or to write data to it.
      * @throws DuplicatedEntityException when dish is already exists in that order.
      * @throws IrrelevantDataException   when the amount of requested dishes exceed available ones in menu.
@@ -260,7 +259,7 @@ public class OrderService implements Service {
     /**
      * Method checks if the user wants to confirm order (the status has to be set from BOOKING to NEW).
      *
-     * @param newStatus - new BookingStatus that has to be set in the Order.
+     * @param newStatus new BookingStatus that has to be set in the Order.
      * @return true if the BookingStatus that has to be set is "NEW". Otherwise, return false.
      */
     private boolean isOrderInConfirmingProcess(BookingStatus newStatus) {
@@ -272,7 +271,7 @@ public class OrderService implements Service {
      * amount of dishes.
      *
      * @param dish                that user wants to order.
-     * @param dishesAmountInOrder - amount of dishes that user wants to order.
+     * @param dishesAmountInOrder amount of dishes that user wants to order.
      * @throws DAOException            when impossible to get data from storage or to write data to it.
      * @throws IrrelevantDataException when the amount of requested dishes exceed available ones in menu.
      */

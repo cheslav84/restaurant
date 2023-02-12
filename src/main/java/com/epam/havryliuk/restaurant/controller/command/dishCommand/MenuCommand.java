@@ -1,16 +1,17 @@
 package com.epam.havryliuk.restaurant.controller.command.dishCommand;
 
 import com.epam.havryliuk.restaurant.controller.command.Command;
-import com.epam.havryliuk.restaurant.controller.responseManager.MenuResponseManager;
-import com.epam.havryliuk.restaurant.model.constants.RequestParameters;
-import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
-import com.epam.havryliuk.restaurant.controller.paths.AppPagesPath;
+import com.epam.havryliuk.restaurant.controller.responseDispatcher.DishDispatcher;
+import com.epam.havryliuk.restaurant.controller.responseDispatcher.MenuDispatcher;
+import com.epam.havryliuk.restaurant.controller.constants.RequestParameters;
+import com.epam.havryliuk.restaurant.controller.constants.ResponseMessages;
+import com.epam.havryliuk.restaurant.controller.constants.paths.AppPagesPath;
+import com.epam.havryliuk.restaurant.controller.responseDispatcher.MessageDispatcher;
 import com.epam.havryliuk.restaurant.model.entity.Category;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
 import com.epam.havryliuk.restaurant.model.entity.Role;
 import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
-import com.epam.havryliuk.restaurant.model.util.BundleManager;
 import com.epam.havryliuk.restaurant.model.service.DishService;
 import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
 import jakarta.servlet.ServletException;
@@ -21,9 +22,8 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Locale;
 
-import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
+import static com.epam.havryliuk.restaurant.controller.constants.RequestAttributes.*;
 
 /**
  * Command to show the menu page and list of dishes in it.
@@ -32,13 +32,13 @@ public class MenuCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(MenuCommand.class);
     private static final String DEFAULT_SORTING = "name";
     @SuppressWarnings("FieldMayBeFinal")
-    private MenuResponseManager menuResponseManager;
+    private MenuDispatcher menuDispatcher;
     @SuppressWarnings("FieldMayBeFinal")
     private DishService dishService;
 
     public MenuCommand () {
         dishService = ApplicationServiceContext.getInstance(DishService.class);
-        menuResponseManager = new MenuResponseManager();
+        menuDispatcher = new MenuDispatcher();
     }
 
     /**
@@ -51,42 +51,63 @@ public class MenuCommand implements Command {
      * sorting dishes.
      */
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        Category currentMenu = menuResponseManager.getCurrentMenu(request);
-        BundleManager bundleManager = BundleManager.valueOf(((Locale) request.getSession().getAttribute(LOCALE)).getCountry());
+    public void execute(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException {
         User user = (User) request.getSession().getAttribute(LOGGED_USER);
         List<Dish> dishes = null;
         List<Dish> specials = null;
         String sortParameter = getSortParameter(request);
         try {
-            if (currentMenu.equals(Category.ALL)) {
-                dishes = dishService.getAllAvailableMenuSortedBy(sortParameter, user);
-            } else {
-                dishes = dishService.getMenuByCategory(menuResponseManager.getCurrentMenu(request), user);
-            }
-            if (dishes.isEmpty()) {
-                request.setAttribute(MENU_MESSAGE,
-                        bundleManager.getProperty(ResponseMessages.MENU_EMPTY));
-            }
+            dishes = getDishes(request, user, sortParameter);
+            DishDispatcher.setMessageIfDishesAbsent(request, dishes);
             specials = dishService.getMenuByCategory(Category.SPECIALS, user);
             LOG.debug("List of dishes received by servlet and going to be sending to client side.");
         } catch (ServiceException e) {
-            request.setAttribute(ERROR_MESSAGE,
-                    bundleManager.getProperty(ResponseMessages.MENU_UNAVAILABLE));
+            MessageDispatcher.setToRequest(request, ERROR_MESSAGE, ResponseMessages.MENU_UNAVAILABLE);
             LOG.error(e);
         }
-        menuResponseManager.setOrderInfoAttribute(request);
+        menuDispatcher.setOrderInfoAttribute(request);
         request.setAttribute(DISH_LIST, dishes);
         request.setAttribute(SPECIALS_DISH_LIST, specials);
         request.getSession().setAttribute(MENU_SORTING_OPTION, sortParameter);
 
+        request.getRequestDispatcher(getRedirectionPage(user)).forward(request, response);
+    }
+
+    /**
+     * Method decides which of page return to User depends on User Role.
+     * @param user current User that page is need to be shown.
+     * @return String representation of redirection URL.
+     */
+
+    private String getRedirectionPage(User user) {
         String redirectionPage;
         if (user != null && user.getRole().equals(Role.MANAGER) ) {
             redirectionPage = AppPagesPath.FORWARD_MANAGER_MENU_PAGE;
         } else {
             redirectionPage = AppPagesPath.FORWARD_MENU_PAGE;
         }
-        request.getRequestDispatcher(redirectionPage).forward(request, response);
+        return redirectionPage;
+    }
+
+    /**
+     * Method decides which list of Dishes shows to User, depends on chose Category.
+     * If User wants to get all dishes, then he chose sorting method of that dishes.
+     * @param sortParameter parameter, or method according to which menu should be sorted to
+     *                     (by name, price or Category).
+     * @return List of Dishes that is need to be displayed for User.
+     * @throws ServiceException throws is any unpredictable situation occurs, and will be
+     * impossible to get dishes.
+     */
+    private List<Dish> getDishes(HttpServletRequest request, User user, String sortParameter) throws ServiceException {
+        Category currentMenu = menuDispatcher.getCurrentMenu(request);
+        List<Dish> dishes;
+        if (currentMenu.equals(Category.ALL)) {
+            dishes = dishService.getAllAvailableMenuSortedBy(sortParameter, user);
+        } else {
+            dishes = dishService.getMenuByCategory(currentMenu, user);
+        }
+        return dishes;
     }
 
     /**

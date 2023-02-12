@@ -1,8 +1,7 @@
 package com.epam.havryliuk.restaurant.controller.command;
 
-import com.epam.havryliuk.restaurant.controller.command.dishCommand.IndexCommand;
-import com.epam.havryliuk.restaurant.model.constants.RequestAttributes;
-import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
+import com.epam.havryliuk.restaurant.controller.constants.RequestAttributes;
+import com.epam.havryliuk.restaurant.controller.constants.ResponseMessages;
 import com.epam.havryliuk.restaurant.model.util.BundleManager;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
@@ -10,15 +9,15 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Locale;
 
-import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.LOCALE;
+import static com.epam.havryliuk.restaurant.controller.constants.RequestAttributes.LOCALE;
 
 /**
  * Choose the necessary command to execution depends on received user request.
  */
 public class CommandFactory {
     private static final Logger LOG = LogManager.getLogger(CommandFactory.class);
-//    private Command defaultCommand = new IndexCommand();
     private Command defaultCommand = CommandEnum.INDEX.command;
+
 
     /**
      * Method obtains the representation of command in String as the last past of
@@ -26,7 +25,6 @@ public class CommandFactory {
      * If method receives the empty part of URL, the default Command will be assigned.
      * In case of wrong command that is not in the Enum list, method set in session
      * message about wrong action and throws IllegalArgumentException.
-     *
      * @param request HttpServletRequest user side.
      * @return Command instance that has to be performed.
      * @throws IllegalArgumentException when the command has to be executed doesn't exist.
@@ -52,4 +50,5 @@ public class CommandFactory {
         }
         return defaultCommand;
     }
+
 }

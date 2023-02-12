@@ -1,13 +1,13 @@
 package com.epam.havryliuk.restaurant.controller.command.orderCommand;
 
 import com.epam.havryliuk.restaurant.controller.command.Command;
-import com.epam.havryliuk.restaurant.model.constants.RequestParameters;
-import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
-import com.epam.havryliuk.restaurant.controller.paths.AppPagesPath;
+import com.epam.havryliuk.restaurant.controller.constants.RequestParameters;
+import com.epam.havryliuk.restaurant.controller.constants.ResponseMessages;
+import com.epam.havryliuk.restaurant.controller.constants.paths.AppPagesPath;
+import com.epam.havryliuk.restaurant.controller.responseDispatcher.MessageDispatcher;
 import com.epam.havryliuk.restaurant.model.entity.Basket;
 import com.epam.havryliuk.restaurant.model.entity.Order;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
-import com.epam.havryliuk.restaurant.model.util.BundleManager;
 import com.epam.havryliuk.restaurant.model.service.OrderService;
 import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,9 +18,8 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Locale;
 
-import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
+import static com.epam.havryliuk.restaurant.controller.constants.RequestAttributes.*;
 
 /**
  * Command that removes one type of Dish from user Order list.
@@ -31,14 +30,13 @@ public class RemoveFromOrderCommand implements Command {
     private OrderService orderService;
 
     public RemoveFromOrderCommand() {
-        ApplicationServiceContext appContext = new ApplicationServiceContext();
-        orderService = appContext.getInstance(OrderService.class);
+        orderService = ApplicationServiceContext.getInstance(OrderService.class);
     }
 
     /**
      * Method receives Order id and Dish id from HttpServletRequest, removes Dish from
      * Order firstly from storage place and then from HttpSession. If method receive
-     * ServiceException from OrderService, User will get message that some problem
+     * ServiceException from com.epam.havryliuk.restaurant.model.service.OrderService, User will get message that some problem
      * occurs in deleting the Dish.
      */
     @Override
@@ -52,9 +50,7 @@ public class RemoveFromOrderCommand implements Command {
             LOG.debug("Dish has been removed from order.");
             session.removeAttribute(ERROR_MESSAGE);
         } catch (ServiceException e) {
-            BundleManager bundleManager = BundleManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());
-            session.setAttribute(ERROR_MESSAGE,
-                    bundleManager.getProperty(ResponseMessages.REMOVE_DISH_FROM_ORDER_ERROR));
+            MessageDispatcher.setToSession(request, ERROR_MESSAGE, ResponseMessages.REMOVE_DISH_FROM_ORDER_ERROR);
             LOG.error(e);
         }
         response.sendRedirect(AppPagesPath.REDIRECT_BASKET);

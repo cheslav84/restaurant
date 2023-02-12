@@ -10,11 +10,14 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.util.Locale;
 
-import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.LOCALE;
+import static com.epam.havryliuk.restaurant.controller.constants.RequestAttributes.LOCALE;
 
 @WebFilter(filterName = "SessionLocaleFilter", urlPatterns = {"/*"})
 public class SessionLocaleFilter implements Filter {
     private static final Logger LOG = LogManager.getLogger(SessionLocaleFilter.class);
+    private static final Locale EN = new Locale("en", "EN");
+    private static final Locale UA = new Locale("uk", "UA");
+
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
@@ -22,11 +25,12 @@ public class SessionLocaleFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpSession session = httpRequest.getSession();
         String requestedLocale = httpRequest.getParameter(LOCALE);
+
         if (requestedLocale != null) {
             Locale locale;
             switch (requestedLocale) {
-                case "EN" -> locale = new Locale("en", "EN");
-                case "UA" -> locale = new Locale("uk", "UA");
+                case "EN" -> locale = EN;
+                case "UA" -> locale = UA;
                 default -> throw new IllegalArgumentException();
             }
             session.setAttribute(LOCALE, locale);

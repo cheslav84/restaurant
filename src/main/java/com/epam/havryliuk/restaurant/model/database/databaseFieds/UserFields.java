@@ -1,7 +1,7 @@
-package com.epam.havryliuk.restaurant.model.constants.databaseFieds;
+package com.epam.havryliuk.restaurant.model.database.databaseFieds;
 
 import com.epam.havryliuk.restaurant.model.util.PropertiesLoader;
-import com.epam.havryliuk.restaurant.model.constants.ResourceProperties;
+import com.epam.havryliuk.restaurant.model.ResourceProperties;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

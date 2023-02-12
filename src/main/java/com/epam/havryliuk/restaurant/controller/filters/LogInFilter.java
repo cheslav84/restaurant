@@ -1,6 +1,6 @@
 package com.epam.havryliuk.restaurant.controller.filters;
 
-import com.epam.havryliuk.restaurant.controller.paths.AppPagesPath;
+import com.epam.havryliuk.restaurant.controller.constants.paths.AppPagesPath;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,7 +10,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
-import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.LOGGED_USER;
+import static com.epam.havryliuk.restaurant.controller.constants.RequestAttributes.LOGGED_USER;
 
 @WebFilter(filterName = "LogInFilter",  urlPatterns = {"/show_dish_info", "/make_order",  "/basket",
         "/remove_from_order", "/set_next_status/*", "/manage_orders", "/add_dish_page", "/managerMenu", "/edit_dish"})

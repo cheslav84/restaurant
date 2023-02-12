@@ -1,13 +1,14 @@
 package com.epam.havryliuk.restaurant.controller.command.dishCommand;
 
 import com.epam.havryliuk.restaurant.controller.command.Command;
-import com.epam.havryliuk.restaurant.model.constants.RequestParameters;
-import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
+import com.epam.havryliuk.restaurant.controller.constants.RequestParameters;
+import com.epam.havryliuk.restaurant.controller.constants.ResponseMessages;
+import com.epam.havryliuk.restaurant.controller.constants.paths.AppPagesPath;
+import com.epam.havryliuk.restaurant.controller.responseDispatcher.MessageDispatcher;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
-import com.epam.havryliuk.restaurant.model.util.BundleManager;
 import com.epam.havryliuk.restaurant.model.service.DishService;
-import com.epam.havryliuk.restaurant.model.util.URLUtil;
+import com.epam.havryliuk.restaurant.controller.responseDispatcher.URLDispatcher;
 import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -16,9 +17,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.util.Locale;
 
-import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
+import static com.epam.havryliuk.restaurant.controller.constants.RequestAttributes.*;
 
 //todo edit description
 /**
@@ -40,7 +40,7 @@ public class DishInfoCommand implements Command {
      * attribute flag that informs user page to show ordering menu of concrete dish. If, on some reason,
      * ServiceException occurs while getting a Dish, user will be informed with correspondent message.
      * All above can be done from several places, and which of pages is going to be redirected to, decides
-     * "getRefererPage" method on "URLUtil" class. When user got logged out, after some period of time doing
+     * "getRefererPage" method on "URLDispatcher" class. When user got logged out, after some period of time doing
      * nothing, execution this command will lead him to the login page.
      */
     @Override
@@ -55,17 +55,15 @@ public class DishInfoCommand implements Command {
             session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
             session.removeAttribute(ORDER_MESSAGE);
         } catch (ServiceException e) {
-            BundleManager bundleManager = BundleManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());
-            session.setAttribute(ERROR_MESSAGE,
-                    bundleManager.getProperty(ResponseMessages.DISH_IN_MENU_NOT_FOUND));
+            MessageDispatcher.setToSession(request, ERROR_MESSAGE, ResponseMessages.DISH_IN_MENU_NOT_FOUND);
             LOG.error(e);
         }
         String redirectingPage;
-//        if (session.getAttribute(LOGGED_USER) != null) {
-            redirectingPage = URLUtil.getRefererPage(request);
-//        } else {
-//            redirectingPage = AppPagesPath.FORWARD_REGISTRATION;
-//        }
+        if (session.getAttribute(LOGGED_USER) != null) {
+            redirectingPage = URLDispatcher.getRefererPage(request);
+        } else {
+            redirectingPage = AppPagesPath.FORWARD_REGISTRATION;
+        }
         response.sendRedirect(redirectingPage);
     }
 }

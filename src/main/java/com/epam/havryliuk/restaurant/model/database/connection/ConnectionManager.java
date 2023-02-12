@@ -1,6 +1,6 @@
 package com.epam.havryliuk.restaurant.model.database.connection;
 
-import com.epam.havryliuk.restaurant.model.constants.DatabaseContext;
+import com.epam.havryliuk.restaurant.model.database.DatabaseContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

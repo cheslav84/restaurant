@@ -1,14 +1,15 @@
 package com.epam.havryliuk.restaurant.controller.command.dishCommand;
 
 import com.epam.havryliuk.restaurant.controller.command.Command;
-import com.epam.havryliuk.restaurant.controller.responseManager.MenuResponseManager;
-import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
-import com.epam.havryliuk.restaurant.controller.paths.AppPagesPath;
+import com.epam.havryliuk.restaurant.controller.constants.paths.AppPagesPath;
+import com.epam.havryliuk.restaurant.controller.responseDispatcher.DishDispatcher;
+import com.epam.havryliuk.restaurant.controller.responseDispatcher.MenuDispatcher;
+import com.epam.havryliuk.restaurant.controller.constants.ResponseMessages;
+import com.epam.havryliuk.restaurant.controller.responseDispatcher.MessageDispatcher;
 import com.epam.havryliuk.restaurant.model.entity.Category;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
 import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
-import com.epam.havryliuk.restaurant.model.util.BundleManager;
 import com.epam.havryliuk.restaurant.model.service.DishService;
 import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
 import jakarta.servlet.ServletException;
@@ -19,9 +20,8 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Locale;
 
-import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
+import static com.epam.havryliuk.restaurant.controller.constants.RequestAttributes.*;
 
 /**
  * Command to show the welcome page and list of dishes in it.
@@ -29,14 +29,13 @@ import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
 public class IndexCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(IndexCommand.class);
     @SuppressWarnings("FieldMayBeFinal")
-    private MenuResponseManager menuResponseManager;
+    private MenuDispatcher menuDispatcher;
     @SuppressWarnings("FieldMayBeFinal")
     private DishService dishService;
 
     public IndexCommand() {
-        ApplicationServiceContext appContext = new ApplicationServiceContext();
-        dishService = appContext.getInstance(DishService.class);
-        menuResponseManager = new MenuResponseManager();
+        dishService = ApplicationServiceContext.getInstance(DishService.class);
+        menuDispatcher = new MenuDispatcher();
     }
 
     /**
@@ -48,24 +47,20 @@ public class IndexCommand implements Command {
      */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        Category currentMenu = menuResponseManager.getCurrentMenu(request);
-        BundleManager bundleManager = BundleManager.valueOf(((Locale) request.getSession().getAttribute(LOCALE)).getCountry());
+        Category currentMenu = menuDispatcher.getCurrentMenu(request);
         User user = (User) request.getSession().getAttribute(LOGGED_USER);
         List<Dish> dishes = null;
         try {
             dishes = dishService.getMenuByCategory(currentMenu, user);
-            if (dishes.isEmpty()) {
-                request.setAttribute(MENU_MESSAGE,
-                        bundleManager.getProperty(ResponseMessages.MENU_EMPTY));
-            }
+            DishDispatcher.setMessageIfDishesAbsent(request, dishes);
             LOG.debug("List of dishes received by servlet and going to be sending to client side.");
         } catch (ServiceException e) {
-            request.setAttribute(ERROR_MESSAGE,
-                    bundleManager.getProperty(ResponseMessages.MENU_UNAVAILABLE));
+            MessageDispatcher.setToRequest(request, ERROR_MESSAGE, ResponseMessages.MENU_UNAVAILABLE);
             LOG.error(e);
         }
-        menuResponseManager.setOrderInfoAttribute(request);
+        menuDispatcher.setOrderInfoAttribute(request);
         request.setAttribute(DISH_LIST, dishes);
         request.getRequestDispatcher(AppPagesPath.FORWARD_INDEX).forward(request, response);
     }
+
 }

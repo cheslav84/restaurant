@@ -1,5 +1,6 @@
-[DEBUG] 2023-02-03 22:57:28.288 [main] DatabaseContext - DatabaseContext initialised.
-[ERROR] 2023-02-03 22:57:28.303 [main] ConnectionManager - Can't get Initial context for DataSource.
+[INFO ] 2023-02-13 01:30:58.846 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao class initialised.
+[DEBUG] 2023-02-13 01:30:58.857 [main] DatabaseContext - DatabaseContext initialised.
+[ERROR] 2023-02-13 01:30:58.858 [main] ConnectionManager - Can't get Initial context for DataSource.
 javax.naming.NoInitialContextException: Need to specify class name in environment or system property, or in an application resource file: java.naming.factory.initial
 	at javax.naming.spi.NamingManager.getInitialContext(NamingManager.java:704) ~[?:?]
 	at javax.naming.InitialContext.getDefaultInitCtx(InitialContext.java:305) ~[?:?]
@@ -13,13 +14,13 @@ javax.naming.NoInitialContextException: Need to specify class name in environmen
 	at jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[?:?]
 	at java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499) ~[?:?]
 	at java.lang.reflect.Constructor.newInstance(Constructor.java:480) ~[?:?]
-	at com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext.lambda$injectAnnotatedFields$1(ApplicationServiceContext.java:70) ~[classes/:?]
+	at com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext.lambda$injectAnnotatedFields$1(ApplicationServiceContext.java:72) ~[classes/:?]
 	at java.lang.Iterable.forEach(Iterable.java:75) ~[?:?]
-	at com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext.injectAnnotatedFields(ApplicationServiceContext.java:66) ~[classes/:?]
-	at com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext.getInstance(ApplicationServiceContext.java:50) ~[classes/:?]
+	at com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext.injectAnnotatedFields(ApplicationServiceContext.java:68) ~[classes/:?]
+	at com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext.getInstance(ApplicationServiceContext.java:51) ~[classes/:?]
 	at com.epam.havryliuk.restaurant.controller.command.dishCommand.IndexCommand.<init>(IndexCommand.java:37) ~[classes/:?]
 	at java.lang.invoke.MethodHandle.invokeWithArguments(MethodHandle.java:732) ~[?:?]
-	at org.mockito.internal.util.reflection.InstrumentationMemberAccessor$Dispatcher$ByteBuddy$ArLctmkd.invokeWithArguments(Unknown Source) ~[?:?]
+	at org.mockito.internal.util.reflection.InstrumentationMemberAccessor$Dispatcher$ByteBuddy$p6sEPdYj.invokeWithArguments(Unknown Source) ~[?:?]
 	at org.mockito.internal.util.reflection.InstrumentationMemberAccessor.lambda$newInstance$0(InstrumentationMemberAccessor.java:191) ~[mockito-core-4.11.0.jar:?]
 	at org.mockito.internal.util.reflection.InstrumentationMemberAccessor.newInstance(InstrumentationMemberAccessor.java:188) ~[mockito-core-4.11.0.jar:?]
 	at org.mockito.internal.util.reflection.InstrumentationMemberAccessor.newInstance(InstrumentationMemberAccessor.java:161) ~[mockito-core-4.11.0.jar:?]
@@ -97,72 +98,135 @@ javax.naming.NoInitialContextException: Need to specify class name in environmen
 	at com.intellij.rt.junit.IdeaTestRunner$Repeater.startRunnerWithArgs(IdeaTestRunner.java:35) ~[junit-rt.jar:?]
 	at com.intellij.rt.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:235) ~[junit-rt.jar:?]
 	at com.intellij.rt.junit.JUnitStarter.main(JUnitStarter.java:54) ~[junit-rt.jar:?]
-[INFO ] 2023-02-03 22:22:27.859 [main] ConnectionManager - DataSource initialised.
-[DEBUG] 2023-02-03 22:22:27.859 [main] ConnectionManager - It is asked for instance of DataSource.
-[DEBUG] 2023-02-03 22:22:28.006 [main] IndexCommand - List of dishes received by servlet and going to be sending to client side.
-[DEBUG] 2023-02-03 22:22:28.007 [main] AppPagesPath - Application paths are initialised.
-[DEBUG] 2023-02-03 22:22:28.080 [main] IndexCommand - List of dishes received by servlet and going to be sending to client side.
-[ERROR] 2023-02-03 22:22:28.100 [main] IndexCommand - com.epam.havryliuk.restaurant.model.exceptions.ServiceException: Such list of Dishes hasn't been found.
-[ERROR] 2023-02-03 22:22:28.361 [main] UserService - User hasn't been found.
-[ERROR] 2023-02-03 22:22:28.370 [main] UserService - An error occurs during receiving the user.
-[ERROR] 2023-02-03 22:22:28.375 [main] UserService - The user with such login is already exists.
-[ERROR] 2023-02-03 22:22:28.376 [main] UserService - The user with such login is already exists.
-[ERROR] 2023-02-03 22:22:28.381 [main] UserService - Error in creating the user.
-[DEBUG] 2023-02-03 22:22:28.386 [main] UserService - The user was successfully created.
-[DEBUG] 2023-02-03 22:22:28.391 [main] UserService - User got from database. Login and password are correct.
-[ERROR] 2023-02-03 22:22:28.407 [main] DishService - Such list of Dishes hasn't been found.
-[ERROR] 2023-02-03 22:22:28.417 [main] DishService - Such dish hasn't been found.
-[DEBUG] 2023-02-03 22:22:28.469 [main] ConnectionManager - It is asked for instance of DataSource.
-[DEBUG] 2023-02-03 22:22:28.475 [main] ManageOrdersCommand - Sorting parameter: STATUS
-[DEBUG] 2023-02-03 22:22:28.487 [main] ManageOrdersCommand - Sorting parameter: STATUS
-[DEBUG] 2023-02-03 22:22:28.525 [main] ConnectionManager - It is asked for instance of DataSource.
-[DEBUG] 2023-02-03 22:22:28.547 [main] MakeOrderCommand - Order in session: Order{id=null, address='Kyiv', phoneNumber='0961150084', isPayed=false, creationDate=null, closeDate=null, user=null, bookingStatus=NEW, baskets=[]}
-[DEBUG] 2023-02-03 22:22:28.548 [main] MakeOrderCommand - Request for "2" has been received.
-[DEBUG] 2023-02-03 22:22:28.549 [main] MakeOrderCommand - continueOrder: null
-[DEBUG] 2023-02-03 22:22:28.550 [main] MakeOrderCommand - redirectionPage basket
-[DEBUG] 2023-02-03 22:22:28.580 [main] MakeOrderCommand - Order{id=null, address='Kyiv', phoneNumber='0961150084', isPayed=false, creationDate=null, closeDate=null, user=null, bookingStatus=NEW, baskets=[]}
-[DEBUG] 2023-02-03 22:22:28.581 [main] MakeOrderCommand - Created new order: Order{id=null, address='Kyiv', phoneNumber='0961150084', isPayed=false, creationDate=null, closeDate=null, user=null, bookingStatus=NEW, baskets=[]}
-[ERROR] 2023-02-03 22:22:28.583 [main] MakeOrderCommand - message.orderDishNotFound
-[ERROR] 2023-02-03 22:22:28.584 [main] MakeOrderCommand - com.epam.havryliuk.restaurant.model.exceptions.ServiceException: message.orderDishNotFound
-[DEBUG] 2023-02-03 22:22:28.584 [main] MakeOrderCommand - continueOrder: null
-[DEBUG] 2023-02-03 22:22:28.585 [main] MakeOrderCommand - redirectionPage samePage
-[DEBUG] 2023-02-03 22:22:28.597 [main] MakeOrderCommand - Order{id=null, address='Kyiv', phoneNumber='0961150084', isPayed=false, creationDate=null, closeDate=null, user=null, bookingStatus=NEW, baskets=[]}
-[DEBUG] 2023-02-03 22:22:28.598 [main] MakeOrderCommand - Created new order: Order{id=null, address='Kyiv', phoneNumber='0961150084', isPayed=false, creationDate=null, closeDate=null, user=null, bookingStatus=NEW, baskets=[]}
-[DEBUG] 2023-02-03 22:22:28.600 [main] MakeOrderCommand - Request for "2" has been received.
-[DEBUG] 2023-02-03 22:22:28.601 [main] MakeOrderCommand - continueOrder: continue
-[DEBUG] 2023-02-03 22:22:28.601 [main] MakeOrderCommand - redirectionPage samePage
-[DEBUG] 2023-02-03 22:22:28.610 [main] MakeOrderCommand - Order{id=null, address='Kyiv', phoneNumber='0961150084', isPayed=false, creationDate=null, closeDate=null, user=null, bookingStatus=NEW, baskets=[]}
-[DEBUG] 2023-02-03 22:22:28.610 [main] MakeOrderCommand - Created new order: Order{id=null, address='Kyiv', phoneNumber='0961150084', isPayed=false, creationDate=null, closeDate=null, user=null, bookingStatus=NEW, baskets=[]}
-[DEBUG] 2023-02-03 22:22:28.611 [main] MakeOrderCommand - Request for "2" has been received.
-[DEBUG] 2023-02-03 22:22:28.612 [main] MakeOrderCommand - continueOrder: null
-[DEBUG] 2023-02-03 22:22:28.612 [main] MakeOrderCommand - redirectionPage basket
-[DEBUG] 2023-02-03 22:22:28.743 [main] ConnectionManager - It is asked for instance of DataSource.
-[ERROR] 2023-02-03 22:22:28.756 [main] BasketCommand - com.epam.havryliuk.restaurant.model.exceptions.EntityNotFoundException
-[DEBUG] 2023-02-03 22:22:28.784 [main] ConnectionManager - It is asked for instance of DataSource.
-[ERROR] 2023-02-03 22:22:28.798 [main] LoginCommand - null
-[DEBUG] 2023-02-03 22:22:28.966 [main] LoginCommand - User logged in.
-[ERROR] 2023-02-03 22:22:28.975 [main] LoginCommand - null
-[ERROR] 2023-02-03 22:22:29.023 [main] LoginCommand - null
-[DEBUG] 2023-02-03 22:22:29.030 [main] MenuResponseManager - Current menu: COFFEE
-[ERROR] 2023-02-03 22:22:29.102 [main] OrderService - Unable to get orders.
-[DEBUG] 2023-02-03 22:22:29.109 [main] OrderService - A dish has been removed from the order.
-[DEBUG] 2023-02-03 22:22:29.127 [main] OrderService - A dish has been removed from the order.
-[ERROR] 2023-02-03 22:22:29.136 [main] OrderService - Unable to get orders.
-[ERROR] 2023-02-03 22:22:29.146 [main] OrderService - Obtained incorrect amount of dishes in order 0
-[ERROR] 2023-02-03 22:22:29.151 [main] OrderService - Unable to get orders.
-[DEBUG] 2023-02-03 22:22:29.157 [main] OrderService - The page was successfully created.
-[ERROR] 2023-02-03 22:22:29.168 [main] OrderService - Unable to change order status.
-[ERROR] 2023-02-03 22:22:29.172 [main] OrderService - The request number of dishes exceed available.
-[DEBUG] 2023-02-03 22:22:29.177 [main] OrderService - The order list was successfully created.
-[DEBUG] 2023-02-03 22:22:29.193 [main] OrderService - Has been created new order: Order{id=1, address='address', phoneNumber='0961150080', isPayed=false, creationDate=null, closeDate=null, user=User{id=0, email='email', name='name', surname='surname', gender='male', isOverEighteen=true}, bookingStatus=BOOKING, baskets=[]}
-[ERROR] 2023-02-03 22:22:29.201 [main] OrderService - Unable to get or create an order.
-[DEBUG] 2023-02-03 22:22:29.217 [main] OrderService - "order status" has been changed to NEW
-[DEBUG] 2023-02-03 22:22:29.224 [main] OrderService - Order has been received: Order{id=null, address='address', phoneNumber='0961150080', isPayed=false, creationDate=null, closeDate=null, user=User{id=0, email='email', name='name', surname='surname', gender='male', isOverEighteen=true}, bookingStatus=BOOKING, baskets=[]}
-[ERROR] 2023-02-03 22:22:29.236 [main] OrderService - Unable to get or create an order.
-[ERROR] 2023-02-03 22:22:29.244 [main] OrderService - Unable to get orders.
-[DEBUG] 2023-02-03 22:22:29.253 [main] OrderService - A dish has been added to the order.
-[DEBUG] 2023-02-03 22:22:29.257 [main] ConnectionManager - It is asked for instance of DataSource.
-[DEBUG] 2023-02-03 22:22:29.261 [main] MenuCommand - List of dishes received by servlet and going to be sending to client side.
-[DEBUG] 2023-02-03 22:22:29.266 [main] MenuCommand - List of dishes received by servlet and going to be sending to client side.
-[DEBUG] 2023-02-03 22:22:29.269 [main] ConnectionManager - It is asked for instance of DataSource.
-[DEBUG] 2023-02-03 22:22:29.270 [main] CommandFactory - Restaurant action was received.
+[INFO ] 2023-02-13 01:30:58.867 [main] ConnectionManager - DataSource initialised.
+[DEBUG] 2023-02-13 01:30:58.867 [main] ConnectionManager - It is asked for instance of DataSource.
+[INFO ] 2023-02-13 01:30:58.867 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction class initialised.
+[DEBUG] 2023-02-13 01:30:58.909 [main] IndexCommand - List of dishes received by servlet and going to be sending to client side.
+[DEBUG] 2023-02-13 01:30:58.910 [main] AppPagesPath - Application paths are initialised.
+[DEBUG] 2023-02-13 01:30:58.963 [main] IndexCommand - List of dishes received by servlet and going to be sending to client side.
+[ERROR] 2023-02-13 01:30:58.975 [main] IndexCommand - com.epam.havryliuk.restaurant.model.exceptions.ServiceException: Such list of Dishes hasn't been found.
+[ERROR] 2023-02-13 01:30:59.051 [main] UserService - User hasn't been found.
+[ERROR] 2023-02-13 01:30:59.060 [main] UserService - An error occurs during receiving the user.
+[ERROR] 2023-02-13 01:30:59.065 [main] UserService - The user with such login is already exists.
+[ERROR] 2023-02-13 01:30:59.065 [main] UserService - The user with such login is already exists.
+[ERROR] 2023-02-13 01:30:59.069 [main] UserService - Error in creating the user.
+[DEBUG] 2023-02-13 01:30:59.073 [main] UserService - The user was successfully created.
+[DEBUG] 2023-02-13 01:30:59.077 [main] UserService - User got from database. Login and password are correct.
+[INFO ] 2023-02-13 01:30:59.184 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao class initialised.
+[INFO ] 2023-02-13 01:30:59.184 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao class initialised.
+[INFO ] 2023-02-13 01:30:59.184 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao class initialised.
+[DEBUG] 2023-02-13 01:30:59.184 [main] ConnectionManager - It is asked for instance of DataSource.
+[INFO ] 2023-02-13 01:30:59.184 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction class initialised.
+[DEBUG] 2023-02-13 01:30:59.188 [main] MakeOrderCommand - Request for "2" has been received.
+[DEBUG] 2023-02-13 01:30:59.192 [main] MakeOrderCommand - Order in session: order
+[DEBUG] 2023-02-13 01:30:59.192 [main] MakeOrderCommand - continueOrder: null
+[DEBUG] 2023-02-13 01:30:59.192 [main] MakeOrderCommand - redirectionPage basket
+[DEBUG] 2023-02-13 01:30:59.225 [main] MakeOrderCommand - Request for "2" has been received.
+[DEBUG] 2023-02-13 01:30:59.226 [main] MakeOrderCommand - User made order: order
+[ERROR] 2023-02-13 01:30:59.227 [main] DishDispatcher - message.orderDishNotFound
+[ERROR] 2023-02-13 01:30:59.227 [main] MakeOrderCommand - com.epam.havryliuk.restaurant.model.exceptions.ServiceException: message.orderDishNotFound
+[DEBUG] 2023-02-13 01:30:59.227 [main] MakeOrderCommand - Created new order: order
+[DEBUG] 2023-02-13 01:30:59.228 [main] MakeOrderCommand - continueOrder: null
+[DEBUG] 2023-02-13 01:30:59.228 [main] MakeOrderCommand - redirectionPage samePage
+[DEBUG] 2023-02-13 01:30:59.237 [main] MakeOrderCommand - Request for "2" has been received.
+[DEBUG] 2023-02-13 01:30:59.238 [main] MakeOrderCommand - User made order: order
+[DEBUG] 2023-02-13 01:30:59.238 [main] MakeOrderCommand - Created new order: order
+[DEBUG] 2023-02-13 01:30:59.238 [main] MakeOrderCommand - continueOrder: continue
+[DEBUG] 2023-02-13 01:30:59.239 [main] MakeOrderCommand - redirectionPage samePage
+[DEBUG] 2023-02-13 01:30:59.248 [main] MakeOrderCommand - Request for "2" has been received.
+[DEBUG] 2023-02-13 01:30:59.248 [main] MakeOrderCommand - User made order: order
+[DEBUG] 2023-02-13 01:30:59.249 [main] MakeOrderCommand - Created new order: order
+[DEBUG] 2023-02-13 01:30:59.249 [main] MakeOrderCommand - continueOrder: null
+[DEBUG] 2023-02-13 01:30:59.249 [main] MakeOrderCommand - redirectionPage basket
+[INFO ] 2023-02-13 01:30:59.265 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.UserDao class initialised.
+[DEBUG] 2023-02-13 01:30:59.265 [main] ConnectionManager - It is asked for instance of DataSource.
+[INFO ] 2023-02-13 01:30:59.265 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction class initialised.
+[ERROR] 2023-02-13 01:30:59.270 [main] LoginCommand - null
+[DEBUG] 2023-02-13 01:30:59.391 [main] LoginCommand - User logged in.
+[ERROR] 2023-02-13 01:30:59.396 [main] LoginCommand - null
+[ERROR] 2023-02-13 01:30:59.429 [main] LoginCommand - null
+[ERROR] 2023-02-13 01:30:59.815 [main] OrderService - Unable to get orders.
+[DEBUG] 2023-02-13 01:30:59.818 [main] OrderService - A dish has been removed from the order.
+[DEBUG] 2023-02-13 01:30:59.827 [main] OrderService - A dish has been removed from the order.
+[ERROR] 2023-02-13 01:30:59.830 [main] OrderService - Unable to get orders.
+[ERROR] 2023-02-13 01:30:59.834 [main] OrderService - Obtained incorrect amount of dishes in order 0
+[ERROR] 2023-02-13 01:30:59.838 [main] OrderService - Unable to get orders.
+[DEBUG] 2023-02-13 01:30:59.840 [main] OrderService - The page was successfully created.
+[ERROR] 2023-02-13 01:30:59.846 [main] OrderService - Unable to change order status.
+[ERROR] 2023-02-13 01:30:59.849 [main] OrderService - The request number of dishes exceed available.
+[DEBUG] 2023-02-13 01:30:59.852 [main] OrderService - The order list was successfully created.
+[DEBUG] 2023-02-13 01:30:59.861 [main] OrderService - Has been created new order: Order{id=1, address='address', phoneNumber='0961150080', isPayed=false, creationDate=null, closeDate=null, user=User{id=0, email='email', name='name', surname='surname', gender='male', isOverEighteen=true}, bookingStatus=BOOKING, baskets=[]}
+[ERROR] 2023-02-13 01:30:59.865 [main] OrderService - Unable to get or create an order.
+[DEBUG] 2023-02-13 01:30:59.874 [main] OrderService - "order status" has been changed to NEW
+[DEBUG] 2023-02-13 01:30:59.877 [main] OrderService - Order has been received: Order{id=null, address='address', phoneNumber='0961150080', isPayed=false, creationDate=null, closeDate=null, user=User{id=0, email='email', name='name', surname='surname', gender='male', isOverEighteen=true}, bookingStatus=BOOKING, baskets=[]}
+[ERROR] 2023-02-13 01:30:59.880 [main] OrderService - Unable to get or create an order.
+[ERROR] 2023-02-13 01:30:59.883 [main] OrderService - Unable to get orders.
+[DEBUG] 2023-02-13 01:30:59.889 [main] OrderService - A dish has been added to the order.
+[ERROR] 2023-02-13 01:30:59.911 [main] DishService - Such list of Dishes hasn't been found.
+[ERROR] 2023-02-13 01:30:59.916 [main] DishService - Such dish hasn't been found.
+[INFO ] 2023-02-13 01:30:59.925 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao class initialised.
+[INFO ] 2023-02-13 01:30:59.929 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao class initialised.
+[INFO ] 2023-02-13 01:30:59.929 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao class initialised.
+[DEBUG] 2023-02-13 01:30:59.929 [main] ConnectionManager - It is asked for instance of DataSource.
+[INFO ] 2023-02-13 01:30:59.929 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction class initialised.
+[DEBUG] 2023-02-13 01:30:59.932 [main] ManageOrdersCommand - Sorting parameter: STATUS
+[DEBUG] 2023-02-13 01:30:59.935 [main] ManageOrdersCommand - Sorting parameter: STATUS
+[INFO ] 2023-02-13 01:30:59.998 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao class initialised.
+[INFO ] 2023-02-13 01:30:59.998 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao class initialised.
+[INFO ] 2023-02-13 01:30:59.998 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao class initialised.
+[DEBUG] 2023-02-13 01:30:59.998 [main] ConnectionManager - It is asked for instance of DataSource.
+[INFO ] 2023-02-13 01:30:59.998 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction class initialised.
+[ERROR] 2023-02-13 01:31:00.003 [main] BasketCommand - com.epam.havryliuk.restaurant.model.exceptions.EntityNotFoundException
+[DEBUG] 2023-02-13 01:31:00.005 [main] MenuDispatcher - Current menu: COFFEE
+[INFO ] 2023-02-13 01:31:00.008 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao class initialised.
+[DEBUG] 2023-02-13 01:31:00.008 [main] ConnectionManager - It is asked for instance of DataSource.
+[INFO ] 2023-02-13 01:31:00.008 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction class initialised.
+[DEBUG] 2023-02-13 01:31:00.010 [main] MenuCommand - List of dishes received by servlet and going to be sending to client side.
+[DEBUG] 2023-02-13 01:31:00.013 [main] MenuCommand - List of dishes received by servlet and going to be sending to client side.
+[INFO ] 2023-02-13 01:31:00.018 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao class initialised.
+[DEBUG] 2023-02-13 01:31:00.018 [main] ConnectionManager - It is asked for instance of DataSource.
+[INFO ] 2023-02-13 01:31:00.018 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction class initialised.
+[INFO ] 2023-02-13 01:31:00.019 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao class initialised.
+[DEBUG] 2023-02-13 01:31:00.019 [main] ConnectionManager - It is asked for instance of DataSource.
+[INFO ] 2023-02-13 01:31:00.019 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction class initialised.
+[INFO ] 2023-02-13 01:31:00.019 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao class initialised.
+[DEBUG] 2023-02-13 01:31:00.019 [main] ConnectionManager - It is asked for instance of DataSource.
+[INFO ] 2023-02-13 01:31:00.020 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction class initialised.
+[INFO ] 2023-02-13 01:31:00.020 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao class initialised.
+[INFO ] 2023-02-13 01:31:00.020 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao class initialised.
+[INFO ] 2023-02-13 01:31:00.020 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao class initialised.
+[DEBUG] 2023-02-13 01:31:00.020 [main] ConnectionManager - It is asked for instance of DataSource.
+[INFO ] 2023-02-13 01:31:00.020 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction class initialised.
+[INFO ] 2023-02-13 01:31:00.021 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao class initialised.
+[INFO ] 2023-02-13 01:31:00.021 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao class initialised.
+[INFO ] 2023-02-13 01:31:00.021 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao class initialised.
+[DEBUG] 2023-02-13 01:31:00.021 [main] ConnectionManager - It is asked for instance of DataSource.
+[INFO ] 2023-02-13 01:31:00.021 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction class initialised.
+[INFO ] 2023-02-13 01:31:00.021 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao class initialised.
+[INFO ] 2023-02-13 01:31:00.021 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao class initialised.
+[INFO ] 2023-02-13 01:31:00.021 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao class initialised.
+[DEBUG] 2023-02-13 01:31:00.021 [main] ConnectionManager - It is asked for instance of DataSource.
+[INFO ] 2023-02-13 01:31:00.022 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction class initialised.
+[INFO ] 2023-02-13 01:31:00.022 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao class initialised.
+[INFO ] 2023-02-13 01:31:00.022 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao class initialised.
+[INFO ] 2023-02-13 01:31:00.022 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao class initialised.
+[DEBUG] 2023-02-13 01:31:00.022 [main] ConnectionManager - It is asked for instance of DataSource.
+[INFO ] 2023-02-13 01:31:00.022 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction class initialised.
+[INFO ] 2023-02-13 01:31:00.022 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao class initialised.
+[INFO ] 2023-02-13 01:31:00.022 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao class initialised.
+[INFO ] 2023-02-13 01:31:00.022 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao class initialised.
+[DEBUG] 2023-02-13 01:31:00.023 [main] ConnectionManager - It is asked for instance of DataSource.
+[INFO ] 2023-02-13 01:31:00.023 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction class initialised.
+[INFO ] 2023-02-13 01:31:00.023 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.UserDao class initialised.
+[DEBUG] 2023-02-13 01:31:00.023 [main] ConnectionManager - It is asked for instance of DataSource.
+[INFO ] 2023-02-13 01:31:00.023 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction class initialised.
+[INFO ] 2023-02-13 01:31:00.023 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.UserDao class initialised.
+[DEBUG] 2023-02-13 01:31:00.023 [main] ConnectionManager - It is asked for instance of DataSource.
+[INFO ] 2023-02-13 01:31:00.023 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction class initialised.
+[INFO ] 2023-02-13 01:31:00.024 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao class initialised.
+[DEBUG] 2023-02-13 01:31:00.024 [main] ConnectionManager - It is asked for instance of DataSource.
+[INFO ] 2023-02-13 01:31:00.024 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction class initialised.
+[INFO ] 2023-02-13 01:31:00.024 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao class initialised.
+[DEBUG] 2023-02-13 01:31:00.024 [main] ConnectionManager - It is asked for instance of DataSource.
+[INFO ] 2023-02-13 01:31:00.024 [main] ApplicationServiceContext - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction class initialised.
+[DEBUG] 2023-02-13 01:31:00.025 [main] CommandFactory - Restaurant action was received.

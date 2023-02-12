@@ -1,6 +1,6 @@
 package com.epam.havryliuk.restaurant.controller.command.orderCommand;
 
-import com.epam.havryliuk.restaurant.model.constants.RequestAttributes;
+import com.epam.havryliuk.restaurant.controller.constants.RequestAttributes;
 import com.epam.havryliuk.restaurant.model.entity.BookingStatus;
 import com.epam.havryliuk.restaurant.model.entity.Order;
 import com.epam.havryliuk.restaurant.model.entity.User;
@@ -25,8 +25,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
-import static com.epam.havryliuk.restaurant.controller.paths.AppPagesPath.FORWARD_BASKET;
+import static com.epam.havryliuk.restaurant.controller.constants.RequestAttributes.*;
+import static com.epam.havryliuk.restaurant.controller.constants.paths.AppPagesPath.FORWARD_BASKET;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -60,7 +60,6 @@ class BasketCommandTest {
         User user = initTestUser();
         List<Order> orders = initTestOrderList(ordersInList);
         when(request.getSession()).thenReturn(session);
-        when(session.getAttribute(LOCALE)).thenReturn(locale);
         when(session.getAttribute(RequestAttributes.LOGGED_USER)).thenReturn(user);
         when(orderService.getAllUserOrders(user)).thenReturn(orders);
         when(orderService.getTotalPrices(orders)).thenReturn(ordersAndTotalPriced);

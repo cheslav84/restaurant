@@ -1,7 +1,7 @@
 package com.epam.havryliuk.restaurant.controller.command.userCommand;
 
-import com.epam.havryliuk.restaurant.model.constants.RequestParameters;
-import com.epam.havryliuk.restaurant.controller.paths.AppPagesPath;
+import com.epam.havryliuk.restaurant.controller.constants.RequestParameters;
+import com.epam.havryliuk.restaurant.controller.constants.paths.AppPagesPath;
 import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.exceptions.EntityNotFoundException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
@@ -19,14 +19,14 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.io.IOException;
 import java.util.Locale;
 
-import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
+import static com.epam.havryliuk.restaurant.controller.constants.RequestAttributes.*;
 
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class LoginCommandTest {
-    Locale locale = new Locale("en", "EN");
+    private final Locale locale = new Locale("en", "EN");
     @Mock
     private HttpServletRequest request;
     @Mock
@@ -53,7 +53,6 @@ class LoginCommandTest {
         when(request.getSession()).thenReturn(session);
         when(request.getParameter(RequestParameters.EMAIL)).thenReturn(email);
         when(request.getParameter(RequestParameters.PASSWORD)).thenReturn(password);
-        when(session.getAttribute(LOCALE)).thenReturn(locale);
         when(userService.getUserFromDatabase(email)).thenReturn(user);
         login.execute(request, response);
         verify(session).setAttribute(LOGGED_USER, user);

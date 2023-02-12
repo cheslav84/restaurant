@@ -1,6 +1,6 @@
 package com.epam.havryliuk.restaurant.controller.command.dishCommand;
 
-import com.epam.havryliuk.restaurant.controller.responseManager.MenuResponseManager;
+import com.epam.havryliuk.restaurant.controller.responseDispatcher.MenuDispatcher;
 import com.epam.havryliuk.restaurant.model.entity.Category;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
 import com.epam.havryliuk.restaurant.model.entity.Role;
@@ -28,8 +28,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
-import static com.epam.havryliuk.restaurant.controller.paths.AppPagesPath.FORWARD_INDEX;
+import static com.epam.havryliuk.restaurant.controller.constants.RequestAttributes.*;
+import static com.epam.havryliuk.restaurant.controller.constants.paths.AppPagesPath.FORWARD_INDEX;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -37,7 +37,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class IndexCommandTest {
-    private Locale locale = new Locale("en", "EN");
+    private final Locale locale = new Locale("en", "EN");
 
     private User user;
     @Mock
@@ -50,8 +50,9 @@ class IndexCommandTest {
     private RequestDispatcher requestDispatcher;
     @Mock
     private DishService dishService;
+
     @Mock
-    private MenuResponseManager menuResponseManager;
+    private MenuDispatcher menuDispatcher;
     @InjectMocks
     private IndexCommand index;
 
@@ -71,14 +72,13 @@ class IndexCommandTest {
         int dishesAmount = 5;
         Category currentMenu = Category.COFFEE;
         List<Dish> dishes = getTestDishes(dishesAmount);
-        when(menuResponseManager.getCurrentMenu(request)).thenReturn(currentMenu);
+        when(menuDispatcher.getCurrentMenu(request)).thenReturn(currentMenu);
         when(request.getSession()).thenReturn(session);
-        when(session.getAttribute(LOCALE)).thenReturn(locale);
         when(session.getAttribute(LOGGED_USER)).thenReturn(user);
         when(dishService.getMenuByCategory(currentMenu, user)).thenReturn(dishes);
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
         index.execute(request, response);
-        verify(menuResponseManager).setOrderInfoAttribute(request);
+        verify(menuDispatcher).setOrderInfoAttribute(request);
         verify(request).setAttribute(DISH_LIST, dishes);
         verify(request).getRequestDispatcher(FORWARD_INDEX);
     }
@@ -88,7 +88,7 @@ class IndexCommandTest {
         String messageMenuEmpty = "There are no dishes it such category available now. Go to another category please.";
         Category currentMenu = Category.COFFEE;
         List<Dish> dishes = new ArrayList<>();
-        when(menuResponseManager.getCurrentMenu(request)).thenReturn(currentMenu);
+        when(menuDispatcher.getCurrentMenu(request)).thenReturn(currentMenu);
         when(request.getSession()).thenReturn(session);
         when(session.getAttribute(LOCALE)).thenReturn(locale);
         when(session.getAttribute(LOGGED_USER)).thenReturn(user);
@@ -96,7 +96,7 @@ class IndexCommandTest {
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
         index.execute(request, response);
         verify(request).setAttribute(MENU_MESSAGE, messageMenuEmpty);
-        verify(menuResponseManager).setOrderInfoAttribute(request);
+        verify(menuDispatcher).setOrderInfoAttribute(request);
         verify(request).setAttribute(DISH_LIST, dishes);
         verify(request).getRequestDispatcher(FORWARD_INDEX);
     }
@@ -106,7 +106,7 @@ class IndexCommandTest {
     void executeExceptionFromService() throws ServletException, IOException, ServiceException {
         String messageMenuEmpty = "Menu is temporary unavailable. Try again later please.";
         Category currentMenu = Category.COFFEE;
-        when(menuResponseManager.getCurrentMenu(request)).thenReturn(currentMenu);
+        when(menuDispatcher.getCurrentMenu(request)).thenReturn(currentMenu);
         when(request.getSession()).thenReturn(session);
         when(session.getAttribute(LOCALE)).thenReturn(locale);
         when(session.getAttribute(LOGGED_USER)).thenReturn(user);
@@ -114,7 +114,7 @@ class IndexCommandTest {
         when(dishService.getMenuByCategory(currentMenu, user)).thenThrow(new ServiceException("Such list of Dishes hasn't been found."));
         index.execute(request, response);
         verify(request).setAttribute(ERROR_MESSAGE, messageMenuEmpty);
-        verify(menuResponseManager).setOrderInfoAttribute(request);
+        verify(menuDispatcher).setOrderInfoAttribute(request);
         verify(request).setAttribute(DISH_LIST, null);
         verify(request).getRequestDispatcher(FORWARD_INDEX);
     }

@@ -1,6 +1,6 @@
-package com.epam.havryliuk.restaurant.controller.paths;
+package com.epam.havryliuk.restaurant.controller.constants.paths;
 
-import com.epam.havryliuk.restaurant.model.constants.ResourceProperties;
+import com.epam.havryliuk.restaurant.model.ResourceProperties;
 import com.epam.havryliuk.restaurant.model.util.PropertiesLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -48,7 +48,7 @@ public class AppPagesPath {
 
         REDIRECT_ERROR = (String) PROPERTIES.get("path.page.redirect.error");
 
-       DISH_IMAGE_PATH = (String) PROPERTIES.get("path.dishImage");
+        DISH_IMAGE_PATH = (String) PROPERTIES.get("path.dishImage");
 
 
         LOG.debug("Application paths are initialised.");

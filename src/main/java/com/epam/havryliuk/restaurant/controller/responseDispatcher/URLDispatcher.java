@@ -1,8 +1,8 @@
-package com.epam.havryliuk.restaurant.model.util;
+package com.epam.havryliuk.restaurant.controller.responseDispatcher;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-public class URLUtil {
+public class URLDispatcher {
 
     /**
      * Gets the referer URL from the header in request, and returns
@@ -17,4 +17,6 @@ public class URLUtil {
         int lastSlashIndex = referer.lastIndexOf('/');
         return referer.substring(lastSlashIndex + 1);
     }
+
+
 }

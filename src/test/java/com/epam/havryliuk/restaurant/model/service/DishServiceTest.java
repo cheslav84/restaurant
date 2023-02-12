@@ -8,6 +8,7 @@ import com.epam.havryliuk.restaurant.model.entity.Role;
 import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.exceptions.DAOException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
+import com.epam.havryliuk.restaurant.model.service.DishService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -100,8 +101,6 @@ class DishServiceTest {
     @Test
     void getAllMenuSortedBy() throws DAOException, ServiceException {
         int dishesInList = 5;
-//        User user = User.getInstance("email", "password", "name", "surname", "Male", true);
-//        user.setRole(Role.CLIENT);
         when(dishDao.getAllAvailableSortedByName()).thenReturn(getDishesByName(dishesInList));
         when(dishDao.getAllAvailableSortedByPrice()).thenReturn(getDishesByPrice(dishesInList));
         when(dishDao.getAllAvailableSortedByCategory()).thenReturn(getDishes(dishesInList));

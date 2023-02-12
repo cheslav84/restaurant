@@ -1,6 +1,6 @@
 package com.epam.havryliuk.restaurant.controller.filters;
 
-import com.epam.havryliuk.restaurant.controller.paths.AppPagesPath;
+import com.epam.havryliuk.restaurant.controller.constants.paths.AppPagesPath;
 import com.epam.havryliuk.restaurant.model.entity.Role;
 import com.epam.havryliuk.restaurant.model.entity.User;
 import jakarta.servlet.*;
@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
-import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.LOGGED_USER;
+import static com.epam.havryliuk.restaurant.controller.constants.RequestAttributes.LOGGED_USER;
 
 @WebFilter(filterName = "AuthenticationManagerFilter",
         urlPatterns = { "/manage_orders", "/add_dish_page", "/edit_dish"})

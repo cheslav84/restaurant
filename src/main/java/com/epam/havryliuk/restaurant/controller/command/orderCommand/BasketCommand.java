@@ -1,13 +1,13 @@
 package com.epam.havryliuk.restaurant.controller.command.orderCommand;
 
 import com.epam.havryliuk.restaurant.controller.command.Command;
-import com.epam.havryliuk.restaurant.model.constants.ResponseMessages;
-import com.epam.havryliuk.restaurant.controller.paths.AppPagesPath;
+import com.epam.havryliuk.restaurant.controller.constants.ResponseMessages;
+import com.epam.havryliuk.restaurant.controller.constants.paths.AppPagesPath;
+import com.epam.havryliuk.restaurant.controller.responseDispatcher.MessageDispatcher;
 import com.epam.havryliuk.restaurant.model.entity.Order;
 import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.exceptions.EntityNotFoundException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
-import com.epam.havryliuk.restaurant.model.util.BundleManager;
 import com.epam.havryliuk.restaurant.model.service.OrderService;
 import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
 import jakarta.servlet.ServletException;
@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.*;
 
-import static com.epam.havryliuk.restaurant.model.constants.RequestAttributes.*;
+import static com.epam.havryliuk.restaurant.controller.constants.RequestAttributes.*;
 
 /**
  * Command to show the user orders page and list of orders in it. With orders for user
@@ -34,8 +34,7 @@ public class BasketCommand implements Command {
     private OrderService orderService;
 
     public BasketCommand() {
-        ApplicationServiceContext appContext = new ApplicationServiceContext();
-        orderService = appContext.getInstance(OrderService.class);
+        orderService = ApplicationServiceContext.getInstance(OrderService.class);
     }
 
     /**
@@ -48,7 +47,6 @@ public class BasketCommand implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         HttpSession session = request.getSession();
-        BundleManager bundleManager = BundleManager.valueOf(((Locale) session.getAttribute(LOCALE)).getCountry());
         User user = (User) session.getAttribute(LOGGED_USER);
         try {
             List<Order> orders = orderService.getAllUserOrders(user);
@@ -56,12 +54,10 @@ public class BasketCommand implements Command {
             Map<Order, BigDecimal> ordersAndTotalPriced = orderService.getTotalPrices(orders);
             session.setAttribute(ORDER_PRICE_MAP, ordersAndTotalPriced);
         } catch (EntityNotFoundException e) {
-            session.setAttribute(ERROR_MESSAGE,
-                    bundleManager.getProperty(ResponseMessages.EMPTY_BASKET));
+            MessageDispatcher.setToSession(request, ERROR_MESSAGE, ResponseMessages.EMPTY_BASKET);
             LOG.error(e);
         } catch (ServiceException e) {
-            session.setAttribute(ERROR_MESSAGE,
-                    bundleManager.getProperty(ResponseMessages.USER_ORDERS_UNAVAILABLE));
+            MessageDispatcher.setToSession(request, ERROR_MESSAGE, ResponseMessages.USER_ORDERS_UNAVAILABLE);
             LOG.error(e);
         }
         request.getRequestDispatcher(AppPagesPath.FORWARD_BASKET).forward(request, response);
