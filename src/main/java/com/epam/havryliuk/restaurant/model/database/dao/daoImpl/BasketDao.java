@@ -1,5 +1,6 @@
 package com.epam.havryliuk.restaurant.model.database.dao.daoImpl;
 
+import com.epam.havryliuk.restaurant.model.entityMappers.BasketMapper;
 import com.epam.havryliuk.restaurant.model.database.databaseFieds.BasketFields;
 import com.epam.havryliuk.restaurant.model.database.databaseFieds.DishFields;
 import com.epam.havryliuk.restaurant.model.database.queries.BasketQuery;
@@ -10,7 +11,6 @@ import com.epam.havryliuk.restaurant.model.exceptions.DAOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.math.BigDecimal;
 import java.sql.*;
 import java.util.*;
 
@@ -47,7 +47,7 @@ public class BasketDao extends AbstractDao<Basket> {
             stmt.setLong(1, order.getId());
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    baskets.add(mapBasket(rs, order));
+                    baskets.add(BasketMapper.mapBasket(rs, order));
                 }
             }
             LOG.debug("List of baskets has been received from database. ");
@@ -57,22 +57,22 @@ public class BasketDao extends AbstractDao<Basket> {
         return baskets;
     }
 
-    /**
-     * Method maps Dish, dish amount and dish price from ResultSet.
-     * If BookingStatus is "Booking" - the order is not confirmed yet by user,
-     * then for Basket sets price from Dish table, otherwise, for Basket sets
-     * fixed price from table with baskets
-     */
-    private Basket mapBasket(ResultSet rs, Order order) throws SQLException {
-        DishDao dishDao = new DishDao();
-        Dish dish = dishDao.mapDish(rs);
-        int amount = rs.getInt(BasketFields.DISH_AMOUNT);
-        BigDecimal price = rs.getBigDecimal(BasketFields.DISH_PRICE);
-        if (order.getBookingStatus() != BookingStatus.BOOKING) {
-            dish.setPrice(price);
-        }
-        return Basket.getInstance(order, dish, price, amount);
-    }
+//    /**
+//     * Method maps Dish, dish amount and dish price from ResultSet.
+//     * If BookingStatus is "Booking" - the order is not confirmed yet by user,
+//     * then for Basket sets price from Dish table, otherwise, for Basket sets
+//     * fixed price from table with baskets
+//     */
+//    private Basket mapBasket(ResultSet rs, Order order) throws SQLException {
+//        DishDao dishDao = new DishDao();
+//        Dish dish = dishDao.mapDish(rs);
+//        int amount = rs.getInt(BasketFields.DISH_AMOUNT);
+//        BigDecimal price = rs.getBigDecimal(BasketFields.DISH_PRICE);
+//        if (order.getBookingStatus() != BookingStatus.BOOKING) {
+//            dish.setPrice(price);
+//        }
+//        return Basket.getInstance(order, dish, price, amount);
+//    }
 
     public Map<String, Integer> getNumberOfRequestedDishesInOrder(long orderId) throws DAOException {
         Map<String, Integer> dishes = new HashMap<>();

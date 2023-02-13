@@ -1,11 +1,11 @@
 package com.epam.havryliuk.restaurant.controller.command.userCommand;
 
 import com.epam.havryliuk.restaurant.controller.command.Command;
-import com.epam.havryliuk.restaurant.controller.responseDispatcher.MessageDispatcher;
-import com.epam.havryliuk.restaurant.model.requestMapper.UserRequestMapper;
+import com.epam.havryliuk.restaurant.controller.dispatchers.MessageDispatcher;
 import com.epam.havryliuk.restaurant.controller.constants.ResponseMessages;
 import com.epam.havryliuk.restaurant.controller.constants.paths.AppPagesPath;
 import com.epam.havryliuk.restaurant.model.entity.User;
+import com.epam.havryliuk.restaurant.model.entityMappers.UserMapper;
 import com.epam.havryliuk.restaurant.model.exceptions.DuplicatedEntityException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.service.UserService;
@@ -50,7 +50,7 @@ public class RegisterCommand implements Command {
         String redirectionPage;
         User user;
         try {
-            user = UserRequestMapper.mapUser(request);
+            user = UserMapper.mapUser(request);
             if (Validator.validateUserData(user, request)){
                 encryptUserPassword(user);
                 userService.addNewUser(user);

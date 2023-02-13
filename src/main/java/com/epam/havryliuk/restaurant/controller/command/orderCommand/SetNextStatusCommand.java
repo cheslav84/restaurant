@@ -4,14 +4,14 @@ import com.epam.havryliuk.restaurant.controller.command.Command;
 
 import com.epam.havryliuk.restaurant.controller.constants.RequestParameters;
 import com.epam.havryliuk.restaurant.controller.constants.ResponseMessages;
-import com.epam.havryliuk.restaurant.controller.responseDispatcher.MessageDispatcher;
+import com.epam.havryliuk.restaurant.controller.dispatchers.MessageDispatcher;
 import com.epam.havryliuk.restaurant.model.entity.BookingStatus;
 import com.epam.havryliuk.restaurant.model.entity.Role;
 import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.exceptions.EntityNotFoundException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.service.OrderService;
-import com.epam.havryliuk.restaurant.controller.responseDispatcher.URLDispatcher;
+import com.epam.havryliuk.restaurant.controller.dispatchers.URLDispatcher;
 import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

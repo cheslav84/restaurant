@@ -1,12 +1,12 @@
 package com.epam.havryliuk.restaurant.controller.command.dishCommand;
 
 import com.epam.havryliuk.restaurant.controller.command.Command;
-import com.epam.havryliuk.restaurant.controller.responseDispatcher.DishDispatcher;
-import com.epam.havryliuk.restaurant.controller.responseDispatcher.MessageDispatcher;
-import com.epam.havryliuk.restaurant.model.requestMapper.DishRequestMapper;
+import com.epam.havryliuk.restaurant.controller.dispatchers.DishDispatcher;
+import com.epam.havryliuk.restaurant.controller.dispatchers.MessageDispatcher;
 import com.epam.havryliuk.restaurant.controller.constants.ResponseMessages;
 import com.epam.havryliuk.restaurant.controller.constants.paths.AppPagesPath;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
+import com.epam.havryliuk.restaurant.model.entityMappers.DishMapper;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.service.DishService;
 import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
@@ -40,7 +40,7 @@ public class EditDishCommand implements Command {
         String redirectionPage = AppPagesPath.REDIRECT_MENU;
         try {
             Dish dish = DishDispatcher.getCurrentDish(request);
-            dish = DishRequestMapper.mapDish(request, dish.getImage());
+            dish = DishMapper.mapDish(request, dish.getImage());
             if (Validator.isEditingDishDataValid(dish, request)) {
                 dishService.updateDish(dish);
                 session.removeAttribute(ERROR_MESSAGE);

@@ -1,4 +1,4 @@
-package com.epam.havryliuk.restaurant.controller.responseDispatcher;
+package com.epam.havryliuk.restaurant.controller.dispatchers;
 
 import com.epam.havryliuk.restaurant.controller.constants.RequestParameters;
 import com.epam.havryliuk.restaurant.model.entity.Category;

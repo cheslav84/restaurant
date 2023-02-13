@@ -1,12 +1,12 @@
 package com.epam.havryliuk.restaurant.controller.command.dishCommand;
 
 import com.epam.havryliuk.restaurant.controller.command.Command;
-import com.epam.havryliuk.restaurant.controller.responseDispatcher.MessageDispatcher;
-import com.epam.havryliuk.restaurant.model.requestMapper.DishRequestMapper;
+import com.epam.havryliuk.restaurant.controller.dispatchers.MessageDispatcher;
 import com.epam.havryliuk.restaurant.controller.constants.RequestParameters;
 import com.epam.havryliuk.restaurant.controller.constants.ResponseMessages;
 import com.epam.havryliuk.restaurant.controller.constants.paths.AppPagesPath;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
+import com.epam.havryliuk.restaurant.model.entityMappers.DishMapper;
 import com.epam.havryliuk.restaurant.model.exceptions.DuplicatedEntityException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.service.DishService;
@@ -46,18 +46,15 @@ public class AddDishCommand implements Command {
         try {
             Part part = request.getPart(RequestParameters.DISH_IMAGE);
             String imageFileName = part.getSubmittedFileName();
-            Dish dish = DishRequestMapper.mapDish(request, imageFileName);
+            Dish dish = DishMapper.mapDish(request, imageFileName);
             session.setAttribute(CURRENT_DISH, dish);
 
             String realPath = request.getServletContext()
                     .getRealPath(AppPagesPath.DISH_IMAGE_PATH + imageFileName);
             if (Validator.isCreatingDishDataValid(dish, realPath, request)) {
                 dishService.addNewDish(dish);
-                InputStream is = part.getInputStream();
-                Files.copy(is, Paths.get(realPath), StandardCopyOption.REPLACE_EXISTING);
-                session.removeAttribute(CURRENT_DISH);
-                session.removeAttribute(WRONG_DISH_FIELD_MESSAGE);
-                session.removeAttribute(ERROR_MESSAGE);
+                saveImage(part, realPath);
+                manageAttributes(session);
                 redirectionPage = AppPagesPath.REDIRECT_MENU;
                 LOG.debug("List of dishes received by servlet and going to be sending to client side.");
             } else {
@@ -73,6 +70,17 @@ public class AddDishCommand implements Command {
             LOG.error(e);
         }
         response.sendRedirect(redirectionPage);
+    }
+
+    private void saveImage(Part part, String realPath) throws IOException {
+        InputStream is = part.getInputStream();
+        Files.copy(is, Paths.get(realPath), StandardCopyOption.REPLACE_EXISTING);
+    }
+
+    private void manageAttributes(HttpSession session) {
+        session.removeAttribute(CURRENT_DISH);
+        session.removeAttribute(WRONG_DISH_FIELD_MESSAGE);
+        session.removeAttribute(ERROR_MESSAGE);
     }
 
 }

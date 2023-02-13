@@ -1,6 +1,7 @@
 package com.epam.havryliuk.restaurant.model.database.dao.daoImpl;
 
 import com.epam.havryliuk.restaurant.model.database.dao.AbstractDao;
+import com.epam.havryliuk.restaurant.model.entityMappers.OrderMapper;
 import com.epam.havryliuk.restaurant.model.database.databaseFieds.OrderFields;
 import com.epam.havryliuk.restaurant.model.database.queries.OrderQuery;
 import com.epam.havryliuk.restaurant.model.entity.*;
@@ -48,8 +49,8 @@ public class OrderDao extends AbstractDao<Order> {
             stmt.setString(++k, bookingStatus.name());
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    order = mapOrder(rs);
-                    order.setUser(user);
+                    order = OrderMapper.mapOrder(rs);
+                    order.setUser(user);//todo виконується в сервісі
                 }
             }
             LOG.debug("Order has been received from database.");
@@ -67,7 +68,7 @@ public class OrderDao extends AbstractDao<Order> {
             stmt.setLong(1, user.getId());
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    Order order = mapOrder(rs);
+                    Order order = OrderMapper.mapOrder(rs);
                     order.setUser(user);
                     orders.add(order);
                 }
@@ -94,7 +95,7 @@ public class OrderDao extends AbstractDao<Order> {
             stmt.setInt(++k, noOfRecords);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    orders.add(mapOrder(rs));
+                    orders.add(OrderMapper.mapOrder(rs));
                 }
             }
             LOG.debug("List of dishes (by category) has been received from database. ");
@@ -122,17 +123,17 @@ public class OrderDao extends AbstractDao<Order> {
 
     }
 
-    private Order mapOrder(ResultSet rs) throws SQLException {
-        long id = rs.getLong(OrderFields.ORDER_ID);
-        String address = rs.getString(OrderFields.ORDER_ADDRESS);
-        String phoneNumber = rs.getString(OrderFields.ORDER_PHONE_NUMBER);
-        boolean isPayed = rs.getBoolean(OrderFields.ORDER_PAYMENT);
-        Date creationDate = rs.getTimestamp(OrderFields.ORDER_CREATION_DATE);
-        Date closeDate = rs.getTimestamp(OrderFields.ORDER_CLOSE_DATE);
-        long bookingStatusId = rs.getLong(OrderFields.ORDER_BOOKING_STATUS);
-        BookingStatus bookingStatus = BookingStatus.getStatus(bookingStatusId);
-        return Order.getInstance(id, address, phoneNumber, isPayed, creationDate, closeDate, bookingStatus);
-    }
+//    private Order mapOrder(ResultSet rs) throws SQLException {
+//        long id = rs.getLong(OrderFields.ORDER_ID);
+//        String address = rs.getString(OrderFields.ORDER_ADDRESS);
+//        String phoneNumber = rs.getString(OrderFields.ORDER_PHONE_NUMBER);
+//        boolean isPayed = rs.getBoolean(OrderFields.ORDER_PAYMENT);
+//        Date creationDate = rs.getTimestamp(OrderFields.ORDER_CREATION_DATE);
+//        Date closeDate = rs.getTimestamp(OrderFields.ORDER_CLOSE_DATE);
+//        long bookingStatusId = rs.getLong(OrderFields.ORDER_BOOKING_STATUS);
+//        BookingStatus bookingStatus = BookingStatus.getStatus(bookingStatusId);
+//        return Order.getInstance(id, address, phoneNumber, isPayed, creationDate, closeDate, bookingStatus);
+//    }
 
     public Date getCreationDate(long orderId) throws DAOException {
         Date date = null;

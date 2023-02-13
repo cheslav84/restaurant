@@ -4,11 +4,11 @@ import com.epam.havryliuk.restaurant.controller.command.Command;
 import com.epam.havryliuk.restaurant.controller.constants.RequestParameters;
 import com.epam.havryliuk.restaurant.controller.constants.ResponseMessages;
 import com.epam.havryliuk.restaurant.controller.constants.paths.AppPagesPath;
-import com.epam.havryliuk.restaurant.controller.responseDispatcher.MessageDispatcher;
+import com.epam.havryliuk.restaurant.controller.dispatchers.MessageDispatcher;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.service.DishService;
-import com.epam.havryliuk.restaurant.controller.responseDispatcher.URLDispatcher;
+import com.epam.havryliuk.restaurant.controller.dispatchers.URLDispatcher;
 import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -47,23 +47,27 @@ public class DishInfoCommand implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         long dishId = Long.parseLong(request.getParameter(RequestParameters.DISH_ID));
         LOG.debug("\"/dishId\" " + dishId + " has been received from user.");
-        HttpSession session = request.getSession();
         Dish dish;
         try {
             dish = dishService.getDish(dishId);
-            session.setAttribute(CURRENT_DISH, dish);
-            session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
-            session.removeAttribute(ORDER_MESSAGE);
+            manageAttributes(request, dish);
         } catch (ServiceException e) {
             MessageDispatcher.setToSession(request, ERROR_MESSAGE, ResponseMessages.DISH_IN_MENU_NOT_FOUND);
             LOG.error(e);
         }
-        String redirectingPage;
-        if (session.getAttribute(LOGGED_USER) != null) {
-            redirectingPage = URLDispatcher.getRefererPage(request);
-        } else {
-            redirectingPage = AppPagesPath.FORWARD_REGISTRATION;
-        }
-        response.sendRedirect(redirectingPage);
+        response.sendRedirect(getRedirectingPage(request));
+    }
+
+    private String getRedirectingPage(HttpServletRequest request) {
+        return request.getSession().getAttribute(LOGGED_USER) != null
+                ? URLDispatcher.getRefererPage(request)
+                : AppPagesPath.FORWARD_REGISTRATION;
+    }
+
+    private void manageAttributes(HttpServletRequest request, Dish dish) {
+        HttpSession session = request.getSession();
+        session.setAttribute(CURRENT_DISH, dish);
+        session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
+        session.removeAttribute(ORDER_MESSAGE);
     }
 }

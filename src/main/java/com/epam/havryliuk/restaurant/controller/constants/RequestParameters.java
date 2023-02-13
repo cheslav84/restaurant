@@ -1,7 +1,8 @@
 package com.epam.havryliuk.restaurant.controller.constants;
 
 /**
- * A list of parameters that can be got from HttpServletRequest.
+ * A list of parameters that can be got from HttpServletRequest,
+ * and we receive from the view layer.
  */
 public interface RequestParameters {
 

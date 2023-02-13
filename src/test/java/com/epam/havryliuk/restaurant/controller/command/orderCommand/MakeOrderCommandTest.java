@@ -8,7 +8,7 @@ import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.service.OrderService;
 import com.epam.havryliuk.restaurant.model.util.validation.Validator;
-import com.epam.havryliuk.restaurant.controller.responseDispatcher.URLDispatcher;
+import com.epam.havryliuk.restaurant.controller.dispatchers.URLDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -29,7 +29,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class MakeOrderCommandTest {
-    private Locale locale = new Locale("en", "EN");
+    private final Locale locale = new Locale("en", "EN");
 
     private final String dishesAmount = "2";
     @Mock

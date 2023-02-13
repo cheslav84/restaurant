@@ -1,6 +1,7 @@
 package com.epam.havryliuk.restaurant.model.database.dao.daoImpl;
 
 import com.epam.havryliuk.restaurant.model.database.dao.AbstractDao;
+import com.epam.havryliuk.restaurant.model.entityMappers.DishMapper;
 import com.epam.havryliuk.restaurant.model.database.databaseFieds.DishFields;
 import com.epam.havryliuk.restaurant.model.database.queries.DishQuery;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
@@ -9,7 +10,6 @@ import com.epam.havryliuk.restaurant.model.exceptions.DAOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -33,7 +33,7 @@ public class DishDao extends AbstractDao<Dish> {
             stmt.setString(1, category.name());
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    dishes.add(mapDish(rs));
+                    dishes.add(DishMapper.mapDish(rs));
                 }
             }
             LOG.debug("List of dishes (by category) has been received from database. ");
@@ -142,7 +142,7 @@ public class DishDao extends AbstractDao<Dish> {
             stmt.setLong(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    dish = mapDish(rs);
+                    dish = DishMapper.mapDish(rs);
                 }
             }
             LOG.debug("The dish with \"id=" + id + "\" has been received from database.");
@@ -160,7 +160,7 @@ public class DishDao extends AbstractDao<Dish> {
             stmt.setString(1, name);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    dish = mapDish(rs);
+                    dish = DishMapper.mapDish(rs);
                 }
             }
             LOG.debug("The dish with \"name=" + name + "\" has been received from database.");
@@ -206,7 +206,7 @@ public class DishDao extends AbstractDao<Dish> {
         try ( PreparedStatement stmt = connection.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
-                dishes.add(mapDish(rs));
+                dishes.add(DishMapper.mapDish(rs));
             }
             LOG.debug("List of dishes have been received from database.");
         } catch (SQLException e) {
@@ -214,18 +214,6 @@ public class DishDao extends AbstractDao<Dish> {
             throw new DAOException(e);
         }
         return dishes;
-    }
-
-    Dish mapDish(ResultSet rs) throws SQLException {// todo mapper
-        long id = rs.getLong(DishFields.DISH_ID);
-        String name = rs.getString(DishFields.DISH_NAME);
-        String description = rs.getString(DishFields.DISH_DESCRIPTION);
-        int weight = rs.getInt(DishFields.DISH_WEIGHT);
-        BigDecimal price = rs.getBigDecimal(DishFields.DISH_PRICE);
-        int amount = rs.getInt(DishFields.DISH_AMOUNT);
-        String image = rs.getString(DishFields.DISH_IMAGE);
-        boolean alcohol = rs.getBoolean(DishFields.DISH_ALCOHOL);
-        return Dish.getInstance(id, name, description, weight, price, amount, image, alcohol);
     }
 
     public int getNumberOfAllDishesInOrder(Dish dish) throws DAOException {

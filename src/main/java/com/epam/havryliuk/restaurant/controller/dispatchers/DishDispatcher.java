@@ -1,16 +1,13 @@
-package com.epam.havryliuk.restaurant.controller.responseDispatcher;
+package com.epam.havryliuk.restaurant.controller.dispatchers;
 
 import com.epam.havryliuk.restaurant.controller.constants.ResponseMessages;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
-import com.epam.havryliuk.restaurant.model.util.BundleManager;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
-import java.util.Locale;
 
 import static com.epam.havryliuk.restaurant.controller.constants.RequestAttributes.*;
 

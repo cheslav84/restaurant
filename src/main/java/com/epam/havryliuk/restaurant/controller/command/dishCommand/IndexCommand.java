@@ -2,10 +2,10 @@ package com.epam.havryliuk.restaurant.controller.command.dishCommand;
 
 import com.epam.havryliuk.restaurant.controller.command.Command;
 import com.epam.havryliuk.restaurant.controller.constants.paths.AppPagesPath;
-import com.epam.havryliuk.restaurant.controller.responseDispatcher.DishDispatcher;
-import com.epam.havryliuk.restaurant.controller.responseDispatcher.MenuDispatcher;
+import com.epam.havryliuk.restaurant.controller.dispatchers.DishDispatcher;
+import com.epam.havryliuk.restaurant.controller.dispatchers.MenuDispatcher;
 import com.epam.havryliuk.restaurant.controller.constants.ResponseMessages;
-import com.epam.havryliuk.restaurant.controller.responseDispatcher.MessageDispatcher;
+import com.epam.havryliuk.restaurant.controller.dispatchers.MessageDispatcher;
 import com.epam.havryliuk.restaurant.model.entity.Category;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
 import com.epam.havryliuk.restaurant.model.entity.User;

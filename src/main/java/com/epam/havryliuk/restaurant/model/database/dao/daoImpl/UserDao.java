@@ -1,18 +1,15 @@
 package com.epam.havryliuk.restaurant.model.database.dao.daoImpl;
 
 import com.epam.havryliuk.restaurant.model.database.dao.AbstractDao;
+import com.epam.havryliuk.restaurant.model.entityMappers.UserMapper;
 import com.epam.havryliuk.restaurant.model.database.queries.UserQuery;
-import com.epam.havryliuk.restaurant.model.entity.Role;
 import com.epam.havryliuk.restaurant.model.entity.User;
-import com.epam.havryliuk.restaurant.model.entity.UserDetails;
-import com.epam.havryliuk.restaurant.model.database.databaseFieds.UserFields;
 import com.epam.havryliuk.restaurant.model.exceptions.DAOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -75,7 +72,7 @@ public class UserDao extends AbstractDao<User> {
         try (PreparedStatement stmt = connection.prepareStatement(UserQuery.FIND_ALL_USERS);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
-                users.add(mapUser(rs));
+                users.add(UserMapper.mapUser(rs));
             }
             LOG.debug("List of user have been received from database.");
         } catch (SQLException e) {
@@ -129,7 +126,7 @@ public class UserDao extends AbstractDao<User> {
         User user = null;
         try (ResultSet rs = stmt.executeQuery()) {
             if (rs.next()) {
-                user = mapUser(rs);
+                user = UserMapper.mapUser(rs);
             }
         }
         return user;
@@ -147,30 +144,30 @@ public class UserDao extends AbstractDao<User> {
         stmt.setLong(k++, user.getRole().getId());
     }
 
-    private User mapUser(ResultSet rs) throws SQLException {
-        long id = rs.getLong(UserFields.USER_ID);
-        String email = rs.getString(UserFields.USER_EMAIL);
-        String password = rs.getString(UserFields.USER_PASSWORD);
-        String name = rs.getString(UserFields.USER_NAME);
-        String surname = rs.getString(UserFields.USER_SURNAME);
-        String gender = rs.getString(UserFields.USER_GENDER);
-        boolean isOverEighteen = rs.getBoolean(UserFields.USER_IS_AGE_OVER_EIGHTEEN);
-        Date accountCreationDate = rs.getTimestamp(UserFields.USER_ACCOUNT_CREATION_DATE);
-        long roleId = rs.getLong(UserFields.USER_ROLE_ID);
-        Role role = Role.getRole(roleId);
-        UserDetails userDetails = null;
-        if (role == Role.MANAGER) {
-            userDetails = mapUserDetails(rs);
-        }
-        return User.getInstance(id, email, password, name, surname,
-                gender, isOverEighteen, accountCreationDate, role, userDetails);
-    }
-
-    private UserDetails mapUserDetails(ResultSet rs) throws SQLException {
-        Date birthDate = new Date(rs.getDate(UserFields.MANAGER_BIRTH_DATE).getTime());
-        String passport = rs.getString(UserFields.MANAGER_PASSPORT);
-        String bankAccount = rs.getString(UserFields.MANAGER_BANK_ACCOUNT);
-        return UserDetails.getInstance(birthDate, passport, bankAccount);
-    }
+//    private User mapUser(ResultSet rs) throws SQLException {
+//        long id = rs.getLong(UserFields.USER_ID);
+//        String email = rs.getString(UserFields.USER_EMAIL);
+//        String password = rs.getString(UserFields.USER_PASSWORD);
+//        String name = rs.getString(UserFields.USER_NAME);
+//        String surname = rs.getString(UserFields.USER_SURNAME);
+//        String gender = rs.getString(UserFields.USER_GENDER);
+//        boolean isOverEighteen = rs.getBoolean(UserFields.USER_IS_AGE_OVER_EIGHTEEN);
+//        Date accountCreationDate = rs.getTimestamp(UserFields.USER_ACCOUNT_CREATION_DATE);
+//        long roleId = rs.getLong(UserFields.USER_ROLE_ID);
+//        Role role = Role.getRole(roleId);
+//        UserDetails userDetails = null;
+//        if (role == Role.MANAGER) {
+//            userDetails = mapUserDetails(rs);
+//        }
+//        return User.getInstance(id, email, password, name, surname,
+//                gender, isOverEighteen, accountCreationDate, role, userDetails);
+//    }
+//
+//    private UserDetails mapUserDetails(ResultSet rs) throws SQLException {
+//        Date birthDate = new Date(rs.getDate(UserFields.MANAGER_BIRTH_DATE).getTime());
+//        String passport = rs.getString(UserFields.MANAGER_PASSPORT);
+//        String bankAccount = rs.getString(UserFields.MANAGER_BANK_ACCOUNT);
+//        return UserDetails.getInstance(birthDate, passport, bankAccount);
+//    }
 
 }

@@ -24,7 +24,7 @@ public interface ResponseMessages {
     String REMOVE_DISH_FROM_ORDER_ERROR = "message.removeDishFromOrderError";
     String MENU_UNAVAILABLE = "message.menuUnavailable";
     String MENU_EMPTY = "message.menuEmpty";
-    String ABSENT_DISHES = "message.dishesAbsent";
+//    String ABSENT_DISHES = "message.dishesAbsent";
     String WRONG_EMAIL_FIELD = "message.wrongEmailField";
     String WRONG_NAME_FIELD = "message.wrongNameField";
     String WRONG_SURNAME_FIELD = "message.wrongSurnameField";

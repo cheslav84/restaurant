@@ -26,8 +26,8 @@ public interface RequestAttributes {
     String MENU_MESSAGE = "menuMessage";
     String NUMBER_OF_PAGES = "noOfPages";
     String CURRENT_PAGE = "currentPage";
-    String RECORDS_PER_PAGE = "recordsPerPage";
+//    String RECORDS_PER_PAGE = "recordsPerPage";
     String WRONG_ACTION = "wrongAction";
     String WRONG_DISH_FIELD_MESSAGE = "wrongDishFieldMessage";
-    String COOKIE_LOCALE = "locale";
+//    String COOKIE_LOCALE = "locale";
 }

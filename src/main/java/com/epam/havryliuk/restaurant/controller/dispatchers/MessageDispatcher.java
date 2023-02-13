@@ -1,4 +1,4 @@
-package com.epam.havryliuk.restaurant.controller.responseDispatcher;
+package com.epam.havryliuk.restaurant.controller.dispatchers;
 
 import com.epam.havryliuk.restaurant.model.util.BundleManager;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,7 +10,7 @@ import static com.epam.havryliuk.restaurant.controller.constants.RequestAttribut
 public class MessageDispatcher {
 
 
-    public static synchronized String getMessage(HttpServletRequest request,String message) {
+    public static synchronized String getMessage(HttpServletRequest request, String message) {
         BundleManager bundleManager = getBundleManager(request);
         return bundleManager.getProperty(message);
     }

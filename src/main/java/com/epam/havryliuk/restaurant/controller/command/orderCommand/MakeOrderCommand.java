@@ -5,8 +5,8 @@ import com.epam.havryliuk.restaurant.controller.constants.RequestAttributes;
 import com.epam.havryliuk.restaurant.controller.constants.RequestParameters;
 import com.epam.havryliuk.restaurant.controller.constants.ResponseMessages;
 import com.epam.havryliuk.restaurant.controller.constants.paths.AppPagesPath;
-import com.epam.havryliuk.restaurant.controller.responseDispatcher.DishDispatcher;
-import com.epam.havryliuk.restaurant.controller.responseDispatcher.MessageDispatcher;
+import com.epam.havryliuk.restaurant.controller.dispatchers.DishDispatcher;
+import com.epam.havryliuk.restaurant.controller.dispatchers.MessageDispatcher;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
 import com.epam.havryliuk.restaurant.model.entity.Order;
 import com.epam.havryliuk.restaurant.model.entity.User;
@@ -14,7 +14,7 @@ import com.epam.havryliuk.restaurant.model.exceptions.DuplicatedEntityException;
 import com.epam.havryliuk.restaurant.model.exceptions.IrrelevantDataException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.service.OrderService;
-import com.epam.havryliuk.restaurant.controller.responseDispatcher.URLDispatcher;
+import com.epam.havryliuk.restaurant.controller.dispatchers.URLDispatcher;
 import com.epam.havryliuk.restaurant.model.util.validation.Validator;
 import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
 import jakarta.servlet.http.HttpServletRequest;
@@ -44,7 +44,7 @@ public class MakeOrderCommand implements Command {
     /**
      * Method executes command that gets order and saves the dishes to it. Firstly method tries to get an
      * Order from HttpSession, if it doesn't in session then method asks for order in storage or a new one.
-     * If User entered invalid data, if Order doesn't exist it still will be null, in such case User will be
+     * If User entered invalid data and Order doesn't exist it still will be null, in such case User will be
      * redirected to the same page and proper message will be shown for him.
      */
     @Override
@@ -55,28 +55,38 @@ public class MakeOrderCommand implements Command {
         Order order = (Order) session.getAttribute(CURRENT_ORDER);
         int dishesAmount = getDishesAmount(request);
         if (order == null) {
-            if (Validator.validateDeliveryData(dishesAmount, request)) {
-                order = getOrCreateOrder(request, user);
-                session.setAttribute(CURRENT_ORDER, order);
-                saveDishToOrder(request, order, dishesAmount);
-                LOG.debug("Created new order: " + order);
-            } else {
-                session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
-                LOG.debug("Some of delivery data is incorrect.");
-            }
+            getOrder(request, session, user, dishesAmount);
         } else {
-            if (Validator.validateDishesAmount(dishesAmount, request)) {
-                saveDishToOrder(request, order, dishesAmount);
-                session.removeAttribute(ERROR_MESSAGE);
-                LOG.debug("Order in session: " + order);
-            } else {
-                session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
-                LOG.debug("Dishes amount is incorrect.");
-            }
+            saveOrder(request, session, order, dishesAmount);
         }
         String redirectionPage = getRedirectionPage(request);
         response.sendRedirect(redirectionPage);
     }
+
+    private void getOrder(HttpServletRequest request, HttpSession session, User user, int dishesAmount) {
+        if (Validator.validateDeliveryData(dishesAmount, request)) {
+            Order order = getOrCreateOrder(request, user);
+            session.setAttribute(CURRENT_ORDER, order);
+            saveDishToOrder(request, order, dishesAmount);
+            LOG.debug("Created new order: " + order);
+        } else {
+            session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
+            LOG.debug("Some of delivery data is incorrect.");
+        }
+    }
+
+    private void saveOrder(HttpServletRequest request, HttpSession session, Order order, int dishesAmount) {
+        if (Validator.validateDishesAmount(dishesAmount, request)) {
+            saveDishToOrder(request, order, dishesAmount);
+            session.removeAttribute(ERROR_MESSAGE);
+            LOG.debug("Order in session: " + order);
+        } else {
+            session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
+            LOG.debug("Dishes amount is incorrect.");
+        }
+    }
+
+
 
     /**
      * Methods requests an order from service. It can be the order that already exist in database

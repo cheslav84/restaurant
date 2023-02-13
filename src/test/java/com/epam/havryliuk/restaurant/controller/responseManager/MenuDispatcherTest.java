@@ -1,6 +1,6 @@
 package com.epam.havryliuk.restaurant.controller.responseManager;
 
-import com.epam.havryliuk.restaurant.controller.responseDispatcher.MenuDispatcher;
+import com.epam.havryliuk.restaurant.controller.dispatchers.MenuDispatcher;
 import com.epam.havryliuk.restaurant.model.entity.Category;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

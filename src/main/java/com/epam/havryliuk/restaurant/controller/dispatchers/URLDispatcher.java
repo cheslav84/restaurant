@@ -1,4 +1,4 @@
-package com.epam.havryliuk.restaurant.controller.responseDispatcher;
+package com.epam.havryliuk.restaurant.controller.dispatchers;
 
 import jakarta.servlet.http.HttpServletRequest;
 

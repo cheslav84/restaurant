@@ -1,6 +1,6 @@
 package com.epam.havryliuk.restaurant.controller.command.dishCommand;
 
-import com.epam.havryliuk.restaurant.controller.responseDispatcher.MenuDispatcher;
+import com.epam.havryliuk.restaurant.controller.dispatchers.MenuDispatcher;
 import com.epam.havryliuk.restaurant.model.entity.Category;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
 import com.epam.havryliuk.restaurant.model.entity.Role;
