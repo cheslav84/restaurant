@@ -58,6 +58,7 @@ public class ManageOrdersCommand implements Command {
             List<Order> orders = ordersPage.getRecords();
             int noOfPages = ordersPage.getNoOfPages();
             request.setAttribute(NUMBER_OF_PAGES, noOfPages);
+            request.setAttribute(RECORDS_PER_PAGE, recordsPerPage);
             request.setAttribute(CURRENT_PAGE, pageNumber);
             request.setAttribute(ORDER_LIST, orders);
             request.removeAttribute(ERROR_MESSAGE);

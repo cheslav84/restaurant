@@ -7,10 +7,10 @@
 <!DOCTYPE html>
 <html lang="${sessionScope.locale.language}">
 <head>
-    <meta content="text/html; charset=UTF-8">
     <title>
         <fmt:message key="manageOrders.manageOrders" />
-    </title>
+    </title>    
+    <meta content="text/html; charset=UTF-8">
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <link href="view/css/common.css" rel="stylesheet" type="text/css">
     <link href="view/css/sidebar.css" rel="stylesheet" type="text/css">
@@ -112,12 +112,18 @@
         <div class="pages orders-per-page">
             <fmt:message key="manageOrders.ordersPerPage" />
             <select name="amount" class="orders-per-page-amout" id="recordsPerPage">
-                <option value="1">1</option>
+                <%-- <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
                 <option selected value="4">4</option>
                 <option value="5">5</option>
-                <option value="6">6</option>
+                <option value="6">6</option> --%>
+                <option value="1" ${"1" == recordsPerPage ? 'selected="selected"' : ''}>1</option>
+                <option value="2" ${"2" == recordsPerPage ? 'selected="selected"' : ''}>2</option>
+                <option value="3" ${"3" == recordsPerPage ? 'selected="selected"' : ''}>3</option>
+                <option value="4" ${"4" == recordsPerPage ? 'selected="selected"' : ''}>4</option>
+                <option value="5" ${"5" == recordsPerPage ? 'selected="selected"' : ''}>5</option>
+                <option value="6" ${"6" == recordsPerPage ? 'selected="selected"' : ''}>6</option>
             </select>
             <a class="setPerPage button apply-order-per-page-button" href="manage_orders?page=${currentPage}">
                 <fmt:message key="manageOrders.apply" />

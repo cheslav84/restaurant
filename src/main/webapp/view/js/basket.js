@@ -8,20 +8,20 @@ $(document).ready(function () {
     }
   }
 
-  const last = Array.from(
-    document.querySelectorAll('#delimiter')
-  ).pop();
+  // const last = Array.from(
+  //   document.querySelectorAll('#delimiter')
+  // ).pop();
 
-  $(last).addClass('last-padding');
+  // $(last).addClass('last-padding');
 
 
-  if (localStorage.recordsPerPage == null) {
-    localStorage.setItem('recordsPerPage', 4);
-  } 
+  // if (localStorage.recordsPerPage == null) {
+  //   localStorage.setItem('recordsPerPage', 4);
+  // } 
 
-  if (localStorage.recordsPerPage) {
-    $('select').val(localStorage.recordsPerPage);
-  } 
+  // if (localStorage.recordsPerPage) {
+  //   $('select').val(localStorage.recordsPerPage);
+  // } 
  
 });
 
