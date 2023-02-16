@@ -72,7 +72,7 @@ public class ApplicationServiceContext {
                         Object annotatedObject = clazz.getConstructor().newInstance();
                         field.set(object, annotatedObject);
                         injectAnnotatedFields(object, clazz.getDeclaredFields());
-                        LOG.info("{} initialised.", annotatedObject.getClass());
+                        LOG.info("{} initialised.", annotatedObject.getClass());//todo
                     } catch (InstantiationException |
                              IllegalAccessException |
                              InvocationTargetException |

@@ -24,7 +24,7 @@ public class Validator {
      * @param user User that data of which has to be validated.
 //     * @throws ValidationException in case some data is invalid.
      */
-    public static synchronized boolean validateUserData(User user, HttpServletRequest request) {
+    public static synchronized boolean validateUserData(User user, HttpServletRequest request) {//todo забрати
         boolean correctFields = true;
         if(!user.getGender().equalsIgnoreCase(RequestParameters.MALE) &&
                 !user.getGender().equalsIgnoreCase(RequestParameters.FEMALE)){
@@ -102,8 +102,7 @@ public class Validator {
         if(dish.getImage().isEmpty()){
             builder.append(MessageDispatcher.getMessage(request, ResponseMessages.IMAGE_DOES_NOT_SET));
             correctFields = false;
-        }
-        if(isSuchImageExist(path)){
+        } else if (isSuchImageExist(path)){
             builder.append(MessageDispatcher.getMessage(request, ResponseMessages.SUCH_IMAGE_EXISTS));
             correctFields = false;
         }

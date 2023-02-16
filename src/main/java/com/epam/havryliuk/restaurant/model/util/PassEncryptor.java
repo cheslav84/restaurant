@@ -14,11 +14,11 @@ public class PassEncryptor {
         argon2 = Argon2Factory.create();
     }
 
-    public static synchronized String encrypt(String password) {
+    public static String encrypt(String password) {
         return argon2.hash(2, MEMORY, 1, password.toCharArray());
     }
 
-    public static synchronized void verify(String hash, String password) throws GeneralSecurityException {
+    public static void verify(String hash, String password) throws GeneralSecurityException {
         if (!argon2.verify(hash, password.toCharArray())) {
             throw new GeneralSecurityException();
         }

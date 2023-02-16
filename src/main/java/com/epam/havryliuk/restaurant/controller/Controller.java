@@ -36,6 +36,8 @@ public class Controller extends HttpServlet {
                                 HttpServletResponse response) throws IOException {
         CommandFactory client = new CommandFactory();
         Command command = client.defineCommand(request);
+        // todo повернути ENUM
+
         try {
             command.execute(request, response);
         } catch (Exception e) {// todo set in web.xml?

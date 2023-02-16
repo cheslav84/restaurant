@@ -52,8 +52,9 @@ public class BasketCommand implements Command {
         try {
             List<Order> orders = orderService.getAllUserOrders(user);
             checkIfOrdersPresent(orders);
-            Map<Order, BigDecimal> ordersAndTotalPriced = orderService.getTotalPrices(orders);
-            session.setAttribute(ORDER_PRICE_MAP, ordersAndTotalPriced);
+//            Map<Order, BigDecimal> ordersAndTotalPriced = orderService.getTotalPrices(orders);
+//            session.setAttribute(ORDER_PRICE_MAP, ordersAndTotalPriced);
+            session.setAttribute(ORDER_LIST, orders);
         } catch (EntityNotFoundException e) {
             MessageDispatcher.setToSession(request, ERROR_MESSAGE, ResponseMessages.EMPTY_BASKET);
             LOG.debug(e);

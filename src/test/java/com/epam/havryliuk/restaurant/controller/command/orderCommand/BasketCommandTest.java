@@ -19,11 +19,9 @@ import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import static com.epam.havryliuk.restaurant.controller.constants.RequestAttributes.*;
 import static com.epam.havryliuk.restaurant.controller.constants.paths.AppPagesPath.FORWARD_BASKET;
@@ -42,8 +40,8 @@ class BasketCommandTest {
     private HttpSession session;
     @Mock
     private RequestDispatcher requestDispatcher;
-    @Mock
-    private Map<Order, BigDecimal> ordersAndTotalPriced;
+//    @Mock
+//    private List<Order> orders;
     @Mock
     private OrderService orderService;
     @InjectMocks
@@ -62,10 +60,10 @@ class BasketCommandTest {
         when(request.getSession()).thenReturn(session);
         when(session.getAttribute(RequestAttributes.LOGGED_USER)).thenReturn(user);
         when(orderService.getAllUserOrders(user)).thenReturn(orders);
-        when(orderService.getTotalPrices(orders)).thenReturn(ordersAndTotalPriced);
+//        when(orderService.getTotalPrices(orders)).thenReturn(this.orders);
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
         basket.execute(request, response);
-        verify(session).setAttribute(ORDER_PRICE_MAP, ordersAndTotalPriced);
+        verify(session).setAttribute(ORDER_LIST, orders);
         verify(request).getRequestDispatcher(FORWARD_BASKET);
     }
 

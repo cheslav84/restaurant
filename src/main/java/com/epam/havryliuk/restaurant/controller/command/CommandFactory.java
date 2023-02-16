@@ -13,7 +13,7 @@ import org.apache.logging.log4j.Logger;
  */
 public class CommandFactory {
     private static final Logger LOG = LogManager.getLogger(CommandFactory.class);
-    private Command defaultCommand = CommandEnum.INDEX.command;
+    private Command defaultCommand = CommandEnum.valueOf("INDEX").getCurrentCommand();
 
 
     /**

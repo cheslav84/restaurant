@@ -87,6 +87,18 @@
   }
   
 
+  .menu-item-title.amount {
+    display: inline-block;
+    margin-right: 10px;
+    /* font-family: 'Droid Sans', sans-serif; */
+    font-family: Merriweather, serif;
+    color: #333333;
+    font-size: 15px;
+    font-style: italic;
+    font-weight: 700;
+    float: right;
+  }
+  
   .menu-page-tab-title.subtitle.sort-menu-by {
     color: #333;
     font-size: 11px;

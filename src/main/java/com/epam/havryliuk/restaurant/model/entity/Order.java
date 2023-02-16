@@ -1,5 +1,6 @@
 package com.epam.havryliuk.restaurant.model.entity;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 public class Order implements Entity {
@@ -11,6 +12,7 @@ public class Order implements Entity {
     private Date closeDate;
     private User user;
     private BookingStatus bookingStatus;
+    private BigDecimal price;
     private List<Basket> baskets;
 
 
@@ -106,6 +108,14 @@ public class Order implements Entity {
 
     public void setBookingStatus(BookingStatus bookingStatus) {
         this.bookingStatus = bookingStatus;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     public List<Basket> getBaskets() {

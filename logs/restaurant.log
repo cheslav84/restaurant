@@ -138,3 +138,836 @@
 2023-02-16 16:10:31 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
 2023-02-16 16:10:31 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
 2023-02-16 16:10:31 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:14:25 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 19:14:25 INFO  ConnectionManager:20 - DataSource initialised.
+2023-02-16 19:14:25 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:14:25 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 19:14:25 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:14:25 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 19:14:25 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:14:25 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-16 19:14:25 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 19:14:25 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-16 19:14:25 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:14:25 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-16 19:14:25 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 19:14:25 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-16 19:14:25 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:14:25 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-16 19:14:25 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 19:14:25 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-16 19:14:25 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:14:25 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-16 19:14:25 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 19:14:25 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-16 19:14:25 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:14:25 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-16 19:14:25 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 19:14:25 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-16 19:14:25 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:14:25 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.UserDao initialised.
+2023-02-16 19:14:25 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:14:25 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.UserDao initialised.
+2023-02-16 19:14:25 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:14:25 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 19:14:25 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:14:25 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 19:14:25 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:14:51 INFO  LoginCommand:61 - User "v_cheslav@ukr.net" logged in.
+2023-02-16 19:15:23 ERROR Controller:43 - Unable to execute request.
+2023-02-16 19:19:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 19:19:46 INFO  ConnectionManager:20 - DataSource initialised.
+2023-02-16 19:19:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:19:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 19:19:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:19:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 19:19:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:19:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-16 19:19:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 19:19:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-16 19:19:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:19:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-16 19:19:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 19:19:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-16 19:19:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:19:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-16 19:19:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 19:19:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-16 19:19:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:19:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-16 19:19:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 19:19:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-16 19:19:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:19:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-16 19:19:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 19:19:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-16 19:19:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:19:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.UserDao initialised.
+2023-02-16 19:19:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:19:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.UserDao initialised.
+2023-02-16 19:19:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:19:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 19:19:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:19:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 19:19:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:19:53 INFO  LoginCommand:61 - User "v_cheslav@ukr.net" logged in.
+2023-02-16 19:23:12 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 19:23:12 INFO  ConnectionManager:20 - DataSource initialised.
+2023-02-16 19:23:12 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:23:12 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 19:23:12 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:23:12 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 19:23:12 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:23:12 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-16 19:23:12 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 19:23:12 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-16 19:23:12 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:23:12 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-16 19:23:12 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 19:23:12 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-16 19:23:12 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:23:12 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-16 19:23:12 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 19:23:12 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-16 19:23:12 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:23:12 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-16 19:23:12 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 19:23:12 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-16 19:23:12 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:23:12 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-16 19:23:12 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 19:23:12 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-16 19:23:12 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:23:12 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.UserDao initialised.
+2023-02-16 19:23:12 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:23:12 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.UserDao initialised.
+2023-02-16 19:23:12 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:23:12 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 19:23:12 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:23:12 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 19:23:12 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:23:17 INFO  LoginCommand:61 - User "v_cheslav@ukr.net" logged in.
+2023-02-16 19:24:30 INFO  DishService:152 - Such dish is already exists.
+2023-02-16 19:40:34 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 19:40:34 INFO  ConnectionManager:20 - DataSource initialised.
+2023-02-16 19:40:34 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:40:34 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 19:40:34 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:40:34 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 19:40:34 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:40:34 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-16 19:40:34 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 19:40:34 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-16 19:40:34 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:40:34 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-16 19:40:34 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 19:40:34 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-16 19:40:34 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:40:34 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-16 19:40:34 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 19:40:34 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-16 19:40:34 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:40:34 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-16 19:40:34 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 19:40:34 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-16 19:40:34 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:40:34 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-16 19:40:34 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 19:40:34 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-16 19:40:34 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:40:34 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.UserDao initialised.
+2023-02-16 19:40:34 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:40:34 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.UserDao initialised.
+2023-02-16 19:40:34 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:40:34 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 19:40:34 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:40:34 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 19:40:34 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 19:40:43 INFO  LoginCommand:61 - User "v_cheslav@ukr.net" logged in.
+2023-02-16 19:40:55 INFO  LoginCommand:61 - User "v_cheslav@ukr.net" logged in.
+2023-02-16 21:29:35 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 21:29:35 INFO  ConnectionManager:20 - DataSource initialised.
+2023-02-16 21:29:35 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 21:29:35 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 21:29:35 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 21:29:35 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 21:29:35 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 21:29:35 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-16 21:29:35 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 21:29:35 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-16 21:29:35 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 21:29:35 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-16 21:29:35 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 21:29:35 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-16 21:29:35 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 21:29:35 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-16 21:29:35 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 21:29:35 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-16 21:29:35 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 21:29:35 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-16 21:29:35 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 21:29:35 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-16 21:29:35 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 21:29:35 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-16 21:29:35 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 21:29:35 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-16 21:29:35 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 21:29:35 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.UserDao initialised.
+2023-02-16 21:29:35 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 21:29:35 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.UserDao initialised.
+2023-02-16 21:29:35 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 21:29:35 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 21:29:35 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 21:29:35 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 21:29:35 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 22:20:53 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 22:20:53 INFO  ConnectionManager:20 - DataSource initialised.
+2023-02-16 22:20:53 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 22:20:53 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 22:20:53 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 22:20:53 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 22:20:53 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 22:20:53 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-16 22:20:53 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 22:20:53 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-16 22:20:53 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 22:20:53 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-16 22:20:53 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 22:20:53 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-16 22:20:53 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 22:20:53 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-16 22:20:53 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 22:20:53 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-16 22:20:53 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 22:20:53 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-16 22:20:53 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 22:20:53 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-16 22:20:53 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 22:20:53 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-16 22:20:53 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 22:20:53 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-16 22:20:53 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 22:20:53 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.UserDao initialised.
+2023-02-16 22:20:53 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 22:20:53 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.UserDao initialised.
+2023-02-16 22:20:53 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 22:20:53 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 22:20:53 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 22:20:53 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 22:20:53 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 23:32:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 23:32:46 INFO  ConnectionManager:20 - DataSource initialised.
+2023-02-16 23:32:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 23:32:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 23:32:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 23:32:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 23:32:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 23:32:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-16 23:32:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 23:32:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-16 23:32:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 23:32:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-16 23:32:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 23:32:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-16 23:32:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 23:32:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-16 23:32:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 23:32:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-16 23:32:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 23:32:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-16 23:32:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 23:32:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-16 23:32:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 23:32:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-16 23:32:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 23:32:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-16 23:32:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 23:32:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.UserDao initialised.
+2023-02-16 23:32:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 23:32:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.UserDao initialised.
+2023-02-16 23:32:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 23:32:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 23:32:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 23:32:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-16 23:32:46 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-16 23:36:45 INFO  LoginCommand:61 - User "v_cheslav@ukr.net" logged in.
+2023-02-16 23:48:16 ERROR DishDao:41 - Error in getting list of dishes from database. 
+2023-02-16 23:48:16 ERROR DishService:43 - List of Dishes hasn't been found.
+2023-02-16 23:48:16 ERROR MenuCommand:68 - com.epam.havryliuk.restaurant.model.exceptions.ServiceException: List of Dishes hasn't been found.
+2023-02-16 23:48:18 ERROR DishDao:41 - Error in getting list of dishes from database. 
+2023-02-16 23:48:18 ERROR DishService:43 - List of Dishes hasn't been found.
+2023-02-16 23:48:18 ERROR MenuCommand:68 - com.epam.havryliuk.restaurant.model.exceptions.ServiceException: List of Dishes hasn't been found.
+2023-02-16 23:48:18 ERROR DishDao:41 - Error in getting list of dishes from database. 
+2023-02-16 23:48:18 ERROR DishService:43 - List of Dishes hasn't been found.
+2023-02-16 23:48:18 ERROR MenuCommand:68 - com.epam.havryliuk.restaurant.model.exceptions.ServiceException: List of Dishes hasn't been found.
+2023-02-16 23:48:19 ERROR DishDao:41 - Error in getting list of dishes from database. 
+2023-02-16 23:48:19 ERROR DishService:43 - List of Dishes hasn't been found.
+2023-02-16 23:48:19 ERROR MenuCommand:68 - com.epam.havryliuk.restaurant.model.exceptions.ServiceException: List of Dishes hasn't been found.
+2023-02-16 23:48:19 ERROR DishDao:41 - Error in getting list of dishes from database. 
+2023-02-16 23:48:19 ERROR DishService:43 - List of Dishes hasn't been found.
+2023-02-16 23:48:19 ERROR MenuCommand:68 - com.epam.havryliuk.restaurant.model.exceptions.ServiceException: List of Dishes hasn't been found.
+2023-02-16 23:48:20 ERROR DishDao:41 - Error in getting list of dishes from database. 
+2023-02-16 23:48:20 ERROR DishService:43 - List of Dishes hasn't been found.
+2023-02-16 23:48:20 ERROR MenuCommand:68 - com.epam.havryliuk.restaurant.model.exceptions.ServiceException: List of Dishes hasn't been found.
+2023-02-16 23:48:22 ERROR DishDao:41 - Error in getting list of dishes from database. 
+2023-02-16 23:48:22 ERROR DishService:43 - List of Dishes hasn't been found.
+2023-02-16 23:48:22 ERROR IndexCommand:60 - com.epam.havryliuk.restaurant.model.exceptions.ServiceException: List of Dishes hasn't been found.
+2023-02-17 00:09:39 INFO  LoginCommand:61 - User "some@gmail.com" logged in.
+2023-02-17 00:25:33 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 00:25:33 INFO  ConnectionManager:20 - DataSource initialised.
+2023-02-17 00:25:33 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 00:25:33 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 00:25:33 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 00:25:33 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 00:25:33 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 00:25:33 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-17 00:25:33 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 00:25:33 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-17 00:25:33 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 00:25:33 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-17 00:25:33 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 00:25:33 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-17 00:25:33 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 00:25:33 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-17 00:25:33 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 00:25:33 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-17 00:25:33 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 00:25:33 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-17 00:25:33 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 00:25:33 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-17 00:25:33 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 00:25:33 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-17 00:25:33 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 00:25:33 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-17 00:25:33 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 00:25:33 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.UserDao initialised.
+2023-02-17 00:25:33 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 00:25:33 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.UserDao initialised.
+2023-02-17 00:25:33 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 00:25:33 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 00:25:33 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 00:25:33 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 00:25:33 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 00:25:40 INFO  LoginCommand:61 - User "some@gmail.com" logged in.
+2023-02-17 00:47:37 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 00:47:37 INFO  ConnectionManager:20 - DataSource initialised.
+2023-02-17 00:47:37 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 00:47:37 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 00:47:37 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 00:47:37 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 00:47:37 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 00:47:37 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-17 00:47:37 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 00:47:37 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-17 00:47:37 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 00:47:37 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-17 00:47:37 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 00:47:37 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-17 00:47:37 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 00:47:37 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-17 00:47:37 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 00:47:37 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-17 00:47:37 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 00:47:37 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-17 00:47:37 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 00:47:37 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-17 00:47:37 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 00:47:37 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-17 00:47:37 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 00:47:37 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-17 00:47:37 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 00:47:37 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.UserDao initialised.
+2023-02-17 00:47:37 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 00:47:37 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.UserDao initialised.
+2023-02-17 00:47:37 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 00:47:37 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 00:47:37 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 00:47:37 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 00:47:37 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 00:47:43 INFO  LoginCommand:61 - User "v_cheslav@ukr.net" logged in.
+2023-02-17 00:47:53 INFO  LoginCommand:61 - User "some@gmail.com" logged in.
+2023-02-17 00:56:45 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 00:56:45 INFO  ConnectionManager:20 - DataSource initialised.
+2023-02-17 00:56:45 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 00:56:45 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 00:56:45 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 00:56:45 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 00:56:45 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 00:56:45 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-17 00:56:45 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 00:56:45 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-17 00:56:45 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 00:56:45 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-17 00:56:45 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 00:56:45 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-17 00:56:45 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 00:56:45 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-17 00:56:45 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 00:56:45 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-17 00:56:45 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 00:56:45 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-17 00:56:45 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 00:56:45 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-17 00:56:45 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 00:56:45 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-17 00:56:45 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 00:56:45 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-17 00:56:45 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 00:56:45 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.UserDao initialised.
+2023-02-17 00:56:45 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 00:56:45 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.UserDao initialised.
+2023-02-17 00:56:45 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 00:56:45 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 00:56:45 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 00:56:45 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 00:56:45 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 00:56:57 INFO  LoginCommand:61 - User "some@gmail.com" logged in.
+2023-02-17 00:59:31 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-17 00:59:31 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 00:59:31 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-17 00:59:31 ERROR ConnectionManager:32 - Can't get Initial context for DataSource.
+javax.naming.NoInitialContextException: Need to specify class name in environment or system property, or in an application resource file: java.naming.factory.initial
+	at javax.naming.spi.NamingManager.getInitialContext(NamingManager.java:704) ~[?:?]
+	at javax.naming.InitialContext.getDefaultInitCtx(InitialContext.java:305) ~[?:?]
+	at javax.naming.InitialContext.getURLOrDefaultInitCtx(InitialContext.java:342) ~[?:?]
+	at javax.naming.InitialContext.lookup(InitialContext.java:409) ~[?:?]
+	at com.epam.havryliuk.restaurant.model.database.connection.ConnectionManager.initDataSource(ConnectionManager.java:29) ~[classes/:?]
+	at com.epam.havryliuk.restaurant.model.database.connection.ConnectionManager.<clinit>(ConnectionManager.java:19) ~[classes/:?]
+	at com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction.<init>(EntityTransaction.java:19) ~[classes/:?]
+	at jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77) ~[?:?]
+	at jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[?:?]
+	at java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499) ~[?:?]
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:480) ~[?:?]
+	at com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext.lambda$injectAnnotatedFields$1(ApplicationServiceContext.java:72) ~[classes/:?]
+	at java.lang.Iterable.forEach(Iterable.java:75) ~[?:?]
+	at com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext.injectAnnotatedFields(ApplicationServiceContext.java:68) ~[classes/:?]
+	at com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext.getInstance(ApplicationServiceContext.java:51) ~[classes/:?]
+	at com.epam.havryliuk.restaurant.controller.command.orderCommand.BasketCommand.<init>(BasketCommand.java:37) ~[classes/:?]
+	at java.lang.invoke.MethodHandle.invokeWithArguments(MethodHandle.java:732) ~[?:?]
+	at org.mockito.internal.util.reflection.InstrumentationMemberAccessor$Dispatcher$ByteBuddy$1W96gwsP.invokeWithArguments(Unknown Source) ~[?:?]
+	at org.mockito.internal.util.reflection.InstrumentationMemberAccessor.lambda$newInstance$0(InstrumentationMemberAccessor.java:191) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.util.reflection.InstrumentationMemberAccessor.newInstance(InstrumentationMemberAccessor.java:188) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.util.reflection.InstrumentationMemberAccessor.newInstance(InstrumentationMemberAccessor.java:161) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.util.reflection.ModuleMemberAccessor.newInstance(ModuleMemberAccessor.java:42) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.util.reflection.FieldInitializer$NoArgConstructorInstantiator.instantiate(FieldInitializer.java:203) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.util.reflection.FieldInitializer.acquireFieldInstance(FieldInitializer.java:146) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.util.reflection.FieldInitializer.initialize(FieldInitializer.java:91) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.configuration.injection.PropertyAndSetterInjection.initializeInjectMocksField(PropertyAndSetterInjection.java:92) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.configuration.injection.PropertyAndSetterInjection.processInjection(PropertyAndSetterInjection.java:73) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.configuration.injection.MockInjectionStrategy.process(MockInjectionStrategy.java:68) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.configuration.injection.MockInjectionStrategy.relayProcessToNextStrategy(MockInjectionStrategy.java:91) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.configuration.injection.MockInjectionStrategy.process(MockInjectionStrategy.java:71) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.configuration.injection.MockInjectionStrategy.relayProcessToNextStrategy(MockInjectionStrategy.java:91) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.configuration.injection.MockInjectionStrategy.process(MockInjectionStrategy.java:71) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.configuration.injection.MockInjection$OngoingMockInjection.apply(MockInjection.java:88) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.configuration.DefaultInjectionEngine.injectMocksOnFields(DefaultInjectionEngine.java:26) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.configuration.InjectingAnnotationEngine.injectCloseableMocks(InjectingAnnotationEngine.java:118) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.configuration.InjectingAnnotationEngine.processInjectMocks(InjectingAnnotationEngine.java:61) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.configuration.InjectingAnnotationEngine.process(InjectingAnnotationEngine.java:48) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.MockitoAnnotations.openMocks(MockitoAnnotations.java:81) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.framework.DefaultMockitoSession.<init>(DefaultMockitoSession.java:43) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.session.DefaultMockitoSessionBuilder.startMocking(DefaultMockitoSessionBuilder.java:83) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.junit.jupiter.MockitoExtension.beforeEach(MockitoExtension.java:153) ~[mockito-junit-jupiter-4.11.0.jar:?]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeBeforeEachCallbacks$2(TestMethodTestDescriptor.java:166) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeBeforeMethodsOrCallbacksUntilExceptionOccurs$6(TestMethodTestDescriptor.java:202) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeBeforeMethodsOrCallbacksUntilExceptionOccurs(TestMethodTestDescriptor.java:202) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeBeforeEachCallbacks(TestMethodTestDescriptor.java:165) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:132) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:68) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:151) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at java.util.ArrayList.forEach(ArrayList.java:1511) ~[?:?]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at java.util.ArrayList.forEach(ArrayList.java:1511) ~[?:?]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:147) ~[junit-platform-launcher-1.9.1.jar:1.9.1]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:127) ~[junit-platform-launcher-1.9.1.jar:1.9.1]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:90) ~[junit-platform-launcher-1.9.1.jar:1.9.1]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:55) ~[junit-platform-launcher-1.9.1.jar:1.9.1]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:102) ~[junit-platform-launcher-1.9.1.jar:1.9.1]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:54) ~[junit-platform-launcher-1.9.1.jar:1.9.1]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:114) ~[junit-platform-launcher-1.9.1.jar:1.9.1]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:86) ~[junit-platform-launcher-1.9.1.jar:1.9.1]
+	at org.junit.platform.launcher.core.DefaultLauncherSession$DelegatingLauncher.execute(DefaultLauncherSession.java:86) ~[junit-platform-launcher-1.9.1.jar:1.9.1]
+	at org.junit.platform.launcher.core.SessionPerRequestLauncher.execute(SessionPerRequestLauncher.java:53) ~[junit-platform-launcher-1.9.1.jar:1.9.1]
+	at com.intellij.junit5.JUnit5IdeaTestRunner.startRunnerWithArgs(JUnit5IdeaTestRunner.java:71) ~[junit5-rt.jar:?]
+	at com.intellij.rt.junit.IdeaTestRunner$Repeater$1.execute(IdeaTestRunner.java:38) ~[junit-rt.jar:?]
+	at com.intellij.rt.execution.junit.TestsRepeater.repeat(TestsRepeater.java:11) ~[idea_rt.jar:?]
+	at com.intellij.rt.junit.IdeaTestRunner$Repeater.startRunnerWithArgs(IdeaTestRunner.java:35) ~[junit-rt.jar:?]
+	at com.intellij.rt.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:235) ~[junit-rt.jar:?]
+	at com.intellij.rt.junit.JUnitStarter.main(JUnitStarter.java:54) ~[junit-rt.jar:?]
+2023-02-17 00:59:31 INFO  ConnectionManager:20 - DataSource initialised.
+2023-02-17 00:59:31 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 01:06:31 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 01:06:31 ERROR ConnectionManager:32 - Can't get Initial context for DataSource.
+javax.naming.NoInitialContextException: Need to specify class name in environment or system property, or in an application resource file: java.naming.factory.initial
+	at javax.naming.spi.NamingManager.getInitialContext(NamingManager.java:704) ~[?:?]
+	at javax.naming.InitialContext.getDefaultInitCtx(InitialContext.java:305) ~[?:?]
+	at javax.naming.InitialContext.getURLOrDefaultInitCtx(InitialContext.java:342) ~[?:?]
+	at javax.naming.InitialContext.lookup(InitialContext.java:409) ~[?:?]
+	at com.epam.havryliuk.restaurant.model.database.connection.ConnectionManager.initDataSource(ConnectionManager.java:29) ~[classes/:?]
+	at com.epam.havryliuk.restaurant.model.database.connection.ConnectionManager.<clinit>(ConnectionManager.java:19) ~[classes/:?]
+	at com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction.<init>(EntityTransaction.java:19) ~[classes/:?]
+	at jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77) ~[?:?]
+	at jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[?:?]
+	at java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499) ~[?:?]
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:480) ~[?:?]
+	at com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext.lambda$injectAnnotatedFields$1(ApplicationServiceContext.java:72) ~[classes/:?]
+	at java.lang.Iterable.forEach(Iterable.java:75) ~[?:?]
+	at com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext.injectAnnotatedFields(ApplicationServiceContext.java:68) ~[classes/:?]
+	at com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext.getInstance(ApplicationServiceContext.java:51) ~[classes/:?]
+	at com.epam.havryliuk.restaurant.controller.command.dishCommand.IndexCommand.<init>(IndexCommand.java:37) ~[classes/:?]
+	at java.lang.invoke.MethodHandle.invokeWithArguments(MethodHandle.java:732) ~[?:?]
+	at org.mockito.internal.util.reflection.InstrumentationMemberAccessor$Dispatcher$ByteBuddy$tUSolEKQ.invokeWithArguments(Unknown Source) ~[?:?]
+	at org.mockito.internal.util.reflection.InstrumentationMemberAccessor.lambda$newInstance$0(InstrumentationMemberAccessor.java:191) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.util.reflection.InstrumentationMemberAccessor.newInstance(InstrumentationMemberAccessor.java:188) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.util.reflection.InstrumentationMemberAccessor.newInstance(InstrumentationMemberAccessor.java:161) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.util.reflection.ModuleMemberAccessor.newInstance(ModuleMemberAccessor.java:42) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.util.reflection.FieldInitializer$NoArgConstructorInstantiator.instantiate(FieldInitializer.java:203) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.util.reflection.FieldInitializer.acquireFieldInstance(FieldInitializer.java:146) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.util.reflection.FieldInitializer.initialize(FieldInitializer.java:91) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.configuration.injection.PropertyAndSetterInjection.initializeInjectMocksField(PropertyAndSetterInjection.java:92) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.configuration.injection.PropertyAndSetterInjection.processInjection(PropertyAndSetterInjection.java:73) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.configuration.injection.MockInjectionStrategy.process(MockInjectionStrategy.java:68) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.configuration.injection.MockInjectionStrategy.relayProcessToNextStrategy(MockInjectionStrategy.java:91) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.configuration.injection.MockInjectionStrategy.process(MockInjectionStrategy.java:71) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.configuration.injection.MockInjectionStrategy.relayProcessToNextStrategy(MockInjectionStrategy.java:91) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.configuration.injection.MockInjectionStrategy.process(MockInjectionStrategy.java:71) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.configuration.injection.MockInjection$OngoingMockInjection.apply(MockInjection.java:88) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.configuration.DefaultInjectionEngine.injectMocksOnFields(DefaultInjectionEngine.java:26) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.configuration.InjectingAnnotationEngine.injectCloseableMocks(InjectingAnnotationEngine.java:118) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.configuration.InjectingAnnotationEngine.processInjectMocks(InjectingAnnotationEngine.java:61) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.configuration.InjectingAnnotationEngine.process(InjectingAnnotationEngine.java:48) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.MockitoAnnotations.openMocks(MockitoAnnotations.java:81) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.framework.DefaultMockitoSession.<init>(DefaultMockitoSession.java:43) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.session.DefaultMockitoSessionBuilder.startMocking(DefaultMockitoSessionBuilder.java:83) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.junit.jupiter.MockitoExtension.beforeEach(MockitoExtension.java:153) ~[mockito-junit-jupiter-4.11.0.jar:?]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeBeforeEachCallbacks$2(TestMethodTestDescriptor.java:166) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeBeforeMethodsOrCallbacksUntilExceptionOccurs$6(TestMethodTestDescriptor.java:202) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeBeforeMethodsOrCallbacksUntilExceptionOccurs(TestMethodTestDescriptor.java:202) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeBeforeEachCallbacks(TestMethodTestDescriptor.java:165) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:132) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:68) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:151) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at java.util.ArrayList.forEach(ArrayList.java:1511) ~[?:?]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at java.util.ArrayList.forEach(ArrayList.java:1511) ~[?:?]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:147) ~[junit-platform-launcher-1.9.1.jar:1.9.1]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:127) ~[junit-platform-launcher-1.9.1.jar:1.9.1]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:90) ~[junit-platform-launcher-1.9.1.jar:1.9.1]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:55) ~[junit-platform-launcher-1.9.1.jar:1.9.1]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:102) ~[junit-platform-launcher-1.9.1.jar:1.9.1]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:54) ~[junit-platform-launcher-1.9.1.jar:1.9.1]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:114) ~[junit-platform-launcher-1.9.1.jar:1.9.1]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:86) ~[junit-platform-launcher-1.9.1.jar:1.9.1]
+	at org.junit.platform.launcher.core.DefaultLauncherSession$DelegatingLauncher.execute(DefaultLauncherSession.java:86) ~[junit-platform-launcher-1.9.1.jar:1.9.1]
+	at org.junit.platform.launcher.core.SessionPerRequestLauncher.execute(SessionPerRequestLauncher.java:53) ~[junit-platform-launcher-1.9.1.jar:1.9.1]
+	at com.intellij.junit5.JUnit5IdeaTestRunner.startRunnerWithArgs(JUnit5IdeaTestRunner.java:71) ~[junit5-rt.jar:?]
+	at com.intellij.rt.junit.IdeaTestRunner$Repeater$1.execute(IdeaTestRunner.java:38) ~[junit-rt.jar:?]
+	at com.intellij.rt.execution.junit.TestsRepeater.repeat(TestsRepeater.java:11) ~[idea_rt.jar:?]
+	at com.intellij.rt.junit.IdeaTestRunner$Repeater.startRunnerWithArgs(IdeaTestRunner.java:35) ~[junit-rt.jar:?]
+	at com.intellij.rt.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:235) ~[junit-rt.jar:?]
+	at com.intellij.rt.junit.JUnitStarter.main(JUnitStarter.java:54) ~[junit-rt.jar:?]
+2023-02-17 01:06:31 INFO  ConnectionManager:20 - DataSource initialised.
+2023-02-17 01:06:31 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 01:06:31 ERROR IndexCommand:60 - com.epam.havryliuk.restaurant.model.exceptions.ServiceException: Such list of Dishes hasn't been found.
+2023-02-17 01:06:31 INFO  UserService:64 - User hasn't been found.
+2023-02-17 01:06:31 INFO  UserService:70 - An error occurs during receiving the user.
+2023-02-17 01:06:31 INFO  UserService:90 - The user with such login is already exists.
+2023-02-17 01:06:31 INFO  UserService:37 - The user with such login is already exists.
+2023-02-17 01:06:31 INFO  UserService:41 - Error in creating the user.
+2023-02-17 01:06:31 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-17 01:06:31 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 01:06:31 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-17 01:06:31 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 01:06:31 ERROR DishDispatcher:29 - message.orderDishNotFound
+2023-02-17 01:06:31 ERROR MakeOrderCommand:141 - com.epam.havryliuk.restaurant.model.exceptions.ServiceException: message.orderDishNotFound
+2023-02-17 01:06:31 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.UserDao initialised.
+2023-02-17 01:06:31 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 01:06:31 ERROR LoginCommand:73 - null
+2023-02-17 01:06:31 INFO  LoginCommand:61 - User "some@mail.com" logged in.
+2023-02-17 01:06:32 INFO  OrderService:165 - Unable to get orders.
+2023-02-17 01:06:32 INFO  OrderService:243 - com.epam.havryliuk.restaurant.model.exceptions.DAOException: Unable to create basket.
+2023-02-17 01:06:32 INFO  OrderService:165 - Unable to get orders.
+2023-02-17 01:06:32 INFO  OrderService:268 - Obtained incorrect amount of dishes in order 0
+2023-02-17 01:06:32 INFO  OrderService:85 - Unable to get orders.
+2023-02-17 01:06:32 INFO  OrderService:58 - Unable to change order status.
+2023-02-17 01:06:32 ERROR OrderService:331 - The request number of dishes exceed available.
+2023-02-17 01:06:32 INFO  OrderService:206 - Unable to get or create an order.
+2023-02-17 01:06:32 INFO  OrderService:206 - Unable to get or create an order.
+2023-02-17 01:06:32 INFO  OrderService:85 - Unable to get orders.
+2023-02-17 01:06:32 ERROR DishService:43 - List of Dishes hasn't been found.
+2023-02-17 01:06:32 ERROR DishService:63 - Such dish with id=5 hasn't been found.
+2023-02-17 01:06:32 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-17 01:06:32 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 01:06:32 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-17 01:06:32 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 01:06:32 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-17 01:06:32 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 01:06:32 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-17 01:06:32 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 01:06:32 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 01:06:32 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 01:06:32 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 01:06:32 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 01:06:32 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 01:06:32 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 01:06:32 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 01:06:32 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 01:06:32 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-17 01:06:32 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 01:06:32 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-17 01:06:32 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 01:06:32 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-17 01:06:32 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 01:06:32 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-17 01:06:32 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 01:06:32 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-17 01:06:32 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 01:06:32 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-17 01:06:32 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 01:06:32 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-17 01:06:32 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 01:06:32 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-17 01:06:32 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 01:06:32 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-17 01:06:32 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 01:06:32 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-17 01:06:32 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 01:06:32 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.UserDao initialised.
+2023-02-17 01:06:32 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 01:06:32 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.UserDao initialised.
+2023-02-17 01:06:32 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 01:06:32 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 01:06:32 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 01:06:32 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 01:06:32 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 01:07:53 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 01:07:53 ERROR ConnectionManager:32 - Can't get Initial context for DataSource.
+javax.naming.NoInitialContextException: Need to specify class name in environment or system property, or in an application resource file: java.naming.factory.initial
+	at javax.naming.spi.NamingManager.getInitialContext(NamingManager.java:704) ~[?:?]
+	at javax.naming.InitialContext.getDefaultInitCtx(InitialContext.java:305) ~[?:?]
+	at javax.naming.InitialContext.getURLOrDefaultInitCtx(InitialContext.java:342) ~[?:?]
+	at javax.naming.InitialContext.lookup(InitialContext.java:409) ~[?:?]
+	at com.epam.havryliuk.restaurant.model.database.connection.ConnectionManager.initDataSource(ConnectionManager.java:29) ~[classes/:?]
+	at com.epam.havryliuk.restaurant.model.database.connection.ConnectionManager.<clinit>(ConnectionManager.java:19) ~[classes/:?]
+	at com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction.<init>(EntityTransaction.java:19) ~[classes/:?]
+	at jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77) ~[?:?]
+	at jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[?:?]
+	at java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499) ~[?:?]
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:480) ~[?:?]
+	at com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext.lambda$injectAnnotatedFields$1(ApplicationServiceContext.java:72) ~[classes/:?]
+	at java.lang.Iterable.forEach(Iterable.java:75) ~[?:?]
+	at com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext.injectAnnotatedFields(ApplicationServiceContext.java:68) ~[classes/:?]
+	at com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext.getInstance(ApplicationServiceContext.java:51) ~[classes/:?]
+	at com.epam.havryliuk.restaurant.controller.command.dishCommand.IndexCommand.<init>(IndexCommand.java:37) ~[classes/:?]
+	at java.lang.invoke.MethodHandle.invokeWithArguments(MethodHandle.java:732) ~[?:?]
+	at org.mockito.internal.util.reflection.InstrumentationMemberAccessor$Dispatcher$ByteBuddy$5dUyLbsU.invokeWithArguments(Unknown Source) ~[?:?]
+	at org.mockito.internal.util.reflection.InstrumentationMemberAccessor.lambda$newInstance$0(InstrumentationMemberAccessor.java:191) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.util.reflection.InstrumentationMemberAccessor.newInstance(InstrumentationMemberAccessor.java:188) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.util.reflection.InstrumentationMemberAccessor.newInstance(InstrumentationMemberAccessor.java:161) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.util.reflection.ModuleMemberAccessor.newInstance(ModuleMemberAccessor.java:42) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.util.reflection.FieldInitializer$NoArgConstructorInstantiator.instantiate(FieldInitializer.java:203) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.util.reflection.FieldInitializer.acquireFieldInstance(FieldInitializer.java:146) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.util.reflection.FieldInitializer.initialize(FieldInitializer.java:91) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.configuration.injection.PropertyAndSetterInjection.initializeInjectMocksField(PropertyAndSetterInjection.java:92) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.configuration.injection.PropertyAndSetterInjection.processInjection(PropertyAndSetterInjection.java:73) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.configuration.injection.MockInjectionStrategy.process(MockInjectionStrategy.java:68) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.configuration.injection.MockInjectionStrategy.relayProcessToNextStrategy(MockInjectionStrategy.java:91) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.configuration.injection.MockInjectionStrategy.process(MockInjectionStrategy.java:71) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.configuration.injection.MockInjectionStrategy.relayProcessToNextStrategy(MockInjectionStrategy.java:91) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.configuration.injection.MockInjectionStrategy.process(MockInjectionStrategy.java:71) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.configuration.injection.MockInjection$OngoingMockInjection.apply(MockInjection.java:88) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.configuration.DefaultInjectionEngine.injectMocksOnFields(DefaultInjectionEngine.java:26) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.configuration.InjectingAnnotationEngine.injectCloseableMocks(InjectingAnnotationEngine.java:118) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.configuration.InjectingAnnotationEngine.processInjectMocks(InjectingAnnotationEngine.java:61) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.configuration.InjectingAnnotationEngine.process(InjectingAnnotationEngine.java:48) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.MockitoAnnotations.openMocks(MockitoAnnotations.java:81) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.framework.DefaultMockitoSession.<init>(DefaultMockitoSession.java:43) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.internal.session.DefaultMockitoSessionBuilder.startMocking(DefaultMockitoSessionBuilder.java:83) ~[mockito-core-4.11.0.jar:?]
+	at org.mockito.junit.jupiter.MockitoExtension.beforeEach(MockitoExtension.java:153) ~[mockito-junit-jupiter-4.11.0.jar:?]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeBeforeEachCallbacks$2(TestMethodTestDescriptor.java:166) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeBeforeMethodsOrCallbacksUntilExceptionOccurs$6(TestMethodTestDescriptor.java:202) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeBeforeMethodsOrCallbacksUntilExceptionOccurs(TestMethodTestDescriptor.java:202) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeBeforeEachCallbacks(TestMethodTestDescriptor.java:165) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:132) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:68) ~[junit-jupiter-engine-5.9.1.jar:5.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:151) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at java.util.ArrayList.forEach(ArrayList.java:1511) ~[?:?]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at java.util.ArrayList.forEach(ArrayList.java:1511) ~[?:?]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54) ~[junit-platform-engine-1.9.1.jar:1.9.1]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:147) ~[junit-platform-launcher-1.9.1.jar:1.9.1]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:127) ~[junit-platform-launcher-1.9.1.jar:1.9.1]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:90) ~[junit-platform-launcher-1.9.1.jar:1.9.1]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:55) ~[junit-platform-launcher-1.9.1.jar:1.9.1]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:102) ~[junit-platform-launcher-1.9.1.jar:1.9.1]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:54) ~[junit-platform-launcher-1.9.1.jar:1.9.1]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:114) ~[junit-platform-launcher-1.9.1.jar:1.9.1]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:86) ~[junit-platform-launcher-1.9.1.jar:1.9.1]
+	at org.junit.platform.launcher.core.DefaultLauncherSession$DelegatingLauncher.execute(DefaultLauncherSession.java:86) ~[junit-platform-launcher-1.9.1.jar:1.9.1]
+	at org.junit.platform.launcher.core.SessionPerRequestLauncher.execute(SessionPerRequestLauncher.java:53) ~[junit-platform-launcher-1.9.1.jar:1.9.1]
+	at com.intellij.junit5.JUnit5IdeaTestRunner.startRunnerWithArgs(JUnit5IdeaTestRunner.java:71) ~[junit5-rt.jar:?]
+	at com.intellij.rt.junit.IdeaTestRunner$Repeater$1.execute(IdeaTestRunner.java:38) ~[junit-rt.jar:?]
+	at com.intellij.rt.execution.junit.TestsRepeater.repeat(TestsRepeater.java:11) ~[idea_rt.jar:?]
+	at com.intellij.rt.junit.IdeaTestRunner$Repeater.startRunnerWithArgs(IdeaTestRunner.java:35) ~[junit-rt.jar:?]
+	at com.intellij.rt.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:235) ~[junit-rt.jar:?]
+	at com.intellij.rt.junit.JUnitStarter.main(JUnitStarter.java:54) ~[junit-rt.jar:?]
+2023-02-17 01:07:53 INFO  ConnectionManager:20 - DataSource initialised.
+2023-02-17 01:07:53 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 01:07:53 ERROR IndexCommand:60 - com.epam.havryliuk.restaurant.model.exceptions.ServiceException: Such list of Dishes hasn't been found.
+2023-02-17 01:07:53 INFO  UserService:64 - User hasn't been found.
+2023-02-17 01:07:53 INFO  UserService:70 - An error occurs during receiving the user.
+2023-02-17 01:07:53 INFO  UserService:90 - The user with such login is already exists.
+2023-02-17 01:07:53 INFO  UserService:37 - The user with such login is already exists.
+2023-02-17 01:07:53 INFO  UserService:41 - Error in creating the user.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 01:07:54 ERROR DishDispatcher:29 - message.orderDishNotFound
+2023-02-17 01:07:54 ERROR MakeOrderCommand:141 - com.epam.havryliuk.restaurant.model.exceptions.ServiceException: message.orderDishNotFound
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.UserDao initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 01:07:54 ERROR LoginCommand:73 - null
+2023-02-17 01:07:54 INFO  LoginCommand:61 - User "some@mail.com" logged in.
+2023-02-17 01:07:54 INFO  OrderService:165 - Unable to get orders.
+2023-02-17 01:07:54 INFO  OrderService:243 - com.epam.havryliuk.restaurant.model.exceptions.DAOException: Unable to create basket.
+2023-02-17 01:07:54 INFO  OrderService:165 - Unable to get orders.
+2023-02-17 01:07:54 INFO  OrderService:268 - Obtained incorrect amount of dishes in order 0
+2023-02-17 01:07:54 INFO  OrderService:85 - Unable to get orders.
+2023-02-17 01:07:54 INFO  OrderService:58 - Unable to change order status.
+2023-02-17 01:07:54 ERROR OrderService:331 - The request number of dishes exceed available.
+2023-02-17 01:07:54 INFO  OrderService:206 - Unable to get or create an order.
+2023-02-17 01:07:54 INFO  OrderService:206 - Unable to get or create an order.
+2023-02-17 01:07:54 INFO  OrderService:85 - Unable to get orders.
+2023-02-17 01:07:54 ERROR DishService:43 - List of Dishes hasn't been found.
+2023-02-17 01:07:54 ERROR DishService:63 - Such dish with id=5 hasn't been found.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.OrderDao initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.UserDao initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.UserDao initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.daoImpl.DishDao initialised.
+2023-02-17 01:07:54 INFO  ApplicationServiceContext:75 - class com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction initialised.

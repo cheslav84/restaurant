@@ -21,19 +21,20 @@ public class PropertiesLoader {
      * @return Properties that loaded from corresponding file.
      * @throws PropertyInitializationException if the properties could not be loaded from file.
      */
-    public static synchronized Properties getProperties(String propertiesFileName) throws PropertyInitializationException {
+    public static synchronized Properties getProperties(String propertiesFileName)
+            throws PropertyInitializationException {
         Properties properties = new Properties();
         try (InputStream is = PropertiesLoader.class.getClassLoader().getResourceAsStream(propertiesFileName)) {
             if (is == null) {
-                LOG.error("The properties file {} haven't been found: ", propertiesFileName);
-                throw new IOException("The properties file propertiesFileName haven't been found: "
-                        + propertiesFileName);
+                String message = "The properties file propertiesFileName haven't been found: " + propertiesFileName;
+                LOG.error(message);
+                throw new IOException(message);
             }
             properties.load(is);
         } catch (IOException e) {
-            LOG.error("Error loading query properties from file {}.\n{}",  propertiesFileName, e);
-            throw new PropertyInitializationException("Error loading query properties from file "
-                    + propertiesFileName);
+            String message = "The properties file propertiesFileName haven't been found: " + propertiesFileName;
+            LOG.error(message);
+            throw new PropertyInitializationException(message);
         }
         return properties;
     }

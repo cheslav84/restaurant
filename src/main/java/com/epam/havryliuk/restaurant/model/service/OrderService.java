@@ -13,7 +13,6 @@ import org.apache.logging.log4j.Logger;
 import java.math.BigDecimal;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class OrderService implements Service {
     private static final Logger LOG = LogManager.getLogger(OrderService.class);
@@ -77,7 +76,9 @@ public class OrderService implements Service {
             transaction.initTransaction(orderDao, basketDao);
             orders = orderDao.getByUserSortedByTime(user);
             for (Order order : orders) {
-                order.setBaskets(basketDao.getOrderDishes(order));
+                List<Basket> baskets = basketDao.getOrderDishes(order);
+                order.setBaskets(baskets);
+                setOrderPrice(order, baskets);
             }
             LOG.debug("The order list was successfully created.");
         } catch (DAOException e) {
@@ -88,6 +89,51 @@ public class OrderService implements Service {
         }
         return orders;
     }
+
+    /**
+     * Method sets price for each order, based on prices of Dishes and amounts of them.
+     *
+     * @param order the Order which price needs to be calculated.
+     * @param baskets entities that have list of dishes in them.
+     */
+    private void setOrderPrice(Order order, List<Basket> baskets) {
+        BigDecimal price = baskets.stream()
+                .map(basket -> basket.getFixedPrice()
+                        .multiply(BigDecimal.valueOf(basket.getAmount())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        order.setPrice(price);
+    }
+
+
+//    public Map<Order, BigDecimal> getAllUserOrdersAndPrices(User user) throws ServiceException {
+//        Map<Order, BigDecimal> ordersAndPrices = new LinkedHashMap<>();
+//        try {
+//            transaction.initTransaction(orderDao, basketDao);
+//            List<Order> orders = orderDao.getByUserSortedByTime(user);
+//
+//            for (Order order : orders) {
+//                List<Basket> baskets = basketDao.getOrderDishes(order);
+//                order.setBaskets(baskets);
+//                or
+//
+//                //todo
+//                BigDecimal sum = baskets.stream()
+//                        .map(basket -> basket.getFixedPrice()
+//                                .multiply(BigDecimal.valueOf(basket.getAmount())))
+//                        .reduce(BigDecimal.ZERO, BigDecimal::add);
+//                System.err.println(sum);
+//
+//            }
+//            LOG.debug("The order list was successfully created.");
+//        } catch (DAOException e) {
+//            LOG.info("Unable to get orders.");
+//            throw new ServiceException("Unable to get orders.", e);
+//        } finally {
+//            transaction.endTransaction();
+//        }
+//        return ordersAndPrices;
+//    }
+
 
     /**
      * Method doing calculation of Orders offset (for pagination purpose), based on
@@ -287,41 +333,41 @@ public class OrderService implements Service {
         }
     }
 
-    /**
-     * Method calculates the total price of each order.
-     *
-     * @param orders list of orders which prices need to be calculated.
-     * @return map of orders, the keys are the orders, and values are the
-     * total prices of that order.
-     */
-    public Map<Order, BigDecimal> getTotalPrices(List<Order> orders) {
-        Map<Order, BigDecimal> ordersAndPrices = orders.stream()
-                .collect(Collectors.toMap(
-                        order -> order,
-                        o -> o.getBaskets()
-                                .stream()
-                                .map(basket -> basket.getFixedPrice()
-                                        .multiply(BigDecimal.valueOf(basket.getAmount())))
-                                .reduce(BigDecimal.ZERO, BigDecimal::add)
-                ));
-        return sortOrdersByPrice(ordersAndPrices);
-    }
+//    /**
+//     * Method calculates the total price of each order.
+//     *
+//     * @param orders list of orders which prices need to be calculated.
+//     * @return map of orders, the keys are the orders, and values are the
+//     * total prices of that order.
+//     */
+//    public Map<Order, BigDecimal> getTotalPrices(List<Order> orders) {//todo
+//        Map<Order, BigDecimal> ordersAndPrices = orders.stream()
+//                .collect(Collectors.toMap(
+//                        order -> order,
+//                        o -> o.getBaskets()
+//                                .stream()
+//                                .map(basket -> basket.getFixedPrice()
+//                                        .multiply(BigDecimal.valueOf(basket.getAmount())))
+//                                .reduce(BigDecimal.ZERO, BigDecimal::add)
+//                ));
+//        return sortOrdersByPrice(ordersAndPrices);
+//    }
 
-    /**
-     * Sort map by creation date of the orders.
-     *
-     * @param ordersAndPrices unsorted map.
-     * @return map sorted by creation date.
-     */
-    private LinkedHashMap<Order, BigDecimal> sortOrdersByPrice(Map<Order, BigDecimal> ordersAndPrices) {
-        return ordersAndPrices.entrySet().stream()
-                .sorted(Map.Entry.comparingByKey(
-                        (o1, o2) -> o2.getCreationDate()
-                                .compareTo(o1.getCreationDate())
-                )).collect(Collectors.toMap(
-                        Map.Entry::getKey,
-                        Map.Entry::getValue,
-                        (e1, e2) -> e1,
-                        LinkedHashMap::new));
-    }
+//    /**
+//     * Sort map by creation date of the orders.
+//     *
+//     * @param ordersAndPrices unsorted map.
+//     * @return map sorted by creation date.
+//     */
+//    private LinkedHashMap<Order, BigDecimal> sortOrdersByPrice(Map<Order, BigDecimal> ordersAndPrices) {
+//        return ordersAndPrices.entrySet().stream()
+//                .sorted(Map.Entry.comparingByKey(
+//                        (o1, o2) -> o2.getCreationDate()
+//                                .compareTo(o1.getCreationDate())
+//                )).collect(Collectors.toMap(
+//                        Map.Entry::getKey,
+//                        Map.Entry::getValue,
+//                        (e1, e2) -> e1,
+//                        LinkedHashMap::new));
+//    }
 }

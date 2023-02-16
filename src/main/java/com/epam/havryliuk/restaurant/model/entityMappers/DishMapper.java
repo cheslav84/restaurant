@@ -39,25 +39,25 @@ public class DishMapper {
         BigDecimal price = BigDecimal.valueOf(0);
         try {
             weight = Integer.parseInt(request.getParameter(RequestParameters.DISH_WEIGHT).trim());
-        } catch (IllegalArgumentException e) {
-            LOG.info("The weight received from user Dish data isn't correct.");
+        } catch (IllegalArgumentException | NullPointerException e) {
+            LOG.debug("The weight received from user Dish data isn't correct.");
         }
         try {
             amount = Integer.parseInt(request.getParameter(RequestParameters.DISH_AMOUNT).trim());
-        } catch (IllegalArgumentException e) {
-            LOG.info("The weight received from user Dish data isn't correct.");
+        } catch (IllegalArgumentException | NullPointerException  e) {
+            LOG.debug("The amount of dishes will not be set.");
         }
         try {
             String priceStr = request.getParameter(RequestParameters.DISH_PRICE)
                     .replaceAll(",", ".").trim();
             price = BigDecimal.valueOf(Double.parseDouble(priceStr));
-        } catch (IllegalArgumentException e) {
-            LOG.info("The price received from user Dish data isn't correct.");
+        } catch (IllegalArgumentException | NullPointerException e) {
+            LOG.debug("The price received from user Dish data isn't correct.");
         }
         try {
             category = Category.valueOf(request.getParameter(RequestParameters.DISH_CATEGORY).toUpperCase().trim());
         } catch (IllegalArgumentException e) {
-            LOG.info("User has not chose Dish category.");
+            LOG.debug("User has not chose Dish category.");
         }
         return Dish.getInstance(name, description, weight, price, imageFileName, alcohol, amount, special, category);
     }

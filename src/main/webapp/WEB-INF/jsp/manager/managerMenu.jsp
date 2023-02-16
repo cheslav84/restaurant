@@ -60,19 +60,6 @@
                                     <fmt:message key="menu.sortByCategory" />
                                 </option>
                             </select>
-                            <%-- <select id="sort-menu-by-selector" name="menuSortingOption"
-                                class="menu-page-tab-title subtitle sort-menu-by">
-                                <fmt:message key="menu.sortBy" />
-                                <option selected value="Name" selected>
-                                    <fmt:message key="menu.sortByName" />
-                                </option>
-                                <option value="Price">
-                                    <fmt:message key="menu.sortByPrice" />
-                                </option>
-                                <option value="Category">
-                                    <fmt:message key="menu.sortByCategory" />
-                                </option>
-                            </select> --%>
                             <input type="submit" value="ALL" name="menuCategory" data-w-tab="ALL"
                                 class="menu-hidden-input menu-tab-button transparent-button" />
                         </form>
@@ -133,6 +120,10 @@
                                         <div class="menu-item-title description">
                                             <c:out value="${dish.description}" />
                                         </div>
+                                         <div class="menu-item-title amount">
+                                            <c:out value="${dish.amount}" />
+                                            <span class="price-marker"> <fmt:message key="menu.amountMarker" /></span>
+                                        </div>                                           
                                         <div class="menu-item-title weight">
                                             <c:out value="${dish.weight}" />
                                             <span class="weight-marker"> <fmt:message key="menu.weightMarker" /></span>
@@ -142,10 +133,6 @@
                                         <c:out value="${dish.price}" />
                                         <span class="price-marker">₴</span>
                                     </div>
-                                    <%-- <div class="menu-item-amount">
-                                        <c:out value="${dish.amount}" />
-                                        <span class="price-marker">₴</span>
-                                    </div> --%>
                                     <form method="get" action="show_dish_info" name="dishOrder">
                                         <button value="${dish.id}" name="dishId" class="button order-menu-button">
                                             <fmt:message key="menu.editDishBtn" />
@@ -195,13 +182,11 @@
                                                     <c:out value="${dishSpecial.price}" />
                                                     <span class="price-marker">₴</span>
                                                 </div>
-                                                <%-- <c:if test="${sessionScope.loggedUser.role == 'MANAGER'}"> --%>
-                                                    <form method="get" action="show_dish_info" name="dishOrder">
-                                                        <button value="${dishSpecial.id}" name="dishId" class="button order-menu-button">
-                                                            <fmt:message key="menu.editDishBtn" />
-                                                        </button>
-                                                    </form>
-                                                <%-- </c:if> --%>
+                                                <form method="get" action="show_dish_info" name="dishOrder">
+                                                    <button value="${dishSpecial.id}" name="dishId" class="button order-menu-button">
+                                                        <fmt:message key="menu.editDishBtn" />
+                                                    </button>
+                                                </form>
                                             </div>
                                         </c:forEach>
                                     </div>

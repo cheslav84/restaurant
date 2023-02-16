@@ -8,7 +8,6 @@ import com.epam.havryliuk.restaurant.model.entity.Role;
 import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.exceptions.DAOException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
-import com.epam.havryliuk.restaurant.model.service.DishService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -78,7 +77,7 @@ class DishServiceTest {
     void getMenuByCategoryException() throws DAOException {
         when(dishDao.findAvailableByCategory(Category.SPECIALS)).thenThrow(new DAOException());
         Exception exception = assertThrows(ServiceException.class, () -> dishService.getMenuByCategory(Category.SPECIALS, user));
-        assertEquals("Such list of Dishes hasn't been found.", exception.getMessage());
+        assertEquals("List of Dishes hasn't been found.", exception.getMessage());
     }
 
     @Test
@@ -95,7 +94,7 @@ class DishServiceTest {
         long dishId = 5;
         when(dishDao.findById(dishId)).thenThrow(new DAOException());
         Exception exception = assertThrows(ServiceException.class, () -> dishService.getDish(dishId));
-        assertEquals("Such dish hasn't been found.", exception.getMessage());
+        assertEquals("Such dish with id=5 hasn't been found.", exception.getMessage());
     }
 
     @Test
