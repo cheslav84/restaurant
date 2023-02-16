@@ -28,8 +28,6 @@ public class DishMapper {
         return Dish.getInstance(id, name, description, weight, price, amount, image, alcohol);
     }
 
-
-
     public synchronized static Dish mapDish(HttpServletRequest request, String imageFileName) {
         String name = request.getParameter(RequestParameters.DISH_NAME);
         String description = request.getParameter(RequestParameters.DISH_DESCRIPTION);

@@ -24,10 +24,12 @@ public class Controller extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
+        LOG.trace("Controller, doGet.");
         processRequest(request, response);
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
+        LOG.trace("Controller, doPost.");
         processRequest(request, response);
     }
     private void processRequest(HttpServletRequest request,
@@ -36,7 +38,7 @@ public class Controller extends HttpServlet {
         Command command = client.defineCommand(request);
         try {
             command.execute(request, response);
-        } catch (Exception e) {
+        } catch (Exception e) {// todo set in web.xml?
             e.printStackTrace();
             LOG.error("Unable to execute request.");
             response.sendRedirect(request.getContextPath() + AppPagesPath.REDIRECT_ERROR);

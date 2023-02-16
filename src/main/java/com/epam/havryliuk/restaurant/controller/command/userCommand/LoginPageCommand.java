@@ -21,7 +21,7 @@ public class LoginPageCommand implements Command {
      */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        LOG.debug("Login page request.");
+        LOG.trace("LoginPageCommand.");
         request.getRequestDispatcher(AppPagesPath.FORWARD_REGISTRATION).forward(request, response);
     }
 }

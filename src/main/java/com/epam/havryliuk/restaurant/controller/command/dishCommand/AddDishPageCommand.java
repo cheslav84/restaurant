@@ -15,7 +15,7 @@ public class AddDishPageCommand implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        LOG.debug("Add dish page.");
+        LOG.trace("AddDishPageCommand");
         request.getRequestDispatcher(AppPagesPath.FORWARD_ADD_DISH_PAGE).forward(request, response);
     }
 }

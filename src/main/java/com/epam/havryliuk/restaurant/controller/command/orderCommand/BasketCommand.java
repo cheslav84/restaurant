@@ -46,6 +46,7 @@ public class BasketCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
+        LOG.trace("BasketCommand.");
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(LOGGED_USER);
         try {
@@ -55,7 +56,7 @@ public class BasketCommand implements Command {
             session.setAttribute(ORDER_PRICE_MAP, ordersAndTotalPriced);
         } catch (EntityNotFoundException e) {
             MessageDispatcher.setToSession(request, ERROR_MESSAGE, ResponseMessages.EMPTY_BASKET);
-            LOG.error(e);
+            LOG.debug(e);
         } catch (ServiceException e) {
             MessageDispatcher.setToSession(request, ERROR_MESSAGE, ResponseMessages.USER_ORDERS_UNAVAILABLE);
             LOG.error(e);

@@ -25,13 +25,13 @@ public class PropertiesLoader {
         Properties properties = new Properties();
         try (InputStream is = PropertiesLoader.class.getClassLoader().getResourceAsStream(propertiesFileName)) {
             if (is == null) {
-                LOG.error("The properties file propertiesFileName haven't been found: " + propertiesFileName);
+                LOG.error("The properties file {} haven't been found: ", propertiesFileName);
                 throw new IOException("The properties file propertiesFileName haven't been found: "
                         + propertiesFileName);
             }
             properties.load(is);
         } catch (IOException e) {
-            LOG.error("Error loading query properties from file " + propertiesFileName, e);
+            LOG.error("Error loading query properties from file {}.\n{}",  propertiesFileName, e);
             throw new PropertyInitializationException("Error loading query properties from file "
                     + propertiesFileName);
         }

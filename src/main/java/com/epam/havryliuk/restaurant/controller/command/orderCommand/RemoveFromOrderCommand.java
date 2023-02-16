@@ -41,6 +41,7 @@ public class RemoveFromOrderCommand implements Command {
      */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        LOG.trace("RemoveFromOrderCommand.");
         long orderId = Long.parseLong(request.getParameter(RequestParameters.ORDER_ID));
         long dishId = Long.parseLong(request.getParameter(RequestParameters.DISH_ID));
         HttpSession session = request.getSession();
@@ -51,7 +52,7 @@ public class RemoveFromOrderCommand implements Command {
             session.removeAttribute(ERROR_MESSAGE);
         } catch (ServiceException e) {
             MessageDispatcher.setToSession(request, ERROR_MESSAGE, ResponseMessages.REMOVE_DISH_FROM_ORDER_ERROR);
-            LOG.error(e);
+            LOG.info(e);
         }
         response.sendRedirect(AppPagesPath.REDIRECT_BASKET);
     }

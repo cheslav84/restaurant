@@ -52,11 +52,12 @@ public class OrderService implements Service {
             }
             orderDao.changeOrderStatus(orderId, newStatus);
             transaction.commit();
-            LOG.debug("\"order status\" has been changed to " + newStatus);
+            LOG.debug("\"Order status\" has been changed to {}", newStatus);
         } catch (DAOException e) {
             transaction.rollback();
-            LOG.error("Unable to change order status.");
-            throw new ServiceException("Unable to change order status.", e);
+            String errorMessage = "Unable to change order status.";
+            LOG.info(errorMessage);
+            throw new ServiceException(errorMessage, e);
         } finally {
             transaction.endTransaction();
         }
@@ -80,7 +81,7 @@ public class OrderService implements Service {
             }
             LOG.debug("The order list was successfully created.");
         } catch (DAOException e) {
-            LOG.error("Unable to get orders.");
+            LOG.info("Unable to get orders.");
             throw new ServiceException("Unable to get orders.", e);
         } finally {
             transaction.endTransaction();
@@ -115,7 +116,7 @@ public class OrderService implements Service {
             }
             LOG.debug("The page was successfully created.");
         } catch (DAOException e) {
-            LOG.error("Unable to get orders.");
+            LOG.info("Unable to get orders.");
             throw new ServiceException("Unable to get orders.", e);
         } finally {
             transaction.end();
@@ -145,18 +146,18 @@ public class OrderService implements Service {
             order = orderDao.geByUserAddressStatus(user, deliveryAddress, BookingStatus.BOOKING);
             if (order != null) {
                 order.setUser(user);
-                LOG.debug("Order has been received: " + order);
+                LOG.debug("Order has been received: {}", order);
             } else {
                 order = Order.getInstance(deliveryAddress, deliveryPhone, false, BookingStatus.BOOKING);
                 order.setUser(user);
                 order = orderDao.create(order);
                 Date creationDate = orderDao.getCreationDate(order.getId());
                 order.setCreationDate(creationDate);
-                LOG.debug("Has been created new order: " + order);
+                LOG.debug("Has been created new order: {}", order);
             }
             transaction.commit();
         } catch (DAOException e) {
-            LOG.error("Unable to get or create an order.");
+            LOG.info("Unable to get or create an order.");
             transaction.rollback();
             throw new ServiceException(e.getMessage(), e);
         } finally {
@@ -189,10 +190,11 @@ public class OrderService implements Service {
             LOG.debug("A dish has been added to the order.");
         } catch (SQLIntegrityConstraintViolationException e) {
             transaction.rollback();
-            LOG.error("Unable to add a dish to the order.");
+            LOG.info("Unable to add a dish to the order. That Dish is already exists is storage.");
             throw new DuplicatedEntityException(e);
         } catch (DAOException e) {
             transaction.rollback();
+            LOG.info(e);
             throw new ServiceException(e.getMessage(), e);
         } finally {
             transaction.endTransaction();
@@ -217,12 +219,12 @@ public class OrderService implements Service {
                 orderDao.deleteDishFromOrderById(orderId, dishId);
             } else {
                 String errorMessage = "Obtained incorrect amount of dishes in order " + dishesInOrder;
-                LOG.error(errorMessage);
+                LOG.info(errorMessage);
                 throw new ServiceException(errorMessage);
             }
             LOG.debug("A dish has been removed from the order.");
         } catch (DAOException e) {
-            LOG.error("Unable to remove a dish from the order.");
+            LOG.info("Unable to remove a dish from the order.");
             throw new ServiceException(e);
         } finally {
             transaction.end();

@@ -41,6 +41,7 @@ public class AddDishCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
+        LOG.trace("AddDishCommand.");
         HttpSession session = request.getSession();
         String redirectionPage;
         try {
@@ -63,7 +64,7 @@ public class AddDishCommand implements Command {
         } catch (DuplicatedEntityException e) {
             redirectionPage = AppPagesPath.REDIRECT_ADD_DISH_PAGE;
             MessageDispatcher.setToSession(request, WRONG_DISH_FIELD_MESSAGE, ResponseMessages.SUCH_DISH_NAME_EXISTS);
-            LOG.info(e);
+            LOG.debug(e);
         } catch (ServiceException e) {
             MessageDispatcher.setToSession(request, ERROR_MESSAGE, ResponseMessages.GLOBAL_ERROR);
             redirectionPage = AppPagesPath.REDIRECT_ERROR;

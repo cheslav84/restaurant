@@ -46,7 +46,7 @@ public class MenuDispatcher {
         } else {
             currentMenu = Optional.ofNullable(lastVisitedMenu).orElse(DEFAULT_MENU);
         }
-        LOG.debug("Current menu: " + currentMenu);
+        LOG.debug("Current menu: {}", currentMenu);
         return Category.valueOf(currentMenu.toUpperCase());
     }
 

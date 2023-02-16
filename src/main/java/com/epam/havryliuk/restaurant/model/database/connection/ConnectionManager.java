@@ -1,6 +1,5 @@
 package com.epam.havryliuk.restaurant.model.database.connection;
 
-import com.epam.havryliuk.restaurant.model.database.DatabaseContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,6 +23,16 @@ public class ConnectionManager {
     private ConnectionManager() {
     }
 
+    private static void initDataSource() {
+        try {
+            Context initContext = new InitialContext();
+            Context envContext = (Context) initContext.lookup(DatabaseContext.CONTEXT);
+            ds = (DataSource) envContext.lookup(DatabaseContext.SOURCE);
+        } catch (NamingException e) {
+            LOG.error("Can't get Initial context for DataSource.", e);
+        }
+    }
+
     public static ConnectionManager getInstance() {
 //        ConnectionManager localInstance = instance;
 //        if (localInstance == null) {
@@ -40,16 +49,6 @@ public class ConnectionManager {
         return INSTANCE;
     }
 
-    private static void initDataSource() {
-        try {
-            Context initContext = new InitialContext();
-            Context envContext = (Context) initContext.lookup(DatabaseContext.CONTEXT);
-            ds = (DataSource) envContext.lookup(DatabaseContext.SOURCE);
-        } catch (NamingException e) {
-            LOG.error("Can't get Initial context for DataSource.", e);
-        }
-    }
-
     public Connection getConnection() throws SQLException {
         try {
             return ds.getConnection();
@@ -62,14 +61,14 @@ public class ConnectionManager {
 
 
     public void close(AutoCloseable closeable) {
-//        synchronized (ConnectionManager.class) {
-        if (closeable != null) {
-            try {
-                closeable.close();
-            } catch (Exception e) {
-                LOG.error("Error closing " + closeable, e);
+        synchronized (ConnectionManager.class) {
+            if (closeable != null) {
+                try {
+                    closeable.close();
+                } catch (Exception e) {
+                    LOG.error("Error closing {}", closeable, e);
+                }
             }
-//            }
         }
     }
 

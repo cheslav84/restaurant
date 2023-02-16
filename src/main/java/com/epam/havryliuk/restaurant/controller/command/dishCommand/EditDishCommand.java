@@ -35,7 +35,7 @@ public class EditDishCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-
+        LOG.trace("EditDishCommand.");
         HttpSession session = request.getSession();
         String redirectionPage = AppPagesPath.REDIRECT_MENU;
         try {

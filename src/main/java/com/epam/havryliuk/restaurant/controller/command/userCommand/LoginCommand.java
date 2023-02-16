@@ -47,6 +47,7 @@ public class LoginCommand implements Command {
      */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        LOG.trace("LoginCommand.");
         String email = request.getParameter(RequestParameters.EMAIL);
         String password = request.getParameter(RequestParameters.PASSWORD);
         HttpSession session = request.getSession();
@@ -57,15 +58,15 @@ public class LoginCommand implements Command {
             session.setAttribute(LOGGED_USER, user);
             session.removeAttribute(ERROR_MESSAGE);
             page = AppPagesPath.REDIRECT_INDEX;
-            LOG.debug("User logged in.");
+            LOG.info("User \"{}\" logged in.", user.getEmail());
         } catch (EntityNotFoundException e) {
             page = AppPagesPath.REDIRECT_REGISTRATION;
             MessageDispatcher.setToSession(request, ERROR_MESSAGE, ResponseMessages.LOGIN_ERROR);
-            LOG.error(e.getMessage());
+            LOG.debug(e.getMessage());
         } catch (GeneralSecurityException e) {
             page = AppPagesPath.REDIRECT_REGISTRATION;
             MessageDispatcher.setToSession(request, ERROR_MESSAGE, ResponseMessages.PASSWORD_ERROR);
-            LOG.error(e.getMessage());
+            LOG.debug(e.getMessage());
         } catch (ServiceException e) {
             page = AppPagesPath.REDIRECT_ERROR;
             MessageDispatcher.setToSession(request, ERROR_MESSAGE, ResponseMessages.GLOBAL_ERROR);

@@ -50,6 +50,7 @@ public class MakeOrderCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
+        LOG.trace("MakeOrderCommand.");
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(RequestAttributes.LOGGED_USER);
         Order order = (Order) session.getAttribute(CURRENT_ORDER);
@@ -68,7 +69,7 @@ public class MakeOrderCommand implements Command {
             Order order = getOrCreateOrder(request, user);
             session.setAttribute(CURRENT_ORDER, order);
             saveDishToOrder(request, order, dishesAmount);
-            LOG.debug("Created new order: " + order);
+            LOG.debug("Created new order: {}", order);
         } else {
             session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
             LOG.debug("Some of delivery data is incorrect.");
@@ -79,7 +80,7 @@ public class MakeOrderCommand implements Command {
         if (Validator.validateDishesAmount(dishesAmount, request)) {
             saveDishToOrder(request, order, dishesAmount);
             session.removeAttribute(ERROR_MESSAGE);
-            LOG.debug("Order in session: " + order);
+            LOG.debug("Order in session: {}", order);
         } else {
             session.setAttribute(SHOW_DISH_INFO, SHOW_DISH_INFO);
             LOG.debug("Dishes amount is incorrect.");

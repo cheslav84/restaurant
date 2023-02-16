@@ -46,6 +46,7 @@ public class RegisterCommand implements Command {
      */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        LOG.trace("RegisterCommand.");
         HttpSession session = request.getSession();
         String redirectionPage;
         User user;
@@ -59,19 +60,19 @@ public class RegisterCommand implements Command {
                 session.removeAttribute(USER_IN_LOGGING);
                 session.removeAttribute(REGISTRATION_PROCESS);
                 redirectionPage = AppPagesPath.REDIRECT_INDEX;
-                LOG.info("The user \"" + user.getName() + "\" has been successfully registered.");
+                LOG.info("The user \"{}\" has been successfully registered.", user.getName());
             } else {
                 user.setPassword(null);
                 request.getSession().setAttribute(USER_IN_LOGGING, user);
-                LOG.error("Some of user data is not correct.");
+                LOG.debug("Some of user data is not correct.");
                 redirectionPage = getRegistrationPage(session);
             }
         } catch (DuplicatedEntityException e) {
-            LOG.error("The user with such login is already exists. Try to use another one." + e);
+            LOG.debug("The user with such login is already exists. Try to use another one.", e);
             MessageDispatcher.setToSession(request, REGISTRATION_ERROR_MESSAGE, ResponseMessages.REGISTRATION_USER_EXISTS);
             redirectionPage = getRegistrationPage(session);
         } catch (ServiceException e) {
-            LOG.error("User hasn't been registered. " + e);
+            LOG.error("User hasn't been registered. ", e);
             MessageDispatcher.setToSession(request, ERROR_MESSAGE, ResponseMessages.REGISTRATION_ERROR);
             redirectionPage = AppPagesPath.REDIRECT_ERROR;
         }

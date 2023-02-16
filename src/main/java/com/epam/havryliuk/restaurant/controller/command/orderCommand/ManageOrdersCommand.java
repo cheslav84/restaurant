@@ -50,6 +50,7 @@ public class ManageOrdersCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
+        LOG.trace("ManageOrdersCommand.");
         setSortingParameter(request);
         setPageNumber(request);
         setRecordsPerPage(request);
@@ -58,13 +59,13 @@ public class ManageOrdersCommand implements Command {
             List<Order> orders = ordersPage.getRecords();
             int noOfPages = ordersPage.getNoOfPages();
             request.setAttribute(NUMBER_OF_PAGES, noOfPages);
+            request.setAttribute(ORDER_LIST, orders);
             request.setAttribute(RECORDS_PER_PAGE, recordsPerPage);
             request.setAttribute(CURRENT_PAGE, pageNumber);
-            request.setAttribute(ORDER_LIST, orders);
             request.removeAttribute(ERROR_MESSAGE);
         } catch (ServiceException e) {
             MessageDispatcher.setToRequest(request, ERROR_MESSAGE, ResponseMessages.ORDERS_ERROR);
-            LOG.error(e.getMessage(), e);
+            LOG.info(e.getMessage(), e);
         }
         request.getRequestDispatcher(AppPagesPath.FORWARD_MANAGE_ORDERS).forward(request, response);
     }
@@ -77,9 +78,9 @@ public class ManageOrdersCommand implements Command {
         try {
             sortingParameter = OrderSorting.valueOf(request.getParameter(
                     RequestParameters.ORDER_SORTING_PARAMETER).toUpperCase());
-            LOG.debug("Sorting parameter: " + sortingParameter);
+            LOG.debug("Sorting parameter: {}", sortingParameter);
         } catch (Exception e) {
-            LOG.error("Sorting parameter is not correct.");
+            LOG.debug("Sorting parameter wasn't specified.");
         }
     }
 
@@ -91,7 +92,7 @@ public class ManageOrdersCommand implements Command {
         try {
             pageNumber = Integer.parseInt(request.getParameter(RequestParameters.PAGE_NUMBER));
         } catch (Exception e) {
-            LOG.error("Page number isn't a Number.");
+            LOG.debug("Page number wasn't specified.");
         }
     }
 
@@ -103,7 +104,7 @@ public class ManageOrdersCommand implements Command {
         try {
             recordsPerPage = Integer.parseInt(request.getParameter(RequestParameters.RECORDS_PER_PAGE));
         } catch (Exception e) {
-            LOG.error("Records per page isn't a Number.");
+            LOG.debug("Records per page wasn't specified.");
         }
     }
 

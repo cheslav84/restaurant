@@ -45,8 +45,9 @@ public class DishInfoCommand implements Command {
      */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        LOG.trace("DishInfoCommand.");
         long dishId = Long.parseLong(request.getParameter(RequestParameters.DISH_ID));
-        LOG.debug("\"/dishId\" " + dishId + " has been received from user.");
+        LOG.debug("\"/dishId\" {}} has been received from user.", dishId);
         Dish dish;
         try {
             dish = dishService.getDish(dishId);

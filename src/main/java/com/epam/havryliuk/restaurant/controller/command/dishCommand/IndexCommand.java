@@ -47,6 +47,7 @@ public class IndexCommand implements Command {
      */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        LOG.trace("IndexCommand.");
         Category currentMenu = menuDispatcher.getCurrentMenu(request);
         User user = (User) request.getSession().getAttribute(LOGGED_USER);
         List<Dish> dishes = null;

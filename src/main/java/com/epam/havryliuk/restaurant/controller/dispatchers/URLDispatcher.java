@@ -13,6 +13,7 @@ public class URLDispatcher {
      * @return command that leads to the same user page.
      */
     public static String getRefererPage(HttpServletRequest req) {
+
         String referer = req.getHeader("Referer");
         int lastSlashIndex = referer.lastIndexOf('/');
         return referer.substring(lastSlashIndex + 1);

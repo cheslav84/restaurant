@@ -31,15 +31,14 @@ public class UserService implements Service {
         try {
             transaction.init(userDao);
             checkIfEmailDoesNotExist(user, userDao);
-//            user.setRole(Role.CLIENT);
             userDao.create(user);
             LOG.debug("The user was successfully created.");
         } catch (DuplicatedEntityException e) {
-            LOG.error(e.getMessage());
+            LOG.info(e.getMessage());
             throw new DuplicatedEntityException(e.getMessage(), e);
         } catch (DAOException e) {
             String errorMessage = "Error in creating the user.";
-            LOG.error(errorMessage);
+            LOG.info(errorMessage);
             throw new ServiceException(errorMessage, e);
         } finally {
             transaction.end();
@@ -62,13 +61,13 @@ public class UserService implements Service {
             user = userDao.findByEmail(email);
             if (user == null) {
                 String errorMessage = "User hasn't been found.";
-                LOG.error(errorMessage);
+                LOG.info(errorMessage);
                 throw new EntityNotFoundException(errorMessage);
             }
             LOG.debug("User got from database. Login and password are correct.");
         } catch (DAOException e) {
             String errorMessage = "An error occurs during receiving the user.";
-            LOG.error(errorMessage);
+            LOG.info(errorMessage);
             throw new ServiceException(errorMessage, e);
         } finally {
             transaction.end();
@@ -88,7 +87,7 @@ public class UserService implements Service {
     private void checkIfEmailDoesNotExist(User user, UserDao userDao) throws ServiceException, DAOException {
         if (userDao.findByEmail(user.getEmail()) != null) {
             String errorMessage = "The user with such login is already exists.";
-            LOG.error(errorMessage);
+            LOG.info(errorMessage);
             throw new DuplicatedEntityException(errorMessage);
         }
     }

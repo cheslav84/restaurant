@@ -50,6 +50,7 @@ public class SetNextStatusCommand implements Command {
      */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        LOG.trace("SetNextStatusCommand.");
         long orderId = Long.parseLong(request.getParameter(RequestParameters.ORDER_ID));
         HttpSession session = request.getSession();
         try {
@@ -62,14 +63,13 @@ public class SetNextStatusCommand implements Command {
                     ResponseMessages.DISH_ALREADY_IN_ORDER + e.getMessage());
 //            session.setAttribute(ERROR_MESSAGE,
 //                    bundleManager.getProperty(ResponseMessages.ABSENT_DISHES) + e.getMessage());
-            LOG.error("Some of dishes are already absent in menu.", e);
+            LOG.info("Some of dishes are already absent in menu.", e);
         } catch (ServiceException e) {
             MessageDispatcher.setToSession(request, ERROR_MESSAGE, ResponseMessages.ORDER_CONFIRM_ERROR);
-            LOG.error(e.getMessage(), e);
+            LOG.info(e.getMessage(), e);
         } catch (AuthenticationException e) {
             MessageDispatcher.setToSession(request, ERROR_MESSAGE, ResponseMessages.UNAPPROPRIATED_RIGHTS_TO_CHANGE_STATUS);
-
-            LOG.error(e.getMessage(), e);
+            LOG.info(e.getMessage(), e);
         }
         response.sendRedirect(URLDispatcher.getRefererPage(request));
     }
@@ -102,7 +102,7 @@ public class SetNextStatusCommand implements Command {
         if (currentStatusId < statusList.size()) {
             nextStatus = BookingStatus.getStatus(currentStatusId + 1);
         }
-        LOG.debug("Have request to change order status to " + nextStatus);
+        LOG.debug("Have request to change order status to {}", nextStatus);
         return nextStatus;
     }
 

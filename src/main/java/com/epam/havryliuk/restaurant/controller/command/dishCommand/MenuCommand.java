@@ -53,6 +53,7 @@ public class MenuCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
+        LOG.trace("MenuCommand.");
         User user = (User) request.getSession().getAttribute(LOGGED_USER);
         List<Dish> dishes = null;
         List<Dish> specials = null;

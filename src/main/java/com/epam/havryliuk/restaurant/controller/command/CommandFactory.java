@@ -2,14 +2,11 @@ package com.epam.havryliuk.restaurant.controller.command;
 
 import com.epam.havryliuk.restaurant.controller.constants.RequestAttributes;
 import com.epam.havryliuk.restaurant.controller.constants.ResponseMessages;
-import com.epam.havryliuk.restaurant.model.util.BundleManager;
+import com.epam.havryliuk.restaurant.controller.dispatchers.MessageDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Locale;
-
-import static com.epam.havryliuk.restaurant.controller.constants.RequestAttributes.LOCALE;
 
 /**
  * Choose the necessary command to execution depends on received user request.
@@ -30,6 +27,7 @@ public class CommandFactory {
      * @throws IllegalArgumentException when the command has to be executed doesn't exist.
      */
     public Command defineCommand(HttpServletRequest request) {
+        LOG.trace("CommandFactory. DefineCommand.");
         String requestURI = request.getRequestURI();
         String command = requestURI.substring(requestURI.lastIndexOf('/') + 1);
         LOG.debug(command + " action was received.");
@@ -41,11 +39,8 @@ public class CommandFactory {
             defaultCommand = currentEnum.getCurrentCommand();
             LOG.debug(command.toUpperCase() + " command is going to be performed.");
         } catch (IllegalArgumentException e) {
+            MessageDispatcher.setToRequest(request, RequestAttributes.WRONG_ACTION, ResponseMessages.GLOBAL_ERROR);
             LOG.error("Wrong action.", e);
-            BundleManager bundleManager = BundleManager.valueOf((
-                    (Locale) request.getSession().getAttribute(LOCALE)).getCountry());
-            request.setAttribute(RequestAttributes.WRONG_ACTION, command
-                    + bundleManager.getProperty(ResponseMessages.GLOBAL_ERROR));
             throw e;
         }
         return defaultCommand;

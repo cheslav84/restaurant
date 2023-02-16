@@ -174,8 +174,7 @@ public class OrderDao extends AbstractDao<Order> {
             stmt.setLong(k++, orderId);
             stmt.setString(k++, bookingStatus.name());
             stmt.executeUpdate();
-            LOG.debug("The status in order with id \"" + orderId +
-                    "\", has been successfully changed");
+            LOG.debug("The status in order with id \"{}\", has been successfully changed", orderId );
         } catch (SQLException e) {
             String errorMessage = "The status in order has not been changed";
             LOG.error(errorMessage, e);

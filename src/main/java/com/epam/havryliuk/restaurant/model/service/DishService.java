@@ -39,7 +39,7 @@ public class DishService implements Service {
                 dishes = dishDao.findAvailableByCategory(category);
             }
         } catch (DAOException e) {
-            String errorMessage = "Such list of Dishes hasn't been found.";
+            String errorMessage = "List of Dishes hasn't been found.";
             LOG.error(errorMessage);
             throw new ServiceException(errorMessage, e);
         } finally {
@@ -59,7 +59,7 @@ public class DishService implements Service {
             transaction.init(dishDao);
             return dishDao.findById(dishId).orElseThrow(DAOException::new);
         } catch (DAOException e) {
-            String errorMessage = "Such dish hasn't been found.";
+            String errorMessage = "Such dish with id=" + dishId + " hasn't been found.";
             LOG.error(errorMessage);
             throw new ServiceException(errorMessage, e);
         } finally {
@@ -84,12 +84,6 @@ public class DishService implements Service {
             } else {
                 dishes = getAvailableDishes(sortParameter);
             }
-//            switch (sortParameter) {
-//                case "name" -> dishes = dishDao.getAllAvailableSortedByName();
-//                case "price" -> dishes = dishDao.getAllAvailableSortedByPrice();
-//                case "category" -> dishes = dishDao.getAllAvailableSortedByCategory();
-//                default -> throw new ServiceException();
-//            }
         } catch (DAOException e) {
             LOG.error("Such list of Dishes hasn't been found.");
             throw new ServiceException(e);
@@ -132,7 +126,7 @@ public class DishService implements Service {
     }
 
 
-    public void addNewDish(Dish dish) throws ServiceException, DuplicatedEntityException {
+    public void addNewDish(Dish dish) throws ServiceException {
         try {
             transaction.initTransaction(dishDao);
             checkIfDishNameExists(dish, dishDao);
@@ -141,7 +135,7 @@ public class DishService implements Service {
             if (dish.isSpecial()) {
                 dishDao.addDishToCategory(dish, Category.SPECIALS);
             }
-            LOG.debug("The dish was successfully created.");
+            LOG.debug("The dish was successfully created in Database.");
         } catch (DAOException e) {
             transaction.rollback();
             LOG.error(e.getMessage());

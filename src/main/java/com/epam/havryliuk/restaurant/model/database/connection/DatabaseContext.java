@@ -1,4 +1,4 @@
-package com.epam.havryliuk.restaurant.model.database;
+package com.epam.havryliuk.restaurant.model.database.connection;
 
 import com.epam.havryliuk.restaurant.model.ResourceProperties;
 import com.epam.havryliuk.restaurant.model.util.PropertiesLoader;

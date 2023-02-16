@@ -2,6 +2,7 @@ package com.epam.havryliuk.restaurant.controller.command.userCommand;
 
 import com.epam.havryliuk.restaurant.controller.command.Command;
 import com.epam.havryliuk.restaurant.controller.constants.paths.AppPagesPath;
+import com.epam.havryliuk.restaurant.model.entity.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -26,12 +27,14 @@ public class LogoutCommand implements Command {
      */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        LOG.trace("LogoutCommand.");
         HttpSession session = request.getSession();
-        if (session.getAttribute(LOGGED_USER) != null) {
+        User user = (User) session.getAttribute(LOGGED_USER);
+        if (user != null) {
             Locale locale = (Locale) session.getAttribute(LOCALE);
             session.invalidate();
             request.getSession(true).setAttribute(LOCALE, locale);
-            LOG.debug("User logged out.");
+            LOG.debug("User \"{}\" logged out.", user.getEmail());
         }
         response.sendRedirect(AppPagesPath.REDIRECT_INDEX);
     }
