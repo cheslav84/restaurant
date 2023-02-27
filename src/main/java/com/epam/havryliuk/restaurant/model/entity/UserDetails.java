@@ -7,13 +7,10 @@ public class UserDetails {
     private String passport;
     private String bankAccount;
 
-
-    public static UserDetails getInstance(Date birthDate, String passport, String bankAccount) {
-        UserDetails userDetails = new UserDetails();
-        userDetails.setBirthDate(birthDate);
-        userDetails.setPassport(passport);
-        userDetails.setBankAccount(bankAccount);
-        return userDetails;
+    private UserDetails(UserDetailsBuilder builder) {
+        this.birthDate = builder.birthDate;
+        this.passport = builder.passport;
+        this.bankAccount = builder.bankAccount;
     }
 
     public Date getBirthDate() {
@@ -59,4 +56,30 @@ public class UserDetails {
         result = 31 * result + (bankAccount != null ? bankAccount.hashCode() : 0);
         return result;
     }
+
+    public static class UserDetailsBuilder {
+        private Date birthDate;
+        private String passport;
+        private String bankAccount;
+
+        public UserDetailsBuilder withBirthDate(Date birthDate) {
+            this.birthDate = birthDate;
+            return this;
+        }
+
+        public UserDetailsBuilder withPassport(String passport) {
+            this.passport = passport;
+            return this;
+        }
+
+        public UserDetailsBuilder withBankAccount(String bankAccount) {
+            this.bankAccount = bankAccount;
+            return this;
+        }
+
+        public UserDetails build() {
+            return new UserDetails(this);
+        }
+    }
+
 }

@@ -15,8 +15,8 @@ import com.epam.havryliuk.restaurant.model.exceptions.IrrelevantDataException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.service.OrderService;
 import com.epam.havryliuk.restaurant.controller.dispatchers.URLDispatcher;
+import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationProcessor;
 import com.epam.havryliuk.restaurant.model.util.validation.Validator;
-import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -38,7 +38,7 @@ public class MakeOrderCommand implements Command {
     private OrderService orderService;
 
     public MakeOrderCommand () {
-        orderService = ApplicationServiceContext.getInstance(OrderService.class);
+        orderService = ApplicationProcessor.getInstance(OrderService.class);
     }
 
     /**

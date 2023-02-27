@@ -33,7 +33,7 @@ public class DishFields {
         DISH_IMAGE = (String) PROPERTIES.get("dish.image");
         DISH_ALCOHOL = (String) PROPERTIES.get("dish.spirits");
         DISH_CATEGORY_ID = (String) PROPERTIES.get("dish.categoryId");
-        LOG.debug("Database fields for \"Dish\" table have been initialised successfully.");
+        LOG.info("Database fields for \"Dish\" table have been initialised successfully.");
     }
 
 }

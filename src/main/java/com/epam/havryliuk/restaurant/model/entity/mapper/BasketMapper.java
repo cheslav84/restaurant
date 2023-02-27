@@ -1,4 +1,4 @@
-package com.epam.havryliuk.restaurant.model.entityMappers;
+package com.epam.havryliuk.restaurant.model.entity.mapper;
 
 import com.epam.havryliuk.restaurant.model.database.databaseFieds.BasketFields;
 import com.epam.havryliuk.restaurant.model.entity.Basket;
@@ -25,6 +25,11 @@ public class BasketMapper {
         if (order.getBookingStatus() != BookingStatus.BOOKING) {
             dish.setPrice(price);
         }
-        return Basket.getInstance(order, dish, price, amount);
+        return new Basket.BasketBuilder()
+                .withOrder(order)
+                .withDish(dish)
+                .withPrice(price)
+                .withAmount(amount)
+                .build();
     }
 }

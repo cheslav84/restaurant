@@ -12,11 +12,6 @@
 
 .order-container {
     padding-bottom: 15px;
-    /* margin-bottom: 10px; */
-    /* border-bottom: 1.5px;
-    border-bottom-style: dashed;
-    border-color: #e88f2a; */
-
 }
 
 .order-details {
@@ -54,9 +49,6 @@
     width: 100%;
 }
 
-
-
-
 .orders-header {
     max-height: 170px;
     padding-top: 41px;
@@ -86,6 +78,13 @@
     margin-top: 54px;
 }
 
+.order-price{
+    margin-top: 40px;
+    color: #47443e;
+    font-size: 16px;
+    line-height: 22px;
+    font-weight: 700;
+}
 
 .order-edit-button {
     position: absolute;

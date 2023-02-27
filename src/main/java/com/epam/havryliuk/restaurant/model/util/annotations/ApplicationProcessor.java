@@ -14,9 +14,8 @@ import java.util.function.Predicate;
  * ApplicationServiceContext instantiates Service classes and the fields of that class
  * which annotated with certain annotation.
  */
-public class ApplicationServiceContext {
-    private static final Logger LOG = LogManager.getLogger(ApplicationServiceContext.class);
-
+public class ApplicationProcessor {
+    private static final Logger LOG = LogManager.getLogger(ApplicationProcessor.class);
     /**
      * Predicate that is checking whether the field is marked by @Autowired annotation.
      */

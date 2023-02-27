@@ -7,50 +7,32 @@ import java.math.BigDecimal;
  * table "order_has_dishes".
  */
 public class Basket implements Entity {
-    private Order order;
-    private Dish dish;
-    private BigDecimal fixedPrice;
-    private Integer amount;
+    private final Order order;
+    private final Dish dish;
+    private final BigDecimal fixedPrice;
+    private final Integer amount;
 
-    public static Basket getInstance(Order order, Dish dish, BigDecimal fixedPrice, Integer amount) {
-        Basket basket = new Basket();
-        basket.setOrder(order);
-        basket.setDish(dish);
-        basket.setFixedPrice(fixedPrice);
-        basket.setAmount(amount);
-        return basket;
+    private Basket(BasketBuilder builder) {
+        this.order = builder.order;
+        this.dish = builder.dish;
+        this.fixedPrice = builder.fixedPrice;
+        this.amount = builder.amount;
     }
 
     public Order getOrder() {
         return order;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
-    }
-
     public Dish getDish() {
         return dish;
-    }
-
-    public void setDish(Dish dish) {
-        this.dish = dish;
     }
 
     public BigDecimal getFixedPrice() {
         return fixedPrice;
     }
 
-    public void setFixedPrice(BigDecimal fixedPrice) {
-        this.fixedPrice = fixedPrice;
-    }
-
     public Integer getAmount() {
         return amount;
-    }
-
-    public void setAmount(Integer amount) {
-        this.amount = amount;
     }
 
     @SuppressWarnings("EqualsReplaceableByObjectsCall")
@@ -73,4 +55,36 @@ public class Basket implements Entity {
         result = 31 * result + (amount != null ? amount.hashCode() : 0);
         return result;
     }
+
+    public static class BasketBuilder {
+        private Order order;
+        private Dish dish;
+        private BigDecimal fixedPrice;
+        private Integer amount;
+
+        public BasketBuilder withOrder(Order order) {
+            this.order = order;
+            return this;
+        }
+
+        public BasketBuilder withDish(Dish dish) {
+            this.dish = dish;
+            return this;
+        }
+
+        public BasketBuilder withPrice(BigDecimal price) {
+            this.fixedPrice = price;
+            return this;
+        }
+
+        public BasketBuilder withAmount(Integer amount) {
+            this.amount = amount;
+            return this;
+        }
+
+        public Basket build() {
+            return new Basket(this);
+        }
+    }
+
 }

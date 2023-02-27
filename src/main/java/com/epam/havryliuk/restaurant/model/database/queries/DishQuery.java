@@ -55,6 +55,6 @@ import java.util.Properties;
          UPDATE_DISH_CATEGORY = (String) PROPERTIES.get("dish.UPDATE_DISH_CATEGORY");
          REMOVE_DISH_FROM_CATEGORY = (String) PROPERTIES.get("dish.REMOVE_DISH_FROM_CATEGORY");
          COUNT_DISHES_BY_NAME = (String) PROPERTIES.get("dish.COUNT_DISHES_BY_NAME");
-         LOG.debug("Database queries for \"Dish\" table have been initialised successfully.");
+         LOG.info("Database queries for \"Dish\" table have been initialised successfully.");
      }
  }

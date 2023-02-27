@@ -39,7 +39,7 @@ public class UserFields {
         MANAGER_BIRTH_DATE = (String) PROPERTIES.get("manager.birthDate");
         MANAGER_PASSPORT = (String) PROPERTIES.get("manager.passport");
         MANAGER_BANK_ACCOUNT = (String) PROPERTIES.get("manager.bankAccount");
-        LOG.debug("Database fields for \"User\" table have been initialised successfully.");
+        LOG.info("Database fields for \"User\" table have been initialised successfully.");
     }
 
 }

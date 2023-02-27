@@ -27,6 +27,6 @@ public class UserQuery {
         UPDATE_USER = (String) PROPERTIES.get("user.UPDATE_USER");
         DELETE_USER = (String) PROPERTIES.get("user.DELETE_USER");
         DELETE_USER_BY_ID = (String) PROPERTIES.get("user.DELETE_USER_BY_ID");
-        LOG.debug("Database queries for \"User\" table have been initialised successfully.");
+        LOG.info("Database queries for \"User\" table have been initialised successfully.");
     }
 }

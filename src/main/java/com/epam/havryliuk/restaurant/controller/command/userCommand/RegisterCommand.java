@@ -5,13 +5,13 @@ import com.epam.havryliuk.restaurant.controller.dispatchers.MessageDispatcher;
 import com.epam.havryliuk.restaurant.controller.constants.ResponseMessages;
 import com.epam.havryliuk.restaurant.controller.constants.paths.AppPagesPath;
 import com.epam.havryliuk.restaurant.model.entity.User;
-import com.epam.havryliuk.restaurant.model.entityMappers.UserMapper;
+import com.epam.havryliuk.restaurant.model.entity.mapper.UserMapper;
 import com.epam.havryliuk.restaurant.model.exceptions.DuplicatedEntityException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.service.UserService;
 import com.epam.havryliuk.restaurant.model.util.validation.Validator;
 import com.epam.havryliuk.restaurant.model.util.PassEncryptor;
-import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
+import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationProcessor;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -32,7 +32,7 @@ public class RegisterCommand implements Command {
     private UserService userService;
 
     public RegisterCommand () {
-        userService = ApplicationServiceContext.getInstance(UserService.class);
+        userService = ApplicationProcessor.getInstance(UserService.class);
     }
 
     /**

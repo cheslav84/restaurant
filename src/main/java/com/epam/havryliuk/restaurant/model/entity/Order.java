@@ -15,38 +15,21 @@ public class Order implements Entity {
     private BigDecimal price;
     private List<Basket> baskets;
 
-
-    public static Order getInstance(String address,
-                                    String phoneNumber,
-                                    boolean isPayed,
-                                    BookingStatus bookingStatus) {
-        Order order = new Order();
-        order.setAddress(address);
-        order.setPhoneNumber(phoneNumber);
-        order.setPayed(isPayed);
-        order.setBookingStatus(bookingStatus);
-        order.setBaskets(new ArrayList<>());
-        return order;
-    }
-
-
-    public static Order getInstance(long id,
-                                    String address,
-                                    String phoneNumber,
-                                    boolean isPayed,
-                                    Date creationDate,
-                                    Date closeDate,
-                                    BookingStatus bookingStatus) {
-        Order order = getInstance(address, phoneNumber, isPayed, bookingStatus);
-        order.setId(id);
-        order.setCreationDate(creationDate);
-        order.setCloseDate(closeDate);
-        return order;
+    private Order (OrderBuilder builder) {
+        this.id = builder.id;
+        this.address =  builder.address;
+        this.phoneNumber =  builder.phoneNumber;
+        this.isPayed = builder.isPayed;
+        this.creationDate = builder.creationDate;
+        this.closeDate = builder.closeDate;
+        this.user = builder.user;
+        this.bookingStatus = builder.bookingStatus;
+        this.price = builder.price;
+        this.baskets = builder.baskets;
     }
 
 
     public Long getId() {
-
         return id;
     }
 
@@ -66,17 +49,10 @@ public class Order implements Entity {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
     public boolean isPayed() {
         return isPayed;
     }
 
-    public void setPayed(boolean payed) {
-        isPayed = payed;
-    }
 
     public Date getCreationDate() {
         return creationDate;
@@ -86,13 +62,6 @@ public class Order implements Entity {
         this.creationDate = creationDate;
     }
 
-//    public Date getCloseDate() {
-//        return closeDate;
-//    }
-
-    public void setCloseDate(Date closeDate) {
-        this.closeDate = closeDate;
-    }
 
     public User getUser() {
         return user;
@@ -106,9 +75,6 @@ public class Order implements Entity {
         return bookingStatus;
     }
 
-    public void setBookingStatus(BookingStatus bookingStatus) {
-        this.bookingStatus = bookingStatus;
-    }
 
     public BigDecimal getPrice() {
         return price;
@@ -172,4 +138,72 @@ public class Order implements Entity {
                 ", baskets=" + baskets +
                 '}';
     }
+
+    public static class OrderBuilder {
+        private Long id;
+        private String address;
+        private String phoneNumber;
+        private boolean isPayed;
+        private Date creationDate;
+        private Date closeDate;
+        private User user;
+        private BookingStatus bookingStatus;
+        private BigDecimal price;
+        private List<Basket> baskets = new ArrayList<>();
+
+        public OrderBuilder withId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public OrderBuilder withAddress(String address) {
+            this.address = address;
+            return this;
+        }
+
+        public OrderBuilder withPhoneNumber(String phoneNumber) {
+            this.phoneNumber = phoneNumber;
+            return this;
+        }
+
+        public OrderBuilder withPayed(boolean payed) {
+            isPayed = payed;
+            return this;
+        }
+
+        public OrderBuilder withCreationDate(Date creationDate) {
+            this.creationDate = creationDate;
+            return this;
+        }
+
+        public OrderBuilder withCloseDate(Date closeDate) {
+            this.closeDate = closeDate;
+            return this;
+        }
+
+        public OrderBuilder withUser(User user) {
+            this.user = user;
+            return this;
+        }
+
+        public OrderBuilder withBookingStatus(BookingStatus bookingStatus) {
+            this.bookingStatus = bookingStatus;
+            return this;
+        }
+
+        public OrderBuilder withPrice(BigDecimal price) {
+            this.price = price;
+            return this;
+        }
+
+        public OrderBuilder withBaskets(List<Basket> baskets) {
+            this.baskets = baskets;
+            return this;
+        }
+
+        public Order build() {
+            return new Order(this);
+        }
+    }
+
 }

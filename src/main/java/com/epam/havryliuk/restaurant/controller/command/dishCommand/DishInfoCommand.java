@@ -9,7 +9,7 @@ import com.epam.havryliuk.restaurant.model.entity.Dish;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.service.DishService;
 import com.epam.havryliuk.restaurant.controller.dispatchers.URLDispatcher;
-import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
+import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationProcessor;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -32,7 +32,7 @@ public class DishInfoCommand implements Command {
     private DishService dishService;
 
     public DishInfoCommand() {
-        dishService = ApplicationServiceContext.getInstance(DishService.class);
+        dishService = ApplicationProcessor.getInstance(DishService.class);
     }
 //todo edit description
     /**

@@ -6,57 +6,26 @@ public class Dish implements Entity {
     private long id;
     private String name;
     private String description;
-    private int weight;
+    private final int weight;
     private BigDecimal price;
-    private int amount;
-    private boolean alcohol;
-    private boolean special;
-    private String image;
-    private Category category;
+    private final int amount;
+    private final boolean alcohol;
+    private final boolean special;
+    private final String image;
+    private final Category category;
 
-    public Dish() {//todo remove
+    private Dish (DishBuilder builder) {
+        this.id = builder.id;
+        this.name = builder.name;
+        this.description = builder.description;
+        this.weight = builder.weight;
+        this.price = builder.price;
+        this.amount = builder.amount;
+        this.alcohol = builder.alcohol;
+        this.special = builder.special;
+        this.image = builder.image;
+        this.category = builder.category;
     }
-
-    public static Dish getInstance(String name, BigDecimal price, int amount) {
-        Dish dish = new Dish();
-        dish.setName(name);
-        dish.setPrice(price);
-        dish.setAmount(amount);
-        return dish;
-    }
-
-    public static Dish getInstance(long id, String name, String description, int weight,
-                                   BigDecimal price, int amount, String image, boolean alcohol) {
-        Dish dish = getInstance(name, price, amount);
-        dish.setId(id);
-        dish.setDescription(description);
-        dish.setWeight(weight);
-        dish.setImage(image);
-        dish.setAlcohol(alcohol);
-        return dish;
-    }
-
-    public static Dish getInstance(String name, String description, int weight,
-                                   BigDecimal price, String image, boolean alcohol,
-                                    int amount,
-                                    boolean special, Category category) {
-        Dish dish = new Dish();
-        dish.setName(name);
-        dish.setPrice(price);
-        dish.setDescription(description);
-        dish.setWeight(weight);
-        dish.setImage(image);
-        dish.setAlcohol(alcohol);
-        dish.setAmount(amount);
-        dish.setSpecial(special);
-        dish.setCategory(category);
-        return dish;
-    }
-
-
-
-
-
 
 
     public long getId() {
@@ -87,10 +56,6 @@ public class Dish implements Entity {
         return weight;
     }
 
-    public void setWeight(int weight) {
-        this.weight = weight;
-    }
-
     public BigDecimal getPrice() {
         return price;
     }
@@ -103,40 +68,20 @@ public class Dish implements Entity {
         return amount;
     }
 
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
-
     public boolean isAlcohol() {
         return alcohol;
-    }
-
-    public void setAlcohol(boolean alcohol) {
-        this.alcohol = alcohol;
     }
 
     public boolean isSpecial() {
         return special;
     }
 
-    public void setSpecial(boolean special) {
-        this.special = special;
-    }
-
     public Category getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
     public String getImage() {
         return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     @Override
@@ -170,5 +115,75 @@ public class Dish implements Entity {
                 ", image='" + image + '\'' +
                 '}' + "\n" ;
     }
+
+
+    public static class DishBuilder {
+        private long id;
+        private String name;
+        private String description;
+        private int weight;
+        private BigDecimal price;
+        private int amount;
+        private boolean alcohol;
+        private boolean special;
+        private String image;
+        private Category category;
+
+        public DishBuilder withId(long id) {
+            this.id = id;
+            return this;
+        }
+
+        public DishBuilder withName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public DishBuilder withDescription(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public DishBuilder withWeight(int weight) {
+            this.weight = weight;
+            return this;
+        }
+
+        public DishBuilder withPrice(BigDecimal price) {
+            this.price = price;
+            return this;
+        }
+
+        public DishBuilder withAmount(int amount) {
+            this.amount = amount;
+            return this;
+        }
+
+        public DishBuilder withAlcohol(boolean alcohol) {
+            this.alcohol = alcohol;
+            return this;
+        }
+
+        public DishBuilder withSpecial(boolean special) {
+            this.special = special;
+            return this;
+        }
+
+        public DishBuilder withImage(String image) {
+            this.image = image;
+            return this;
+        }
+
+        public DishBuilder withCategory(Category category) {
+            this.category = category;
+            return this;
+        }
+
+        public Dish build(){
+            return new Dish(this);
+        }
+    }
+
+
 
 }

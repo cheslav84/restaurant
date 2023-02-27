@@ -74,7 +74,7 @@
                             </div>
                             <div class="section-divider-line order-divider"></div>
                             <c:forEach var="basket" items="${order.baskets}">
-                                <div role="listitem" class="menu-list-item w-dyn-item w-col w-col-6 order-list">
+                                <div role="listitem" class="menu-list-item  w-col w-col-6 order-list">
                                     <div class="one-dish-info"></div>
                                     <div class="menu-item-label menu-item-amount">
                                         <c:out value="${basket.amount}" />
@@ -97,6 +97,12 @@
                             </c:forEach>
                         </div>
                     </div>
+                    <div>
+                    <div class="order-price">
+                        <fmt:message key="manageOrders.priceToPay" />
+                        <c:out value="${order.price}" />
+                        <span class="price-marker">₴</span>
+                    </div>
                     <c:if test="${(order.bookingStatus ne 'COMPLETED') && (order.bookingStatus ne 'WAITING_PAYMENT')}">
                         <form method="post" action="set_next_status?currentStatus=${order.bookingStatus}">
                             <button value="${order.id}" name="orderId" class="button order-confirm-button">
@@ -104,6 +110,7 @@
                             </button>
                         </form>
                     </c:if>
+                    </div>
                 </div>
                 <div id="delimiter"></div>
         </div>
@@ -112,12 +119,6 @@
         <div class="pages orders-per-page">
             <fmt:message key="manageOrders.ordersPerPage" />
             <select name="amount" class="orders-per-page-amout" id="recordsPerPage">
-                <%-- <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option selected value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option> --%>
                 <option value="1" ${"1" == recordsPerPage ? 'selected="selected"' : ''}>1</option>
                 <option value="2" ${"2" == recordsPerPage ? 'selected="selected"' : ''}>2</option>
                 <option value="3" ${"3" == recordsPerPage ? 'selected="selected"' : ''}>3</option>

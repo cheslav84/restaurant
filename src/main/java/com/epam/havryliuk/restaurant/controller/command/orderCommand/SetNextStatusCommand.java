@@ -12,7 +12,7 @@ import com.epam.havryliuk.restaurant.model.exceptions.EntityNotFoundException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.service.OrderService;
 import com.epam.havryliuk.restaurant.controller.dispatchers.URLDispatcher;
-import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
+import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationProcessor;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -39,7 +39,7 @@ public class SetNextStatusCommand implements Command {
     }
 
     public SetNextStatusCommand() {
-        orderService = ApplicationServiceContext.getInstance(OrderService.class);
+        orderService = ApplicationProcessor.getInstance(OrderService.class);
     }
 
     /**

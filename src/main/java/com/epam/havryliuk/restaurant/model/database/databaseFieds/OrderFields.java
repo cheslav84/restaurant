@@ -33,6 +33,6 @@ public class OrderFields {
         ORDER_BOOKING_STATUS = (String) PROPERTIES.get("order.bookingStatusId");
         NUMBER_OF_DISHES_IN_ORDER = (String) PROPERTIES.get("basket.numberOfDishesInOrder");
         NUMBER_OF_ORDERS = (String) PROPERTIES.get("order.numberOfOrders");
-        LOG.debug("Database fields for \"OrderFields\" table have been initialised successfully.");
+        LOG.info("Database fields for \"OrderFields\" table have been initialised successfully.");
     }
 }

@@ -3,6 +3,7 @@ package com.epam.havryliuk.restaurant.controller.command.orderCommand;
 import com.epam.havryliuk.restaurant.controller.constants.RequestAttributes;
 import com.epam.havryliuk.restaurant.model.entity.BookingStatus;
 import com.epam.havryliuk.restaurant.model.entity.Order;
+import com.epam.havryliuk.restaurant.model.entity.Role;
 import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.service.OrderService;
@@ -40,8 +41,6 @@ class BasketCommandTest {
     private HttpSession session;
     @Mock
     private RequestDispatcher requestDispatcher;
-//    @Mock
-//    private List<Order> orders;
     @Mock
     private OrderService orderService;
     @InjectMocks
@@ -60,7 +59,6 @@ class BasketCommandTest {
         when(request.getSession()).thenReturn(session);
         when(session.getAttribute(RequestAttributes.LOGGED_USER)).thenReturn(user);
         when(orderService.getAllUserOrders(user)).thenReturn(orders);
-//        when(orderService.getTotalPrices(orders)).thenReturn(this.orders);
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
         basket.execute(request, response);
         verify(session).setAttribute(ORDER_LIST, orders);
@@ -82,7 +80,14 @@ class BasketCommandTest {
     }
 
     private User initTestUser() {
-        return User.getInstance("email", "password", "name", "surname", "male", true);
+        return new User.UserBuilder()
+                .withEmail("email")
+                .withPassword("password")
+                .withName("name")
+                .withSurname("surname")
+                .withGender("Male")
+                .withOverEighteen(true)
+                .build();
     }
 
     private List<Order> initTestOrderList(int numOfOrders) {
@@ -93,7 +98,13 @@ class BasketCommandTest {
         for (int i = 0; i < numOfOrders; i++) {
             String address = "address" + i;
             String phoneNo = "096115008" + i;
-            orders.add(Order.getInstance(address, phoneNo, true, BookingStatus.NEW));
+            Order order = new Order.OrderBuilder()
+                    .withAddress(address)
+                    .withPhoneNumber(phoneNo)
+                    .withPayed(true)
+                    .withBookingStatus(BookingStatus.NEW)
+                    .build();
+            orders.add(order);
         }
         return orders;
     }

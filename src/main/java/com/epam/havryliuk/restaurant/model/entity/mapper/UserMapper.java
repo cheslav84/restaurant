@@ -1,4 +1,4 @@
-package com.epam.havryliuk.restaurant.model.entityMappers;
+package com.epam.havryliuk.restaurant.model.entity.mapper;
 
 import com.epam.havryliuk.restaurant.controller.constants.RequestParameters;
 import com.epam.havryliuk.restaurant.model.database.databaseFieds.UserFields;
@@ -28,15 +28,29 @@ public class UserMapper {
         if (role == Role.MANAGER) {
             userDetails = mapUserDetails(rs);
         }
-        return User.getInstance(id, email, password, name, surname,
-                gender, isOverEighteen, accountCreationDate, role, userDetails);
+        return new User.UserBuilder()
+                .withId(id)
+                .withEmail(email)
+                .withPassword(password)
+                .withName(name)
+                .withSurname(surname)
+                .withGender(gender)
+                .withOverEighteen(isOverEighteen)
+                .withAccountCreationDate(accountCreationDate)
+                .withRole(role)
+                .withUserDetails(userDetails)
+                .build();
     }
 
     private static synchronized UserDetails mapUserDetails(ResultSet rs) throws SQLException {
         Date birthDate = new Date(rs.getDate(UserFields.MANAGER_BIRTH_DATE).getTime());
         String passport = rs.getString(UserFields.MANAGER_PASSPORT);
         String bankAccount = rs.getString(UserFields.MANAGER_BANK_ACCOUNT);
-        return UserDetails.getInstance(birthDate, passport, bankAccount);
+        return new UserDetails.UserDetailsBuilder()
+                .withBirthDate(birthDate)
+                .withPassport(passport)
+                .withPassport(bankAccount)
+                .build();
     }
 
     /**
@@ -56,8 +70,14 @@ public class UserMapper {
         final String surname = req.getParameter(RequestParameters.SURNAME).trim();
         final String gender = req.getParameter(RequestParameters.GENDER).trim();
         final boolean isOverEighteen = req.getParameter(RequestParameters.OVER_EIGHTEEN_AGE) != null;
-        User user = User.getInstance(email, password, name, surname, gender, isOverEighteen);
-        user.setRole(Role.CLIENT);
-        return user;
+        return  new User.UserBuilder()
+                .withEmail(email)
+                .withPassword(password)
+                .withName(name)
+                .withSurname(surname)
+                .withGender(gender)
+                .withOverEighteen(isOverEighteen)
+                .withRole(Role.CLIENT)
+                .build();
     }
 }

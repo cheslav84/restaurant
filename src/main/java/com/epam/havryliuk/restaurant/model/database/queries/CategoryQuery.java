@@ -27,6 +27,6 @@
 //        UPDATE_CATEGORY = (String) PROPERTIES.get("category.UPDATE_CATEGORY");
 //        DELETE_CATEGORY_BY_NAME = (String) PROPERTIES.get("category.DELETE_CATEGORY_BY_NAME");
 //        DELETE_CATEGORY_BY_ID = (String) PROPERTIES.get("category.DELETE_CATEGORY_BY_ID");
-//        LOG.debug("Database queries for \"Category\" table have been initialised successfully.");
+//        LOG.info("Database queries for \"Category\" table have been initialised successfully.");
 //    }
 //}

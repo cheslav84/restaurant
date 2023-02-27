@@ -37,6 +37,6 @@ public class OrderQuery {
         GET_NUMBER_DISHES_IN_ORDER = (String) PROPERTIES.get("order.GET_NUMBER_DISHES_IN_ORDER");
         DELETE_ORDER_BY_ID = (String) PROPERTIES.get("order.DELETE_ORDER_BY_ID");
         GET_NUMBER_OF_CONFIRMED_ORDERS = (String) PROPERTIES.get("order.GET_NUMBER_OF_CONFIRMED_ORDERS");
-        LOG.debug("Database queries for \"Custom order\" table have been initialised successfully.");
+        LOG.info("Database queries for \"Custom order\" table have been initialised successfully.");
     }
 }

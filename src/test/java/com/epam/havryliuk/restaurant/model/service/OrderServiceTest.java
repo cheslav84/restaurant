@@ -10,8 +10,6 @@ import com.epam.havryliuk.restaurant.model.exceptions.DAOException;
 import com.epam.havryliuk.restaurant.model.exceptions.IrrelevantDataException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 
-import com.epam.havryliuk.restaurant.model.exceptions.ValidationException;
-import com.epam.havryliuk.restaurant.model.service.OrderService;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -154,7 +152,7 @@ class OrderServiceTest {
     }
 
     @Test
-    void getOrCreateOrderExistedOrder() throws DAOException, ValidationException, ServiceException {
+    void getOrCreateOrderExistedOrder() throws DAOException, ServiceException {
         User user = initTestUser();
         String address = "address";
         String phoneNo = "0961150080";
@@ -168,7 +166,7 @@ class OrderServiceTest {
     }
 
     @Test
-    void getOrCreateOrderNewOrder() throws DAOException, ValidationException, ServiceException {
+    void getOrCreateOrderNewOrder() throws DAOException, ServiceException {
         User user = initTestUser();
         String address = "address";
         String phoneNo = "0961150080";
@@ -299,7 +297,14 @@ class OrderServiceTest {
         for (int i = 0; i < numOfOrders; i++) {
             String address = "address" + i;
             String phoneNo = "096115008" + i;
-             orders.add(Order.getInstance(address, phoneNo, true, BookingStatus.NEW));
+            Order order = new Order.OrderBuilder()
+                    .withAddress(address)
+                    .withPhoneNumber(phoneNo)
+                    .withPayed(true)
+                    .withBookingStatus(BookingStatus.NEW)
+                    .withBaskets(new LinkedList<>())
+                    .build();
+            orders.add(order);
         }
         return orders;
     }
@@ -312,26 +317,47 @@ class OrderServiceTest {
     }
 
     private User initTestUser() {
-        return User.getInstance("email", "password", "name", "surname", "male", true);
+        return new User.UserBuilder()
+                .withEmail("email")
+                .withPassword("password")
+                .withName("name")
+                .withSurname("surname")
+                .withGender("Male")
+                .withOverEighteen(true)
+                .build();
     }
 
     private Order initTestOrder(BookingStatus bookingStatus) {
         String address = "address";
         String phoneNo = "0961150080";
-        return Order.getInstance(address, phoneNo, false, bookingStatus);
+        return new Order.OrderBuilder()
+                .withAddress(address)
+                .withPhoneNumber(phoneNo)
+                .withPayed(false)
+                .withBookingStatus(bookingStatus)
+                .build();
     }
 
     private Basket initTestBasket(BookingStatus bookingStatus, int amount) {
         Order order = initTestOrder(bookingStatus);
         Dish dish = initTestDish();
         BigDecimal fixedPrice = new BigDecimal(25);
-        return Basket.getInstance(order, dish, fixedPrice, amount);
+        return new Basket.BasketBuilder()
+                .withOrder(order)
+                .withDish(dish)
+                .withPrice(fixedPrice)
+                .withAmount(amount)
+                .build();
     }
 
     private Dish initTestDish() {
         String name = "dishName";
         BigDecimal price = new BigDecimal(25);
         int amount = 5;
-        return Dish.getInstance(name, price, amount);
+        return new Dish.DishBuilder()
+                .withName(name)
+                .withPrice(price)
+                .withAmount(amount)
+                .build();
     }
 }

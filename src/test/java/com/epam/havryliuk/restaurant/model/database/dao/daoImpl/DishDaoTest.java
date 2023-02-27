@@ -5,7 +5,6 @@ import com.epam.havryliuk.restaurant.model.entity.Dish;
 import com.epam.havryliuk.restaurant.model.exceptions.DAOException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.provider.Arguments;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -15,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,8 +22,6 @@ class DishDaoTest {
     @Mock
     DishDao dishDAO;
 
-//    @Mock
-//    DishDao dishDAO;
 
     @BeforeEach
     public void setup() {
@@ -126,7 +122,21 @@ class DishDaoTest {
         BigDecimal price = BigDecimal.valueOf(id);
         int amount = (int) id;
         String image = "image" + id;
-        return Dish.getInstance(id, name, description, weight, price, amount, image, false);
+//        return Dish.getInstance(id, name, description, weight, price, amount, image, false);
+        return new Dish.DishBuilder()
+                .withId(id)
+                .withName(name)
+                .withDescription(description)
+                .withWeight(weight)
+                .withPrice(price)
+                .withImage(image)
+                .withAlcohol(false)
+                .withAmount(amount)
+                .build();
+
+
+
+
     }
 
     private List<Dish> getDishesList(int numberOfDishes) {

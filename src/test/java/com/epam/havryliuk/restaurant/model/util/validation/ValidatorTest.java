@@ -165,23 +165,95 @@ class ValidatorTest {
 
     private static Stream<Arguments> correctUser () {
         return Stream.of(
-                Arguments.of (User.getInstance(1L, "a@mail.com", "Somepassword!@#^&$3254235", "Ім'я",
-                        "Прізвище", "Male", true, new Date(), Role.CLIENT, null)),
-                Arguments.of (User.getInstance(1L, "some@mail.com", "Pass123!", "Bruce",
-                        "Lee", "Male", true, new Date(), Role.MANAGER, null)),
-                Arguments.of (User.getInstance(1L, "e-mail@i.ua", "%51Password", "Name",
-                        "Surname", "Male", true, new Date(), Role.CLIENT, null))
+                Arguments.of(
+                        new User.UserBuilder()
+                                .withId(1L)
+                                .withEmail("a@mail.com")
+                                .withPassword("Somepassword!@#^&$3254235")
+                                .withName("Ім'я")
+                                .withSurname("Прізвище")
+                                .withGender("Male")
+                                .withOverEighteen(true)
+                                .withAccountCreationDate(new Date())
+                                .withRole(Role.CLIENT)
+                                .withUserDetails(null)
+                                .build()
+                ),
+                Arguments.of(
+                        new User.UserBuilder()
+                                .withId(1L)
+                                .withEmail("some@mail.com")
+                                .withPassword("Pass123!")
+                                .withName("Bruce")
+                                .withSurname("Lee")
+                                .withGender("Male")
+                                .withOverEighteen(true)
+                                .withAccountCreationDate(new Date())
+                                .withRole(Role.MANAGER)
+                                .withUserDetails(null)
+                                .build()
+                ),
+                Arguments.of(
+                        new User.UserBuilder()
+                                .withId(1L)
+                                .withEmail("e-mail@i.ua")
+                                .withPassword("%51Password")
+                                .withName("Name")
+                                .withSurname("Surname")
+                                .withGender("Male")
+                                .withOverEighteen(true)
+                                .withAccountCreationDate(new Date())
+                                .withRole(Role.CLIENT)
+                                .withUserDetails(null)
+                                .build()
+                )
         );
     }
 
     private static Stream<Arguments> wrongUser () {
         return Stream.of(
-                Arguments.of (User.getInstance(1L, "@mail.com", "Somepassword3254235", "Name#",
-                        "Surname!", "gender", true, new Date(), Role.CLIENT, null)),
-                Arguments.of (User.getInstance(1L, "some@com", "Pass1234", "",
-                        "", "", true, new Date(), Role.MANAGER, null)),
-                Arguments.of (User.getInstance(1L, "e-maili.ua", "%Password", "Name23",
-                        "Sur2name", "gender", true, new Date(), Role.CLIENT, null))
+                Arguments.of (
+                        new User.UserBuilder()
+                                .withId(1L)
+                                .withEmail("@mail.com")
+                                .withPassword("Somepassword3254235")
+                                .withName("Name#")
+                                .withSurname("Surname!")
+                                .withGender("gender")
+                                .withOverEighteen(true)
+                                .withAccountCreationDate(new Date())
+                                .withRole(Role.CLIENT)
+                                .withUserDetails(null)
+                                .build()
+                ),
+                Arguments.of (
+                        new User.UserBuilder()
+                                .withId(1L)
+                                .withEmail("some@com")
+                                .withPassword("Pass1234")
+                                .withName("")
+                                .withSurname("")
+                                .withGender("")
+                                .withOverEighteen(true)
+                                .withAccountCreationDate(new Date())
+                                .withRole(Role.CLIENT)
+                                .withUserDetails(null)
+                                .build()
+                ),
+                Arguments.of (
+                        new User.UserBuilder()
+                                .withId(1L)
+                                .withEmail("e-maili.ua")
+                                .withPassword("%Password")
+                                .withName("Name23")
+                                .withSurname("Sur2name")
+                                .withGender("gender")
+                                .withOverEighteen(true)
+                                .withAccountCreationDate(new Date())
+                                .withRole(Role.CLIENT)
+                                .withUserDetails(null)
+                                .build()
+                )
         );
     }
 
@@ -236,22 +308,43 @@ class ValidatorTest {
     private static Stream<Arguments> correctDishes () {
         return Stream.of(
                 Arguments.of (
-                        Dish.getInstance("El", "Dish - delicious & tasty/nice, just taste it.",
-                                Regex.MIN_WEIGHT, Regex.MIN_PRICE, "imageFileName.png", false,
-                                1, false, Category.COFFEE)
+                        new Dish.DishBuilder()
+                                .withName("El")
+                                .withDescription("Dish - delicious & tasty/nice, just taste it.")
+                                .withWeight(Regex.MIN_WEIGHT)
+                                .withPrice(Regex.MIN_PRICE)
+                                .withImage("imageFileName.png")
+                                .withSpecial(false)
+                                .withAmount(1)
+                                .withAlcohol(false)
+                                .withCategory(Category.DRINKS)
+                                .build()
                 ),
                 Arguments.of (
-                        Dish.getInstance("Some delicious and tasty",
-                                "Do you think this \"Beer\" is mouth-watering? Try it! 10% of alcohol.",
-                                (Regex.MIN_WEIGHT + Regex.MAX_WEIGHT ) / 2,
-                                Regex.MIN_PRICE.add(Regex.MAX_PRICE).divide(BigDecimal.valueOf(2)),
-                                "imageName.jpeg", true,
-                                Regex.MAX_AMOUNT / 2, true, Category.DRINKS)
+                        new Dish.DishBuilder()
+                                .withName("Some delicious and tasty")
+                                .withDescription("Do you think this \"Beer\" is mouth-watering? Try it! 10% of alcohol.")
+                                .withWeight((Regex.MIN_WEIGHT + Regex.MAX_WEIGHT ) / 2)
+                                .withPrice(Regex.MIN_PRICE.add(Regex.MAX_PRICE).divide(BigDecimal.valueOf(2)))
+                                .withImage("imageName.jpeg")
+                                .withSpecial(true)
+                                .withAmount(Regex.MAX_AMOUNT / 2)
+                                .withAlcohol(true)
+                                .withCategory(Category.DRINKS)
+                                .build()
                 ),
                 Arguments.of (
-                        Dish.getInstance("Смачна страва на 100", "Опис страви, кількість символів складає 45 шт",
-                                Regex.MAX_WEIGHT, Regex.MAX_PRICE, "imageFileName.png", true,
-                                Regex.MAX_AMOUNT, false, Category.DINER)
+                        new Dish.DishBuilder()
+                                .withName("Смачна страва на 100")
+                                .withDescription("Опис страви, кількість символів складає 45 шт")
+                                .withWeight(Regex.MAX_WEIGHT)
+                                .withPrice(Regex.MAX_PRICE)
+                                .withImage("imageFileName.png")
+                                .withSpecial(true)
+                                .withAmount(Regex.MAX_AMOUNT)
+                                .withAlcohol(false)
+                                .withCategory(Category.DRINKS)
+                                .build()
                 )
         );
     }
@@ -259,33 +352,47 @@ class ValidatorTest {
     private static Stream<Arguments> notCorrectDishes () {
         return Stream.of(
                 Arguments.of (
-                        Dish.getInstance("E", "Short description.",
-                                - Regex.MIN_WEIGHT,
-                                Regex.MIN_PRICE.negate(),
-                                "", false,
-                                - Regex.MAX_AMOUNT,
-                                false,
-                                null)
+                        new Dish.DishBuilder()
+                                .withName("E")
+                                .withDescription("Short description.")
+                                .withWeight(- Regex.MIN_WEIGHT)
+                                .withPrice(Regex.MIN_PRICE.negate())
+                                .withImage("")
+                                .withSpecial(false)
+                                .withAmount(- Regex.MAX_AMOUNT)
+                                .withAlcohol(false)
+                                .withCategory(null)
+                                .build()
                 ),
                 Arguments.of (
-                        Dish.getInstance("Not correct symbol '",
-                                "Not correct symbol '",
-                                Regex.MIN_WEIGHT - 1,
-                                Regex.MIN_PRICE.subtract(Regex.MIN_PRICE),
-                                "imageName.jpeg", true,
-                                -1, true, null)
+                        new Dish.DishBuilder()
+                                .withName("Not correct symbol '")
+                                .withDescription("Not correct symbol '")
+                                .withWeight(Regex.MIN_WEIGHT - 1)
+                                .withPrice(Regex.MIN_PRICE.subtract(Regex.MIN_PRICE))
+                                .withImage("imageName.jpeg")
+                                .withSpecial(true)
+                                .withAmount(-1)
+                                .withAlcohol(true)
+                                .withCategory(null)
+                                .build()
                 ),
                 Arguments.of (
-                        Dish.getInstance("Занадто довга назва страви",
-                                """
+                        new Dish.DishBuilder()
+                                .withName("Занадто довга назва страви")
+                                .withDescription("""
                                 Надто довгий опис. Надто довгий опис. Надто довгий опис. Надто довгий опис.
                                 Надто довгий опис. Надто довгий опис. Надто довгий опис. Надто довгий опис.
                                 Надто довгий опис. Надто довгий опис. Надто довгий опис. Надто довгий опис.
-                                Надто довгий опис. Надто довгий опис.""",
-                                Regex.MAX_WEIGHT + 1,
-                                Regex.MAX_PRICE.add(BigDecimal.valueOf(1)),
-                                "imageFileName.png", true,
-                                Regex.MAX_AMOUNT + 1, false, null)
+                                Надто довгий опис. Надто довгий опис.""")
+                                .withWeight(Regex.MAX_WEIGHT + 1)
+                                .withPrice(Regex.MAX_PRICE.add(BigDecimal.valueOf(1)))
+                                .withImage("imageFileName.png")
+                                .withSpecial(true)
+                                .withAmount(Regex.MAX_AMOUNT + 1)
+                                .withAlcohol(false)
+                                .withCategory(null)
+                                .build()
                 )
         );
     }

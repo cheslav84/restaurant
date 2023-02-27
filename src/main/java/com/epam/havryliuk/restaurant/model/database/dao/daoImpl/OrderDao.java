@@ -1,7 +1,7 @@
 package com.epam.havryliuk.restaurant.model.database.dao.daoImpl;
 
 import com.epam.havryliuk.restaurant.model.database.dao.AbstractDao;
-import com.epam.havryliuk.restaurant.model.entityMappers.OrderMapper;
+import com.epam.havryliuk.restaurant.model.entity.mapper.OrderMapper;
 import com.epam.havryliuk.restaurant.model.database.databaseFieds.OrderFields;
 import com.epam.havryliuk.restaurant.model.database.queries.OrderQuery;
 import com.epam.havryliuk.restaurant.model.entity.*;

@@ -1,4 +1,4 @@
-package com.epam.havryliuk.restaurant.model.service;//package com.epam.havryliuk.restaurant.model.service;
+package com.epam.havryliuk.restaurant.model.service;
 
 import com.epam.havryliuk.restaurant.model.database.dao.EntityTransaction;
 import com.epam.havryliuk.restaurant.model.database.dao.daoImpl.BasketDao;
@@ -75,7 +75,7 @@ public class OrderService implements Service {
         try {
             transaction.initTransaction(orderDao, basketDao);
             orders = orderDao.getByUserSortedByTime(user);
-            for (Order order : orders) {
+            for (Order order : orders) {//todo extract method
                 List<Basket> baskets = basketDao.getOrderDishes(order);
                 order.setBaskets(baskets);
                 setOrderPrice(order, baskets);
@@ -89,51 +89,6 @@ public class OrderService implements Service {
         }
         return orders;
     }
-
-    /**
-     * Method sets price for each order, based on prices of Dishes and amounts of them.
-     *
-     * @param order the Order which price needs to be calculated.
-     * @param baskets entities that have list of dishes in them.
-     */
-    private void setOrderPrice(Order order, List<Basket> baskets) {
-        BigDecimal price = baskets.stream()
-                .map(basket -> basket.getFixedPrice()
-                        .multiply(BigDecimal.valueOf(basket.getAmount())))
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-        order.setPrice(price);
-    }
-
-
-//    public Map<Order, BigDecimal> getAllUserOrdersAndPrices(User user) throws ServiceException {
-//        Map<Order, BigDecimal> ordersAndPrices = new LinkedHashMap<>();
-//        try {
-//            transaction.initTransaction(orderDao, basketDao);
-//            List<Order> orders = orderDao.getByUserSortedByTime(user);
-//
-//            for (Order order : orders) {
-//                List<Basket> baskets = basketDao.getOrderDishes(order);
-//                order.setBaskets(baskets);
-//                or
-//
-//                //todo
-//                BigDecimal sum = baskets.stream()
-//                        .map(basket -> basket.getFixedPrice()
-//                                .multiply(BigDecimal.valueOf(basket.getAmount())))
-//                        .reduce(BigDecimal.ZERO, BigDecimal::add);
-//                System.err.println(sum);
-//
-//            }
-//            LOG.debug("The order list was successfully created.");
-//        } catch (DAOException e) {
-//            LOG.info("Unable to get orders.");
-//            throw new ServiceException("Unable to get orders.", e);
-//        } finally {
-//            transaction.endTransaction();
-//        }
-//        return ordersAndPrices;
-//    }
-
 
     /**
      * Method doing calculation of Orders offset (for pagination purpose), based on
@@ -158,7 +113,9 @@ public class OrderService implements Service {
             orderPage.setNoOfPages(noOfRecords, recordsPerPage);
             orderPage.setRecords(orders);
             for (Order order : orders) {
-                order.setBaskets(basketDao.getOrderDishes(order));
+                List<Basket> baskets = basketDao.getOrderDishes(order);
+                order.setBaskets(baskets);
+                setOrderPrice(order, baskets);
             }
             LOG.debug("The page was successfully created.");
         } catch (DAOException e) {
@@ -191,11 +148,16 @@ public class OrderService implements Service {
             transaction.initTransaction(orderDao);
             order = orderDao.geByUserAddressStatus(user, deliveryAddress, BookingStatus.BOOKING);
             if (order != null) {
-                order.setUser(user);
+                order.setUser(user);//todo?? чому встановлюється юзер, якщо ми шукаємо за юзером
                 LOG.debug("Order has been received: {}", order);
             } else {
-                order = Order.getInstance(deliveryAddress, deliveryPhone, false, BookingStatus.BOOKING);
-                order.setUser(user);
+                order = new Order.OrderBuilder()
+                        .withAddress(deliveryAddress)
+                        .withPhoneNumber(deliveryPhone)
+                        .withPayed(false)
+                        .withBookingStatus(BookingStatus.BOOKING)
+                        .withUser(user)
+                        .build();
                 order = orderDao.create(order);
                 Date creationDate = orderDao.getCreationDate(order.getId());
                 order.setCreationDate(creationDate);
@@ -228,7 +190,12 @@ public class OrderService implements Service {
         try {
             transaction.initTransaction(basketDao, dishDao);
             checkAvailableDishes(dish, dishesAmountInOrder, dishDao);
-            Basket basket = Basket.getInstance(order, dish, dish.getPrice(), dishesAmountInOrder);
+            Basket basket = new Basket.BasketBuilder()
+                    .withOrder(order)
+                    .withDish(dish)
+                    .withPrice(dish.getPrice())
+                    .withAmount(dishesAmountInOrder)
+                    .build();
             basket = basketDao.create(basket);
             List<Basket> baskets = order.getBaskets();
             baskets.add(basket);
@@ -246,6 +213,8 @@ public class OrderService implements Service {
             transaction.endTransaction();
         }
     }
+
+
 
     /**
      * Method removes dishes from order. If it remains the only one dish in an order,
@@ -333,41 +302,17 @@ public class OrderService implements Service {
         }
     }
 
-//    /**
-//     * Method calculates the total price of each order.
-//     *
-//     * @param orders list of orders which prices need to be calculated.
-//     * @return map of orders, the keys are the orders, and values are the
-//     * total prices of that order.
-//     */
-//    public Map<Order, BigDecimal> getTotalPrices(List<Order> orders) {//todo
-//        Map<Order, BigDecimal> ordersAndPrices = orders.stream()
-//                .collect(Collectors.toMap(
-//                        order -> order,
-//                        o -> o.getBaskets()
-//                                .stream()
-//                                .map(basket -> basket.getFixedPrice()
-//                                        .multiply(BigDecimal.valueOf(basket.getAmount())))
-//                                .reduce(BigDecimal.ZERO, BigDecimal::add)
-//                ));
-//        return sortOrdersByPrice(ordersAndPrices);
-//    }
-
-//    /**
-//     * Sort map by creation date of the orders.
-//     *
-//     * @param ordersAndPrices unsorted map.
-//     * @return map sorted by creation date.
-//     */
-//    private LinkedHashMap<Order, BigDecimal> sortOrdersByPrice(Map<Order, BigDecimal> ordersAndPrices) {
-//        return ordersAndPrices.entrySet().stream()
-//                .sorted(Map.Entry.comparingByKey(
-//                        (o1, o2) -> o2.getCreationDate()
-//                                .compareTo(o1.getCreationDate())
-//                )).collect(Collectors.toMap(
-//                        Map.Entry::getKey,
-//                        Map.Entry::getValue,
-//                        (e1, e2) -> e1,
-//                        LinkedHashMap::new));
-//    }
+    /**
+     * Method sets price for each order, based on prices of Dishes and amounts of them.
+     *
+     * @param order the Order which price needs to be calculated.
+     * @param baskets entities that have list of dishes in them.
+     */
+    private void setOrderPrice(Order order, List<Basket> baskets) {
+        BigDecimal price = baskets.stream()
+                .map(basket -> basket.getFixedPrice()
+                        .multiply(BigDecimal.valueOf(basket.getAmount())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        order.setPrice(price);
+    }
 }

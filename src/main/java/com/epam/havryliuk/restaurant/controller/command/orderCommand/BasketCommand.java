@@ -9,7 +9,7 @@ import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.exceptions.EntityNotFoundException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.service.OrderService;
-import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
+import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationProcessor;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,7 +18,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.*;
 
 import static com.epam.havryliuk.restaurant.controller.constants.RequestAttributes.*;
@@ -34,7 +33,7 @@ public class BasketCommand implements Command {
     private OrderService orderService;
 
     public BasketCommand() {
-        orderService = ApplicationServiceContext.getInstance(OrderService.class);
+        orderService = ApplicationProcessor.getInstance(OrderService.class);
     }
 
     /**
@@ -52,8 +51,6 @@ public class BasketCommand implements Command {
         try {
             List<Order> orders = orderService.getAllUserOrders(user);
             checkIfOrdersPresent(orders);
-//            Map<Order, BigDecimal> ordersAndTotalPriced = orderService.getTotalPrices(orders);
-//            session.setAttribute(ORDER_PRICE_MAP, ordersAndTotalPriced);
             session.setAttribute(ORDER_LIST, orders);
         } catch (EntityNotFoundException e) {
             MessageDispatcher.setToSession(request, ERROR_MESSAGE, ResponseMessages.EMPTY_BASKET);

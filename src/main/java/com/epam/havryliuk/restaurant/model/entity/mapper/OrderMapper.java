@@ -1,4 +1,4 @@
-package com.epam.havryliuk.restaurant.model.entityMappers;
+package com.epam.havryliuk.restaurant.model.entity.mapper;
 
 import com.epam.havryliuk.restaurant.model.database.databaseFieds.OrderFields;
 import com.epam.havryliuk.restaurant.model.entity.BookingStatus;
@@ -18,6 +18,14 @@ public class OrderMapper {
         Date closeDate = rs.getTimestamp(OrderFields.ORDER_CLOSE_DATE);
         long bookingStatusId = rs.getLong(OrderFields.ORDER_BOOKING_STATUS);
         BookingStatus bookingStatus = BookingStatus.getStatus(bookingStatusId);
-        return Order.getInstance(id, address, phoneNumber, isPayed, creationDate, closeDate, bookingStatus);
+        return new Order.OrderBuilder()
+                .withId(id)
+                .withAddress(address)
+                .withPhoneNumber(phoneNumber)
+                .withPayed(isPayed)
+                .withCreationDate(creationDate)
+                .withCloseDate(closeDate)
+                .withBookingStatus(bookingStatus)
+                .build();
     }
 }

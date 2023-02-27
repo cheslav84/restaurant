@@ -9,7 +9,7 @@ import com.epam.havryliuk.restaurant.model.entity.Basket;
 import com.epam.havryliuk.restaurant.model.entity.Order;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.service.OrderService;
-import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
+import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationProcessor;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -30,7 +30,7 @@ public class RemoveFromOrderCommand implements Command {
     private OrderService orderService;
 
     public RemoveFromOrderCommand() {
-        orderService = ApplicationServiceContext.getInstance(OrderService.class);
+        orderService = ApplicationProcessor.getInstance(OrderService.class);
     }
 
     /**

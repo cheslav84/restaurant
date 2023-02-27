@@ -21,6 +21,6 @@ public class BasketFields {
         DISH_ID = (String) PROPERTIES.get("basket.dishId");
         DISH_PRICE = (String) PROPERTIES.get("basket.price");
         DISH_AMOUNT = (String) PROPERTIES.get("basket.amount");
-        LOG.debug("Database fields for \"order_has_dish\" table have been initialised successfully.");
+        LOG.info("Database fields for \"order_has_dish\" table have been initialised successfully.");
     }
 }

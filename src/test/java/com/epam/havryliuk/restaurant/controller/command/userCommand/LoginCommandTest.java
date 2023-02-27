@@ -47,9 +47,7 @@ class LoginCommandTest {
     void executeAccess() throws ServiceException, IOException {
         String email = "some@mail.com";
         String password = "strongPass!123";
-        User user = User.getInstance("some@mail.com",
-                "$argon2i$v=19$m=15360,t=2,p=1$bQjJSajx2zklOm1oyOQEkg$LKjzTVXK2krz65T6SpsBhjdrOErB7OeMX6y7zl+rhP8",
-                "name", "surname", "Male", true);
+        User user = getUserForTest();
         when(request.getSession()).thenReturn(session);
         when(request.getParameter(RequestParameters.EMAIL)).thenReturn(email);
         when(request.getParameter(RequestParameters.PASSWORD)).thenReturn(password);
@@ -77,9 +75,7 @@ class LoginCommandTest {
     void executeWrongPassword() throws ServiceException, IOException {
         String email = "some@mail.com";
         String password = "strongPass!124";
-        User user = User.getInstance("some@mail.com",
-                "$argon2i$v=19$m=15360,t=2,p=1$bQjJSajx2zklOm1oyOQEkg$LKjzTVXK2krz65T6SpsBhjdrOErB7OeMX6y7zl+rhP8",
-                "name", "surname", "Male", true);
+        User user = getUserForTest();
         when(request.getSession()).thenReturn(session);
         when(request.getParameter(RequestParameters.EMAIL)).thenReturn(email);
         when(request.getParameter(RequestParameters.PASSWORD)).thenReturn(password);
@@ -88,6 +84,18 @@ class LoginCommandTest {
         login.execute(request, response);
         verify(session).setAttribute(ERROR_MESSAGE, "The password is incorrect.");
         verify(response).sendRedirect(AppPagesPath.REDIRECT_REGISTRATION);
+    }
+
+    private User getUserForTest() {
+        User user = new User.UserBuilder()
+                .withEmail("some@mail.com")
+                .withPassword("$argon2i$v=19$m=15360,t=2,p=1$bQjJSajx2zklOm1oyOQEkg$LKjzTVXK2krz65T6SpsBhjdrOErB7OeMX6y7zl+rhP8")
+                .withName("name")
+                .withSurname("surname")
+                .withGender("Male")
+                .withOverEighteen(true)
+                .build();
+        return user;
     }
 
     @Test

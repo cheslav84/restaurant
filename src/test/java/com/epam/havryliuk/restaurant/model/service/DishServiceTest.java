@@ -44,8 +44,15 @@ class DishServiceTest {
     private DishService dishService;
     @BeforeAll
     public void initUser() {
-        user = User.getInstance("email", "password", "name", "surname", "Male", true);
-        user.setRole(Role.CLIENT);
+        user =  new User.UserBuilder()
+                .withEmail("email")
+                .withPassword("password")
+                .withName("name")
+                .withSurname("surname")
+                .withGender("Male")
+                .withOverEighteen(true)
+                .withRole(Role.CLIENT)
+                .build();
     }
 
     @BeforeEach
@@ -132,17 +139,28 @@ class DishServiceTest {
     private List<Dish> getDishes(int size){
         List<Dish> dishes = new ArrayList<>();
         for (int i = 0; i < size; i++) {
-            Dish dish = Dish.getInstance("DishName" + i, new BigDecimal(size - i), i);
+            Dish dish = new Dish.DishBuilder()
+                    .withName("DishName" + i)
+                    .withPrice(new BigDecimal(size - i))
+                    .withAmount(i)
+                    .build();
             dishes.add(dish);
         }
         return dishes;
     }
 
     private Optional<Dish> getDishForTest (Long dishId) {
-       return Optional.of(Dish.getInstance(dishId, "Name", "lorem ispum",
-                50, new BigDecimal(450), 30, "image.png", false));
+        Dish dish = new Dish.DishBuilder()
+                .withId(dishId)
+                .withName("Name")
+                .withDescription("lorem ispum")
+                .withWeight(50)
+                .withPrice(new BigDecimal(450))
+                .withAmount(30)
+                .withImage("image.png")
+                .withAlcohol(false)
+                .build();
+       return Optional.of(dish);
     }
-
-
 
 }

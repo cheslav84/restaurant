@@ -6,11 +6,11 @@ import com.epam.havryliuk.restaurant.controller.constants.RequestParameters;
 import com.epam.havryliuk.restaurant.controller.constants.ResponseMessages;
 import com.epam.havryliuk.restaurant.controller.constants.paths.AppPagesPath;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
-import com.epam.havryliuk.restaurant.model.entityMappers.DishMapper;
+import com.epam.havryliuk.restaurant.model.entity.mapper.DishMapper;
 import com.epam.havryliuk.restaurant.model.exceptions.DuplicatedEntityException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.service.DishService;
-import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
+import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationProcessor;
 import com.epam.havryliuk.restaurant.model.util.validation.Validator;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -35,7 +35,7 @@ public class AddDishCommand implements Command {
     private DishService dishService;
 
     public AddDishCommand() {
-        dishService = ApplicationServiceContext.getInstance(DishService.class);
+        dishService = ApplicationProcessor.getInstance(DishService.class);
     }
 
     @Override

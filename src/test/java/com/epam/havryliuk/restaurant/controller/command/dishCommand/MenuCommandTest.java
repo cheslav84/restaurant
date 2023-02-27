@@ -53,7 +53,14 @@ class MenuCommandTest {
     private MenuCommand menu;
     @BeforeEach
     public void setup() {
-        user = User.getInstance("email", "password", "name", "surname", "Male", true);
+        user =  new User.UserBuilder()
+                .withEmail("email")
+                .withPassword("password")
+                .withName("name")
+                .withSurname("surname")
+                .withGender("Male")
+                .withOverEighteen(true)
+                .build();
         user.setRole(Role.MANAGER);
         int dishesAmount = 5;
         dishes = getTestDishes(dishesAmount);
@@ -95,7 +102,11 @@ class MenuCommandTest {
     private List<Dish> getTestDishes(int size){
         List<Dish> dishes = new ArrayList<>();
         for (int i = 0; i < size; i++) {
-            Dish dish = Dish.getInstance("DishName" + i, new BigDecimal(size - i), i);
+            Dish dish = new Dish.DishBuilder()
+                    .withName("DishName" + i)
+                    .withPrice(new BigDecimal(size - i))
+                    .withAmount(i)
+                    .build();
             dishes.add(dish);
         }
         return dishes;

@@ -6,10 +6,10 @@ import com.epam.havryliuk.restaurant.controller.dispatchers.MessageDispatcher;
 import com.epam.havryliuk.restaurant.controller.constants.ResponseMessages;
 import com.epam.havryliuk.restaurant.controller.constants.paths.AppPagesPath;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
-import com.epam.havryliuk.restaurant.model.entityMappers.DishMapper;
+import com.epam.havryliuk.restaurant.model.entity.mapper.DishMapper;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.service.DishService;
-import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
+import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationProcessor;
 import com.epam.havryliuk.restaurant.model.util.validation.Validator;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,7 +29,7 @@ public class EditDishCommand implements Command {
     private DishService dishService;
 
     public EditDishCommand() {
-        dishService = ApplicationServiceContext.getInstance(DishService.class);
+        dishService = ApplicationProcessor.getInstance(DishService.class);
     }
 
     @Override
@@ -40,9 +40,10 @@ public class EditDishCommand implements Command {
         String redirectionPage = AppPagesPath.REDIRECT_MENU;
         try {
             Dish dish = DishDispatcher.getCurrentDish(request);
-            dish = DishMapper.mapDish(request, dish.getImage());
-            if (Validator.isEditingDishDataValid(dish, request)) {
-                dishService.updateDish(dish);
+            Dish newDish = DishMapper.mapDish(request, dish.getImage());
+            newDish.setId(dish.getId());
+            if (Validator.isEditingDishDataValid(newDish, request)) {
+                dishService.updateDish(newDish);
                 session.removeAttribute(ERROR_MESSAGE);
                 LOG.debug("List of dishes received by servlet and going to be sending to client side.");
             } else {

@@ -1,7 +1,7 @@
 package com.epam.havryliuk.restaurant.model.database.dao.daoImpl;
 
 import com.epam.havryliuk.restaurant.model.database.dao.AbstractDao;
-import com.epam.havryliuk.restaurant.model.entityMappers.UserMapper;
+import com.epam.havryliuk.restaurant.model.entity.mapper.UserMapper;
 import com.epam.havryliuk.restaurant.model.database.queries.UserQuery;
 import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.exceptions.DAOException;

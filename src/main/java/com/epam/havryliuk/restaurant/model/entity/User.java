@@ -14,28 +14,41 @@ public class User implements Entity {
     private Role role;
     private UserDetails userDetails;
 
-    public static User getInstance(String email, String password, String name, String surname,
-                                   String gender, boolean isOverEighteen) {
-        User user = new User();
-        user.setEmail(email);
-        user.setPassword(password);
-        user.setName(name);
-        user.setSurname(surname);
-        user.setGender(gender);
-        user.setOverEighteen(isOverEighteen);
-        return user;
-    }
+//    public static User getInstance(String email, String password, String name, String surname,
+//                                   String gender, boolean isOverEighteen) {
+//        User user = new User();
+//        user.setEmail(email);
+//        user.setPassword(password);
+//        user.setName(name);
+//        user.setSurname(surname);
+//        user.setGender(gender);
+//        user.setOverEighteen(isOverEighteen);
+//        return user;
+//    }
+//
+//
+//    public static User getInstance(Long id, String email, String password, String name,
+//                                   String surname, String gender, boolean isOverEighteen,
+//                                   Date accountCreationDate, Role role, UserDetails userDetails) {
+//        User user = getInstance(email, password, name, surname, gender, isOverEighteen);
+//        user.setId(id);
+//        user.setAccountCreationDate(accountCreationDate);
+//        user.setRole(role);
+//        user.setUserDetails(userDetails);
+//        return user;
+//    }
 
-
-    public static User getInstance(Long id, String email, String password, String name,
-                                   String surname, String gender, boolean isOverEighteen,
-                                   Date accountCreationDate, Role role, UserDetails userDetails) {
-        User user = getInstance(email, password, name, surname, gender, isOverEighteen);
-        user.setId(id);
-        user.setAccountCreationDate(accountCreationDate);
-        user.setRole(role);
-        user.setUserDetails(userDetails);
-        return user;
+    private User (UserBuilder builder) {
+        this.id = builder.id;
+        this.email = builder.email;
+        this.password = builder.password;
+        this.name = builder.name;
+        this.surname = builder.surname;
+        this.gender = builder.gender;
+        this.isOverEighteen = builder.isOverEighteen;
+        this.accountCreationDate = builder.accountCreationDate;
+        this.role = builder.role;
+        this.userDetails = builder.userDetails;
     }
 
     public long getId() {
@@ -156,4 +169,74 @@ public class User implements Entity {
                 ", isOverEighteen=" + isOverEighteen +
                 '}';
     }
+
+    public static class UserBuilder {
+        private long id;
+        private String email;
+        private transient String password;
+        private String name;
+        private String surname;
+        private String gender;
+        private boolean isOverEighteen;
+        private Date accountCreationDate;
+        private Role role;
+        private UserDetails userDetails;
+
+        public UserBuilder withId(long id) {
+            this.id = id;
+            return this;
+        }
+
+        public UserBuilder withEmail(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public UserBuilder withPassword(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public UserBuilder withName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public UserBuilder withSurname(String surname) {
+            this.surname = surname;
+            return this;
+        }
+
+        public UserBuilder withGender(String gender) {
+            this.gender = gender;
+            return this;
+        }
+
+        public UserBuilder withOverEighteen(boolean overEighteen) {
+            isOverEighteen = overEighteen;
+            return this;
+        }
+
+        public UserBuilder withAccountCreationDate(Date accountCreationDate) {
+            this.accountCreationDate = accountCreationDate;
+            return this;
+        }
+
+        public UserBuilder withRole(Role role) {
+            this.role = role;
+            return this;
+        }
+
+        public UserBuilder withUserDetails(UserDetails userDetails) {
+            this.userDetails = userDetails;
+            return this;
+        }
+
+        public User build() {
+            return new User(this);
+        }
+    }
+
+
+
 }

@@ -10,7 +10,7 @@ import com.epam.havryliuk.restaurant.model.exceptions.EntityNotFoundException;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.service.UserService;
 import com.epam.havryliuk.restaurant.model.util.PassEncryptor;
-import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
+import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationProcessor;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -32,7 +32,7 @@ public class LoginCommand implements Command {
     private UserService userService;
 
     public LoginCommand() {
-        userService = ApplicationServiceContext.getInstance(UserService.class);
+        userService = ApplicationProcessor.getInstance(UserService.class);
     }
 
     /**

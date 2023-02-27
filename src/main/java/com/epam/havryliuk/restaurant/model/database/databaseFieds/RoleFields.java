@@ -17,7 +17,7 @@ public class RoleFields {
         PROPERTIES = PropertiesLoader.getProperties(ResourceProperties.DB_FIELDS_SETTING_FILE);
         ROLE_ID = (String) PROPERTIES.get("role.id");
         ROLE_NAME = (String) PROPERTIES.get("role.name");
-        LOG.debug("Database fields for \"Role\" table have been initialised successfully.");
+        LOG.info("Database fields for \"Role\" table have been initialised successfully.");
     }
 
 }

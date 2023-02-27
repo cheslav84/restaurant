@@ -117,11 +117,16 @@
       <scope>compile</scope>
     </dependency>
 
-
     <dependency>
       <groupId>de.mkammerer</groupId>
       <artifactId>argon2-jvm</artifactId>
       <version>2.11</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.reflections</groupId>
+      <artifactId>reflections</artifactId>
+      <version>0.10.2</version>
     </dependency>
 
 <!--    <dependency>-->
@@ -136,17 +141,6 @@
 <!--    </dependency>-->
 
 
-<!--    <dependency>-->
-<!--      <groupId>org.flywaydb</groupId>-->
-<!--      <artifactId>flyway-core</artifactId>-->
-<!--      <version>9.14.1</version>-->
-<!--    </dependency>-->
-
-<!--    <dependency>-->
-<!--      <groupId>org.flywaydb</groupId>-->
-<!--      <artifactId>flyway-core</artifactId>-->
-<!--      <version>8.0.0</version>-->
-<!--    </dependency>-->
 
     <dependency>
       <groupId>org.flywaydb.enterprise</groupId>

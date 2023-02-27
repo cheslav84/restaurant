@@ -10,7 +10,7 @@ import com.epam.havryliuk.restaurant.model.entity.OrderSorting;
 import com.epam.havryliuk.restaurant.model.entity.Page;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.service.OrderService;
-import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
+import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationProcessor;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -35,7 +35,7 @@ public class ManageOrdersCommand implements Command {
     private OrderService orderService;
 
     public ManageOrdersCommand() {
-        orderService = ApplicationServiceContext.getInstance(OrderService.class);
+        orderService = ApplicationProcessor.getInstance(OrderService.class);
     }
 
     /**

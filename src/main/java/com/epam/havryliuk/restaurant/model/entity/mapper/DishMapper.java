@@ -1,4 +1,4 @@
-package com.epam.havryliuk.restaurant.model.entityMappers;
+package com.epam.havryliuk.restaurant.model.entity.mapper;
 
 import com.epam.havryliuk.restaurant.controller.constants.RequestParameters;
 import com.epam.havryliuk.restaurant.model.database.databaseFieds.DishFields;
@@ -16,7 +16,7 @@ public class DishMapper {
     private static final Logger LOG = LogManager.getLogger(DishMapper.class);
 
 
-    public static synchronized Dish mapDish(ResultSet rs) throws SQLException {
+    public static Dish mapDish(ResultSet rs) throws SQLException {
         long id = rs.getLong(DishFields.DISH_ID);
         String name = rs.getString(DishFields.DISH_NAME);
         String description = rs.getString(DishFields.DISH_DESCRIPTION);
@@ -25,10 +25,19 @@ public class DishMapper {
         int amount = rs.getInt(DishFields.DISH_AMOUNT);
         String image = rs.getString(DishFields.DISH_IMAGE);
         boolean alcohol = rs.getBoolean(DishFields.DISH_ALCOHOL);
-        return Dish.getInstance(id, name, description, weight, price, amount, image, alcohol);
+        return new Dish.DishBuilder()
+                .withId(id)
+                .withName(name)
+                .withDescription(description)
+                .withWeight(weight)
+                .withPrice(price)
+                .withImage(image)
+                .withAlcohol(alcohol)
+                .withAmount(amount)
+                .build();
     }
 
-    public synchronized static Dish mapDish(HttpServletRequest request, String imageFileName) {
+    public static Dish mapDish(HttpServletRequest request, String imageFileName) {
         String name = request.getParameter(RequestParameters.DISH_NAME);
         String description = request.getParameter(RequestParameters.DISH_DESCRIPTION);
         boolean alcohol = request.getParameter(RequestParameters.DISH_ALCOHOL) != null;
@@ -59,6 +68,18 @@ public class DishMapper {
         } catch (IllegalArgumentException e) {
             LOG.debug("User has not chose Dish category.");
         }
-        return Dish.getInstance(name, description, weight, price, imageFileName, alcohol, amount, special, category);
+        return new Dish.DishBuilder()
+                .withName(name)
+                .withDescription(description)
+                .withWeight(weight)
+                .withPrice(price)
+                .withImage(imageFileName)
+                .withAlcohol(alcohol)
+                .withAmount(amount)
+                .withSpecial(special)
+                .withCategory(category)
+                .build();
     }
+
+
 }

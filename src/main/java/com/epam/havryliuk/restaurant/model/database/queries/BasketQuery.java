@@ -19,6 +19,6 @@ public class BasketQuery {
         ADD_DISH_TO_BASKET = (String) PROPERTIES.get("basket.ADD_DISH_TO_BASKET");
 //        GET_DISH_FR0M_BASKET = (String) PROPERTIES.get("basket.GET_DISH_FR0M_BASKET");
         GET_NUMBER_OF_REQUESTED_DISHES_IN_ORDER = (String) PROPERTIES.get("basket.GET_NUMBER_OF_REQUESTED_DISHES_IN_ORDER");
-        LOG.debug("Database queries for \"order_has_dishes\" table have been initialised successfully.");
+        LOG.info("Database queries for \"order_has_dishes\" table have been initialised successfully.");
     }
 }

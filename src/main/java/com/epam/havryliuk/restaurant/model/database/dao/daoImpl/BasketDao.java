@@ -1,6 +1,6 @@
 package com.epam.havryliuk.restaurant.model.database.dao.daoImpl;
 
-import com.epam.havryliuk.restaurant.model.entityMappers.BasketMapper;
+import com.epam.havryliuk.restaurant.model.entity.mapper.BasketMapper;
 import com.epam.havryliuk.restaurant.model.database.databaseFieds.BasketFields;
 import com.epam.havryliuk.restaurant.model.database.databaseFieds.DishFields;
 import com.epam.havryliuk.restaurant.model.database.queries.BasketQuery;

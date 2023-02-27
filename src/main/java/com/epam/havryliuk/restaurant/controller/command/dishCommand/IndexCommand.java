@@ -11,7 +11,7 @@ import com.epam.havryliuk.restaurant.model.entity.Dish;
 import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.service.DishService;
-import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationServiceContext;
+import com.epam.havryliuk.restaurant.model.util.annotations.ApplicationProcessor;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -34,7 +34,7 @@ public class IndexCommand implements Command {
     private DishService dishService;
 
     public IndexCommand() {
-        dishService = ApplicationServiceContext.getInstance(DishService.class);
+        dishService = ApplicationProcessor.getInstance(DishService.class);
         menuDispatcher = new MenuDispatcher();
     }
 
