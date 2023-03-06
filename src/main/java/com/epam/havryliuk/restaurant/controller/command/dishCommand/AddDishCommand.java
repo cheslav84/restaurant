@@ -1,6 +1,7 @@
 package com.epam.havryliuk.restaurant.controller.command.dishCommand;
 
 import com.epam.havryliuk.restaurant.controller.command.Command;
+import com.epam.havryliuk.restaurant.controller.dispatchers.ImageDispatcher;
 import com.epam.havryliuk.restaurant.controller.dispatchers.MessageDispatcher;
 import com.epam.havryliuk.restaurant.controller.constants.RequestParameters;
 import com.epam.havryliuk.restaurant.controller.constants.ResponseMessages;
@@ -16,7 +17,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import jakarta.servlet.http.Part;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -45,19 +45,13 @@ public class AddDishCommand implements Command {
         HttpSession session = request.getSession();
         String redirectionPage;
         try {
-            Part part = request.getPart(RequestParameters.DISH_IMAGE);
-            String imageFileName = part.getSubmittedFileName();
-            Dish dish = DishMapper.mapDish(request, imageFileName);
+            ImageDispatcher imageDispatcher =
+                    new ImageDispatcher(request, RequestParameters.DISH_IMAGE, AppPagesPath.DISH_IMAGE_PATH);
+            Dish dish = DishMapper.mapDish(request, imageDispatcher.getImageFileName());
             session.setAttribute(CURRENT_DISH, dish);
-
-            String realPath = request.getServletContext()
-                    .getRealPath(AppPagesPath.DISH_IMAGE_PATH + imageFileName);
-            if (Validator.isCreatingDishDataValid(dish, realPath, request)) {
-                dishService.addNewDish(dish);
-                saveImage(part, realPath);
-                manageAttributes(session);
+            if (Validator.isCreatingDishDataValid(dish, imageDispatcher, request)) {
+                saveDish(dish, imageDispatcher, session);
                 redirectionPage = AppPagesPath.REDIRECT_MENU;
-                LOG.debug("List of dishes received by servlet and going to be sending to client side.");
             } else {
                 redirectionPage = AppPagesPath.REDIRECT_ADD_DISH_PAGE;
             }
@@ -73,9 +67,17 @@ public class AddDishCommand implements Command {
         response.sendRedirect(redirectionPage);
     }
 
-    private void saveImage(Part part, String realPath) throws IOException {
-        InputStream is = part.getInputStream();
-        Files.copy(is, Paths.get(realPath), StandardCopyOption.REPLACE_EXISTING);
+    private void saveDish(Dish dish, ImageDispatcher imageDispatcher, HttpSession session)
+            throws ServiceException, IOException {
+        dishService.addNewDish(dish);
+        saveImage(imageDispatcher);
+        manageAttributes(session);
+        LOG.debug("List of dishes received by servlet and going to be sending to client side.");
+    }
+
+    private void saveImage(ImageDispatcher imageDispatcher) throws IOException {
+        InputStream is = imageDispatcher.getPart().getInputStream();
+        Files.copy(is, Paths.get(imageDispatcher.getRealPath()), StandardCopyOption.REPLACE_EXISTING);
     }
 
     private void manageAttributes(HttpSession session) {

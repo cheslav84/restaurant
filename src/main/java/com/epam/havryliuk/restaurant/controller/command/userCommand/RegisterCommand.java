@@ -31,7 +31,7 @@ public class RegisterCommand implements Command {
     @SuppressWarnings("FieldMayBeFinal")
     private UserService userService;
 
-    public RegisterCommand () {
+    public RegisterCommand() {
         userService = ApplicationProcessor.getInstance(UserService.class);
     }
 

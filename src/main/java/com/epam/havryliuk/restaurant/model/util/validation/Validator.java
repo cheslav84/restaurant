@@ -2,6 +2,7 @@ package com.epam.havryliuk.restaurant.model.util.validation;
 
 import com.epam.havryliuk.restaurant.controller.constants.RequestParameters;
 import com.epam.havryliuk.restaurant.controller.constants.ResponseMessages;
+import com.epam.havryliuk.restaurant.controller.dispatchers.ImageDispatcher;
 import com.epam.havryliuk.restaurant.controller.dispatchers.MessageDispatcher;
 import com.epam.havryliuk.restaurant.model.entity.Dish;
 import com.epam.havryliuk.restaurant.model.entity.User;
@@ -24,7 +25,7 @@ public class Validator {
      * @param user User that data of which has to be validated.
 //     * @throws ValidationException in case some data is invalid.
      */
-    public static synchronized boolean validateUserData(User user, HttpServletRequest request) {//todo забрати
+    public static boolean validateUserData(User user, HttpServletRequest request) {//todo забрати
         boolean correctFields = true;
         if(!user.getGender().equalsIgnoreCase(RequestParameters.MALE) &&
                 !user.getGender().equalsIgnoreCase(RequestParameters.FEMALE)){
@@ -61,7 +62,7 @@ public class Validator {
      * Validates delivery address and phone when User makes an order.
      * @return true if data is correct.
      */
-    public static synchronized boolean validateDeliveryData(int dishesAmount, HttpServletRequest request) {
+    public static boolean validateDeliveryData(int dishesAmount, HttpServletRequest request) {
         String deliveryAddress = request.getParameter(RequestParameters.DELIVERY_ADDRESS);
         String deliveryPhone = request.getParameter(RequestParameters.DELIVERY_PHONE);
         HttpSession session = request.getSession();
@@ -87,7 +88,7 @@ public class Validator {
      * @param request HttpServletRequest from User. From Request method get Session and set Error message
      *            when dishes amount is 0 or less.
      */
-    public static synchronized boolean validateDishesAmount(int dishesAmount, HttpServletRequest request) {
+    public static boolean validateDishesAmount(int dishesAmount, HttpServletRequest request) {
         if ((dishesAmount > 0 && dishesAmount <= Regex.MAX_AMOUNT)){
             return true;
         } else {
@@ -96,13 +97,13 @@ public class Validator {
         }
     }
 
-    public static synchronized boolean isCreatingDishDataValid(Dish dish, String path, HttpServletRequest request) {
+    public static boolean isCreatingDishDataValid(Dish dish, ImageDispatcher imageDispatcher, HttpServletRequest request) {
         StringBuilder builder = new StringBuilder();
         boolean correctFields = validateDish(dish, request, builder);
         if(dish.getImage().isEmpty()){
             builder.append(MessageDispatcher.getMessage(request, ResponseMessages.IMAGE_DOES_NOT_SET));
             correctFields = false;
-        } else if (isSuchImageExist(path)){
+        } else if (isSuchImageExist(imageDispatcher.getRealPath())){
             builder.append(MessageDispatcher.getMessage(request, ResponseMessages.SUCH_IMAGE_EXISTS));
             correctFields = false;
         }
@@ -110,7 +111,7 @@ public class Validator {
         return correctFields;
     }
 
-    public static synchronized boolean isEditingDishDataValid(Dish dish, HttpServletRequest request) {
+    public static boolean isEditingDishDataValid(Dish dish, HttpServletRequest request) {
         StringBuilder builder = new StringBuilder();
         boolean correctFields = validateDish(dish, request, builder);
         if(dish.getAmount() < 0 || dish.getAmount() > Regex.MAX_AMOUNT){
@@ -121,7 +122,7 @@ public class Validator {
         return correctFields;
     }
 
-    private static synchronized boolean validateDish(Dish dish, HttpServletRequest request, StringBuilder builder){
+    private static boolean validateDish(Dish dish, HttpServletRequest request, StringBuilder builder){
         request.getSession().removeAttribute(WRONG_DISH_FIELD_MESSAGE);
         boolean correctFields = true;
         if(!regexChecker(dish.getName(), Regex.DISH_NAME)){
@@ -147,20 +148,20 @@ public class Validator {
         return correctFields;
     }
 
-    private static synchronized void setMessageIfDataNotValid(HttpServletRequest request,
+    private static void setMessageIfDataNotValid(HttpServletRequest request,
                                                               StringBuilder builder, boolean correctFields) {
         if (!correctFields) {
             request.getSession().setAttribute(WRONG_DISH_FIELD_MESSAGE, builder.toString());
         }
     }
 
-    private static synchronized boolean isSuchImageExist(String path) {
+    private static boolean isSuchImageExist(String path) {
         File file = new File(path);
         return file.exists();
     }
 
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-    private static synchronized boolean regexChecker (String toCheck, String regex) {
+    private static boolean regexChecker (String toCheck, String regex) {
         Pattern regexPattern = Pattern.compile(regex);
         Matcher regexMatcher = regexPattern.matcher(toCheck);
         return regexMatcher.matches();

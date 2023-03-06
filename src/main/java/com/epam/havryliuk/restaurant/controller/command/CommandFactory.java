@@ -13,7 +13,7 @@ import org.apache.logging.log4j.Logger;
  */
 public class CommandFactory {
     private static final Logger LOG = LogManager.getLogger(CommandFactory.class);
-    private Command defaultCommand = CommandEnum.valueOf("INDEX").getCurrentCommand();
+    private Command defaultCommand = CommandsHolder.valueOf("INDEX").getCurrentCommand();
 
 
     /**
@@ -30,14 +30,14 @@ public class CommandFactory {
         LOG.trace("CommandFactory. DefineCommand.");
         String requestURI = request.getRequestURI();
         String command = requestURI.substring(requestURI.lastIndexOf('/') + 1);
-        LOG.debug(command + " action was received.");
+        LOG.debug("{} action was received.", command);
         if (command.equals(requestURI.substring(requestURI.indexOf('/') + 1))) {
             return defaultCommand;
         }
         try {
-            CommandEnum currentEnum = CommandEnum.valueOf(command.toUpperCase());
+            CommandsHolder currentEnum = CommandsHolder.valueOf(command.toUpperCase());
             defaultCommand = currentEnum.getCurrentCommand();
-            LOG.debug(command.toUpperCase() + " command is going to be performed.");
+            LOG.debug( "{} command is going to be performed.", command.toUpperCase());
         } catch (IllegalArgumentException e) {
             MessageDispatcher.setToRequest(request, RequestAttributes.WRONG_ACTION, ResponseMessages.GLOBAL_ERROR);
             LOG.error("Wrong action.", e);

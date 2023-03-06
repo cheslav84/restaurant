@@ -54,7 +54,7 @@ class IndexCommandTest {
     @Mock
     private MenuDispatcher menuDispatcher;
     @InjectMocks
-    private IndexCommand index;
+    private IndexCommand indexCommand;
 
     @BeforeAll
     public void initUser() {
@@ -84,7 +84,7 @@ class IndexCommandTest {
         when(session.getAttribute(LOGGED_USER)).thenReturn(user);
         when(dishService.getMenuByCategory(currentMenu, user)).thenReturn(dishes);
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
-        index.execute(request, response);
+        indexCommand.execute(request, response);
         verify(menuDispatcher).setOrderInfoAttribute(request);
         verify(request).setAttribute(DISH_LIST, dishes);
         verify(request).getRequestDispatcher(FORWARD_INDEX);
@@ -101,7 +101,7 @@ class IndexCommandTest {
         when(session.getAttribute(LOGGED_USER)).thenReturn(user);
         when(dishService.getMenuByCategory(currentMenu, user)).thenReturn(dishes);
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
-        index.execute(request, response);
+        indexCommand.execute(request, response);
         verify(request).setAttribute(MENU_MESSAGE, messageMenuEmpty);
         verify(menuDispatcher).setOrderInfoAttribute(request);
         verify(request).setAttribute(DISH_LIST, dishes);
@@ -119,7 +119,7 @@ class IndexCommandTest {
         when(session.getAttribute(LOGGED_USER)).thenReturn(user);
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
         when(dishService.getMenuByCategory(currentMenu, user)).thenThrow(new ServiceException("Such list of Dishes hasn't been found."));
-        index.execute(request, response);
+        indexCommand.execute(request, response);
         verify(request).setAttribute(ERROR_MESSAGE, messageMenuEmpty);
         verify(menuDispatcher).setOrderInfoAttribute(request);
         verify(request).setAttribute(DISH_LIST, null);

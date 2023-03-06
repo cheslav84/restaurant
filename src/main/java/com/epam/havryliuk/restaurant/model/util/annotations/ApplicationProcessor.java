@@ -19,7 +19,8 @@ public class ApplicationProcessor {
     /**
      * Predicate that is checking whether the field is marked by @Autowired annotation.
      */
-    private static final Predicate<Field> HAS_ANNOTATION = field -> field.getDeclaredAnnotation(Autowired.class) != null;
+    private static final Predicate<Field> HAS_ANNOTATION =
+            field -> field.getDeclaredAnnotation(Autowired.class) != null;
 
     /**
      * Method receives as parameter a Service class, creates an instance of that class,
@@ -71,7 +72,7 @@ public class ApplicationProcessor {
                         Object annotatedObject = clazz.getConstructor().newInstance();
                         field.set(object, annotatedObject);
                         injectAnnotatedFields(object, clazz.getDeclaredFields());
-                        LOG.info("{} initialised.", annotatedObject.getClass());//todo
+                        LOG.debug("{} initialised.", annotatedObject.getClass());//todo
                     } catch (InstantiationException |
                              IllegalAccessException |
                              InvocationTargetException |

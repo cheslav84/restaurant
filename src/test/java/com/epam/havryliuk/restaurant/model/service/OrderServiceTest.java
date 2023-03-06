@@ -40,6 +40,9 @@ class OrderServiceTest {
     @Mock
     private EntityTransaction transaction;
 
+    @Mock
+    private User user;
+
     @InjectMocks
     private OrderService orderService;
 
@@ -64,14 +67,14 @@ class OrderServiceTest {
         long orderId = 1;
         BookingStatus status = BookingStatus.NEW;
         when(dishDao.updateDishesAmountByOrderedValues(orderId)).thenThrow(new DAOException());
-        Exception exception = assertThrows(ServiceException.class, () -> orderService.changeOrderStatus(orderId, status));
+        Exception exception = assertThrows(ServiceException.class,
+                () -> orderService.changeOrderStatus(orderId, status));
         assertEquals("Unable to change order status.", exception.getMessage());
     }
 
     @Test
     void getAllUserOrders() throws DAOException, ServiceException {
         int ordersInList = 3;
-        User user = initTestUser();
         List<Order> ordersMock = initTestOrderList(user, ordersInList);
         when(orderDao.getByUserSortedByTime(user)).thenReturn(ordersMock);
         List<Order> orders = orderService.getAllUserOrders(user);
@@ -84,7 +87,6 @@ class OrderServiceTest {
 
     @Test
     void getAllUserOrdersExceptionFromOrderDao() throws DAOException {
-        User user = initTestUser();
         when(orderDao.getByUserSortedByTime(user)).thenThrow(new DAOException());
         Exception exception = assertThrows(ServiceException.class, () -> orderService.getAllUserOrders(user));
         assertEquals("Unable to get orders.", exception.getMessage());
@@ -94,7 +96,6 @@ class OrderServiceTest {
     @Test
     void getAllUserOrdersExceptionFromBasketDao() throws DAOException {
         int recordsPerPage = 3;
-        User user = initTestUser();
         List<Order> ordersMock = initTestOrderList(user, recordsPerPage);
         when(orderDao.getByUserSortedByTime(user)).thenReturn(ordersMock);
         when(basketDao.getOrderDishes(ordersMock.get(0))).thenThrow(new DAOException());
@@ -113,7 +114,7 @@ class OrderServiceTest {
         when(orderDao.getNoOfOrders()).thenReturn(noOfRecords);
         when(orderDao.getPartOfOrders(offset, recordsPerPage, sorting)).thenReturn(ordersMock);
         Page<Order> expected = initPagesList(recordsPerPage, noOfRecords);
-        Page<Order> orderPage = orderService.getAllOrders(page, recordsPerPage, sorting);
+        Page<Order> orderPage = orderService.getPageOfOrders(page, recordsPerPage, sorting);
         assertEquals(expected, orderPage);
         assertEquals(recordsPerPage, orderPage.getRecords().size());
         orderPage.setNoOfPages(noOfRecords, recordsPerPage + 1);
@@ -129,7 +130,8 @@ class OrderServiceTest {
         int offset = getPageOffset(page, recordsPerPage);
         OrderSorting sorting = OrderSorting.STATUS;
         when(orderDao.getPartOfOrders(offset, recordsPerPage, sorting)).thenThrow(new DAOException());
-        Exception exception = assertThrows(ServiceException.class, () -> orderService.getAllOrders(page, recordsPerPage, sorting));
+        Exception exception = assertThrows(ServiceException.class,
+                () -> orderService.getPageOfOrders(page, recordsPerPage, sorting));
         assertEquals("Unable to get orders.", exception.getMessage());
     }
 
@@ -147,27 +149,25 @@ class OrderServiceTest {
         List<Order> ordersMock = initTestOrderList(recordsPerPage);
         when(orderDao.getPartOfOrders(offset, recordsPerPage, sorting)).thenReturn(ordersMock);
         when(basketDao.getOrderDishes(ordersMock.get(0))).thenThrow(new DAOException());
-        Exception exception = assertThrows(ServiceException.class, () -> orderService.getAllOrders(page, recordsPerPage, sorting));
+        Exception exception = assertThrows(ServiceException.class,
+                () -> orderService.getPageOfOrders(page, recordsPerPage, sorting));
         assertEquals("Unable to get orders.", exception.getMessage());
     }
 
     @Test
     void getOrCreateOrderExistedOrder() throws DAOException, ServiceException {
-        User user = initTestUser();
         String address = "address";
         String phoneNo = "0961150080";
         BookingStatus bookingStatus = BookingStatus.BOOKING;
         Order ordersMock = initTestOrder(bookingStatus);
-        when(orderDao.geByUserAddressStatus(user, address, bookingStatus)).thenReturn(ordersMock);
+        when(orderDao.geByUserAddressStatus(user, address, bookingStatus)).thenReturn(Optional.ofNullable(ordersMock));
         Order expected = initTestOrder(bookingStatus);
-        expected.setUser(user);
         Order order = orderService.getOrCreateOrder(user, address, phoneNo);
         assertEquals(expected, order);
     }
 
     @Test
     void getOrCreateOrderNewOrder() throws DAOException, ServiceException {
-        User user = initTestUser();
         String address = "address";
         String phoneNo = "0961150080";
         long orderId = 1;
@@ -177,7 +177,7 @@ class OrderServiceTest {
         Order ordersMockWithId = initTestOrder(bookingStatus);
         ordersMockWithId.setId(orderId);
         ordersMockWithId.setUser(user);
-        when(orderDao.geByUserAddressStatus(user, address, bookingStatus)).thenReturn(null);
+        when(orderDao.geByUserAddressStatus(user, address, bookingStatus)).thenReturn(Optional.empty());
         when(orderDao.create(ordersMock)).thenReturn(ordersMockWithId);
         Order expected = initTestOrder(bookingStatus);
         expected.setId(orderId);
@@ -189,25 +189,26 @@ class OrderServiceTest {
 
     @Test
     void getOrCreateOrderExceptionGettingExistedUser() throws DAOException {
-        User user = initTestUser();
         String address = "address";
         String phoneNo = "0961150080";
         BookingStatus bookingStatus = BookingStatus.BOOKING;
-        when(orderDao.geByUserAddressStatus(user, address, bookingStatus)).thenThrow(new DAOException("Searched order is absent in database."));
-        Exception exception = assertThrows(ServiceException.class, () -> orderService.getOrCreateOrder(user, address, phoneNo));
+        when(orderDao.geByUserAddressStatus(user, address, bookingStatus))
+                .thenThrow(new DAOException("Searched order is absent in database."));
+        Exception exception = assertThrows(ServiceException.class,
+                () -> orderService.getOrCreateOrder(user, address, phoneNo));
         assertEquals("Searched order is absent in database.", exception.getMessage());
     }
 
     @Test
     void getOrCreateOrderExceptionCreatingUser() throws DAOException {
-        User user = initTestUser();
         String address = "address";
         String phoneNo = "0961150080";
         BookingStatus bookingStatus = BookingStatus.BOOKING;
         Order order = initTestOrder(bookingStatus);
         order.setUser(user);
         when(orderDao.create(order)).thenThrow(new DAOException("Error in inserting order to database."));
-        Exception exception = assertThrows(ServiceException.class, () -> orderService.getOrCreateOrder(user, address, phoneNo));
+        Exception exception = assertThrows(ServiceException.class,
+                () -> orderService.getOrCreateOrder(user, address, phoneNo));
         assertEquals("Error in inserting order to database.", exception.getMessage());
     }
 
@@ -233,7 +234,8 @@ class OrderServiceTest {
         Order order = initTestOrder(bookingStatus);
         Dish dish = initTestDish();
         int dishesAmountInOrder = 5;
-        Exception exception = assertThrows(IrrelevantDataException.class, () -> orderService.addDishToOrder(order, dish, dishesAmountInOrder));
+        Exception exception = assertThrows(IrrelevantDataException.class,
+                () -> orderService.addDishToOrder(order, dish, dishesAmountInOrder));
         assertEquals("The request number of dishes exceed available.", exception.getMessage());
     }
 
@@ -246,7 +248,8 @@ class OrderServiceTest {
         Basket mockedBasked = initTestBasket(bookingStatus, dishesAmountInOrder);
         when(basketDao.create(mockedBasked)).thenThrow(new DAOException("Unable to create basket."));
         when(dishDao.getNumberOfAllDishesInOrder(dish)).thenReturn(dishesAmountInOrder + 1);
-        Exception exception = assertThrows(ServiceException.class, () -> orderService.addDishToOrder(order, dish, dishesAmountInOrder));
+        Exception exception = assertThrows(ServiceException.class,
+                () -> orderService.addDishToOrder(order, dish, dishesAmountInOrder));
         assertEquals("Unable to create basket.", exception.getMessage());
     }
 
@@ -276,7 +279,8 @@ class OrderServiceTest {
         long orderId = 1;
         long dishId = 1;
         int dishesInOrder = 0;
-        Exception exception = assertThrows(ServiceException.class, () -> orderService.removeDishFromOrder(orderId, dishId));
+        Exception exception = assertThrows(ServiceException.class,
+                () -> orderService.removeDishFromOrder(orderId, dishId));
         String errorMessage = "Obtained incorrect amount of dishes in order " + dishesInOrder;
         assertEquals(errorMessage, exception.getMessage());
     }
@@ -316,16 +320,6 @@ class OrderServiceTest {
         return orders;
     }
 
-    private User initTestUser() {
-        return new User.UserBuilder()
-                .withEmail("email")
-                .withPassword("password")
-                .withName("name")
-                .withSurname("surname")
-                .withGender("Male")
-                .withOverEighteen(true)
-                .build();
-    }
 
     private Order initTestOrder(BookingStatus bookingStatus) {
         String address = "address";

@@ -1,6 +1,6 @@
 package com.epam.havryliuk.restaurant.model.exceptions;
 
-public class DAOException extends Exception {
+public class DAOException extends RuntimeException {
 
     public DAOException() {
         super();

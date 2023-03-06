@@ -61,7 +61,7 @@ class ManageOrdersCommandTest {
         when(request.getParameter(RequestParameters.PAGE_NUMBER)).thenReturn(String.valueOf(pageNumber));
         when(request.getParameter(RequestParameters.RECORDS_PER_PAGE)).thenReturn(String.valueOf(recordsPerPage));
         when(request.getRequestDispatcher(AppPagesPath.FORWARD_MANAGE_ORDERS)).thenReturn(requestDispatcher);
-        when(orderService.getAllOrders(pageNumber, recordsPerPage, sortingParameter)).thenReturn(ordersPage);
+        when(orderService.getPageOfOrders(pageNumber, recordsPerPage, sortingParameter)).thenReturn(ordersPage);
         manageOrders.execute(request, response);
         verify(request).setAttribute(NUMBER_OF_PAGES, noOfPages);
         verify(request).setAttribute(CURRENT_PAGE, pageNumber);
@@ -77,12 +77,12 @@ class ManageOrdersCommandTest {
         when(request.getParameter(RequestParameters.ORDER_SORTING_PARAMETER)).thenReturn(String.valueOf(sortingParameter));
         when(request.getParameter(RequestParameters.PAGE_NUMBER)).thenReturn(String.valueOf(pageNumber));
         when(request.getParameter(RequestParameters.RECORDS_PER_PAGE)).thenReturn(String.valueOf(recordsPerPage));
-        when(orderService.getAllOrders(pageNumber, recordsPerPage, sortingParameter)).thenReturn(ordersPage);
+        when(orderService.getPageOfOrders(pageNumber, recordsPerPage, sortingParameter)).thenReturn(ordersPage);
         when(request.getRequestDispatcher(AppPagesPath.FORWARD_MANAGE_ORDERS)).thenReturn(requestDispatcher);
         manageOrders.execute(request, response);
-        when(orderService.getAllOrders(pageNumber, recordsPerPage, sortingParameter)).thenThrow(new ServiceException("Unable to get orders."));
+        when(orderService.getPageOfOrders(pageNumber, recordsPerPage, sortingParameter)).thenThrow(new ServiceException("Unable to get orders."));
         Exception exception = assertThrows(ServiceException.class, () ->
-                orderService.getAllOrders(pageNumber, recordsPerPage, sortingParameter));
+                orderService.getPageOfOrders(pageNumber, recordsPerPage, sortingParameter));
         assertEquals("Unable to get orders.", exception.getMessage());
     }
 }

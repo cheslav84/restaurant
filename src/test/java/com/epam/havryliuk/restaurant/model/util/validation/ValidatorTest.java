@@ -2,6 +2,7 @@ package com.epam.havryliuk.restaurant.model.util.validation;
 
 import com.epam.havryliuk.restaurant.controller.constants.RequestParameters;
 import com.epam.havryliuk.restaurant.controller.constants.ResponseMessages;
+import com.epam.havryliuk.restaurant.controller.dispatchers.ImageDispatcher;
 import com.epam.havryliuk.restaurant.model.entity.*;
 import com.epam.havryliuk.restaurant.model.util.BundleManager;
 import jakarta.servlet.http.HttpServletRequest;
@@ -36,6 +37,8 @@ class ValidatorTest {
     private Dish dish;
     @Mock
     private User user;
+    @Mock
+    private ImageDispatcher imageDispatcher;
 
     @BeforeEach
     public void setup() {
@@ -134,7 +137,8 @@ class ValidatorTest {
     @MethodSource({"correctDishes"})
     void isCreatingDishDataValid(Dish dish) {
         String imagePath = "db_context.properties";
-        assertTrue(Validator.isCreatingDishDataValid(dish, imagePath, request));
+        when(imageDispatcher.getRealPath()).thenReturn(imagePath);
+        assertTrue(Validator.isCreatingDishDataValid(dish, imageDispatcher, request));
     }
 
     @ParameterizedTest
@@ -146,9 +150,10 @@ class ValidatorTest {
     @ParameterizedTest
     @MethodSource({"notCorrectDishes"})
     void isCreatingDishDataInvalid(Dish dish) {
-        String imageName = "db_context.properties";
+        String imagePath = "db_context.properties";
+        when(imageDispatcher.getRealPath()).thenReturn(imagePath);
         String wrongMessages = setAllWrongMessages();
-        assertFalse(Validator.isCreatingDishDataValid(dish, imageName, request));
+        assertFalse(Validator.isCreatingDishDataValid(dish, imageDispatcher, request));
         assertErrorMessages(dish, wrongMessages);
     }
 

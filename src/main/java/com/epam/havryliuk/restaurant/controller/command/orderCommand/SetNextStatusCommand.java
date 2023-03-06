@@ -61,8 +61,6 @@ public class SetNextStatusCommand implements Command {
         } catch (EntityNotFoundException e) {
             MessageDispatcher.setToSession(request, ERROR_MESSAGE,
                     ResponseMessages.DISH_ALREADY_IN_ORDER + e.getMessage());
-//            session.setAttribute(ERROR_MESSAGE,
-//                    bundleManager.getProperty(ResponseMessages.ABSENT_DISHES) + e.getMessage());
             LOG.info("Some of dishes are already absent in menu.", e);
         } catch (ServiceException e) {
             MessageDispatcher.setToSession(request, ERROR_MESSAGE, ResponseMessages.ORDER_CONFIRM_ERROR);

@@ -3,7 +3,6 @@ package com.epam.havryliuk.restaurant.controller.command.orderCommand;
 import com.epam.havryliuk.restaurant.controller.constants.RequestAttributes;
 import com.epam.havryliuk.restaurant.model.entity.BookingStatus;
 import com.epam.havryliuk.restaurant.model.entity.Order;
-import com.epam.havryliuk.restaurant.model.entity.Role;
 import com.epam.havryliuk.restaurant.model.entity.User;
 import com.epam.havryliuk.restaurant.model.exceptions.ServiceException;
 import com.epam.havryliuk.restaurant.model.service.OrderService;

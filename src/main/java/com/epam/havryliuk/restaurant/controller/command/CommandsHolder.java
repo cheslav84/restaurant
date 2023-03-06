@@ -2,13 +2,16 @@ package com.epam.havryliuk.restaurant.controller.command;
 
 import com.epam.havryliuk.restaurant.controller.command.dishCommand.*;
 import com.epam.havryliuk.restaurant.controller.command.orderCommand.*;
-import com.epam.havryliuk.restaurant.controller.command.userCommand.*;
+import com.epam.havryliuk.restaurant.controller.command.userCommand.LoginPageCommand;
+import com.epam.havryliuk.restaurant.controller.command.userCommand.LoginCommand;
+import com.epam.havryliuk.restaurant.controller.command.userCommand.LogoutCommand;
+import com.epam.havryliuk.restaurant.controller.command.userCommand.RegisterCommand;
 
 /**
  * Returns instances of Command by the command name.
  */
 
-public enum CommandEnum {
+public enum CommandsHolder {
     INDEX (new IndexCommand()),
     MENU (new MenuCommand()),
     SHOW_DISH_INFO (new DishInfoCommand()),
@@ -27,7 +30,7 @@ public enum CommandEnum {
 
      private final Command command;
 
-    CommandEnum(Command command) {
+    CommandsHolder(Command command) {
         this.command = command;
     }
 

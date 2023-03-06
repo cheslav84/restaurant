@@ -40,7 +40,7 @@ public class OrderDao extends AbstractDao<Order> {
         return order;
     }
 
-    public Order geByUserAddressStatus(User user, String address, BookingStatus bookingStatus) throws DAOException {
+    public Optional<Order> geByUserAddressStatus(User user, String address, BookingStatus bookingStatus) throws DAOException {
         Order order = null;
         try (PreparedStatement stmt = connection.prepareStatement(OrderQuery.GET_BY_USER_ID_ADDRESS_AND_STATUS)) {
             int k = 0;
@@ -49,8 +49,7 @@ public class OrderDao extends AbstractDao<Order> {
             stmt.setString(++k, bookingStatus.name());
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    order = OrderMapper.mapOrder(rs);
-                    order.setUser(user);//todo виконується в сервісі
+                    order = OrderMapper.mapOrder(rs, user);
                 }
             }
             LOG.debug("Order has been received from database.");
@@ -59,7 +58,7 @@ public class OrderDao extends AbstractDao<Order> {
             LOG.error(errorMassage, e);
             throw new DAOException(errorMassage, e);
         }
-        return order;
+        return Optional.ofNullable(order);
     }
 
     public List<Order> getByUserSortedByTime(User user) throws DAOException {
@@ -68,8 +67,7 @@ public class OrderDao extends AbstractDao<Order> {
             stmt.setLong(1, user.getId());
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    Order order = OrderMapper.mapOrder(rs);
-                    order.setUser(user);
+                    Order order = OrderMapper.mapOrder(rs, user);
                     orders.add(order);
                 }
             }
@@ -123,18 +121,6 @@ public class OrderDao extends AbstractDao<Order> {
 
     }
 
-//    private Order mapOrder(ResultSet rs) throws SQLException {
-//        long id = rs.getLong(OrderFields.ORDER_ID);
-//        String address = rs.getString(OrderFields.ORDER_ADDRESS);
-//        String phoneNumber = rs.getString(OrderFields.ORDER_PHONE_NUMBER);
-//        boolean isPayed = rs.getBoolean(OrderFields.ORDER_PAYMENT);
-//        Date creationDate = rs.getTimestamp(OrderFields.ORDER_CREATION_DATE);
-//        Date closeDate = rs.getTimestamp(OrderFields.ORDER_CLOSE_DATE);
-//        long bookingStatusId = rs.getLong(OrderFields.ORDER_BOOKING_STATUS);
-//        BookingStatus bookingStatus = BookingStatus.getStatus(bookingStatusId);
-//        return Order.getInstance(id, address, phoneNumber, isPayed, creationDate, closeDate, bookingStatus);
-//    }
-
     public Date getCreationDate(long orderId) throws DAOException {
         Date date = null;
         try (PreparedStatement stmt = connection.prepareStatement(OrderQuery.GET_CREATION_DATE_BY_ID)) {
@@ -152,6 +138,7 @@ public class OrderDao extends AbstractDao<Order> {
         }
         return date;
     }
+
     @SuppressWarnings("UnusedAssignment")
     private void setOrderParameters(Order order, PreparedStatement stmt) throws SQLException {
         int k = 1;

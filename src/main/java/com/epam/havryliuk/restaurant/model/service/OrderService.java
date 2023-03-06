@@ -62,6 +62,45 @@ public class OrderService implements Service {
         }
     }
 
+
+    /**
+     * Method checks if the user wants to confirm order (the status has to be set from BOOKING to NEW).
+     *
+     * @param newStatus new BookingStatus that has to be set in the Order.
+     * @return true if the BookingStatus that has to be set is "NEW". Otherwise, return false.
+     */
+    private boolean isOrderInConfirmingProcess(BookingStatus newStatus) {
+        return newStatus.equals(BookingStatus.NEW);
+    }
+
+
+    /**
+     * Method receives requested dishes from a client and checks if that dishes are really present in storage.
+     * RequestedDishes - gets the requested amounts and names of the dishes within an order.
+     * PresentDishes - gets the actual amounts and names of the dishes within an order that are presents in menu.
+     * If the requested amount any of dishes are more that presented dishes in menu, method th
+     *
+     * @param orderId id of user Order.
+     * @throws EntityNotFoundException If the requested amount any of dishes are more that presented dishes in menu,
+     *                                 method throws the EntityAbsentException with the list of absent dishes in its message.
+     */
+    private void checkDishesIfPresent(DishDao dishDao, BasketDao basketDao, long orderId) throws EntityNotFoundException, DAOException {
+        Map<String, Integer> requestedDishes = basketDao.getNumberOfRequestedDishesInOrder(orderId);
+        Map<String, Integer> presentDishes = dishDao.getNumberOfEachDishInOrder(orderId);
+        List<String> absentDishesList = new ArrayList<>();
+        for (String reqDishName : requestedDishes.keySet()) {
+            if (requestedDishes.get(reqDishName) > presentDishes.get(reqDishName)) {
+                absentDishesList.add(reqDishName);
+            }
+        }
+        if (absentDishesList.size() != 0) {
+            String absentDishes = "\"" + String.join("\", \"", absentDishesList) + "\"";
+            LOG.debug("Some of dishes are not present.");
+            throw new EntityNotFoundException(absentDishes);
+        }
+    }
+
+
     /**
      * Method gets the list of user Order from storage, that sorted by
      * creation time of that Order. For every Order method set list of Baskets.
@@ -75,11 +114,7 @@ public class OrderService implements Service {
         try {
             transaction.initTransaction(orderDao, basketDao);
             orders = orderDao.getByUserSortedByTime(user);
-            for (Order order : orders) {//todo extract method
-                List<Basket> baskets = basketDao.getOrderDishes(order);
-                order.setBaskets(baskets);
-                setOrderPrice(order, baskets);
-            }
+            setBasketsForEachOrder(orders);
             LOG.debug("The order list was successfully created.");
         } catch (DAOException e) {
             LOG.info("Unable to get orders.");
@@ -89,6 +124,7 @@ public class OrderService implements Service {
         }
         return orders;
     }
+
 
     /**
      * Method doing calculation of Orders offset (for pagination purpose), based on
@@ -102,7 +138,7 @@ public class OrderService implements Service {
      * @return Page of Orders that has to be displayed in one user page.
      * @throws ServiceException when impossible to get data.
      */
-    public Page<Order> getAllOrders(int page, int recordsPerPage, OrderSorting sorting) throws ServiceException {
+    public Page<Order> getPageOfOrders(int page, int recordsPerPage, OrderSorting sorting) throws ServiceException {
         Page<Order> orderPage = new Page<>();
         List<Order> orders;
         try {
@@ -112,11 +148,7 @@ public class OrderService implements Service {
             orders = orderDao.getPartOfOrders(offset, recordsPerPage, sorting);
             orderPage.setNoOfPages(noOfRecords, recordsPerPage);
             orderPage.setRecords(orders);
-            for (Order order : orders) {
-                List<Basket> baskets = basketDao.getOrderDishes(order);
-                order.setBaskets(baskets);
-                setOrderPrice(order, baskets);
-            }
+            setBasketsForEachOrder(orders);
             LOG.debug("The page was successfully created.");
         } catch (DAOException e) {
             LOG.info("Unable to get orders.");
@@ -127,14 +159,24 @@ public class OrderService implements Service {
         return orderPage;
     }
 
+    /**
+     * Method gets Order baskets from storage, and sets them to each Order.
+     * @param orders list of orders that baskets need to be set in.
+     */
+    private void setBasketsForEachOrder(List<Order> orders) throws DAOException {
+        for (Order order : orders) {
+            List<Basket> baskets = basketDao.getOrderDishes(order);
+            order.setBaskets(baskets);
+            setOrderPrice(order, baskets);
+        }
+    }
+
 
     /**
      * Returns an Order that firstly tries to get from storage. The Order is considered that
      * exists in it, if the delivery address is the same as the User wants to deliver to, and the
      * BookingStatus is "BOOKING" (an order is not confirmed by the User). If such Order doesn't exist -
-     * creates a new one from data that received from the user side (delivery address, delivery phone).
-     * As that order is new, then payment status is set to false, and the BookingStatus is "BOOKING".
-     * Other data, like id and creation is formed by storage.
+     * creates a new one.
      * @param user            current User in session.
      * @param deliveryAddress the address that Order needs to be delivered to.
      * @param deliveryPhone   the contact phone number.
@@ -146,23 +188,8 @@ public class OrderService implements Service {
         Order order;
         try {
             transaction.initTransaction(orderDao);
-            order = orderDao.geByUserAddressStatus(user, deliveryAddress, BookingStatus.BOOKING);
-            if (order != null) {
-                order.setUser(user);//todo?? чому встановлюється юзер, якщо ми шукаємо за юзером
-                LOG.debug("Order has been received: {}", order);
-            } else {
-                order = new Order.OrderBuilder()
-                        .withAddress(deliveryAddress)
-                        .withPhoneNumber(deliveryPhone)
-                        .withPayed(false)
-                        .withBookingStatus(BookingStatus.BOOKING)
-                        .withUser(user)
-                        .build();
-                order = orderDao.create(order);
-                Date creationDate = orderDao.getCreationDate(order.getId());
-                order.setCreationDate(creationDate);
-                LOG.debug("Has been created new order: {}", order);
-            }
+            order = orderDao.geByUserAddressStatus(user, deliveryAddress, BookingStatus.BOOKING)
+                    .orElseGet(() -> createNewOrder(orderDao, deliveryAddress, deliveryPhone, user));
             transaction.commit();
         } catch (DAOException e) {
             LOG.info("Unable to get or create an order.");
@@ -173,6 +200,29 @@ public class OrderService implements Service {
         }
         return order;
     }
+
+
+    /**
+     * Creates a new Order from data that received from the user side (delivery address, delivery phone).
+     * As that order is new, then payment status is set to false, and the BookingStatus is "BOOKING".
+     * Other data, like id and creation is formed by storage.
+     */
+    private Order createNewOrder(OrderDao orderDao, String deliveryAddress, String deliveryPhone, User user)
+            throws DAOException {
+        Order order = new Order.OrderBuilder()
+                .withAddress(deliveryAddress)
+                .withPhoneNumber(deliveryPhone)
+                .withPayed(false)
+                .withBookingStatus(BookingStatus.BOOKING)
+                .withUser(user)
+                .build();
+        order = orderDao.create(order);
+        Date creationDate = orderDao.getCreationDate(order.getId());
+        order.setCreationDate(creationDate);
+        LOG.debug("Has been created new order: {}", order);
+        return order;
+    }
+
 
     /**
      * Method checks whether dishes that user wants to order are available in menu (checkAvailableDishes),
@@ -215,7 +265,6 @@ public class OrderService implements Service {
     }
 
 
-
     /**
      * Method removes dishes from order. If it remains the only one dish in an order,
      * then order will be removed completely.
@@ -246,42 +295,6 @@ public class OrderService implements Service {
         }
     }
 
-    /**
-     * Method receives requested dishes from a client and checks if that dishes are really present in storage.
-     * RequestedDishes - gets the requested amounts and names of the dishes within an order.
-     * PresentDishes - gets the actual amounts and names of the dishes within an order that are presents in menu.
-     * If the requested amount any of dishes are more that presented dishes in menu, method th
-     *
-     * @param orderId id of user Order.
-     * @throws EntityNotFoundException If the requested amount any of dishes are more that presented dishes in menu,
-     *                                 method throws the EntityAbsentException with the list of absent dishes in its message.
-     */
-    private void checkDishesIfPresent(DishDao dishDao, BasketDao basketDao, long orderId) throws EntityNotFoundException, DAOException {
-        Map<String, Integer> requestedDishes = basketDao.getNumberOfRequestedDishesInOrder(orderId);
-        Map<String, Integer> presentDishes = dishDao.getNumberOfEachDishInOrder(orderId);
-        List<String> absentDishesList = new ArrayList<>();
-        for (String reqDishName : requestedDishes.keySet()) {
-            if (requestedDishes.get(reqDishName) > presentDishes.get(reqDishName)) {
-                absentDishesList.add(reqDishName);
-            }
-        }
-        if (absentDishesList.size() != 0) {
-            String absentDishes = "\"" + String.join("\", \"", absentDishesList) + "\"";
-            LOG.debug("Some of dishes are not present.");
-            throw new EntityNotFoundException(absentDishes);
-        }
-    }
-
-
-    /**
-     * Method checks if the user wants to confirm order (the status has to be set from BOOKING to NEW).
-     *
-     * @param newStatus new BookingStatus that has to be set in the Order.
-     * @return true if the BookingStatus that has to be set is "NEW". Otherwise, return false.
-     */
-    private boolean isOrderInConfirmingProcess(BookingStatus newStatus) {
-        return newStatus.equals(BookingStatus.NEW);
-    }
 
     /**
      * Method gets receives the number of available dishes in menu, and compares it with the request
@@ -301,6 +314,7 @@ public class OrderService implements Service {
             throw new IrrelevantDataException(errorMessage);
         }
     }
+
 
     /**
      * Method sets price for each order, based on prices of Dishes and amounts of them.

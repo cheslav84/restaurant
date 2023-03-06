@@ -22,7 +22,7 @@ public class DishDispatcher {
      * @return Dish that need to be saved to order.
      * @throws ServiceException if there is no Dish present in session.
      */
-    public static synchronized Dish getCurrentDish(HttpServletRequest request) throws ServiceException {
+    public static Dish getCurrentDish(HttpServletRequest request) throws ServiceException {
         Dish dish = (Dish) request.getSession().getAttribute(CURRENT_DISH);
         if (dish == null) {
             MessageDispatcher.setToSession(request, ORDER_MESSAGE, ResponseMessages.ORDER_DISH_NOT_FOUND);
@@ -37,7 +37,7 @@ public class DishDispatcher {
      * If dishes are absent in menu Category, shows the massage about it.
      * @param dishes list of Dishes in menu Category that needs to be checked.
      */
-    public static synchronized void setMessageIfDishesAbsent(HttpServletRequest request, List<Dish> dishes) {
+    public static void setMessageIfDishesAbsent(HttpServletRequest request, List<Dish> dishes) {
         if (dishes.isEmpty()) {
             MessageDispatcher.setToRequest(request, MENU_MESSAGE, ResponseMessages.MENU_EMPTY);
         }

@@ -36,7 +36,7 @@ public class MenuCommand implements Command {
     @SuppressWarnings("FieldMayBeFinal")
     private DishService dishService;
 
-    public MenuCommand () {
+    public MenuCommand() {
         dishService = ApplicationProcessor.getInstance(DishService.class);
         menuDispatcher = new MenuDispatcher();
     }

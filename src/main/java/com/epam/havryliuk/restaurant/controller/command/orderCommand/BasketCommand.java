@@ -50,7 +50,7 @@ public class BasketCommand implements Command {
         User user = (User) session.getAttribute(LOGGED_USER);
         try {
             List<Order> orders = orderService.getAllUserOrders(user);
-            checkIfOrdersPresent(orders);
+            checkIfOrdersPresent(orders, session);
             session.setAttribute(ORDER_LIST, orders);
         } catch (EntityNotFoundException e) {
             MessageDispatcher.setToSession(request, ERROR_MESSAGE, ResponseMessages.EMPTY_BASKET);
@@ -67,8 +67,9 @@ public class BasketCommand implements Command {
      *
      * @throws EntityNotFoundException if the list is empty.
      */
-    private void checkIfOrdersPresent(List<Order> orders) throws EntityNotFoundException {
+    private void checkIfOrdersPresent(List<Order> orders, HttpSession session) throws EntityNotFoundException {
         if (orders.size() == 0) {
+            session.removeAttribute(ORDER_LIST);
             throw new EntityNotFoundException();
         }
     }

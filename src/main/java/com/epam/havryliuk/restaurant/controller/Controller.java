@@ -34,9 +34,11 @@ public class Controller extends HttpServlet {
     }
     private void processRequest(HttpServletRequest request,
                                 HttpServletResponse response) throws IOException {
-        CommandFactory client = new CommandFactory();
-        Command command = client.defineCommand(request);
+        CommandFactory client = new CommandFactory();// todo подивитись чи створюється нова фарбрика на користрувача
+        Command command = client.defineCommand(request);// todo подивитись чи створюється нова команда на користрувача
         // todo повернути ENUM
+        System.err.println(client);
+        System.err.println(command);
 
         try {
             command.execute(request, response);
