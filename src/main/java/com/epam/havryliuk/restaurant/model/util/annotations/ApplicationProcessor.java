@@ -7,7 +7,9 @@ import org.apache.logging.log4j.Logger;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.Predicate;
 
 /**
@@ -63,24 +65,46 @@ public class ApplicationProcessor {
      * @param declaredFields an Array of declared fields of that object.
      */
     private static synchronized <T> void injectAnnotatedFields(T object, Field[] declaredFields) {
-        Arrays.stream(declaredFields)
-                .filter(HAS_ANNOTATION).toList()
-                .forEach(field -> {
-                    field.setAccessible(true);
-                    Class<?> clazz = field.getType();
-                    try {
-                        Object annotatedObject = clazz.getConstructor().newInstance();
-                        field.set(object, annotatedObject);
-                        injectAnnotatedFields(object, clazz.getDeclaredFields());
-                        LOG.debug("{} initialised.", annotatedObject.getClass());//todo
-                    } catch (InstantiationException |
-                             IllegalAccessException |
-                             InvocationTargetException |
-                             NoSuchMethodException e) {
-                        String errorMessage = "Field doesn't have a constructor.";
-                        LOG.error(errorMessage);
-                        throw new IllegalStateException(errorMessage, e);
-                    }
-                });
+        List<Field> list = new ArrayList<>();
+        for (Field declaredField : declaredFields) {
+            if (HAS_ANNOTATION.test(declaredField)) {
+                list.add(declaredField);
+            }
+        }
+        for (Field field : list) {
+            field.setAccessible(true);
+            Class<?> clazz = field.getType();
+            try {
+                Object annotatedObject = clazz.getConstructor().newInstance();
+                field.set(object, annotatedObject);
+                injectAnnotatedFields(object, clazz.getDeclaredFields());
+            } catch (InstantiationException |
+                     IllegalAccessException |
+                     InvocationTargetException |
+                     NoSuchMethodException e) {
+                String errorMessage = "Field doesn't have a constructor.";
+                LOG.error(errorMessage);
+                throw new IllegalStateException(errorMessage, e);
+            }
+        }
+//        Arrays.stream(declaredFields)
+//                .filter(HAS_ANNOTATION).toList()
+//                .forEach(field -> {
+//                    field.setAccessible(true);
+//                    Class<?> clazz = field.getType();
+//                    try {
+//                        Object annotatedObject = clazz.getConstructor().newInstance();
+//                        field.set(object, annotatedObject);
+//                        injectAnnotatedFields(object, clazz.getDeclaredFields());
+//                        LOG.debug("{} initialised.", annotatedObject.getClass());//todo
+//                    } catch (InstantiationException |
+//                             IllegalAccessException |
+//                             InvocationTargetException |
+//                             NoSuchMethodException e) {
+//                        String errorMessage = "Field doesn't have a constructor.";
+//                        LOG.error(errorMessage);
+//                        throw new IllegalStateException(errorMessage, e);
+//                    }
+//                });
     }
 }

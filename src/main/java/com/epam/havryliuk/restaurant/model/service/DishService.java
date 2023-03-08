@@ -101,11 +101,21 @@ public class DishService implements Service {
     private List<Dish> getAllDishes (String sortParameter) throws DAOException, ServiceException {
         List<Dish> dishes;
         switch (sortParameter) {
-            case "name" -> dishes = dishDao.getAllSortedByName();
-            case "price" -> dishes = dishDao.getAllSortedByPrice();
-            case "category" -> dishes = dishDao.getAllSortedByCategory();
-            default -> throw new ServiceException();
+            case "name": dishes = dishDao.getAllSortedByName();
+              break;
+            case "price": dishes = dishDao.getAllSortedByPrice();
+                break;
+            case "category": dishes = dishDao.getAllSortedByCategory();
+                break;
+            default: throw new ServiceException();
         }
+
+//        switch (sortParameter) {
+//            case "name" -> dishes = dishDao.getAllSortedByName();
+//            case "price" -> dishes = dishDao.getAllSortedByPrice();
+//            case "category" -> dishes = dishDao.getAllSortedByCategory();
+//            default -> throw new ServiceException();
+//        }
         return dishes;
     }
 
@@ -117,11 +127,21 @@ public class DishService implements Service {
     private List<Dish> getAvailableDishes (String sortParameter) throws DAOException, ServiceException {
         List<Dish> dishes;
         switch (sortParameter) {
-            case "name" -> dishes = dishDao.getAllAvailableSortedByName();
-            case "price" -> dishes = dishDao.getAllAvailableSortedByPrice();
-            case "category" -> dishes = dishDao.getAllAvailableSortedByCategory();
-            default -> throw new ServiceException();
+            case "name": dishes = dishDao.getAllAvailableSortedByName();
+                break;
+            case "price": dishes = dishDao.getAllAvailableSortedByPrice();
+                break;
+            case "category": dishes = dishDao.getAllAvailableSortedByCategory();
+                break;
+            default: throw new ServiceException();
         }
+
+//        switch (sortParameter) {
+//            case "name" -> dishes = dishDao.getAllAvailableSortedByName();
+//            case "price" -> dishes = dishDao.getAllAvailableSortedByPrice();
+//            case "category" -> dishes = dishDao.getAllAvailableSortedByCategory();
+//            default -> throw new ServiceException();
+//        }
         return dishes;
     }
 

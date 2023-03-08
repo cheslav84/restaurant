@@ -28,11 +28,19 @@ public class SessionLocaleFilter implements Filter {
 
         if (requestedLocale != null) {
             Locale locale;
+
             switch (requestedLocale) {
-                case "EN" -> locale = EN;
-                case "UA" -> locale = UA;
-                default -> throw new IllegalArgumentException();
+                case "EN": locale = EN;
+                break;
+                case "UA": locale = UA;
+                break;
+                default : throw new IllegalArgumentException();
             }
+//            switch (requestedLocale) {
+//                case "EN" -> locale = EN;
+//                case "UA" -> locale = UA;
+//                default -> throw new IllegalArgumentException();
+//            }
             session.setAttribute(LOCALE, locale);
         } else if (session.getAttribute(LOCALE) == null) {
             session.setAttribute(LOCALE, Locale.getDefault());

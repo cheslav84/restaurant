@@ -10,10 +10,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -101,15 +98,26 @@ class DishDaoTest {
 
     @Test
     void getNumberOfEachDishInOrder() throws DAOException {
-        Map<String, Integer> dishesAmount = Map.of("fish", 2, "meet", 3);
+        Map<String, Integer> dishesAmount = new HashMap<>();
+        dishesAmount.put("fish", 2);
+        dishesAmount.put("meet", 3);
+//        Map<String, Integer> dishesAmount = Map.of("fish", 2, "meet", 3);
         Mockito.when(dishDAO.getNumberOfEachDishInOrder(3)).thenReturn(dishesAmount);
         assertEquals(dishDAO.getNumberOfEachDishInOrder(3), dishesAmount);
     }
 
     @Test
     void getNumberOfEachDishInOrderFalse() throws DAOException {
-        Map<String, Integer> dishesAmountMock = Map.of("fish", 2, "meet", 3);
-        Map<String, Integer> dishesAmount = Map.of("fish", 2, "meet", 3, "beer", 1);
+        Map<String, Integer> dishesAmountMock = new HashMap<>();
+        dishesAmountMock.put("fish", 2);
+        dishesAmountMock.put("meet", 3);
+        Map<String, Integer> dishesAmount = new HashMap<>();
+        dishesAmount.put("fish", 2);
+        dishesAmount.put("meet", 3);
+        dishesAmount.put("beer", 1);
+
+//        Map<String, Integer> dishesAmountMock = Map.of("fish", 2, "meet", 3);
+//        Map<String, Integer> dishesAmount = Map.of("fish", 2, "meet", 3, "beer", 1);
         Mockito.when(dishDAO.getNumberOfEachDishInOrder(3)).thenReturn(dishesAmountMock);
         assertNotEquals(dishDAO.getNumberOfEachDishInOrder(3), dishesAmount);
     }
