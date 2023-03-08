@@ -6569,3 +6569,36 @@ javax.naming.NoInitialContextException: Need to specify class name in environmen
 2023-03-06 23:19:44 INFO  OrderFields:36 - Database fields for "OrderFields" table have been initialised successfully.
 2023-03-06 23:19:44 INFO  PropertiesLoader:39 - Properties file "database_fields.properties" is loaded.
 2023-03-06 23:19:44 INFO  BasketFields:24 - Database fields for "order_has_dish" table have been initialised successfully.
+2023-03-06 23:54:22 INFO  ContextListener:19 - Fl
+2023-03-06 23:54:54 INFO  ContextListener:17 - Fl
+2023-03-07 00:08:30 INFO  ContextListener:16 - Fl
+2023-03-07 00:08:30 INFO  ContextListener:19 - Fl
+2023-03-07 00:08:58 INFO  ContextListener:16 - Fl
+2023-03-07 00:09:25 INFO  ContextListener:16 - Fl
+2023-03-07 00:11:04 INFO  ContextListener:16 - Fl
+2023-03-07 00:28:25 INFO  ContextListener:18 - Fl
+2023-03-07 01:03:08 INFO  ContextListener:21 - Fl
+2023-03-07 01:03:21 INFO  ContextListener:21 - Fl
+2023-03-07 01:07:14 INFO  ContextListener:21 - Fl
+2023-03-07 01:08:04 INFO  ContextListener:21 - Fl
+2023-03-07 01:13:28 INFO  ContextListener:21 - Fl
+2023-03-07 01:13:52 INFO  ContextListener:21 - Fl
+2023-03-07 01:16:28 INFO  PropertiesLoader:39 - Properties file "db_context.properties" is loaded.
+2023-03-07 01:16:28 INFO  ConnectionManager:20 - DataSource initialised.
+2023-03-07 01:16:29 INFO  PropertiesLoader:39 - Properties file "application_path.properties" is loaded.
+2023-03-07 01:16:32 INFO  PropertiesLoader:39 - Properties file "database_queries.properties" is loaded.
+2023-03-07 01:16:32 INFO  UserQuery:30 - Database queries for "User" table have been initialised successfully.
+2023-03-07 01:16:32 INFO  PropertiesLoader:39 - Properties file "database_fields.properties" is loaded.
+2023-03-07 01:16:32 INFO  UserFields:42 - Database fields for "User" table have been initialised successfully.
+2023-03-07 01:16:32 INFO  LoginCommand:61 - User "v_cheslav@ukr.net" logged in.
+2023-03-07 01:16:32 INFO  PropertiesLoader:39 - Properties file "database_queries.properties" is loaded.
+2023-03-07 01:16:32 INFO  DishQuery:58 - Database queries for "Dish" table have been initialised successfully.
+2023-03-07 01:16:32 INFO  PropertiesLoader:39 - Properties file "database_fields.properties" is loaded.
+2023-03-07 01:16:32 INFO  DishFields:36 - Database fields for "Dish" table have been initialised successfully.
+2023-03-08 22:11:35 INFO  PropertiesLoader:39 - Properties file "db_context.properties" is loaded.
+2023-03-08 22:11:35 INFO  ConnectionManager:20 - DataSource initialised.
+2023-03-08 22:11:36 INFO  PropertiesLoader:39 - Properties file "database_queries.properties" is loaded.
+2023-03-08 22:11:36 INFO  DishQuery:58 - Database queries for "Dish" table have been initialised successfully.
+2023-03-08 22:11:36 INFO  PropertiesLoader:39 - Properties file "database_fields.properties" is loaded.
+2023-03-08 22:11:36 INFO  DishFields:36 - Database fields for "Dish" table have been initialised successfully.
+2023-03-08 22:11:36 INFO  PropertiesLoader:39 - Properties file "application_path.properties" is loaded.
